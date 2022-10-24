@@ -4,5 +4,97 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.TaskMapper">
 
+	<!-- 업무 등록 -->
+	<insert id="insertTask">
+		INSERT INTO task
+			VALUES(task_seq.nextval, #{dept_id}, #{task_title}, TO_CLOB(#{task_content}), #{task_writer},
+					sysdate, sysdate, #{category}, 'Y', 'Y', sysdate)
+	</insert>
+	
+	<!-- 업무 수정 -->
+	<update id="updateTask"> 
+	
+		UPDATE task SET dept_id = #{dept_id},
+						task_title = #{task_title},
+						task_content = TO_CLOB(#{task_content}),
+						start_date = sysdate,
+						end_date = sysdate,
+						category = #{category},
+						t_private = 'N'
+			WHERE task_id = ${task_id}
+	
+	</update>
+	
+	<!-- 업무 삭제 -->
+	<delete id="deleteTask">
+	
+		DELETE FROM task
+			WHERE task_id = #{task_id}
+	
+	</delete>
+	
+	
+	<!-- 검색어 처리를 위한 쿼리 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							task_title LIKE '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							task_content LIKE '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							task_writer LIKE '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	
+	<!-- 검색 기능 포함 페이징처리 -->
+	<select id="getListWithPaging" resultType="org.shiftworks.domain.TaskVO">
+	
+		<![CDATA[
+		SELECT task_id, task_title, task_content, task_writer,
+				start_date, end_date, category, t_private, date_created
+			FROM (SELECT /*+INDEX_DESC(task task_pk) */
+				ROWNUM rn, task_id, task_title, task_content, task_writer,
+	        		start_date, end_date, category, t_private, date_created
+	        	FROM task
+	        	WHERE
+		]]>
+
+		<include refid="criteria"/> 
+	      
+		<![CDATA[    
+				ROWNUM <= #{pageNum} * #{amount})
+			WHERE rn > (#{pageNum} -1) * #{amount}   
+		]]>
+		
+	</select>
+	
+	
+	<!-- 총 업무(게시글) 개수 -->
+	<select id="getTotalTask" resultType="int">
+	
+		SELECT COUNT(*) FROM task
+			WHERE
+			<include refid="criteria"/>
+			task_id > 0
+			
+	</select>
+	
+	<!-- 업무(게시글) 개별 조회 -->
+	<select id="getTask" resultType="org.shiftworks.domain.TaskVO">
+	
+		SELECT * FROM task
+			WHERE task_id = #{task_id}
+	
+	</select>
 
 </mapper>
