@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.PostMapper">
+
+
+	<insert id="insertPost" parameterType="org.shiftworks.domain.PostVO">
+		insert into post (post_id, b_id, emp_id, dept_id, post_name, post_content,
+		post_regno, post_regdate, post_updatedate, post_fix, post_receivedept)
+		values (post_seq.nextval, #{b_id}, #{emp_id}, #{dept_id},#{post_name},
+		#{post_content},0, sysdate, sysdate, 'N', #{post_receivedept})
+	</insert> 
+	
+	<select id="getListPostVO" resultType="org.shiftworks.domain.PostVO">
+		select * from post order by post_id desc
+	</select>
+	
+	<update id="updatePost" parameterType="org.shiftworks.domain.PostVO">
+		update post set 	post_name =#{post_name}, post_content = #{post_content},
+		post_updatedate = sysdate, post_receivedept = #{post_receivedept}
+		where post_id = #{post_id}
+	</update>
+
+	<delete id="deletePost" parameterType="int" >
+		delete from post where post_id = #{post_id}
+	</delete>
+	
+	<select id="getPost"  parameterType="int" resultType="org.shiftworks.domain.PostVO">
+		select * from post where post_id = #{post_id}
+	</select>
+	
+	
+</mapper>
