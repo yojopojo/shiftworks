@@ -1,5 +1,7 @@
 package org.shiftworks.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.BookingVO;
@@ -50,6 +52,13 @@ public class BookingMapperTests {
 		log.info("get one booking by mapper.................");
 		mapper.getBooking(3);
 	}
+	
+//	@Test
+//	public void testGetList() {
+//		log.info("getList by mapper......................");
+//		List<BookingVO> list = mapper.getList();
+//		log.info(list);
+//	}
 	
 	
 	

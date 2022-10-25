@@ -14,8 +14,12 @@
 		(#{book_id}, #{rsc_id}, #{emp_id}, #{dept_id}, #{book_date}, #{book_begin}, #{book_begin}+2, #{book_title}, #{book_content})
 	</insert>
 	
-<!-- 	<select id="getBooking" parameterType="int" resultType="org.shiftworks.domain.BookingVO">
+	<select id="getBooking" parameterType="int" resultType="org.shiftworks.domain.BookingVO">
 		select * from rsc_booking where book_id = #{book_id}
+	</select>
+	
+<!-- 	<select id="getList" resultType="org.shiftworks.domain.BookingVO">
+		select * from rsc_booking
 	</select> -->
 	
 	

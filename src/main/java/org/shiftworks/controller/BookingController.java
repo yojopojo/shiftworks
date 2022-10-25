@@ -42,13 +42,13 @@ public class BookingController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
-//	@GetMapping("/{book_id}")
-//	public BookingVO getBooking(@PathVariable("book_id") int book_id) {
-//		
-//		BookingVO vo = service.getBooking(book_id);
-//		
-//		return vo;
-//	}
+	@GetMapping("/{book_id}")
+	public BookingVO getBooking(@PathVariable("book_id") int book_id) {
+		
+		BookingVO vo = service.getBooking(book_id);
+		
+		return vo;
+	}
 
 
 

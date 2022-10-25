@@ -1,5 +1,7 @@
 package org.shiftworks.service;
 
+import java.util.List;
+
 import org.shiftworks.domain.BookingVO;
 import org.shiftworks.mapper.BookingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,22 @@ public class BookingServiceImpl implements BookingService {
 		return re;
 	}
 
+	@Override
+	public BookingVO getBooking(int book_id) {
+		log.info("getBooking Service..................");
+		BookingVO vo = mapper.getBooking(book_id);
+		log.info(vo);
+		
+		return vo;
+	}
+
 //	@Override
-//	public BookingVO getBooking(int book_id) {
-//		log.info("getBooking Service..................");
-//		BookingVO vo = mapper.getBooking(book_id);
-//		log.info(vo);
+//	public List<BookingVO> getList() {
+//		log.info("getList Service.....................");
+//		List<BookingVO> list = mapper.getList();
+//		log.info(list);
 //		
-//		return vo;
+//		return list;
 //	}
 
 }
