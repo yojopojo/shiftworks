@@ -25,6 +25,8 @@ public class PostServiceTests {
 	@Test
 	public void testGetList() {
 		Criteria cri = new Criteria(2, 10);
+		cri.setType("W");
+		cri.setKeyword("김기역");
 		service.getList(cri).forEach(post -> log.info(post));
 	}
 	

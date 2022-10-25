@@ -53,11 +53,16 @@ public class PostController {
 	
 	
 	//db에서 PostVO list 받아오기
-	@GetMapping(value = "/pages/{pageNum}")
-	public ResponseEntity<List<PostVO>>getList(
-														@PathVariable("pageNum") int pageNum){
+	@GetMapping(value = "/pages/{type}/{keyword}/{pageNum}")
+	public ResponseEntity<List<PostVO>> getList(
+														@PathVariable("pageNum") int pageNum,
+														@PathVariable("type") String type,
+														@PathVariable("keyword")String keyword){
 		
 		Criteria cri = new Criteria(pageNum, 10);
+		cri.setType(type);
+		cri.setKeyword(keyword);
+		
 		return new ResponseEntity<List<PostVO>>(service.getList(cri) ,HttpStatus.OK);
 	}
 	

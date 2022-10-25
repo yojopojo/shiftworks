@@ -16,17 +16,38 @@
 		select * from post order by post_id desc
 	</select> -->
 	
+	
+	
 	<select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
 		<![CDATA[
-			select 
-				*
+			select post_id, b_id, post_name, post_content,
+				post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, name
 			from
-				(
-				select /*+INDEX_DESC(post post_pk) */
-					rownum rn, post_id, b_id, emp_id, dept_id, post_name, post_content,
-					post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
-				from post
-				where rownum <=#{pageNum}*#{amount}
+				( select /*+INDEX_DESC(post post_pk) */
+				  rownum rn, post_id, b_id,  post_name, post_content,
+				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, name
+				from post p JOIN employee e
+				ON e.emp_id =p.emp_id 
+				where
+		]]>
+			
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item='type' collection="typeArr" >
+				<trim prefix="OR">
+					<choose>
+						<when test="type =='T'.toString()">
+							post_name like '%'||#{keyword}||'%'
+						</when>
+						<when test="type =='W'.toString()">
+							 name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+	</trim>
+				
+		<![CDATA[		
+				rownum <=#{pageNum}*#{amount}
 				)
 			where rn >(#{pageNum}-1)*#{amount}
 		]]>

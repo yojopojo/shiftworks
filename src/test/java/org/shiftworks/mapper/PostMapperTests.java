@@ -72,6 +72,8 @@ public class PostMapperTests {
 	@Test
 	public void testGetListPaging() {
 		Criteria cri = new Criteria();
+		cri.setKeyword("김기역");
+		cri.setType("W");
 		List<PostVO> list = mapper.getListWithPaging(cri);
 		list.forEach(post -> log.info(post));
 	}
