@@ -26,5 +26,8 @@
 		select * from rsc_booking where emp_id = #{emp_id}
 	</select>
 	
+<!-- 	<delete id="deleteBooking" parameterType="int">
+		delete from rsc_booking where book_id = #{book_id}
+	</delete> -->
 	
 </mapper>

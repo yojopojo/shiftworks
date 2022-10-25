@@ -60,12 +60,21 @@ public class BookingMapperTests {
 //		log.info(list);
 //	}
 	
-	@Test
-	public void testGetMyList() {
-		log.info("getMyList by mapper.......................");
-		List<BookingVO> myList = mapper.getMyList("IMP3056");
-		log.info(myList);
-	}
+//	@Test
+//	public void testGetMyList() {
+//		log.info("getMyList by mapper.......................");
+//		List<BookingVO> myList = mapper.getMyList("IMP3056");
+//		log.info(myList);
+//	}
+	
+//	@Test
+//	public void testDeleteBooking() {
+//		log.info("deleteBooking by mapper...................");
+//		int re = mapper.deleteBooking(7);
+//		log.info(re);
+//	}
+	
+	
 	
 	
 	
