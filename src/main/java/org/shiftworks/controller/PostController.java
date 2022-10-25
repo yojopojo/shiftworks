@@ -1,5 +1,6 @@
 package org.shiftworks.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,11 +43,9 @@ public class PostController {
 	}
 	
 	//register form에서 받아온 값 db에 넣기
-	@PostMapping(value = "/new",
-				consumes = "application/json",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
+	@PostMapping(value = "/new")
 	public ResponseEntity<String> register(@RequestBody PostVO vo){
-		
+		log.info("controller..............................");
 		int insertCount = service.insertPost(vo);
 		log.info("insertCount: " + insertCount);
 		
@@ -55,19 +55,35 @@ public class PostController {
 	}
 	
 	
-	//db에서 PostVO list 받아오기
-	@GetMapping(value = "/pages/{type}/{keyword}/{pageNum}")
-	public ResponseEntity<List<PostVO>> getList(
-														@PathVariable("pageNum") int pageNum,
-														@PathVariable("type") String type,
-														@PathVariable("keyword")String keyword){
+	//list.jsp 이동
+	@GetMapping(value = "/pages/{pageNum}")
+	public  ModelAndView getList(@PathVariable("pageNum") int page){
 		
-		Criteria cri = new Criteria(pageNum, 10);
-		cri.setType(type);
-		cri.setKeyword(keyword);
+		Criteria cri = new Criteria(page,10);
 		
-		return new ResponseEntity<List<PostVO>>(service.getList(cri) ,HttpStatus.OK);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/board/list");
+		mav.addObject("list",service.getList(cri));
+		
+		return mav;
 	}
+	
+	
+	//db에서 PostVO list 받아오기
+//	@GetMapping(value = "/pages/{pageNum}/{type}/{keyword}")
+//	public  ModelAndView getList(
+//								@PathVariable("pageNum")int page,
+//								@PathVariable("type") String type,
+//								@PathVariable("keyword") String keyword){
+//		
+//		Criteria cri = new Criteria(page,10);
+//		
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("/board/list");
+//		
+//		mav.addObject("list",service.getList(cri));
+//		return mav;
+//	}
 	
 	
 	//db에서 특정 PostVO 받아오기 

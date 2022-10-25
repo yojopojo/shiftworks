@@ -18,7 +18,7 @@
 	
 	
 	
-	<select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
+	<!-- <select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
 		<![CDATA[
 			select post_id, b_id, post_name, post_content,
 				post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, name
@@ -31,7 +31,7 @@
 				where
 		]]>
 			
-		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		 <trim prefix="(" suffix=") AND" prefixOverrides="OR">
 			<foreach item='type' collection="typeArr" >
 				<trim prefix="OR">
 					<choose>
@@ -44,7 +44,28 @@
 					</choose>
 				</trim>
 			</foreach>
-	</trim>
+	</trim> 
+				
+		<![CDATA[		
+				rownum <=#{pageNum}*#{amount}
+				)
+			where rn >(#{pageNum}-1)*#{amount}
+		]]>
+		
+	</select> -->
+	
+	<select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
+		<![CDATA[
+			select post_id, b_id, post_name, post_content,emp_id,dept_id,
+				post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
+			from
+				( select /*+INDEX_DESC(post post_pk) */
+				  rownum rn, post_id, b_id,  post_name, post_content, emp_id,dept_id,
+				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
+				from post 
+				where
+		]]>
+			
 				
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}

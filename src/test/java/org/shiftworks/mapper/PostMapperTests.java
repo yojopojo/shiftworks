@@ -69,14 +69,14 @@ public class PostMapperTests {
 //		log.info(mapper.getPost(target));
 //	}
 	
-	@Test
-	public void testGetListPaging() {
-		Criteria cri = new Criteria();
-		cri.setKeyword("김기역");
-		cri.setType("W");
-		List<PostVO> list = mapper.getListWithPaging(cri);
-		list.forEach(post -> log.info(post));
-	}
+//	@Test
+//	public void testGetListPaging() {
+//		Criteria cri = new Criteria();
+//		cri.setKeyword("김기역");
+//		cri.setType("W");
+//		List<PostVO> list = mapper.getListWithPaging(cri);
+//		list.forEach(post -> log.info(post));
+//	}
 
 
 }
