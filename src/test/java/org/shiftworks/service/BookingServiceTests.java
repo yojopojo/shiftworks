@@ -1,5 +1,7 @@
 package org.shiftworks.service;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.BookingVO;
@@ -46,6 +48,7 @@ public class BookingServiceTests {
 	@Test
 	public void getList() {
 		log.info("getList Testing........................");
-		
+		List<BookingVO> list = service.getList();
+		log.info(list);
 	}
 }

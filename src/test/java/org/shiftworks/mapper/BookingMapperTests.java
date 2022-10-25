@@ -47,18 +47,18 @@ public class BookingMapperTests {
 //		log.info(re);
 //	}
 	
-	@Test
-	public void testGetBooking() {
-		log.info("get one booking by mapper.................");
-		mapper.getBooking(3);
-	}
-	
 //	@Test
-//	public void testGetList() {
-//		log.info("getList by mapper......................");
-//		List<BookingVO> list = mapper.getList();
-//		log.info(list);
+//	public void testGetBooking() {
+//		log.info("get one booking by mapper.................");
+//		mapper.getBooking(3);
 //	}
+	
+	@Test
+	public void testGetList() {
+		log.info("getList by mapper......................");
+		List<BookingVO> list = mapper.getList();
+		log.info(list);
+	}
 	
 	
 	

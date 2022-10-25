@@ -18,9 +18,9 @@
 		select * from rsc_booking where book_id = #{book_id}
 	</select>
 	
-<!-- 	<select id="getList" resultType="org.shiftworks.domain.BookingVO">
+	<select id="getList" resultType="org.shiftworks.domain.BookingVO">
 		select * from rsc_booking
-	</select> -->
+	</select>
 	
 	
 </mapper>

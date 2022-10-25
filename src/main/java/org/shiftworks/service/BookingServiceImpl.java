@@ -34,13 +34,13 @@ public class BookingServiceImpl implements BookingService {
 		return vo;
 	}
 
-//	@Override
-//	public List<BookingVO> getList() {
-//		log.info("getList Service.....................");
-//		List<BookingVO> list = mapper.getList();
-//		log.info(list);
-//		
-//		return list;
-//	}
+	@Override
+	public List<BookingVO> getList() {
+		log.info("getList Service.....................");
+		List<BookingVO> list = mapper.getList();
+		log.info(list);
+		
+		return list;
+	}
 
 }

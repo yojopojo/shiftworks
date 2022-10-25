@@ -1,5 +1,7 @@
 package org.shiftworks.controller;
 
+import java.util.List;
+
 import org.shiftworks.domain.BookingVO;
 import org.shiftworks.service.BookingService;
 import org.springframework.http.HttpStatus;
@@ -48,6 +50,13 @@ public class BookingController {
 		BookingVO vo = service.getBooking(book_id);
 		
 		return vo;
+	}
+	
+	@GetMapping("/list")
+	public List<BookingVO> getList() {
+		List<BookingVO> list = service.getList();
+		
+		return list;
 	}
 
 

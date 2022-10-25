@@ -14,6 +14,6 @@ public interface BookingMapper {
 	
 	public int insertBooking(BookingVO vo);
 	public BookingVO getBooking(int rsc_id);
-//	public List<BookingVO> getList();
+	public List<BookingVO> getList();
 	
 }
