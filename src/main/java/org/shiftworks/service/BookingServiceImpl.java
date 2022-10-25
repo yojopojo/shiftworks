@@ -43,4 +43,13 @@ public class BookingServiceImpl implements BookingService {
 		return list;
 	}
 
+	@Override
+	public List<BookingVO> getMyList(String emp_id) {
+		log.info("getMyList Service.................");
+		List<BookingVO> myList = mapper.getMyList(emp_id);
+		log.info(myList);
+		
+		return myList;
+	}
+
 }

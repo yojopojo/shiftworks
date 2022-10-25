@@ -22,5 +22,9 @@
 		select * from rsc_booking
 	</select>
 	
+	<select id="getMyList" parameterType="String" resultType="org.shiftworks.domain.BookingVO">
+		select * from rsc_booking where emp_id = #{emp_id}
+	</select>
+	
 	
 </mapper>

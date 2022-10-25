@@ -58,6 +58,16 @@ public class BookingController {
 		
 		return list;
 	}
+	
+	@GetMapping("/list/{emp_id}")
+	public List<BookingVO> getMyList(@PathVariable("emp_id") String emp_id){
+		log.info("getMyList controller....................");
+		
+		List<BookingVO> myList = service.getMyList(emp_id);
+		log.info(myList);
+		
+		return myList;
+	}
 
 
 

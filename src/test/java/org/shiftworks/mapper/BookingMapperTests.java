@@ -34,14 +34,14 @@ public class BookingMapperTests {
 //		log.info("insert Testing......................................");
 //		
 //		BookingVO vo = new BookingVO();
-//		vo.setBook_id(5);
-//		vo.setRsc_id("CFR305");
+//		vo.setBook_id(8);
+//		vo.setRsc_id("CFR307");
 //		vo.setDept_id("IMP");
 //		vo.setEmp_id("IMP3056");
-//		vo.setBook_date("2022-10-25");
+//		vo.setBook_date("2022-10-27");
 //		vo.setBook_begin(10);
-//		vo.setBook_title("reserv mapper test");
-//		vo.setBook_content("something something blah");
+//		vo.setBook_title("reserv mapper test2");
+//		vo.setBook_content("123something something blah");
 //		int re = mapper.insertBooking(vo);
 //		log.info(vo);
 //		log.info(re);
@@ -53,12 +53,37 @@ public class BookingMapperTests {
 //		mapper.getBooking(3);
 //	}
 	
+//	@Test
+//	public void testGetList() {
+//		log.info("getList by mapper......................");
+//		List<BookingVO> list = mapper.getList();
+//		log.info(list);
+//	}
+	
 	@Test
-	public void testGetList() {
-		log.info("getList by mapper......................");
-		List<BookingVO> list = mapper.getList();
-		log.info(list);
+	public void testGetMyList() {
+		log.info("getMyList by mapper.......................");
+		List<BookingVO> myList = mapper.getMyList("IMP3056");
+		log.info(myList);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

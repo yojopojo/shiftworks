@@ -45,10 +45,39 @@ public class BookingServiceTests {
 //		log.info(vo);
 //	}
 	
+//	@Test
+//	public void getList() {
+//		log.info("getList Testing........................");
+//		List<BookingVO> list = service.getList();
+//		log.info(list);
+//	}
+	
 	@Test
-	public void getList() {
-		log.info("getList Testing........................");
-		List<BookingVO> list = service.getList();
-		log.info(list);
+	public void getMyList() {
+		log.info("getMyList Service Testing................");
+		List<BookingVO> myList = service.getMyList("IMP3056");
+		log.info(myList);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
