@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>/sample/all page</h1>
+	<h1>/Login/main test page</h1>
 	
 	<sec:authorize access="isAnonymous()">
   		<a href="/customLogin">로그인</a>

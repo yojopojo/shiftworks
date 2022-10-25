@@ -2,6 +2,9 @@ package org.shiftworks.domain;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class EmployeeVO {
 	
 	private String emp_id;
