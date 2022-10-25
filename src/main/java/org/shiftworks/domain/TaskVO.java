@@ -12,7 +12,7 @@ public class TaskVO {
 	private String dept_id;
 	private String task_title;
 	private String task_content;
-	private String task_writer;
+	private String emp_id;
 	private Date start_date;
 	private Date end_date;
 	private String category;

@@ -16,9 +16,12 @@ public class TaskCriteria {
 		pageNum = 1;
 	}
 
-	public TaskCriteria(int pageNum) {
+
+	public TaskCriteria(int pageNum, String type, String keyword) {
 		super();
 		this.pageNum = pageNum;
+		this.type = type;
+		this.keyword = keyword;
 	}
 	
 	public String[] getTypeArr() {
@@ -26,5 +29,6 @@ public class TaskCriteria {
 		return type == null ? new String[] {}: type.split("");
 		
 	}
+
 	
 }

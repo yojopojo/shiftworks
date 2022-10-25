@@ -7,8 +7,8 @@
 	<!-- 업무 등록 -->
 	<insert id="insertTask">
 		INSERT INTO task
-			VALUES(task_seq.nextval, #{dept_id}, #{task_title}, TO_CLOB(#{task_content}), #{task_writer},
-					sysdate, sysdate, #{category}, 'Y', 'Y', sysdate)
+			VALUES(task_seq.nextval, #{dept_id}, #{task_title}, TO_CLOB(#{task_content}), #{emp_id},
+					#{start_date}, #{end_date}, #{category}, #{t_private}, #{notification}, sysdate)
 	</insert>
 	
 	<!-- 업무 수정 -->
@@ -17,10 +17,10 @@
 		UPDATE task SET dept_id = #{dept_id},
 						task_title = #{task_title},
 						task_content = TO_CLOB(#{task_content}),
-						start_date = sysdate,
-						end_date = sysdate,
+						start_date = #{start_date},
+						end_date = #{end_date},
 						category = #{category},
-						t_private = 'N'
+						t_private = #{t_private}
 			WHERE task_id = ${task_id}
 	
 	</update>
@@ -47,7 +47,7 @@
 							task_content LIKE '%'||#{keyword}||'%'
 						</when>
 						<when test="type == 'W'.toString()">
-							task_writer LIKE '%'||#{keyword}||'%'
+							name LIKE '%'||#{keyword}||'%'
 						</when>
 					</choose>
 				</trim>
@@ -60,12 +60,13 @@
 	<select id="getListWithPaging" resultType="org.shiftworks.domain.TaskVO">
 	
 		<![CDATA[
-		SELECT task_id, task_title, task_content, task_writer,
+		SELECT task_id, task_title, task_content, name,
 				start_date, end_date, category, t_private, date_created
 			FROM (SELECT /*+INDEX_DESC(task task_pk) */
-				ROWNUM rn, task_id, task_title, task_content, task_writer,
+				ROWNUM rn, task_id, task_title, task_content, name,
 	        		start_date, end_date, category, t_private, date_created
-	        	FROM task
+	        	FROM task t JOIN employee e
+	        	ON t.emp_id = e.emp_id
 	        	WHERE
 		]]>
 
@@ -73,6 +74,7 @@
 	      
 		<![CDATA[    
 				ROWNUM <= #{pageNum} * #{amount})
+			
 			WHERE rn > (#{pageNum} -1) * #{amount}   
 		]]>
 		
@@ -82,7 +84,8 @@
 	<!-- 총 업무(게시글) 개수 -->
 	<select id="getTotalTask" resultType="int">
 	
-		SELECT COUNT(*) FROM task
+		SELECT COUNT(*) FROM task t JOIN employee e
+			ON t.emp_id = e.emp_id
 			WHERE
 			<include refid="criteria"/>
 			task_id > 0

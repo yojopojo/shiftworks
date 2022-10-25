@@ -30,7 +30,7 @@ public class TaskMapperTests {
 //		
 //		task.setDept_id("dept");
 //		task.setTask_title("단위테스트");
-//		task.setTask_writer("test");
+//		task.setEmp_id("U2946709");
 //		task.setTask_content("Task 단위테스트입니다.");
 //		task.setCategory("기타");
 //
@@ -76,19 +76,19 @@ public class TaskMapperTests {
 //	}
 	
 	// 검색 조건을 적용한 페이징 처리
-//	@Test
-//	public void testGetListWithPaging() {
-//		TaskCriteria cri = new TaskCriteria(2);
-//		cri.setKeyword("단위");
-//		cri.setType("TCW");
-//		
-//		mapper.getListWithPaging(cri);
-//	}
+	@Test
+	public void testGetListWithPaging() {
+		TaskCriteria cri = new TaskCriteria();
+		
+		cri.setPageNum(1);
+		
+		mapper.getListWithPaging(cri);
+	}
 	
 	// 업무 개별 조회
-	@Test
-	public void testGetTask() {
-		mapper.getTask(9);
-	}
+//	@Test
+//	public void testGetTask() {
+//		mapper.getTask(9);
+//	}
 
 }

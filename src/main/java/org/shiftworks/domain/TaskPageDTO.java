@@ -1,5 +1,7 @@
 package org.shiftworks.domain;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -8,6 +10,8 @@ import lombok.ToString;
 public class TaskPageDTO {
 
 	private TaskCriteria cri;
+	
+	private List<TaskVO> list;
 	
 	private int startPage, endPage, totalTask;
 	private boolean prev, next;

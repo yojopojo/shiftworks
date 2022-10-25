@@ -20,12 +20,14 @@ public class TaskServiceImpl implements TaskService {
 	private TaskMapper taskMapper;
 
 	@Override
-	public List<TaskVO> getList(TaskPageDTO taskPageDTO) {
+	public TaskPageDTO getList(TaskCriteria cri) {
 	
 		log.info("service: getlist..........");
 		
-		return taskMapper.getListWithPaging(taskPageDTO.getCri());
+		return new TaskPageDTO(cri, taskMapper.getTotalTask(cri));
 	}
+	
+
 
 	@Override
 	public TaskVO getTask(Integer task_id) {
@@ -58,5 +60,7 @@ public class TaskServiceImpl implements TaskService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 
 }
