@@ -17,8 +17,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<context:property-placeholder
-		location="classpath:application.properties" />
+	<context:property-placeholder location="classpath:application.properties"/>
 
 	<!-- 보안을 위해 DB 관련 정보 properties 이용 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
