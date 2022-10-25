@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.MessageMapper">
+
+	<insert id="insertMessage" parameterType="org.shiftworks.domain.MessageVO">
+		INSERT INTO Message(msg_id, notice, important, content, time, sender) 
+		VALUES(message_seq.nextval, #{notice}, #{important}, #{content}, #{time}, #{sender})
+	</insert>
+	
+	<select id="getList" resultType="org.shiftworks.domain.MessageVO">
+		SELECT * FROM message
+	</select>
+	
+	<select id="getMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="int">
+		SELECT * FROM message WHERE msg_id = #{msg_id} 
+	</select>
+	
+	<select id="getNoticeMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT * FROM message WHERE notice = 'Y' and sender = #{sender}
+	</select>
+	
+	<select id="getImportantMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT * FROM message WHERE important = 'Y' and sender = #{sender}
+	</select>
+
+</mapper>
