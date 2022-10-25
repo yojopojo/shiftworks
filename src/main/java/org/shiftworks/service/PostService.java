@@ -2,13 +2,14 @@ package org.shiftworks.service;
 
 import java.util.List;
 
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 
 public interface PostService {
 	
 	public int insertPost(PostVO postvo);
 	
-	public List<PostVO> getList();
+	public List<PostVO> getList(Criteria cri);
 	
 	public int updatePost(PostVO postvo);
 	
