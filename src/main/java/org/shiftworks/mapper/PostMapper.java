@@ -2,13 +2,14 @@ package org.shiftworks.mapper;
 
 import java.util.List;
 
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 
 public interface PostMapper {
 	
 	public int insertPost(PostVO postvo);
 	
-	public List<PostVO> getListPostVO();
+	public List<PostVO> getListWithPaging(Criteria cri);
 	
 	public int updatePost(PostVO postvo);
 	

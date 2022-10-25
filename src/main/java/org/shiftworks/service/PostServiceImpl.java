@@ -2,6 +2,7 @@ package org.shiftworks.service;
 
 import java.util.List;
 
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.mapper.PostMapper;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostVO> getList() {
-		return mapper.getListPostVO();
+	public List<PostVO> getList(Criteria cri) {
+		return mapper.getListWithPaging(cri);
 	}
 
 	@Override

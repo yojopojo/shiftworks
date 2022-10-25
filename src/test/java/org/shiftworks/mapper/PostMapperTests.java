@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,17 +44,17 @@ public class PostMapperTests {
 //		
 //	}
 	
-	@Test
-	public void testUpdate() {
-		PostVO postvo = new PostVO();
-		
-		postvo.setPost_id(1);
-		postvo.setPost_name("수정");
-		postvo.setPost_content("수정되나요?");
-		postvo.setPost_receivedept("12");
-		
-		mapper.updatePost(postvo);
-	}
+//	@Test
+//	public void testUpdate() {
+//		PostVO postvo = new PostVO();
+//		
+//		postvo.setPost_id(1);
+//		postvo.setPost_name("수정");
+//		postvo.setPost_content("수정되나요?");
+//		postvo.setPost_receivedept("12");
+//		
+//		mapper.updatePost(postvo);
+//	}
 	
 //	@Test
 //	public void testDelete() {
@@ -67,6 +68,13 @@ public class PostMapperTests {
 //		int target =2;
 //		log.info(mapper.getPost(target));
 //	}
+	
+	@Test
+	public void testGetListPaging() {
+		Criteria cri = new Criteria();
+		List<PostVO> list = mapper.getListWithPaging(cri);
+		list.forEach(post -> log.info(post));
+	}
 
 
 }

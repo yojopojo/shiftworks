@@ -12,8 +12,25 @@
 		#{post_content},0, sysdate, sysdate, 'N', #{post_receivedept})
 	</insert> 
 	
-	<select id="getListPostVO" resultType="org.shiftworks.domain.PostVO">
+	<!-- <select id="getListPostVO" resultType="org.shiftworks.domain.PostVO">
 		select * from post order by post_id desc
+	</select> -->
+	
+	<select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
+		<![CDATA[
+			select 
+				*
+			from
+				(
+				select /*+INDEX_DESC(post post_pk) */
+					rownum rn, post_id, b_id, emp_id, dept_id, post_name, post_content,
+					post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
+				from post
+				where rownum <=#{pageNum}*#{amount}
+				)
+			where rn >(#{pageNum}-1)*#{amount}
+		]]>
+		
 	</select>
 	
 	<update id="updatePost" parameterType="org.shiftworks.domain.PostVO">

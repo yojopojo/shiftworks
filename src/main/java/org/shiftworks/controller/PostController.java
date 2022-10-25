@@ -3,6 +3,7 @@ package org.shiftworks.controller;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -52,10 +53,12 @@ public class PostController {
 	
 	
 	//db에서 PostVO list 받아오기
-	@GetMapping(value = "/get")
-	public ResponseEntity<List<PostVO>>getList(){
+	@GetMapping(value = "/pages/{pageNum}")
+	public ResponseEntity<List<PostVO>>getList(
+														@PathVariable("pageNum") int pageNum){
 		
-		return new ResponseEntity<List<PostVO>>(service.getList(),HttpStatus.OK);
+		Criteria cri = new Criteria(pageNum, 10);
+		return new ResponseEntity<List<PostVO>>(service.getList(cri) ,HttpStatus.OK);
 	}
 	
 	
