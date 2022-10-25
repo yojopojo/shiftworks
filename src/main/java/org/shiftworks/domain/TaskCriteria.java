@@ -9,19 +9,19 @@ public class TaskCriteria {
 
 	private int amount = 10;
 	private int pageNum;
-	private String type;
-	private String keyword;
+	private String type, keyword, selectedCategory, selectedDept;
 
 	public TaskCriteria() {
 		pageNum = 1;
 	}
 
-
-	public TaskCriteria(int pageNum, String type, String keyword) {
+	public TaskCriteria(int pageNum, String type, String keyword, String selectedCategory, String selectedDept) {
 		super();
 		this.pageNum = pageNum;
 		this.type = type;
 		this.keyword = keyword;
+		this.selectedCategory = selectedCategory;
+		this.selectedDept = selectedDept;
 	}
 	
 	public String[] getTypeArr() {

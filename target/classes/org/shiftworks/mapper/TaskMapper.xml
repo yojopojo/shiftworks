@@ -55,27 +55,47 @@
 		</trim>
 	</sql>
 	
+ 	<!-- 카테고리 설정을 위한 쿼리 -->
+	<sql id="selectedCategory">
+		<if test="selectedCategory != null">
+			category LIKE '%'||#{selectedCategory}||'%' AND
+		</if>
+	</sql>
+	
+	<!-- 부서 설정을 위한 쿼리 -->
+	<sql id="selectedDept">
+		<if test="selectedDept != null">
+			t.dept_id LIKE '%'||#{selectedDept}||'%' AND
+		</if>
+	</sql>
 	
 	<!-- 검색 기능 포함 페이징처리 -->
 	<select id="getListWithPaging" resultType="org.shiftworks.domain.TaskVO">
 	
 		<![CDATA[
-		SELECT task_id, task_title, task_content, name,
+		SELECT task_id, dept_id, task_title, task_content, emp_id, name,
 				start_date, end_date, category, t_private, date_created
 			FROM (SELECT /*+INDEX_DESC(task task_pk) */
-				ROWNUM rn, task_id, task_title, task_content, name,
-	        		start_date, end_date, category, t_private, date_created
+				ROWNUM rn, task_id, t.dept_id as dept_id, task_title, DBMS_LOB.SUBSTR(task_content, 4000, 1) as task_content,
+				t.emp_id as emp_id, name, start_date, end_date, category, t_private, date_created
 	        	FROM task t JOIN employee e
 	        	ON t.emp_id = e.emp_id
 	        	WHERE
 		]]>
 
-		<include refid="criteria"/> 
+		<include refid="selectedCategory"/> 
+		<include refid="selectedDept"/> 
 	      
 		<![CDATA[    
 				ROWNUM <= #{pageNum} * #{amount})
 			
-			WHERE rn > (#{pageNum} -1) * #{amount}   
+			WHERE
+		]]>
+		
+		<include refid="criteria"/>
+			
+		<![CDATA[
+			rn > (#{pageNum} -1) * #{amount}   
 		]]>
 		
 	</select>
