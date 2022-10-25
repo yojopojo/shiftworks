@@ -7,6 +7,7 @@ import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.service.PostService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,9 @@ public class PostController {
 	}
 	
 	//register form에서 받아온 값 db에 넣기
-	@PostMapping(value = "/new")
+	@PostMapping(value = "/new",
+				consumes = "application/json",
+				produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> register(@RequestBody PostVO vo){
 		
 		int insertCount = service.insertPost(vo);
