@@ -1,7 +1,9 @@
 package org.shiftworks.domain;
 
+import lombok.Data;
 import lombok.ToString;
 
+@Data
 @ToString
 public class TaskPageDTO {
 
