@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     	
+<<<<<<< HEAD
     <wb-module deploy-name="shiftworks">
+=======
+    <wb-module deploy-name="controller-1.0.0-BUILD-SNAPSHOT">
+>>>>>>> df452d1226a78710f91233ac4642def1931afbfd
                 
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         		
@@ -9,7 +13,12 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         		
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<<<<<<< HEAD
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
+=======
+
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources">
+>>>>>>> df452d1226a78710f91233ac4642def1931afbfd
         		
         <property name="java-output-path" value="target/classes"/>
                 
