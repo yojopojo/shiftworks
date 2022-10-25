@@ -25,4 +25,12 @@
 		SELECT * FROM message WHERE important = 'Y' and sender = #{sender}
 	</select>
 
+	<select id="getSendMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT * FROM message WHERE sender = #{sender}
+	</select>
+	
+	<select id="getReceiveMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT * FROM message WHERE sender = #{sender}
+	</select>
+	
 </mapper>

@@ -1,10 +1,7 @@
 package org.shiftworks.messenger;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.shiftworks.domain.MessageVO;
 import org.shiftworks.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
