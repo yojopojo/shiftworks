@@ -1,5 +1,8 @@
 package org.shiftworks.domain;
 
+import lombok.Data;
+
+@Data
 public class BookingVO {
 	private int book_id;
 	private String rsc_id;

@@ -52,14 +52,19 @@ public class BookingServiceTests {
 //		log.info(list);
 //	}
 	
+//	@Test
+//	public void getMyList() {
+//		log.info("getMyList Service Testing................");
+//		List<BookingVO> myList = service.getMyList("IMP3056");
+//		log.info(myList);
+//	}
+	
 	@Test
-	public void getMyList() {
-		log.info("getMyList Service Testing................");
-		List<BookingVO> myList = service.getMyList("IMP3056");
-		log.info(myList);
+	public void deleteBooking() {
+		log.info("deleteBooking Service Testing..............");
+		int re = service.deleteBooking(4);
+		log.info(re);
 	}
-	
-	
 	
 	
 	

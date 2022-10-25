@@ -16,6 +16,6 @@ public interface BookingMapper {
 	public BookingVO getBooking(int rsc_id);
 	public List<BookingVO> getList();
 	public List<BookingVO> getMyList(String emp_id);
-//	public int deleteBooking(int book_id);
+	public int deleteBooking(int book_id);
 	
 }

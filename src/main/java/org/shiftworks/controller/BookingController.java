@@ -68,6 +68,16 @@ public class BookingController {
 		
 		return myList;
 	}
+	
+	@PostMapping("/{book_id}")
+	public ResponseEntity<String> deleteBooking(@PathVariable("book_id") int book_id) {
+		log.info("deleteBooking controller..................");
+		int re = service.deleteBooking(6);
+		log.info(re);
+		
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
 
 
 

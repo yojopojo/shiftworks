@@ -52,4 +52,12 @@ public class BookingServiceImpl implements BookingService {
 		return myList;
 	}
 
+	@Override
+	public int deleteBooking(int book_id) {
+		log.info("deleteBooking Service..............");
+		int re = mapper.deleteBooking(book_id);
+		
+		return re;
+	}
+
 }
