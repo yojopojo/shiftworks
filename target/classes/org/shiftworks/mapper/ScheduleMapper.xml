@@ -5,6 +5,19 @@
 <mapper namespace="org.shiftworks.mapper.ScheduleMapper">
 
 	<insert id="insertSchedule">
+		INSERT INTO schedule
+			VALUES(schedule_seq.nextval, #{dept_id}, #{book_id}, #{sch_title}, #{sch_content},
+					#{start_date}, #{end_date}, #{group}, #{sch_writer})
+	</insert>
+	
+	<insert id="insertPartipant">
+		
+		<foreach collection="participant" item="p">
+			INSERT INTO sch_participant
+				VALUES(#{p}, #{dept_id}, #{sch_id}, #
+			
+			
+		</foreach>
 	
 	</insert>
 
