@@ -24,8 +24,8 @@
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
-				<security:user name="emp_id" password="shiftworks113" authorities="user"/>
-				<security:user name="emp_id" password="shiftworks113" authorities="user, admin"/>
+				<security:user name="user" password="shiftworks113" authorities="ROLE_USER"/>
+				<security:user name="admin" password="shiftworks113" authorities="ROLE_USER, ROLE_ADMIN"/>
 			
 			
 			</security:user-service>
