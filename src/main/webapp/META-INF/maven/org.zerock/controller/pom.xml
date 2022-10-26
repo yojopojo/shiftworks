@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.shiftworks</groupId>
+	<groupId>org.zerock</groupId>
 	<artifactId>controller</artifactId>
 	<name>shiftworks</name>
 	<packaging>war</packaging>
@@ -256,33 +256,7 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>5.0.7.RELEASE</version>
 		</dependency>
-<<<<<<< HEAD:target/m2e-wtp/web-resources/META-INF/maven/org.shiftworks/controller/pom.xml
 
-		<!-- 소켓 통신을 위한 라이브러리 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<version>4.2.4.RELEASE</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.8.9</version>
-		</dependency>
-
-=======
-
->>>>>>> 950d4db8c9968bc8516e1bf46243448bb36653a2:src/main/webapp/META-INF/maven/org.shiftworks/controller/pom.xml
 	</dependencies>
 	<build>
 		<plugins>
