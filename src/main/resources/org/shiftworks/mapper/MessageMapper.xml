@@ -24,7 +24,11 @@
 	
 	<!-- 공지 메시지 검색-->
 	<select id="getNoticeMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT * FROM message WHERE notice = 'Y' and sender = #{sender}
+		SELECT m.msg_id, m.notice, m.important, m.content, m.sender
+			FROM message m, receiver r 
+			WHERE notice = 'Y' 
+				and m.sender = #{sender} 
+				and r.emp_id = #{sender}
 	</select>
 	
 	<!-- 중요 메시지 검색 -->

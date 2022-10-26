@@ -19,25 +19,25 @@ public class MessageTests {
 	@Autowired
 	MessageMapper mapper;
 	
-	@Test
-	public void getReceiveMessage() {
-		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
-	}
-	
-	@Test
-	public void getSendMessage() {
-		mapper.getSendMessage("U2946709").forEach(message ->log.info(message));
-	}
-	
+//	@Test
+//	public void getReceiveMessage() {
+//		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
+//	}
+//	
+//	@Test
+//	public void getSendMessage() {
+//		mapper.getSendMessage("U2946709").forEach(message ->log.info(message));
+//	}
+//	
 //	@Test
 //	public void getImportantMessage() {
 //		mapper.getImportantMessage("U2946709").forEach(message->log.info(message));
 //	}
 	
-//	@Test
-//	public void getNoticeMessage() {
-//		mapper.getNoticeMessage("U2946709").forEach(message->log.info(message));
-//	}
+	@Test
+	public void getNoticeMessage() {
+		mapper.getNoticeMessage("U2946709").forEach(message->log.info(message));
+	}
 	
 //	@Test
 //	public void getMessage() {
