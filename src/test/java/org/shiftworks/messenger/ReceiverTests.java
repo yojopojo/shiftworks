@@ -27,7 +27,7 @@ public class ReceiverTests {
 //	@Test
 //	public void testInsert() {
 //		
-//		ReceiverVO receiver = new ReceiverVO(1, "S8891577", "infosecu8");
+//		ReceiverVO receiver = new ReceiverVO(5, "S8891577", "infosecu8");
 //		log.info(mapper.insertReceiver(receiver));
 //	}
 }

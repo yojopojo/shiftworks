@@ -4,46 +4,103 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.MessageMapper">
 
+	<!-- 연관 관계 MessageVO - ReceiverVO - MessengerFileVO -->
+	<resultMap type="org.shiftworks.domain.ReceiverVO"
+		id="receiverMap">
+		<id column="msg_id" property="msg_id" />
+		<id column="emp_id" property="emp_id" />
+		<id column="dept_id" property="dept_id" />
+		<result column="checking" property="checking" />
+
+		<!-- 1 : 다 관계의 경우 데이터 매핑시켜준다. association => 1 : 1 관계 collection => 1 : 
+			다 관계 (한명의 유저가 작성한 글 목록) 일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용 -->
+
+
+		<id column="msg_id" property="msg_id" />
+		<result column="notice" property="msg_id" />
+		<result column="important" property="notice" />
+		<result column="content" property="content" />
+		<result column="time" property="time" />
+		<result column="emp_id" property="emp_id" />
+		<collection property="receiver" resultMap="receiverMap"/>
+
+	</resultMap>
+
 	<!-- Message 관련 기능 -->
-	
 	<!-- 메시지 저장 -->
-	<insert id="insertMessage" parameterType="org.shiftworks.domain.MessageVO">
-		INSERT INTO Message(msg_id, notice, important, content, time, sender) 
-		VALUES(message_seq.nextval, #{notice}, #{important}, #{content}, #{time}, #{sender})
+	<insert id="insertMessage"
+		parameterType="org.shiftworks.domain.MessageVO">
+		INSERT INTO Message(msg_id, notice, important, content,
+		time, emp_id)
+		VALUES(message_seq.nextval, #{notice}, #{important}, #{content}, #{time}, #{emp_id})
 	</insert>
-	
+
 	<!-- 모든 메시지 검색 -->
-	<select id="getList" resultType="org.shiftworks.domain.MessageVO">
+	<select id="getList"
+		resultType="org.shiftworks.domain.MessageVO">
 		SELECT * FROM message
 	</select>
-	
+
 	<!-- 메시지 번호를 통해 상세 메시지 검색 -->
-	<select id="getMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="int">
-		SELECT * FROM message WHERE msg_id = #{msg_id} 
-	</select>
-	
-	<!-- 공지 메시지 검색-->
-	<select id="getNoticeMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT m.msg_id, m.notice, m.important, m.content, m.sender
-			FROM message m, receiver r 
-			WHERE notice = 'Y' 
-				and m.sender = #{sender} 
-				and r.emp_id = #{sender}
-	</select>
-	
-	<!-- 중요 메시지 검색 -->
-	<select id="getImportantMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT * FROM message WHERE important = 'Y' and sender = #{sender}
+	<select id="getMessage"
+		resultType="org.shiftworks.domain.MessageVO" parameterType="int">
+		SELECT *
+		FROM message WHERE msg_id = #{msg_id}
 	</select>
 
-	<!-- 보낸 메시지 검색 -->
-	<select id="getSendMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT * FROM message WHERE sender = #{sender}
+	<!-- 공지로 보낸 메시지 검색 -->
+	<select id="getNoticeSendMessage"
+		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT *
+		FROM message m, receiver r WHERE notice = 'Y' AND m.emp_id = #{emp_id}
 	</select>
-	
+
+	<!-- 중요로 보낸 메시지 검색 -->
+	<select id="getImportantReceiverMessage"
+		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT *
+		FROM message m, receiver r WHERE m.important = 'Y' and r.emp_id =
+		#{emp_id}
+	</select>
+
+	<!-- 공지로 받은 메시지 검색 -->
+	<select id="getNoticeReceiverMessage"
+		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT *
+		FROM message m, receiver r
+		WHERE m.msg_id = r.msg_id
+		AND notice = 'Y'
+		AND r.emp_id = #{emp_id}
+	</select>
+
+	<!-- 중요로 받은 메시지 검색 -->
+	<select id="getImportantSendMessage"
+		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT *
+		FROM message m, receiver r
+		WHERE m.msg_id = r.msg_id
+		AND important = 'Y'
+		AND r.emp_id = #{emp_id}
+	</select>
+
 	<!-- 받은 메시지 검색 -->
-	<select id="getReceiveMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT * FROM message WHERE sender = #{sender}
+	<select id="getReceiveMessage"
+		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT
+		m.msg_id, m.notice, m.important, m.time, m.emp_id, r.emp_id,
+		r.checking
+		FROM message m, receiver r
+		WHERE m.msg_id = r.msg_id and r.emp_id = #{emp_id}
 	</select>
-	
+
+	<!-- 받은 메시지 검색 -->
+	<select id="getSendMessage"
+		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
+		SELECT
+		m.msg_id, m.notice, m.important, m.time, m.emp_id, r.emp_id,
+		r.checking
+		FROM message m, receiver r
+		WHERE m.msg_id = r.msg_id and m.emp_id = #{emp_id}
+	</select>
+
 </mapper>
