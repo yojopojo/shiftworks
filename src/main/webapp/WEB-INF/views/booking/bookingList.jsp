@@ -26,7 +26,7 @@
 				<c:forEach items="${list }" var="reserv">
 					<tr>
 						<td><c:out value="${reserv.book_id }"></c:out></td>
-						<td><c:out value="${reserv.book_title }"></c:out></td>
+						<td><a href="#"><c:out value="${reserv.book_title }"></c:out></a></td>
 						<td><c:out value="${reserv.emp_id }"></c:out></td>
 						<td><c:out value="${reserv.book_date }"></c:out></td>
 					</tr>				

@@ -41,7 +41,7 @@ public class BookingController {
 		service.insertBooking(vo);
 		log.info(vo);
 		
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+		return new ResponseEntity<String>("success Reservation", HttpStatus.OK);
 	}
 	
 	@GetMapping("/{book_id}")

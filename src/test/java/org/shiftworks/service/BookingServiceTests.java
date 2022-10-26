@@ -24,14 +24,14 @@ public class BookingServiceTests {
 		log.info("insertBooking Testing..................");
 		
 		BookingVO vo = new BookingVO();
-		vo.setBook_id(100);
-		vo.setBook_title("예약 테스트_한글");
+		vo.setBook_id(4);
+		vo.setBook_title("Service Test-insert3");
 		vo.setBook_begin(9);
-		vo.setRsc_id("CFR305");
-		vo.setDept_id("IMP");
-		vo.setEmp_id("IMP3056");
-		vo.setBook_date("2022-10-29");
-		vo.setBook_content("한글_예약_테스트");
+		vo.setRsc_id("CFR505");
+		vo.setDept_id("SALES");
+		vo.setEmp_id("SALES3056");
+		//vo.setBook_date("2022/10/28");
+		vo.setBook_content("insertBooking Service Test");
 
 		service.insertBooking(vo);
 		log.info(vo);
