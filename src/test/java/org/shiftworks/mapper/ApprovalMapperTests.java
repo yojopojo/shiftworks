@@ -17,8 +17,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ApprovalMapperTests {
 	
-	// FIX ERROR CHECK
-	
 
 	@Autowired
 	private ApprovalMapper mapper;
