@@ -14,8 +14,7 @@
 		
 		<foreach collection="participant" item="p">
 			INSERT INTO sch_participant
-				VALUES(#{p}, #{dept_id}, #{sch_id}, #{notification})
-			
+				VALUES(#{p.emp_id}, #{p.dept_id}, #{p.sch_id}, #{p.notification})
 			
 		</foreach>
 	
