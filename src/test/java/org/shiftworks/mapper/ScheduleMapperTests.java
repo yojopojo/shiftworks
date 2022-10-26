@@ -105,10 +105,16 @@ public class ScheduleMapperTests {
 //	}
 	
 	// 메모 불러오기, 수정
+//	@Test
+//	public void testMemo() {
+//		mapper.updateMemo("S8945709", "안녕하세요?");
+//		mapper.getMemo("S8945709");
+//	}
+	
+	// 일정 참가자 리스트 불러오기
 	@Test
-	public void testMemo() {
-		mapper.updateMemo("S8945709", "안녕하세요?");
-		mapper.getMemo("S8945709");
+	public void testGetParticipant() {
+		mapper.getParticipant(5);
 	}
 	
 }

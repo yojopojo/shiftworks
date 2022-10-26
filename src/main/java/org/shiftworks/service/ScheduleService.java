@@ -13,9 +13,9 @@ public interface ScheduleService {
 	
 	boolean insertSchedule(ScheduleVO scheduleVO);
 	boolean updateSchedule(ScheduleVO scheduleVO);
-	boolean deleteSchedule(Integer sch_id);
+	boolean deleteSchedule(Integer sch_id, String emp_id);
 	
-	String getMemo();
-	boolean updateMemo();
+	String getMemo(String emp_id);
+	boolean updateMemo(String emp_id, String memo);
 	
 }
