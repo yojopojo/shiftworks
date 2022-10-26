@@ -7,6 +7,7 @@ import org.shiftworks.domain.ScheduleVO;
 import org.shiftworks.mapper.ScheduleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
 
@@ -32,6 +33,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	// 일정, 참가자 리스트 등록
 	@Override
+	@Transactional
 	public boolean insertSchedule(ScheduleVO scheduleVO) {
 		boolean result1 = mapper.insertSchedule(scheduleVO) == 1;
 		boolean result2 = false;
@@ -58,6 +60,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	// 일정 삭제
 	@Override
+	@Transactional
 	public boolean deleteSchedule(Integer sch_id, String emp_id) {
 		
 		// 모든 사람에게서 일정이 삭제되면 해당 일정 자체를 삭제
