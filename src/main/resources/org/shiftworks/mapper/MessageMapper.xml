@@ -4,31 +4,40 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.MessageMapper">
 
+	<!-- Message 관련 기능 -->
+	
+	<!-- 메시지 저장 -->
 	<insert id="insertMessage" parameterType="org.shiftworks.domain.MessageVO">
 		INSERT INTO Message(msg_id, notice, important, content, time, sender) 
 		VALUES(message_seq.nextval, #{notice}, #{important}, #{content}, #{time}, #{sender})
 	</insert>
 	
+	<!-- 모든 메시지 검색 -->
 	<select id="getList" resultType="org.shiftworks.domain.MessageVO">
 		SELECT * FROM message
 	</select>
 	
+	<!-- 메시지 번호를 통해 상세 메시지 검색 -->
 	<select id="getMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="int">
 		SELECT * FROM message WHERE msg_id = #{msg_id} 
 	</select>
 	
+	<!-- 공지 메시지 검색-->
 	<select id="getNoticeMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
 		SELECT * FROM message WHERE notice = 'Y' and sender = #{sender}
 	</select>
 	
+	<!-- 중요 메시지 검색 -->
 	<select id="getImportantMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
 		SELECT * FROM message WHERE important = 'Y' and sender = #{sender}
 	</select>
 
+	<!-- 보낸 메시지 검색 -->
 	<select id="getSendMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
 		SELECT * FROM message WHERE sender = #{sender}
 	</select>
 	
+	<!-- 받은 메시지 검색 -->
 	<select id="getReceiveMessage" resultType="org.shiftworks.domain.MessageVO" parameterType="String">
 		SELECT * FROM message WHERE sender = #{sender}
 	</select>

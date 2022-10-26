@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageVO {
+	
 	private int msg_id;
 	private char notice;
 	private char important;
 	private String content;
 	private String time;
 	private String sender;
+	
 }

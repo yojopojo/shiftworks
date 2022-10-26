@@ -20,9 +20,19 @@ public class MessageTests {
 	MessageMapper mapper;
 	
 	@Test
-	public void getImportantMessage() {
-		mapper.getImportantMessage("U2946709").forEach(message->log.info(message));
+	public void getReceiveMessage() {
+		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
 	}
+	
+	@Test
+	public void getSendMessage() {
+		mapper.getSendMessage("U2946709").forEach(message ->log.info(message));
+	}
+	
+//	@Test
+//	public void getImportantMessage() {
+//		mapper.getImportantMessage("U2946709").forEach(message->log.info(message));
+//	}
 	
 //	@Test
 //	public void getNoticeMessage() {
@@ -33,7 +43,6 @@ public class MessageTests {
 //	public void getMessage() {
 //		log.info(mapper.getMessage(1));
 //	}
-	
 	
 //	@Test
 //	public void testGetList() {
