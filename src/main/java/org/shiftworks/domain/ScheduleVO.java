@@ -1,6 +1,5 @@
 package org.shiftworks.domain;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -12,10 +11,12 @@ public class ScheduleVO {
 	private Integer book_id;
 	private String sch_title;
 	private String sch_content;
-	private Date start_date;
-	private Date end_date;
-	private String group;
+	private String start_date;
+	private String end_date;
+	private String sch_group;
 	private String sch_writer;
+	private String emp_id;
+	private String sch_date;
 	
-	private List<String> participant;
+	private String[] participant;
 }
