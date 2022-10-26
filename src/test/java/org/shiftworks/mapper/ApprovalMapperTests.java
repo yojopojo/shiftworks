@@ -37,16 +37,22 @@ public class ApprovalMapperTests {
 //
 //	}
 	
+//	@Test
+//	public void testRead() {
+//		ApprovalVO approval = mapper.read(1);
+//		log.info(approval);
+//	}
+	
 	@Test
-	public void testInsertSelectKey() {
+	public void testUpdate() {
 		ApprovalVO approval = new ApprovalVO();
-		approval.setApr_title("새로 작성하는 글 SelectKey");
-		approval.setApr_content("새로 작성하는 내용 SelectKey");
-		approval.setApr_status('2');
+		approval.setApr_id(1);
+		approval.setApr_status('3');
+		approval.setApr_check(3);
 		
-		mapper.insert(approval);
-		log.info(approval);
-
+		int count = mapper.update(approval);
+		log.info("UPDATE COUNT: " + count);
 	}
+	
 
 }

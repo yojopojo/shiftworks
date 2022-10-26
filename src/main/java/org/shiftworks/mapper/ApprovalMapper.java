@@ -9,6 +9,7 @@ public interface ApprovalMapper {
 
 	public List<ApprovalVO> getList();
 	public void insert(ApprovalVO approval);
-	public void insertSelectKey(ApprovalVO approval);
+	public ApprovalVO read(int apr_id);
+	public int update(ApprovalVO approval);
 	
 }
