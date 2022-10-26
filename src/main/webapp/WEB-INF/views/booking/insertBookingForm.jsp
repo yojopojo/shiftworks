@@ -60,6 +60,7 @@
 			
 			bookingService.insertBooking(bookingData, function(result){
 						alert("RESULT: "+result);
+						$(location).attr('href', '/booking/list');
 					})
 		
 		

@@ -22,7 +22,7 @@ var bookingService = (function(){
 			}
 		})
 	}
-	
+	 
 
 	
 	
