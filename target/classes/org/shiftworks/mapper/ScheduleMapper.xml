@@ -19,6 +19,7 @@
 		</foreach>
 	
 	</insert>
-
+	
+	<delete id=""></delete>
 
 </mapper>
