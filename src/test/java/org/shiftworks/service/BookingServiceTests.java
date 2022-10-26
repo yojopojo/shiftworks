@@ -19,23 +19,23 @@ public class BookingServiceTests {
 	@Autowired
 	public BookingService service;
 	
-//	@Test
-//	public void insertBookingTest() {
-//		log.info("insertBooking Testing..................");
-//		
-//		BookingVO vo = new BookingVO();
-//		vo.setBook_id(4);
-//		vo.setBook_title("예약 테스트_한글");
-//		vo.setBook_begin(9);
-//		vo.setRsc_id("CFR305");
-//		vo.setDept_id("IMP");
-//		vo.setEmp_id("IMP3056");
-//		vo.setBook_date("2022-10-25");
-//		vo.setBook_content("한글_예약_테스트");
-//
-//		service.insertBooking(vo);
-//		log.info(vo);
-//	}
+	@Test
+	public void insertBookingTest() {
+		log.info("insertBooking Testing..................");
+		
+		BookingVO vo = new BookingVO();
+		vo.setBook_id(100);
+		vo.setBook_title("예약 테스트_한글");
+		vo.setBook_begin(9);
+		vo.setRsc_id("CFR305");
+		vo.setDept_id("IMP");
+		vo.setEmp_id("IMP3056");
+		vo.setBook_date("2022-10-29");
+		vo.setBook_content("한글_예약_테스트");
+
+		service.insertBooking(vo);
+		log.info(vo);
+	}
 	
 //	@Test
 //	public void getBookingTest() {
@@ -59,13 +59,13 @@ public class BookingServiceTests {
 //		log.info(myList);
 //	}
 	
-	@Test
-	public void deleteBooking() {
-		log.info("deleteBooking Service Testing..............");
-		int re = service.deleteBooking(4);
-		log.info(re);
-	}
-	
+//	@Test
+//	public void deleteBooking() {
+//		log.info("deleteBooking Service Testing..............");
+//		int re = service.deleteBooking(4);
+//		log.info(re);
+//	}
+//	
 	
 	
 	

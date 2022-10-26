@@ -257,26 +257,25 @@
 			<version>5.0.7.RELEASE</version>
 		</dependency>
 
-		<!-- 소켓 통신을 위한 라이브러리 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<!-- web socket을 위한 라이브러리 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
-			<version>4.2.4.RELEASE</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.9.0</version>
+			<version>2.9.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.8.9</version>
+			<version>2.9.6</version>
 		</dependency>
 
 	</dependencies>

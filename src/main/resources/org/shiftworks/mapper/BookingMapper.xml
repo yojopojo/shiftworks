@@ -9,9 +9,9 @@
 	</select>
 	
 	<insert id="insertBooking" parameterType="org.shiftworks.domain.BookingVO"> 
-		insert into rsc_booking 
+		insert into rsc_booking (book_id, rsc_id, emp_id, dept_id, book_date, book_begin, book_end, book_title, book_content)
 		values 
-		(#{book_id}, #{rsc_id}, #{emp_id}, #{dept_id}, #{book_date}, #{book_begin}, #{book_begin}+2, #{book_title}, #{book_content})
+		(#{book_id}, #{rsc_id}, #{emp_id}, #{dept_id}, sysdate, #{book_begin}, #{book_begin}+2, #{book_title}, #{book_content})
 	</insert>
 	
 	<select id="getBooking" parameterType="int" resultType="org.shiftworks.domain.BookingVO">

@@ -34,7 +34,7 @@ public class BookingController {
 		return mav;
 	}
 	
-	@PostMapping(value = "/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	@PostMapping(value ="/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertBooking(@RequestBody BookingVO vo) {
 		
 		log.info("insertBooking controller.............");
@@ -53,10 +53,13 @@ public class BookingController {
 	}
 	
 	@GetMapping("/list")
-	public List<BookingVO> getList() {
-		List<BookingVO> list = service.getList();
+	public ModelAndView getList() {
+		//List<BookingVO> list = service.getList();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("booking/bookingList");
+		mav.addObject("list", service.getList());
 		
-		return list;
+		return mav;
 	}
 	
 	@GetMapping("/list/{emp_id}")
