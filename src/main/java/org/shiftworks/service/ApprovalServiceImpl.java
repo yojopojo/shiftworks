@@ -4,8 +4,20 @@ import java.util.List;
 
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.TempApprovalVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+@Log4j
+@Service
+@AllArgsConstructor
 public class ApprovalServiceImpl implements ApprovalService {
+	
+	@Autowired
+	private ApprovalVO approval;
+	private TempApprovalVO temp;
 
 	@Override
 	public String getForm() {
