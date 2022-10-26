@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.ApprovalMapper">
 
-	<!-- 결재 -->
+	<!-- 결재 생성, 읽기, 상태 변경(C,R,U) -->
 	<select id="getList" resultType="org.shiftworks.domain.ApprovalVO">
 		<![CDATA[
 			select*from approval where apr_id>0	

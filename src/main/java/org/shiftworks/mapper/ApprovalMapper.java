@@ -8,7 +8,7 @@ import org.shiftworks.domain.ApprovalVO;
 public interface ApprovalMapper {
 
 	public List<ApprovalVO> getList();
-	public void insert(ApprovalVO approval);
+	public int insert(ApprovalVO approval);
 	public ApprovalVO read(int apr_id);
 	public int update(ApprovalVO approval);
 	
