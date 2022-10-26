@@ -6,5 +6,34 @@
 	http://www.springframework.org/schema/security/spring-security.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<security:http>
+	
+		<security:intercept-url pattern="/login/all" access="permitAll"/>
+		<security:intercept-url pattern="/login/member" access="hasRole('user')"/>
+		<security:intercept-url pattern="/login/admin" access="hasRole('admin')"/>
+
+		
+	
+		
+		
+	
+		<security:form-login/>
+	
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="user" password="shiftworks113" authorities="ROLE_USER"/>
+				<security:user name="admin" password="shiftworks113" authorities="ROLE_USER, ROLE_ADMIN"/>
+			
+			
+			</security:user-service>
+			
+		</security:authentication-provider>
+		
+	
+	</security:authentication-manager>
+	
 
 </beans>
