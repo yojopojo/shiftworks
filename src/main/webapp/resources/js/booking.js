@@ -7,7 +7,7 @@ var bookingService = (function(){
 		
 		$.ajax({
 			type: 'post',
-			url: 'booking/new',
+			url: '/booking/new',
 			data: JSON.stringify(bookingData),
 			contentType: "application/json; charset=utf-8",
 			success: function(result, status, xhr){
@@ -22,6 +22,9 @@ var bookingService = (function(){
 			}
 		})
 	}
+	
+
+	
 	
 	return {name:"Reservation",
 			insertBooking:insertBooking

@@ -28,15 +28,20 @@
 	<script type="text/javascript" src="/resources/js/booking.js"></script>
 	<script type="text/javascript">
 	
+	
+	
 	$(document).ready(function(){
 		
 		console.log(bookingService);
 		console.log("---------------------JS '***bookingService***' TESTING---------------------");
 		
 		bookingService.insertBooking(
-			{book_id:10, rsc_id:"CFR307", emp_id:"SALES730", dept_id:"SALES", book_date:"2022-10-30", book_begin: 14, book_title:"test day2 to JSON", book_content:"plz..."}
+				{book_id:14, rsc_id:"CFR307", emp_id:"SALES12", dept_id:"SALES", book_date:"2022-11-3", 
+					book_begin: 14, book_title:"test day2 : JSON test", book_content:"plz..."}
+				,function(result){
+				alert("RESULT: "+result);
+			}
 		)
-		
 		
 	});
 	
