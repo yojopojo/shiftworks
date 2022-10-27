@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class CommonController {
 	
+	@GetMapping("/accessError")
 	public void  accessDenied(Authentication auth, Model model) {
 		log.info("access Denied: " + auth);
 		model.addAttribute("msg", "Access Denied");
@@ -28,6 +29,12 @@ public class CommonController {
 		if(logout != null) {
 			model.addAttribute("logout", "Log out!!");
 		}
+	}
+	
+	@GetMapping("LOG_userLogout")
+	public void logoutGET() {
+		
+		log.info("user log out.........."  );
 	}
 
 	
