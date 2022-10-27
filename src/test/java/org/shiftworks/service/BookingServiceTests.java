@@ -1,5 +1,7 @@
 package org.shiftworks.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -19,23 +21,23 @@ public class BookingServiceTests {
 	@Autowired
 	public BookingService service;
 	
-	@Test
-	public void insertBookingTest() {
-		log.info("insertBooking Testing..................");
-		
-		BookingVO vo = new BookingVO();
-		vo.setBook_id(4);
-		vo.setBook_title("Service Test-insert3");
-		vo.setBook_begin(9);
-		vo.setRsc_id("CFR505");
-		vo.setDept_id("SALES");
-		vo.setEmp_id("SALES3056");
-		//vo.setBook_date("2022/10/28");
-		vo.setBook_content("insertBooking Service Test");
-
-		service.insertBooking(vo);
-		log.info(vo);
-	}
+//	@Test
+//	public void insertBookingTest() {
+//		log.info("insertBooking Testing..................");
+//		
+//		BookingVO vo = new BookingVO();
+//		vo.setBook_id(14);
+//		vo.setBook_title("Service Test-insert3");
+//		vo.setBook_begin(9);
+//		vo.setRsc_id("CFR505");
+//		vo.setDept_id("SALES");
+//		vo.setEmp_id("SALES3056");
+//		//vo.setBook_date("2022/10/28");
+//		vo.setBook_content("insertBooking Service Test");
+//
+//		service.insertBooking(vo);
+//		log.info(vo);
+//	}
 	
 //	@Test
 //	public void getBookingTest() {
@@ -68,7 +70,42 @@ public class BookingServiceTests {
 //	
 	
 	
-	
+	@Test
+	public void insertBookingConditionTest() {
+		log.info("insertBooking Condition Check Testing..................");
+		
+		BookingVO vo = new BookingVO();
+
+	      try {
+	    		String dateStr = "2022-10-25";
+	    		log.info("date확인합니다...................................");
+	            log.info(dateStr);
+	            
+	            // 포맷터        
+	            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");         
+	            // 문자열 -> Date
+	            Date date = formatter.parse(dateStr);
+	            log.info("formatter확인합니다..........................plz.......");
+	            log.info(date);
+	            
+	            vo.setBook_date(date);
+	        } catch (Exception e) {
+	  			e.printStackTrace();
+	  		}
+
+		vo.setBook_id(17);
+		vo.setBook_title("Service Test-insert3");
+		vo.setBook_begin(9);
+		vo.setRsc_id("CFR505");
+		vo.setDept_id("SALES");
+		vo.setEmp_id("SALES3056");
+		//vo.setBook_date("2022/10/25");
+		vo.setBook_content("insertBooking Service Test");
+
+		int re = service.insertBookingCondition(vo);
+		log.info(vo);
+		log.info("vo결과값: (22/10/25...................................)"+re);
+	}
 	
 	
 	

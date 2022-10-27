@@ -10,4 +10,9 @@ public interface BookingService {
 	public List<BookingVO> getList();
 	public List<BookingVO> getMyList(String emp_id);
 	public int deleteBooking(int book_id);
+	
+	
+	//예약(조건식)
+	public int insertBookingCondition(BookingVO vo);
+
 }

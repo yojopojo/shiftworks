@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -26,6 +28,51 @@ import lombok.extern.log4j.Log4j;
 public class BookingController {
 	
 	private BookingService service;
+	
+	//calendar test method
+	@GetMapping("/cal")
+	public ModelAndView getCalList() {
+		ModelAndView mav = new ModelAndView();
+		List<BookingVO> list = service.getList();
+		
+		String json = new Gson().toJson(list);
+
+		mav.setViewName("booking/bookingCal");
+		mav.addObject("event", json);
+		
+		log.info("cal controller..........................mav.......................");
+		log.info(mav);
+		log.info("json결과: ---------------------------------------"+json);
+
+		return mav;
+	}
+	
+	
+	//calendar test method = 예약 1개 보기
+	@GetMapping("/cal/{book_id}")
+	public ModelAndView getCal(@PathVariable("book_id") int book_id) {
+		ModelAndView mav = new ModelAndView();
+		BookingVO vo = service.getBooking(book_id);
+		
+		String json = new Gson().toJson(vo);
+
+		mav.setViewName("booking/bookingCal");
+		mav.addObject("event", json);
+		
+		log.info("cal controller..........................mav.......................");
+		log.info(mav);
+		log.info("json결과: ---------------------------------------"+json);
+
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("/new")
 	public ModelAndView insertBooking() throws Exception{

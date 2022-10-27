@@ -47,7 +47,6 @@
 				
 		$('#submitBtn').on("click", function(e){
 			//console.log("book_id: "+book_id+"입니다");
-			
 			var bookingData = {
 					book_id: book_id.val(),
 					rsc_id: rsc_id.val(),

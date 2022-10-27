@@ -21,12 +21,37 @@ var bookingService = (function(){
 				}
 			}
 		})
-	}
-	 
-
+	}//end insertBooking
+	
+	function listBookingCal(callback, error){
+		$.get("/booking/cal", function(result){
+			if(callback){
+				callback(result);
+			}
+	}).fail(function(xhr, status, err){
+		if(error){
+			error();
+		}
+	});
+	}//end listBookingCal
+	
+	function listBookingCall(callback, error){
+		$.getJSON("/booking/cal", function(JSONdata){
+			if(callback){
+				callback(JSONdata);
+			}
+	}).fail(function(xhr, status, err){
+		if(error){
+			error();
+		}
+	});
+	}//end listBookingCal
+	
 	
 	
 	return {name:"Reservation",
-			insertBooking:insertBooking
+			insertBooking:insertBooking,
+			getCalList:listBookingCal,
+			getCal:listBookingCall
 			};
 })();

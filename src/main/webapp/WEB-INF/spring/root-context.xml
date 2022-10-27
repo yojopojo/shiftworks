@@ -14,21 +14,10 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 
-<<<<<<< HEAD
    
    <!-- Root Context: defines shared resources visible to all other web components -->
-=======
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
->>>>>>> refs/heads/develop
-
-<<<<<<< HEAD
-   <context:property-placeholder
-      location="classpath:application.properties" />
-=======
-	<context:property-placeholder
-		location="classpath:application.properties" />
->>>>>>> refs/heads/develop
+   <context:property-placeholder location="classpath:application.properties"/>
 
    <!-- 보안을 위해 DB 관련 정보 properties 이용 -->
    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -57,13 +46,4 @@
    <mybatis-spring:scan
       base-package="org.shiftworks.mapper" />
 
-<<<<<<< HEAD
 </beans>
-=======
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
-</beans>
->>>>>>> refs/heads/develop

@@ -1,5 +1,6 @@
 package org.shiftworks.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
@@ -17,5 +18,6 @@ public interface BookingMapper {
 	public List<BookingVO> getList();
 	public List<BookingVO> getMyList(String emp_id);
 	public int deleteBooking(int book_id);
+	public List<BookingVO> getBookingList(Date date);
 	
 }

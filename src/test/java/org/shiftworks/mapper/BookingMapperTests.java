@@ -1,5 +1,7 @@
 package org.shiftworks.mapper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -77,6 +79,29 @@ public class BookingMapperTests {
 	
 	
 	
+	@Test
+	public void testGetBookingList() {
+		log.info("get bookingList by mapper.................");
+		
+		String dateStr = "2022-10-25";
+		log.info("date확인합니다...................................");
+	    log.info(dateStr);
+	    
+	    // 포맷터        
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	    // 문자열 -> Date
+	    try {
+		    Date date = formatter.parse(dateStr);
+		    log.info("formatter확인합니다..........................plz.......");
+		    log.info(date);
+		    List<BookingVO> bookingList = mapper.getBookingList(date);
+		    
+		   log.info(bookingList);
+		   
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -85,9 +110,7 @@ public class BookingMapperTests {
 	
 	
 	
-	
-	
-	
+
 	
 	
 	
