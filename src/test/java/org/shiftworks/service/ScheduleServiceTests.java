@@ -42,24 +42,24 @@ public class ScheduleServiceTests {
 //	}
 	
 	// 일정 등록
-//	@Test
-//	public void testInsertSchedule() {
-//		ScheduleVO vo = new ScheduleVO();
-//		
-//		String[] arr = {"U2946709", "S8891577"};
-//		
-//		vo.setBook_id(12);
-//		vo.setDept_id("infosecu8");
-//		vo.setEmp_id("U2946709");
-//		vo.setSch_group("부서");
-//		vo.setStart_date("2022-09-20");
-//		vo.setEnd_date("2022-09-27");
-//		vo.setSch_title("시퀀스 마지막 테스트");
-//		vo.setSch_content("test.");
-//		vo.setParticipant(arr);
-//		
-//		service.insertSchedule(vo);
-//	}
+	@Test
+	public void testInsertSchedule() {
+		ScheduleVO vo = new ScheduleVO();
+		
+		String[] arr = {"U2946709", "S8891577"};
+		
+		vo.setBook_id(12);
+		vo.setDept_id("infosecu8");
+		vo.setEmp_id("U2946709");
+		vo.setSch_group("부서");
+		vo.setStart_date("2022-09-20");
+		vo.setEnd_date("2022-09-27");
+		vo.setSch_title("시퀀스 마지막 테스트");
+		vo.setSch_content("test.");
+		vo.setParticipant(arr);
+		
+		service.insertSchedule(vo);
+	}
 	
 	// 일정 수정
 //	@Test
@@ -77,10 +77,10 @@ public class ScheduleServiceTests {
 //	}
 	
 	// 일정 삭제
-	@Test
-	public void testDeleteSchedule() {
-		service.deleteSchedule(5, "U2946709");
-		service.deleteSchedule(5, "S8945709");
-	}
+//	@Test
+//	public void testDeleteSchedule() {
+//		service.deleteSchedule(5, "U2946709");
+//		service.deleteSchedule(5, "S8945709");
+//	}
 
 }

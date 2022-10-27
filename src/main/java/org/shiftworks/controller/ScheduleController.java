@@ -70,12 +70,6 @@ public class ScheduleController {
 		return new ResponseEntity<ScheduleVO>(vo, HttpStatus.OK);
 	}
 	
-	// 일정 등록 폼으로 이동
-	@GetMapping("/new")
-	public void insertForm() {
-		
-	}
-	
 	// 일정 등록
 	@PostMapping(value="/new",
 					produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -109,4 +103,30 @@ public class ScheduleController {
 				new ResponseEntity<String>("success", HttpStatus.OK) :
 				new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	// 메모 가져오기
+	@GetMapping(value="/memo",
+			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> getMemo(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		String emp_id = (String) session.getAttribute("emp_id");
+		
+		return new ResponseEntity<String>(service.getMemo(emp_id), HttpStatus.OK);
+	}
+	
+	// 메모 업데이트
+	@RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT},
+			value="/memo",
+			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> updateMemo(HttpServletRequest request, @RequestBody String memo) {
+	
+		HttpSession session = request.getSession();
+		String emp_id = (String) session.getAttribute("emp_id");
+		
+		return service.updateMemo(emp_id, memo) ?
+			new ResponseEntity<String>("success", HttpStatus.OK) :
+			new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 }
