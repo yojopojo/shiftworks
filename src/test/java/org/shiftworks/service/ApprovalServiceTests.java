@@ -29,12 +29,12 @@ public class ApprovalServiceTests {
 	@Test
 	public void testInsertTest() {
 		ApprovalVO vo = new ApprovalVO();
-		vo.setAf_id(1);
-		vo.setEmp_id("abc");
-		vo.setApr_title("abc");
-		vo.setApr_content("abc");
-		vo.setApr_check(1);
-		vo.setApr_status('1');
+		vo.setAf_id(4);
+		vo.setEmp_id("def");
+		vo.setApr_title("def");
+		vo.setApr_content("def");
+		vo.setApr_status('4');
+		vo.setApr_comment("작동 여부 확인4");
 		
 		int a = service.insertForm(vo);
 		log.info("a:"+ a);
@@ -52,11 +52,12 @@ public class ApprovalServiceTests {
 	
 	@Test
 	public void testUpdate() {
-		ApprovalVO approval = service.get(2);
+		ApprovalVO approval = service.get(44);
 		if (approval == null) {
 			return;
 		}
-		approval.setApr_title("결재 제목 수정");
+		approval.setApr_title("결재 제목 수정 확인");
+		approval.setApr_comment("코멘트 수정 여부 확인");
 		log.info("UPDATE RESULT: " + service.update(approval));
 	}
 	
