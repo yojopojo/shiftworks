@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Booking your Meetings here</title>
+<title>Book your meetings here</title>
 </head>
 <body>
 	<h2>insertBookingForm 입니다.</h2><br>

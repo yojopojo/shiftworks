@@ -45,11 +45,13 @@ public class BookingController {
 	}
 	
 	@GetMapping("/{book_id}")
-	public BookingVO getBooking(@PathVariable("book_id") int book_id) {
+	public ModelAndView getBooking(@PathVariable("book_id") int book_id) {
 		
-		BookingVO vo = service.getBooking(book_id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("booking/detail");
+		mav.addObject("booking", service.getBooking(book_id));
 		
-		return vo;
+		return mav;
 	}
 	
 	@GetMapping("/list")
