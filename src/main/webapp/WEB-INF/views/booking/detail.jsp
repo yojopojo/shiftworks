@@ -14,14 +14,14 @@
 	<table>
 		<thead>
 			<tr>
-				<th><c:out value="${booking.book_id }"></c:out> </th>
-				<th><c:out value="${booking.book_title }"></c:out></th>
-				<th><c:out value="${booking.emp_id }"></c:out></th>
+				<th><c:out value="${event.book_id }"></c:out> </th>
+				<th><c:out value="${event.book_title }"></c:out></th>
+				<th><c:out value="${event.emp_id }"></c:out></th>
 			</tr>
 		</thead>
 			<tr>
 				<td>일정</td>
-				<td><c:out value="${booking.book_date } ${booking.book_begin }시~${booking.book_end }시"></c:out></td>
+				<td><c:out value="${event.book_date } ${event.book_begin }시~${event.book_end }시"></c:out></td>
 			</tr>
 			
 			<tr>
@@ -31,7 +31,7 @@
 			
 			<tr>
 				<td>상세설명</td>
-				<td><c:out value="${booking.book_content }"></c:out></td>
+				<td><c:out value="${event.book_content }"></c:out></td>
 			</tr>
 	</table>
 	<br><br>

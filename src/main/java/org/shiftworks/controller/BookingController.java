@@ -49,7 +49,7 @@ public class BookingController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("booking/detail");
-		mav.addObject("booking", service.getBooking(book_id));
+		mav.addObject("event", service.getBooking(book_id));
 		
 		return mav;
 	}
@@ -59,7 +59,7 @@ public class BookingController {
 		//List<BookingVO> list = service.getList();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("booking/bookingList");
-		mav.addObject("list", service.getList());
+		mav.addObject("event", service.getList());
 		
 		return mav;
 	}
@@ -70,7 +70,7 @@ public class BookingController {
 		List<BookingVO> myList = service.getMyList(emp_id);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("booking/bookingList");
-		mav.addObject("list", myList);
+		mav.addObject("event", myList);
 		log.info(myList);
 		
 		return mav;
