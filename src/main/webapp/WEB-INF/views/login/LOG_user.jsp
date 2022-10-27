@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>/login/user page</h1>
+	<h1>/Login/user page</h1>
 </body>
 </html>

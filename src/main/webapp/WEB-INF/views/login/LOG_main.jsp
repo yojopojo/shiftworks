@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>LOG_main/ShiftWorks</title>
 </head>
 <body>
 	<h1>/Login/main test page</h1>

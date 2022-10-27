@@ -6,26 +6,27 @@
 	http://www.springframework.org/schema/security/spring-security.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<bean id ="customAccessDenied" class="org.shiftworks.security.CustomAccessDeniedHandler"/>
 	<security:http>
 	
 		<security:intercept-url pattern="/login/all" access="permitAll"/>
-		<security:intercept-url pattern="/login/member" access="hasRole('user')"/>
+		<security:intercept-url pattern="/login/user" access="hasRole('user')"/>
 		<security:intercept-url pattern="/login/admin" access="hasRole('admin')"/>
 
+		<!-- <security:form-login/> -->
+		<security:form-login login-page="/LOG_userLogin"/>
 		
-	
-		
-		
-	
-		<security:form-login/>
+	<!-- <security:access-denied-handler error-page="/accessError"/> -->
+	<security:access-denied-handler ref="customAccessDenied"/>
 	
 	</security:http>
 	
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
-				<security:user name="user" password="shiftworks113" authorities="ROLE_USER"/>
-				<security:user name="admin" password="shiftworks113" authorities="ROLE_USER, ROLE_ADMIN"/>
+				<security:user name="user1" password="{noop}shiftworks113" authorities="user"/>
+				<security:user name="user4" password="{noop}shiftworks113" authorities="admin"/>
+				
 			
 			
 			</security:user-service>

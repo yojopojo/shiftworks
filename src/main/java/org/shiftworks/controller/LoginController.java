@@ -19,15 +19,15 @@ public class LoginController {
 		
 	}
 	
-	@GetMapping
+	@GetMapping("/user")
 	public void doUser() {
 		
-		log.info("user page");
+		log.info("user page.........");
 	}
 	
 	@GetMapping("/admin")
 	public void doAdmin() {
-		log.info("admin only");
+		log.info("admin only...........");
 	}
 	
 }
