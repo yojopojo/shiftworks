@@ -7,7 +7,14 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<bean id ="customAccessDenied" class="org.shiftworks.security.CustomAccessDeniedHandler"/>
-		<bean id ="customLoginSuccessHandler" class="org.shiftworks.security.CustomLoginSuccessHandler"/>
+
+<!-- <bean id ="customLoginSuccessHandler" class="org.shiftworks.security.CustomLoginSuccessHandler"/> -->
+	
+	<bean id="bcryptPasswordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	
+	<bean id="customUserDetailsService"
+		class="org.shiftworks.security.CustomUserDetailsService"/>
 	
 	<security:http>
 	
@@ -18,21 +25,22 @@
 		<!-- <security:form-login/> -->
 		<security:form-login login-page="/LOG_userLogin"/>
 		
-		<security:logout logout-url="/LOG_userLogout" invalidate-session="true"/>
+		<security:logout logout-url="/LOG_userLogout" 
+			invalidate-session="true"
+			delete-cookies="JSESSION_ID"/>
 	<!-- <security:access-denied-handler error-page="/accessError"/> -->
 	<security:access-denied-handler ref="customAccessDenied"/>
 	
 	</security:http>
 	
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+			<!-- <security:user-service>
 				<security:user name="user1" password="{noop}shiftworks113" authorities="user"/>
-				<security:user name="user4" password="{noop}shiftworks113" authorities="admin"/>
-				
+				<security:user name="user4" password="{noop}shiftworks113" authorities="admin"/>			
+			</security:user-service> -->
 			
-			
-			</security:user-service>
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
 			
 		</security:authentication-provider>
 		
