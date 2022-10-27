@@ -19,8 +19,6 @@ public class MessageTests {
 	@Autowired
 	MessageMapper mapper;
 	
-
-	
 //	@Test
 //	public void testImportantReceiveMessage() {
 //		mapper.getImportantReceiveMessage("U2946709").forEach(message->log.info(message));
@@ -30,16 +28,16 @@ public class MessageTests {
 //	public void testGetNoticeReceiveMessage() {
 //		mapper.getNoticeReceiveMessage("U2946709").forEach(message ->log.info(message));
 //	}
-//	
-	@Test
-	public void testReceiveMessage() {
-		mapper.getReceiveMessage("S2385307").forEach(message ->log.info(message));
-	}
-
+	
 //	@Test
-//	public void testGetSendMessage() {
-//		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
+//	public void testReceiveMessage() {
+//		mapper.getReceiveMessage("S2385307").forEach(message ->log.info(message));
 //	}
+
+	@Test
+	public void testGetSendMessage() {
+		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
+	}
 //	
 //	@Test
 //	public void testGetImportantSendMessage() {

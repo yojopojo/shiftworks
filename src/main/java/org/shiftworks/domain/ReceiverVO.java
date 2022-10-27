@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ReceiverVO {
 	
 	private int msg_id;

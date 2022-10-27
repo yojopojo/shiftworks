@@ -20,9 +20,14 @@ public class ReceiverTests {
 	ReceiverMapper mapper;
 	
 	@Test
-	public void testUpdate() {
-		log.info(mapper.updateChecking(new ReceiverVO(1, "S8891577", "infosecu8")));
+	public void testGetReceiverList() {
+		mapper.getReceiverList().forEach(receiver->log.info(receiver));
 	}
+	
+//	@Test
+//	public void testUpdate() {
+//		log.info(mapper.updateChecking(new ReceiverVO(1, "S8891577", "infosecu8")));
+//	}
 
 //	@Test
 //	public void testInsert() {

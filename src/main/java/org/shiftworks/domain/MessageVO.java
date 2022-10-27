@@ -15,9 +15,9 @@ public class MessageVO {
 	private char notice;
 	private char important;
 	private String content;
-	private String time;
-	private String emp_id;	// 보낸 사람 사번
+	private String sendtime;
+	private String sender;	// 보낸 사람 사번
 	
-	private List<ReceiverVO> receiver;
+	private List<ReceiverVO> receivers;
 	
 }
