@@ -49,7 +49,6 @@ public class ApprovalMapperTests {
 		ApprovalVO approval = new ApprovalVO();
 		approval.setApr_id(1);
 		approval.setApr_status('3');
-		approval.setApr_check(3);
 		
 		int count = mapper.update(approval);
 		log.info("UPDATE COUNT: " + count);
