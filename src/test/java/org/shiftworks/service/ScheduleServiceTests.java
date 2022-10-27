@@ -9,6 +9,7 @@ import org.shiftworks.domain.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
 
@@ -78,8 +79,8 @@ public class ScheduleServiceTests {
 	// 일정 삭제
 	@Test
 	public void testDeleteSchedule() {
-		service.deleteSchedule(13, "U2946709");
-		service.deleteSchedule(13, "S8891577");
+		service.deleteSchedule(5, "U2946709");
+		service.deleteSchedule(5, "S8945709");
 	}
 
 }

@@ -9,7 +9,7 @@ import org.shiftworks.domain.ScheduleVO;
 public interface ScheduleMapper {
 
 	List<ScheduleVO> getList(ScheduleCriteria cri);
-	List<ScheduleVO> search(ScheduleCriteria cri);
+	List<ScheduleVO> search(String keyword);
 	
 	ScheduleVO getSchedule(Integer sch_id);
 	

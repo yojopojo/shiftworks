@@ -8,6 +8,7 @@ import org.shiftworks.domain.ScheduleVO;
 public interface ScheduleService {
 
 	List<ScheduleVO> getList(ScheduleCriteria cri);
+	List<ScheduleVO> search(String keyword);
 	
 	ScheduleVO getSchedule(Integer sch_id);
 	

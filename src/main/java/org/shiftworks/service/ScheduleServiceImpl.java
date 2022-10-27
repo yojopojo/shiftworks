@@ -21,8 +21,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 	// 월별 일정 가져오기
 	@Override
 	public List<ScheduleVO> getList(ScheduleCriteria cri) {
-		mapper.getList(cri);
-		return null;
+		return mapper.getList(cri);
+	}
+	
+	@Override
+	public List<ScheduleVO> search(String keyword) {
+	
+		return mapper.search(keyword);
 	}
 
 	// 개별 일정 가져오기
@@ -32,8 +37,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	// 일정, 참가자 리스트 등록
-	@Override
 	@Transactional
+	@Override
 	public boolean insertSchedule(ScheduleVO scheduleVO) {
 		boolean result1 = mapper.insertSchedule(scheduleVO) == 1;
 		boolean result2 = false;
@@ -59,8 +64,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	// 일정 삭제
-	@Override
 	@Transactional
+	@Override
 	public boolean deleteSchedule(Integer sch_id, String emp_id) {
 		
 		// 모든 사람에게서 일정이 삭제되면 해당 일정 자체를 삭제

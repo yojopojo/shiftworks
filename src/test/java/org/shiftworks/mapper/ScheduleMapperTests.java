@@ -90,13 +90,10 @@ public class ScheduleMapperTests {
 //	}
 	
 	// 일정 검색하기
-//	@Test
-//	public void testSearch() {
-//		ScheduleCriteria cri = new ScheduleCriteria();
-//		cri.setKeyword("수정");
-//		
-//		mapper.search(cri);
-//	}
+	@Test
+	public void testSearch() {
+		mapper.search("수정");
+	}
 
 	// 일정 상세보기
 //	@Test
@@ -112,9 +109,9 @@ public class ScheduleMapperTests {
 //	}
 	
 	// 일정 참가자 리스트 불러오기
-	@Test
-	public void testGetParticipant() {
-		mapper.getParticipant(5);
-	}
+//	@Test
+//	public void testGetParticipant() {
+//		mapper.getParticipant(5);
+//	}
 	
 }
