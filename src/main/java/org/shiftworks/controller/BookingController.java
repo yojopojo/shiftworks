@@ -65,13 +65,15 @@ public class BookingController {
 	}
 	
 	@GetMapping("/list/{emp_id}")
-	public List<BookingVO> getMyList(@PathVariable("emp_id") String emp_id){
+	public ModelAndView getMyList(@PathVariable("emp_id") String emp_id){
 		log.info("getMyList controller....................");
-		
 		List<BookingVO> myList = service.getMyList(emp_id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("booking/bookingList");
+		mav.addObject("list", myList);
 		log.info(myList);
 		
-		return myList;
+		return mav;
 	}
 	
 	@PostMapping("/{book_id}")
