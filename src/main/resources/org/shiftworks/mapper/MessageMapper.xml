@@ -12,8 +12,9 @@
 		<id column="dept_id" property="dept_id" />
 		<result column="checking" property="checking" />
 
-		<!-- 1 : 다 관계의 경우 데이터 매핑시켜준다. association => 1 : 1 관계 collection => 1 : 
-			다 관계 (한명의 유저가 작성한 글 목록) 일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용 -->
+		<!-- 1 : 다 관계의 경우 데이터 매핑시켜준다. 
+			association => 1 : 1 관계 
+			collection => 1 : 다 관계 (한명의 유저가 작성한 글 목록) 일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용 -->
 
 
 		<id column="msg_id" property="msg_id" />
