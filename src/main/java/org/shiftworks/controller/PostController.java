@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -55,35 +56,39 @@ public class PostController {
 	}
 	
 	
-	//list.jsp 이동
-	@GetMapping(value = "/pages/{pageNum}")
-	public  ModelAndView getList(@PathVariable("pageNum") int page){
+	
+	  //pageNum만 있을 시 list.jsp 이동
+	  @GetMapping(value = "/pages/{pageNum}") 
+	  public ModelAndView getList(@PathVariable("pageNum") int page){
+	 
+       log.info("controller.......");
+	  Criteria cri = new Criteria(page,10);
+	  
+	  ModelAndView mav = new ModelAndView(); 
+	  
+	  mav.setViewName("/board/list");
+	  mav.addObject("pageMaker",new PageDTO(cri,service.getTotal(),service.getListSearch(cri)));
+	  
+	  return mav; 
+	  }
+	
+	
+	//검색 클릭 시 페이지 조회
+	@PostMapping(value = "/pages/{pageNum}/{type}/{keyword}")
+	public  ResponseEntity<PageDTO> getList(
+								@PathVariable("pageNum")int page,
+								@PathVariable("type") String type,
+								@PathVariable("keyword") String keyword){
 		
 		Criteria cri = new Criteria(page,10);
+		cri.setKeyword(keyword);
+		cri.setType(type);
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/board/list");
-		mav.addObject("list",service.getList(cri));
+		log.info("aaaaaaaaaaaaaaaaa: "+ service.getListSearch(cri));
+		return new ResponseEntity<PageDTO>(new PageDTO(cri, service.getTotal(), service.getListSearch(cri)),
+				HttpStatus.OK);
 		
-		return mav;
 	}
-	
-	
-	//db에서 PostVO list 받아오기
-//	@GetMapping(value = "/pages/{pageNum}/{type}/{keyword}")
-//	public  ModelAndView getList(
-//								@PathVariable("pageNum")int page,
-//								@PathVariable("type") String type,
-//								@PathVariable("keyword") String keyword){
-//		
-//		Criteria cri = new Criteria(page,10);
-//		
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("/board/list");
-//		
-//		mav.addObject("list",service.getList(cri));
-//		return mav;
-//	}
 	
 	
 	//db에서 특정 PostVO 받아오기 

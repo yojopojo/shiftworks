@@ -24,10 +24,10 @@ public class PostServiceTests {
 
 	@Test
 	public void testGetList() {
-		Criteria cri = new Criteria(1, 10);
-//		cri.setType("W");
-//		cri.setKeyword("김기역");
-		service.getList(cri).forEach(post -> log.info(post));
+		Criteria cri = new Criteria(1, 180);
+		cri.setType("T");
+		cri.setKeyword("jsp");
+		service.getListSearch(cri).forEach(post -> log.info(post));
 	}
 	
 //	@Test

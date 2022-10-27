@@ -23,9 +23,14 @@ public class PostServiceImpl implements PostService {
 		
 	}
 
+	/*
+	 * @Override public List<PostVO> getList(Criteria cri) { return
+	 * mapper.getListWithPaging(cri); }
+	 */
+	
 	@Override
-	public List<PostVO> getList(Criteria cri) {
-		return mapper.getListWithPaging(cri);
+	public List<PostVO> getListSearch(Criteria cri) {
+		return mapper.getListWithPagingSearch(cri);
 	}
 
 	@Override
@@ -42,6 +47,13 @@ public class PostServiceImpl implements PostService {
 	public PostVO getPost(int post_id) {
 		return mapper.getPost(post_id);
 	}
+
+	@Override
+	public int getTotal() {
+		return mapper.getTotal();
+	}
+
+	
 	
 
 }

@@ -24,23 +24,38 @@ var postService = (function(){
 	
 	
 	
-	function getList(post, callback, error) {
-
-		$.getJSON('/pages/'+type+"/"+ keyword+"/"+ pageNum,
-			function(data) {
+	  
+	  
+	  
+	  
+	
+	
+	function getListWithSearch(post, callback, error) {
+		
+		console.log('/board/pages/'+post.pageNum +'/' +post.type+'/'+post.keyword);
+		$.ajax({
+			type : 'post',
+			url : '/board/pages/'+post.pageNum +'/' +post.type+'/'+post.keyword+".json",
+			data : JSON.stringify(post),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
 				if (callback) {
-					callback(data);
+					callback(result);
 				}
-			}).fail( function(xhr, status, er) {
+			},
+			error : function(xhr, status, er) {
 				if (error) {
-					error();
+					error(er);
 				}
-			});
+			}
+		})
 	}
 	
+	
+
 	return {
 		add:add,
-		getList: getList
+		getListWithSearch:getListWithSearch
 		};
 	
 	
