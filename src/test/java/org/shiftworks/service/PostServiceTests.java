@@ -22,6 +22,7 @@ public class PostServiceTests {
 	@Autowired
 	private PostService service;
 
+<<<<<<< HEAD
 	@Test
 	public void testGetList() {
 		Criteria cri = new Criteria(1, 10);
@@ -43,6 +44,29 @@ public class PostServiceTests {
 //		
 //		service.insertPost(vo);
 //	}
+=======
+//	@Test
+//	public void testGetList() {
+//		Criteria cri = new Criteria(1, 300);
+//		cri.setType("W");
+//		cri.setKeyword("성은지");
+//		service.getListSearch(cri).forEach(post -> log.info(post));
+//	}
+	
+	@Test
+	public void testInsert() {
+		PostVO vo = new PostVO();
+		
+		vo.setB_id(2);
+		vo.setDept_id("11");
+		vo.setEmp_id("U2946709");
+		vo.setPost_name("호");
+		vo.setPost_content("성은지 내용입니다");
+		vo.setPost_receivedept("12");
+		
+		service.insertPost(vo);
+	}
+>>>>>>> branch 'feature-boa' of https://github.com/brightvvater/shiftworks.git
 	
 //	@Test
 //	public void testUpdate() {

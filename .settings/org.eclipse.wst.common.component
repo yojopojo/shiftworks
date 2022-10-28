@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
                 	
     
     
@@ -33,7 +34,14 @@
         
         
         
+=======
+    <wb-module deploy-name="controller-1.0.0-BUILD-SNAPSHOT">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+>>>>>>> branch 'feature-boa' of https://github.com/brightvvater/shiftworks.git
         <property name="context-root" value="controller"/>
+<<<<<<< HEAD
                                 	
     
     
@@ -43,4 +51,8 @@
 
 
 
+=======
+        <property name="java-output-path" value="/shiftworks/target/classes"/>
+    </wb-module>
+>>>>>>> branch 'feature-boa' of https://github.com/brightvvater/shiftworks.git
 </project-modules>
