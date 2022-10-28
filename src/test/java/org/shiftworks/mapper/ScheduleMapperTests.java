@@ -23,24 +23,24 @@ public class ScheduleMapperTests {
 	private ScheduleMapper mapper;
 
 	// 일정 입력 테스트
-	@Test
-	public void testInsertSchedule() {
-		ScheduleVO vo = new ScheduleVO();
-		
-		String[] arr = {"S8945709", "U2946709"};
-		
-		vo.setBook_id(5);
-		vo.setDept_id("neuro289");
-		vo.setEmp_id("U2946709");
-		vo.setSch_group("부서");
-		vo.setStart_date("2022-10-07");
-		vo.setEnd_date("2022-10-09");
-		vo.setSch_title("view 테스트");
-		vo.setSch_content("test.");
-		vo.setParticipant(arr);
-		
-		mapper.insertSchedule(vo);
-	}
+//	@Test
+//	public void testInsertSchedule() {
+//		ScheduleVO vo = new ScheduleVO();
+//		
+//		String[] arr = {"S8945709", "U2946709"};
+//		
+//		vo.setBook_id(5);
+//		vo.setDept_id("neuro289");
+//		vo.setEmp_id("U2946709");
+//		vo.setSch_group("부서");
+//		vo.setStart_date("2022-10-07");
+//		vo.setEnd_date("2022-10-09");
+//		vo.setSch_title("view 테스트");
+//		vo.setSch_content("test.");
+//		vo.setParticipant(arr);
+//		
+//		mapper.insertSchedule(vo);
+//	}
 	
 	// 모든 참가자의 일정 리스트에 일정 등록
 //	@Test
@@ -82,12 +82,12 @@ public class ScheduleMapperTests {
 //	}
 	
 	// 일정 불러오기
-//	@Test
-//	public void testGetList() {
-//		ScheduleCriteria cri = new ScheduleCriteria("2022-05-02", "부서");
-//		
-//		mapper.getList(cri);
-//	}
+	@Test
+	public void testGetList() {
+		ScheduleCriteria cri = new ScheduleCriteria(null, "2022-09-02");
+		
+		mapper.getList(cri);
+	}
 	
 	// 일정 검색하기
 //	@Test
