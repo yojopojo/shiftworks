@@ -24,7 +24,7 @@
 				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
 					<thead>
 						<tr>
-							<th>테이블번호</th>
+							<th>게시판번호</th>
 							<th>게시글번호</th>
 							<th>작성자</th>
 							<th>작성부서</th>
@@ -35,11 +35,13 @@
 					</thead>
 					
 						<c:forEach items="${pageMaker.list}" var="pageMaker">
-						<tbody ="dddd">
+						<tbody>
 							<tr>
 								<td><c:out value="${pageMaker.b_id}" /></td>
-								<td><c:out value="${pageMaker.post_id}" /></td>
-								<td><c:out value="${pageMaker.emp_id}" /></td>
+								<td><a class="get" href='<c:out value="${pageMaker.post_id}"/>'>
+									<c:out value="${pageMaker.post_id}" /></a>
+								</td>
+								<td><c:out value="${pageMaker.name}" /></td>
 								<td><c:out value="${pageMaker.dept_id}" /></td>
 								<td><c:out value="${pageMaker.post_name}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
@@ -51,10 +53,12 @@
 						</c:forEach> 
 					
 				</table>
-
+				
+				
+				<!--검색버튼 -->
 				 <div class='row'>
 					<div class="col-lg-12">
-						<div id='searchForm'>
+						<form id='searchForm' action="/board/list" method="post">
 							<select name='type'>
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
@@ -70,27 +74,25 @@
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 							<button id='searchBtn' class='btn btn-default'>검색 </button>
-						</div>
+						</form>
 					</div>
 				</div>
 				
-				<%-- <form id='actionForm' action='/board/pages/' method='post'>
-					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type}"/>'>
-					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword}"/>'>
-				</form> --%>
 
 				<!--페이지 처리 뷰-->
 				<div class='pull-right'>
 					<ul class="pagination">
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous">
+							<a href="${pageMaker.startPage -1}">이전</a></li>
+						</c:if>
 						 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
 								<a href="${num}">${num}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="${pageMaker.endPage +1 }">Next</a></li>
+							<li class="paginate_button next"><a href="${pageMaker.endPage +1 }">이후</a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -98,29 +100,12 @@
 			</div>
 			<!-- end panelBody-->
 
-
-			<!-- Modal  추가 -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-						</div>
-						<div class="modal-body">처리가 완료되었습니다.</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
-						</div>
-					</div>
-					<!--modal-content-->
-				</div>
-				<!-- /.modal-dialog -->
-			</div>
-			<!-- /.modal -->
+			<form id='actionForm' action='/board/list' method='get'>
+					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type}"/>'>
+					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword}"/>'>
+			</form> 
 
 
 		</div>
@@ -146,48 +131,58 @@ $(document).ready(function () {
 	      location.href = "/board/new";
 	      
 	    });
-	
-	//검색 버튼 클릭 시 검색 조건에 맞는 데이터 불러와서 출력하기 
-	$("#searchBtn").on("click", function(e){
-		
-		$('#boardTest').find("td").remove();
-		
-		var post= {
-				type: formType.val(),
-				keyword : formKeyword.val(),
-				pageNum: formPageNum.val()
-		};
-		
-		
-		console.log(post.type);
-		console.log(post.keyword);
-		console.log(formPageNum.val());
-		
-	    postService.getListWithSearch(post, function(result){
-	    	
-	    	console.log(result.list["1"].b_id)
-	    	console.log(result.list["1"].post_name);
-			
-			  for(var i=0;i<result.list.length;i++){
-				$('#dddd').append("<tr><td align='center'>" +result.list[i+""].b_id + "</td>" +
-									"<td>" + result.list[i+""].post_id + "</td>" +
-									"<td>" + result.list[i+""].emp_id + "</td>"+
-									"<td>" + result.list[i+""].dept_id + "</td>"+
-									"<td>" + result.list[i+""].post_name +"</td>"+
-									"<td>" + result.list[i+""].post_regdate+"</td>"+
-									"<td>" + result.list[i+""].post_updatedate+"</td></tr>");  
-		 	}  
-			
-		}); 
-		
-	   
-	
-		
-	});
-		
-	
-	
+	 
+	  $(".paginate_button a").on("click", function(e) {
 
+					e.preventDefault();
+
+					console.log('click');
+
+					$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
+					$("#actionForm").submit();
+	   });
+		
+	  
+	  
+	 //검색 버튼 클릭 시 검색한 list 불러오기
+	 var searchForm = $("#searchForm");
+	  
+	  $("#searchBtn").on("click", function(e){
+		  
+		  if (!searchForm.find("option:selected").val()) {
+				alert("검색종류를 선택하세요");
+				return false;
+			}
+
+			if (!searchForm.find("input[name='keyword']").val()) {
+				alert("키워드를 입력하세요");
+				return false;
+			}
+
+			searchForm.find("input[name='pageNum']").val("1");
+
+			searchForm.submit();
+	  });
+		
+	  
+	  //글번호 클릭 시 get.jsp 이동하기
+	  $(".get").on("click",function(e){
+		  
+			e.preventDefault();
+			$("#actionForm") .
+				append("<input type='hidden' name='post_id' value='"+ $(this).attr("href")+ "'>");
+			
+			$("#actionForm").attr("action","/board/get");
+			$("#actionForm").submit();
+			
+			/* var post = $(this).attr("href");
+			console.log(post);
+			
+			location href = "/board/"+post; */
+		  
+		
+	  });
+	
 	    	
 	  
 });

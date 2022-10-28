@@ -86,7 +86,7 @@ $(document).ready(function () {
 	      var post = {
 	            b_id: 1,
 	            post_name:formInputTitle.val(),
-	            emp_id:1,
+	            emp_id:'U2946709',
 	            dept_id:formInputDept.val(),
 	            post_content:formInputContent.val(),
 	            post_receivedept:formInputReceive.val()
