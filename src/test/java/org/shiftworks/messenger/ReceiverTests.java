@@ -19,10 +19,10 @@ public class ReceiverTests {
 	@Autowired
 	ReceiverMapper mapper;
 	
-	@Test
-	public void testGetReceiverList() {
-		mapper.getReceiverList().forEach(receiver->log.info(receiver));
-	}
+//	@Test
+//	public void testGetReceiverList() {
+//		mapper.getReceiverList().forEach(receiver->log.info(receiver));
+//	}
 	
 //	@Test
 //	public void testUpdate() {
@@ -32,7 +32,7 @@ public class ReceiverTests {
 //	@Test
 //	public void testInsert() {
 //		
-//		ReceiverVO receiver = new ReceiverVO(5, "S8891577", "infosecu8");
-//		log.info(mapper.insertReceiver(receiver));
+//		ReceiverVO receiver = new ReceiverVO(5, "S2385307", "hrpart01");
+//		log.info("testInsert : " + mapper.insertReceiver(receiver));
 //	}
 }

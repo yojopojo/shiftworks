@@ -23,83 +23,76 @@
 		<result column="msg_id" property="msg_id"/>
 		<result column="emp_id" property="emp_id"/>
 		<result column="dept_id" property="dept_id"/>
-		
 		<result column="checking" property="checking"/>
 	</resultMap>
-	
+	 
 	
 	<!-- Message 관련 기능 -->
 	<!-- 메시지 저장 -->
 	<insert id="insertMessage"
 		parameterType="org.shiftworks.domain.MessageVO">
 		INSERT INTO Message(msg_id, notice, important, content,
-		sendtime, emp_id)
-		VALUES(message_seq.nextval, #{notice}, #{important}, #{content}, #{sendtime}, #{emp_id})
+		sendtime, sender)
+		VALUES(message_seq.nextval, #{notice}, #{important}, #{content}, #{sendtime}, #{sender})
 	</insert>
 
 	<!-- 모든 메시지 검색 -->
-	<select id="getList"
-		resultType="org.shiftworks.domain.MessageVO">
-		SELECT * FROM message
+	<select id="getList" resultMap="messageMap">
+		SELECT m.msg_id, m.notice, m.important, m.sendtime, m.sender, r.emp_id as emp_id, r.dept_id, r.checking as checking
+			FROM message m, receiver r 
+			WHERE m.msg_id = r.msg_id 
 	</select>
 
 	<!-- 메시지 번호를 통해 상세 메시지 검색 -->
-	<select id="getMessage"
-		resultType="org.shiftworks.domain.MessageVO" parameterType="int">
-		SELECT *
-		FROM message WHERE msg_id = #{msg_id}
+	<select id="getMessage" resultMap="messageMap" parameterType="int">
+		SELECT m.*
+		FROM message m WHERE m.msg_id = #{msg_id}
 	</select>
 
 	<!-- 공지로 보낸 메시지 검색 -->
-	<select id="getNoticeSendMessage"
-		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT *
-		FROM message m, receiver r WHERE notice = 'Y' AND m.emp_id = #{emp_id}
+	<select id="getNoticeSendMessage" resultMap="messageMap" parameterType="String">
+		SELECT m.*, r.*
+			FROM message m, receiver r 
+			WHERE m.msg_id = r.msg_id AND m.sender = #{emp_id} AND m.notice = 'Y'
 	</select>
-
+	
 	<!-- 중요로 보낸 메시지 검색 -->
-	<select id="getImportantReceiverMessage"
-		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT *
-		FROM message m, receiver r WHERE m.important = 'Y' and r.emp_id =
-		#{emp_id}
+	<select id="getImportantSendMessage" resultMap="messageMap" parameterType="String">
+		SELECT m.*, r.*
+			FROM message m, receiver r 
+			WHERE m.msg_id = r.msg_id AND m.sender = #{emp_id} AND m.important = 'Y'
 	</select>
 
 	<!-- 공지로 받은 메시지 검색 -->
-	<select id="getNoticeReceiverMessage"
-		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT *
-		FROM message m, receiver r
-		WHERE m.msg_id = r.msg_id
-		AND notice = 'Y'
-		AND r.emp_id = #{emp_id}
+	<select id="getNoticeReceiveMessage" resultMap="messageMap" parameterType="String">
+		SELECT m.*, r.*
+			FROM message m, receiver r
+			WHERE m.msg_id = r.msg_id
+				AND r.emp_id = #{emp_id}
+				AND m.notice = 'Y'
 	</select>
-
+	
 	<!-- 중요로 받은 메시지 검색 -->
-	<select id="getImportantSendMessage"
-		resultType="org.shiftworks.domain.MessageVO" parameterType="String">
-		SELECT *
-		FROM message m, receiver r
-		WHERE m.msg_id = r.msg_id
-		AND important = 'Y'
-		AND r.emp_id = #{emp_id}
+	<select id="getImportantReceiveMessage" resultMap="messageMap" parameterType="String">
+		SELECT m.*, r.*
+			FROM message m, receiver r
+			WHERE m.msg_id = r.msg_id
+				AND r.emp_id = #{emp_id}
+				AND m.important = 'Y'
 	</select>
 
+	
 	<!-- 받은 메시지 검색 -->
-	<select id="getReceiveMessage"
-		resultMap="messageMap" parameterType="String">
-		SELECT
-		m.msg_id , m.notice, m.important, m.sendtime, m.emp_id, r.emp_id, r.checking
-		FROM message m, receiver r
-		WHERE m.msg_id = r.msg_id and r.emp_id = #{emp_id}
+	<select id="getReceiveMessage" resultMap="messageMap" parameterType="String">
+		SELECT m.msg_id , m.notice, m.important, m.sendtime, m.sender, r.emp_id, r.checking
+			FROM message m, receiver r
+			WHERE m.msg_id = r.msg_id and r.emp_id = #{emp_id}
 	</select>
 
 	<!-- 보낸 메시지 검색 -->
-	<select id="getSendMessage"
-		resultMap="messageMap" parameterType="String">
-		SELECT
-		m.msg_id, m.notice, m.important, m.sendtime, m.sender, r.emp_id as emp_id, r.checking as checking
-		FROM message m, receiver r
-		WHERE m.msg_id = r.msg_id and m.sender = #{emp_id}
+	<select id="getSendMessage" resultMap="messageMap" parameterType="String">
+		SELECT m.msg_id, m.notice, m.important, m.sendtime, m.sender, r.emp_id as emp_id, r.checking as checking
+			FROM message m, receiver r
+			WHERE m.msg_id = r.msg_id and m.sender = #{emp_id}
 	</select>
 </mapper>

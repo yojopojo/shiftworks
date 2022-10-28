@@ -2,6 +2,7 @@ package org.shiftworks.messenger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.shiftworks.domain.MessageVO;
 import org.shiftworks.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,36 +20,43 @@ public class MessageTests {
 	@Autowired
 	MessageMapper mapper;
 	
-//	@Test
-//	public void testImportantReceiveMessage() {
-//		mapper.getImportantReceiveMessage("U2946709").forEach(message->log.info(message));
-//	}
-//	
-//	@Test
-//	public void testGetNoticeReceiveMessage() {
-//		mapper.getNoticeReceiveMessage("U2946709").forEach(message ->log.info(message));
-//	}
-	
-//	@Test
-//	public void testReceiveMessage() {
-//		mapper.getReceiveMessage("S2385307").forEach(message ->log.info(message));
-//	}
-
+	// 보낸 중요 메시지 검색
 	@Test
-	public void testGetSendMessage() {
-		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
+	public void testImportantReceiveMessage() {
+		mapper.getImportantReceiveMessage("S8891577").forEach(message->log.info(message));
 	}
-//	
+	
+	// 보낸 공지 메시지 검색
+	@Test
+	public void testGetNoticeReceiveMessage() {
+		mapper.getNoticeReceiveMessage("S8891577").forEach(message ->log.info(message));
+	}
+	
+//	// 받은 중요 메시지 검색
 //	@Test
 //	public void testGetImportantSendMessage() {
 //		mapper.getImportantSendMessage("U2946709").forEach(message->log.info(message));
 //	}
 	
+//	// 받은 공지 메시지 검색
 //	@Test
 //	public void testGetNoticeSendMessage() {
 //		mapper.getNoticeSendMessage("U2946709").forEach(message->log.info(message));
 //	}
 	
+	// 사번으로 받은 메시지 검색
+//	@Test
+//	public void testReceiveMessage() {
+//		mapper.getReceiveMessage("S2385307").forEach(message ->log.info(message));
+//	}
+
+	// 사번으로 보낸 메시지 검색
+//	@Test
+//	public void testGetSendMessage() {
+//		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
+//	}
+
+	// 메시지 번호로 메시지 정보 조회 (수신인 제외)
 //	@Test
 //	public void testGetMessage() {
 //		log.info(mapper.getMessage(1));
@@ -59,17 +67,17 @@ public class MessageTests {
 //				
 //		mapper.getList().forEach(message->log.info(message));
 //	}
-//	
+	
 	
 //	@Test
 //	public void testInsert() {
 //		
 //		MessageVO message = new MessageVO();
-//		message.setNotice('Y');
+//		message.setNotice('N');
 //		message.setImportant('N');
 //		message.setContent("notice message");
 //		message.setSender("U2946709");
-//		message.setTime("2022-10-25");
+//		message.setSendtime("2022-10-25");
 //		
 //		int re = mapper.insertMessage(message);
 //		log.info(message);
