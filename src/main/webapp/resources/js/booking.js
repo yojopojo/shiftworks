@@ -47,11 +47,26 @@ var bookingService = (function(){
 	});
 	}//end listBookingCal
 	
+	function getCalList(callback,error){
+		$.getJSON("/booking/list2.json", 
+			function(data){
+				if(callback){
+					callback(data);
+				}
+		}).fail(function(xhr, status, err){
+			if(error){
+				error();
+			}
+		});
+	}
 	
+
 	
+	//이름 정리
 	return {name:"Reservation",
 			insertBooking:insertBooking,
-			getCalList:listBookingCal,
+			getCalList:getCalList,
+			listBookingCal:listBookingCal,
 			getCal:listBookingCall
 			};
 })();

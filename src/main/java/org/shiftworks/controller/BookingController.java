@@ -29,6 +29,21 @@ public class BookingController {
 	
 	private BookingService service;
 	
+	
+	//getList 테스트 메서드(list만 가져오고 view없음)
+	@GetMapping("/list2")
+	public List<BookingVO> getList2() {
+		List<BookingVO> list = service.getList();
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("booking/bookingList");
+//		mav.addObject("event", service.getList());
+		
+		return list;
+	}
+	
+	
+	
+	
 	//calendar test method
 	@GetMapping("/cal")
 	public ModelAndView getCalList() {

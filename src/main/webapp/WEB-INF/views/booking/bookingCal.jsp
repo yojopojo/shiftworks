@@ -12,17 +12,75 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>  
 <!-- fullcalendar 언어 CDN -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<!--javaScript 스크립트-->
+<script type="text/javascript" src="/resources/js/booking.js"></script>
+<script type="text/javascript">
 
-<script>
+
+
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         /* var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth'
         }); */
         
+		bookingService.getCalList(function(result){
+    		console.log("RESULT: "+result);
+    	})
+    	
         var calendar = new FullCalendar.Calendar(calendarEl, {
+     });
+        
+        calendar.render();
+        
+      });
+      
+      
+		/* events = [
+    		{
+    			start: result.book_date
+    		}
+    		] */
+   
+      
+/*       	   events: [
+       	    {
+       	      title  : '구매팀 워크샵',
+       	      start  : '2022-11-11'
+       	    },
+       	    {
+       	      title  : '해외영업팀 출장',
+       	      start  : '2022-11-05',
+       	      end    : '2022-11-07'
+       	    },
+       	    {
+       	      title  : '인사팀 오전 회의',
+       	      start  : '2022-11-09T12:3.0:00',
+       	      allDay : false // will make the time show
+       	    }
+       	  ] */
+       	  
+/*          	 eventSources: [{
+        		events: function(info, successCallback, failureCallback) {
+        			$.ajax({
+        				type: 'GET',
+            			url: 'booking/list2',
+        				dataType: 'json',
+        				data: {
+        					start : 
+        						moment(info.startStr).format('YYYY-MM-DD'),
+        				},
+        				success: function(data) {
+        					successCallback(data);
+        				}
+        			});
+        		}
+        	}] */
+       	  
+       	  
         	
-        	events:function(callback){
+        	
+/*         	events:function(callback){
         		
         		$.ajax({
         			type: 'GET',
@@ -40,7 +98,8 @@
         			}
         		})//end ajax
         		
-        	}//end events function
+        	}//end events function */
+        	
         	
          	  /* eventSources: [
 
@@ -54,35 +113,13 @@
         		    // any other sources...
         		  ] */
         	
-        	
-        	// events: '/booking/cal'
-/*         	   events: [
-        	    {
-        	      title  : '구매팀 워크샵',
-        	      start  : '2022-11-11'
-        	    },
-        	    {
-        	      title  : '해외영업팀 출장',
-        	      start  : '2022-11-05',
-        	      end    : '2022-11-07'
-        	    },
-        	    {
-        	      title  : '인사팀 오전 회의',
-        	      start  : '2022-11-09T12:30:00',
-        	      allDay : false // will make the time show
-        	    }
-        	  ] */
        	   /* events: [
        	    {
        	      title  : ,
        	      start  : 
        	    }
        	  ] */
-       	});
-        
-        calendar.render();
-        
-      });
+
 
 </script>
 
