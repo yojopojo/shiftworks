@@ -1,0 +1,21 @@
+@charset "EUC-KR";
+
+#mainTable {
+	width: 80%;
+}
+
+#memoTable {
+	width: 20%;
+}
+
+.dayOfWeek td {
+	width: 14%;
+}
+
+.dropdown {
+	align-items: right;
+}
+
+.eachSch {
+	color: darkblue;
+}

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -30,6 +31,14 @@ import lombok.extern.log4j.Log4j;
 public class ScheduleController {
 
 	private ScheduleService service;
+	
+	@GetMapping("")
+	public ModelAndView schedule() {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/schedule/SCH_list");
+		return mav;
+	}
 	
 	// 그룹별, 월별 일정 가져오기
 	@GetMapping(value="/{sch_group}/{selectedDate}",
