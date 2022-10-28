@@ -26,6 +26,6 @@ public class EmployeeVO {
 	private String emp_id2;
 	private String dept_id2;
 	private String password;
-	private List<UserDTO> userDTOList;
+	
 
 }

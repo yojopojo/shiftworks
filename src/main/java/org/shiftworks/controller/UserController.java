@@ -4,12 +4,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import lombok.extern.log4j.Log4j;
 
-@Controller
+@RestController
 @Log4j
-public class CommonController {
+public class UserController {
+	
+
 	
 	@GetMapping("/accessError")
 	public void  accessDenied(Authentication auth, Model model) {
@@ -36,6 +40,13 @@ public class CommonController {
 		
 		log.info("user log out.........."  );
 	}
+	
+	
+	@GetMapping
+	public String homeLogin() {
+		return null;
+	}
+	
 
 	
 
