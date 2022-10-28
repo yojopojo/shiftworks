@@ -14,7 +14,8 @@
 	<insert id="insert">
 		insert into approval (apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
 			apr_status,apr_comment, apr_signdate) 
-		values(approval_seq.nextval,#{af_id},#{emp_id,jdbcType=VARCHAR},sysdate,#{apr_title},#{apr_content},#{apr_status},#{apr_comment},sysdate)
+		values(approval_seq.nextval,#{af_id},#{emp_id,jdbcType=VARCHAR},sysdate
+		,#{apr_title,jdbcType=VARCHAR},#{apr_content,jdbcType=VARCHAR},#{apr_status},#{apr_comment,jdbcType=VARCHAR},sysdate)
 	</insert>
 	
 	<select id="read" resultType="org.shiftworks.domain.ApprovalVO">

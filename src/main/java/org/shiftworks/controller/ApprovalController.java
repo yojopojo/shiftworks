@@ -30,12 +30,24 @@ public class ApprovalController {
 		model.addAttribute("list", service.getList());
 	}
 	
+	// 결재 문서 작성
+	@PostMapping("/insert")
+	public String insert(ApprovalVO approval, RedirectAttributes rttr) {
+		log.info("insert: "+ approval);
+		service.insertForm(approval);
+		
+		rttr.addFlashAttribute("result",approval.getApr_id());
+		return "redirect:/approval/list";
+	}
+	
+	// 결재 문서 상세보기
 	@GetMapping("/get")
 	public void get(@RequestParam("apr_id") int apr_id, Model model) {
 		log.info("/get");
 		model.addAttribute("approval",service.get(apr_id));
 	}
 	
+	// 결재 수정(결재 상태 수정)
 	@PostMapping("/update")
 	public String update(ApprovalVO approval, RedirectAttributes rttr) {
 		log.info("update: "+approval);
@@ -46,10 +58,7 @@ public class ApprovalController {
 		return "redirect:/approval/list";
 	}
 	
-	// 결재 양식 입력
-//	@PostMapping("/insert")
-//	public void insert() {	
-//	}
+	// 결재 양식 호출
 	@GetMapping("/insert")
 	public void insert() {}
 	

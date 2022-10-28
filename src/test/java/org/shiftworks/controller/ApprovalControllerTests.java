@@ -33,42 +33,57 @@ public class ApprovalControllerTests {
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
+//	
+//	@Test
+//	public void testList() throws Exception{
+//		log.info(
+//				mockMvc.perform(MockMvcRequestBuilders.get("/approval/list"))
+//				.andReturn()
+//				.getModelAndView()
+//				.getModelMap()
+//				);
+//		
+//	}
 	
-	@Test
-	public void testList() throws Exception{
-		log.info(
-				mockMvc.perform(MockMvcRequestBuilders.get("/approval/list"))
-				.andReturn()
-				.getModelAndView()
-				.getModelMap()
-				);
-		
-	}
+//	@Test
+//	public void testInsert() throws Exception{
+//		
+//		String resultPage = mockMvc
+//			.perform(MockMvcRequestBuilders.post("/approval/insert")
+//				.param("apr_id", "4")
+//				.param("apr_title", "결제명")
+//				.param("apr_content", "결재사항")
+//				.param("apr_check", "4")
+//				.param("apr_status", "4"))
+//			.andReturn().getModelAndView().getViewName();
+//		
+//		log.info(resultPage);
+//			
+//	}
 	
-	@Test
-	public void testGet() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders
-				.get("/approval/get")
-				.param("apr_id", "2"))
-				.andReturn()
-				.getModelAndView().getModelMap());
-	}
-	
-	@Test
-	public void testUpdate() throws Exception{
-		
-		String resultPage = mockMvc
-			.perform(MockMvcRequestBuilders.post("/approval/update")
-				.param("apr_id", "3")
-				.param("apr_title", "수정된 결제명")
-				.param("apr_content", "수정된 결재사항")
-				.param("apr_check", "3")
-				.param("apr_status", "3"))
-			.andReturn().getModelAndView().getViewName();
-		
-		log.info(resultPage);
-			
-	}
+//	@Test
+//	public void testGet() throws Exception{
+//		log.info(mockMvc.perform(MockMvcRequestBuilders
+//				.get("/approval/get")
+//				.param("apr_id", "2"))
+//				.andReturn()
+//				.getModelAndView().getModelMap());
+//	}
+//	
+//	@Test
+//	public void testUpdate() throws Exception{
+//		
+//		String resultPage = mockMvc
+//			.perform(MockMvcRequestBuilders.post("/approval/update")
+//				.param("apr_id", "43")
+//				.param("apr_title", "수정 날짜 확인")
+//				.param("apr_comment", "수정 날짜 확인")
+//				.param("apr_status", "0"))
+//			.andReturn().getModelAndView().getViewName();
+//		
+//		log.info(resultPage);
+//			
+//	}
 	
 	
 	
