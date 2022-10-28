@@ -16,7 +16,7 @@
 				<div class="form-group">rsc_id <input name="rsc_id" type="text"><br></div>
 				<div class="form-group">emp_id <input name="emp_id" type="text"><br></div>
 				<div class="form-group">dept_id <input name="dept_id" type="text" value=""><br></div>
-				<!-- <div class="form-group">예약일자 <input name="book_date" type="text"><br></div>  -->
+				<div class="form-group">예약일자 <input name="book_date" type="text"><br></div>
 				<div class="form-group">예약 시작시간 <input name="book_begin" type="text"><br></div> 
 				<div class="form-group">예약명 <input name="book_title" type="text"><br></div> 
 				<div class="form-group">예약내용 <input name="book_content" type="text"><br></div>
@@ -40,7 +40,7 @@
 		var rsc_id = form.find("input[name='rsc_id']");
 		var emp_id = form.find("input[name='emp_id']");
 		var dept_id = form.find("input[name='dept_id']");
-		//var book_date = form.find("input[name='book_date']");
+		var book_date = form.find("input[name='book_date']");
 		var book_begin = form.find("input[name='book_begin']");
 		var book_title = form.find("input[name='book_title']");
 		var book_content = form.find("input[name='book_content']");
@@ -53,6 +53,7 @@
 					emp_id: emp_id.val(),
 					dept_id: dept_id.val(),
 					book_begin: book_begin.val(),
+					book_date: book_date.val(),
 					book_title: book_title.val(),
 					book_content: book_content.val(),
 			};

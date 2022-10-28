@@ -13,11 +13,15 @@ public interface BookingMapper {
 	
 	public String getBooking2();
 	
+	//예약하기
 	public int insertBooking(BookingVO vo);
-	public BookingVO getBooking(int rsc_id);
+	//예약목록불러오기(예약 중복 조건 비교)
+	public List<BookingVO> getBookingList(BookingVO vo);
+	
+	
+	public BookingVO getBooking(int book_id);
 	public List<BookingVO> getList();
 	public List<BookingVO> getMyList(String emp_id);
 	public int deleteBooking(int book_id);
-	public List<BookingVO> getBookingList(Date date);
 	
 }

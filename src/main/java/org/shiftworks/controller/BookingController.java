@@ -67,13 +67,7 @@ public class BookingController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	//예약폼 페이지로 이동
 	@GetMapping("/new")
 	public ModelAndView insertBooking() throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -81,14 +75,20 @@ public class BookingController {
 		return mav;
 	}
 	
+	//예약하기
 	@PostMapping(value ="/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertBooking(@RequestBody BookingVO vo) {
 		
 		log.info("insertBooking controller.............");
-		service.insertBooking(vo);
+		//service.insertBooking(vo);
+		int re = service.insertBookingCondition(vo);
 		log.info(vo);
+		log.info(re);
 		
-		return new ResponseEntity<String>("success Reservation", HttpStatus.OK);
+		return re == 1
+				? new ResponseEntity<>("success Reservation", HttpStatus.OK)
+				: new ResponseEntity<>("fail", HttpStatus.OK);
+		//return new ResponseEntity<String>("success Reservation", HttpStatus.OK);
 	}
 	
 	@GetMapping("/{book_id}")

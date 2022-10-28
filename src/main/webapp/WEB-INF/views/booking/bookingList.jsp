@@ -12,6 +12,8 @@
 
 	<h2>All Booking List</h2>
 	<h5><a href="/booking/list/${emp_id }"><c:out value="내 예약목록 보기"></c:out></a></h5>
+	<h5><a href="/booking/new"><c:out value="예약하기"></c:out></a></h5><br>
+	
 	<div class="bookingList">
 		<div class="list-body">
 			<table class="table table-striped table-bordered table-hover">
