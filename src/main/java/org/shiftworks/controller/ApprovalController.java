@@ -23,6 +23,7 @@ public class ApprovalController {
 
 	private ApprovalService service;
 	
+	// 결재 리스트
 	@GetMapping("/list")
 	public void list(Model model) {
 		log.info("list");
@@ -44,4 +45,14 @@ public class ApprovalController {
 		}
 		return "redirect:/approval/list";
 	}
+	
+	// 결재 양식 입력
+//	@PostMapping("/insert")
+//	public void insert() {	
+//	}
+	@GetMapping("/insert")
+	public void insert() {}
+	
+	
+	
 }
