@@ -7,6 +7,7 @@ import org.shiftworks.domain.TempApprovalVO;
 
 public interface ApprovalService {
 	
+	// 결재 
 	public int insertForm(ApprovalVO approval);
 	public ApprovalVO get(int apr_id);
 	public List<ApprovalVO> getList();

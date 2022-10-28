@@ -24,7 +24,8 @@
 	<update id="update">
 		update approval
 		set apr_status = #{apr_status},
-		apr_comment = #{apr_comment}
+		apr_comment = #{apr_comment},
+		apr_signdate = sysdate
 		where apr_id = #{apr_id}
 	</update>
 	
