@@ -63,7 +63,7 @@
 				<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
 
 
-				<form id='operForm' action="/board/modify" method="get">
+				<form id='operForm' action="/board/update" method="get">
 					<input type='hidden' id='post_id' name='post_id' 
 						value='<c:out value="${post.post_id}"/>'>
 					<input type='hidden' name='pageNum' 

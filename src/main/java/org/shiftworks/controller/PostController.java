@@ -106,7 +106,7 @@ public class PostController {
 	
 	
 	//수정 클릭 시 modify.jsp로 이동
-	@GetMapping(value = {"/get","/modify"})
+	@GetMapping(value = {"/get","/update"})
 	public void get(@RequestParam("post_id")int post_id, 
 							@ModelAttribute("cri") Criteria cri, Model model) throws Exception{
 		
@@ -114,7 +114,7 @@ public class PostController {
 	}
 	
 	// 수정 데이터 값을 db 넣기
-	@PostMapping(value = "/modify")
+	@PostMapping(value = "/update")
 	public String modify(PostVO post,
 				@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
 		

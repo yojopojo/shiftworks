@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
+<%@include file="/WEB-INF/views/board/index.jsp"%>
 
 
 <div class="row">
@@ -18,7 +19,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
 
-      <form role="form" action="/board/modify" method="post">
+      <form id="form" action="/board/update" method="post">
         <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
         <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 	    <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
@@ -79,7 +80,7 @@
     <!--  end panel-body -->
   </div>
   <!-- end panel -->
-</div>
+
 <!-- /.row -->
 
 <script type="text/javascript">
