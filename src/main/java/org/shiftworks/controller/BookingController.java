@@ -1,6 +1,11 @@
 package org.shiftworks.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.shiftworks.domain.BookingVO;
 import org.shiftworks.service.BookingService;
@@ -12,10 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -31,14 +39,49 @@ public class BookingController {
 	
 	
 	//getList 테스트 메서드(list만 가져오고 view없음)
-	@GetMapping("/list2")
-	public List<BookingVO> getList2() {
-		List<BookingVO> list = service.getList();
+	@GetMapping("/getCal")
+	@ResponseBody
+	public Map<String, Object> getCal() {
+		BookingVO getOne = service.getBooking(3);
+		
+		String bookdate = getOne.getBook_date();
+		log.info(bookdate); //10개
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("title", getOne.getBook_title());
+		map.put("start", getOne.getBook_date());
+		
+		return map;
+		
+		
 //		ModelAndView mav = new ModelAndView();
 //		mav.setViewName("booking/bookingList");
 //		mav.addObject("event", service.getList());
 		
-		return list;
+//		JsonObject jsonObj = new JsonObject();
+//		JsonArray jsonArr = new JsonArray();
+//		
+//		HashMap<String, Object> hash = new HashMap<String, Object>();
+//		
+//		for(int i=0; i<list.size();i++) {
+//			hash.put("title", list.get(i).getBook_title());
+//			hash.put("start", list.get(i).getBook_date());
+//
+//			jsonObj = new JsonObject(hash);
+//			jsonArr.add(jsonObj);
+//		}
+//		log.info("jsonArr: "+jsonArr);
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		for(int i=0;i<list.size();i++) {
+//			map.put("title", list.get(i).getBook_title());
+//			map.put("start", list.get(i).getBook_date());
+//		}
+//		
+//		ArrayList<HashMap<String, Object>> resultList = new ArrayList<HashMap<String,Object>>();
+//		resultList.add(null);
+		
+		//return map;
 	}
 	
 	
@@ -47,6 +90,7 @@ public class BookingController {
 	public ModelAndView getCalList() {
 		ModelAndView mav = new ModelAndView();
 		List<BookingVO> list = service.getList();
+		log.info("list확인......................................>"+list);
 		
 		String json = new Gson().toJson(list);
 
@@ -61,23 +105,23 @@ public class BookingController {
 	}
 	
 	
-	//calendar test method = 예약 1개 보기
-	@GetMapping("/cal/{book_id}")
-	public ModelAndView getCal(@PathVariable("book_id") int book_id) {
-		ModelAndView mav = new ModelAndView();
-		BookingVO vo = service.getBooking(book_id);
-		
-		String json = new Gson().toJson(vo);
-
-		mav.setViewName("booking/bookingCal");
-		mav.addObject("event", json);
-		
-		log.info("cal controller..........................mav.......................");
-		log.info(mav);
-		log.info("json결과: ---------------------------------------"+json);
-
-		return mav;
-	}
+//	//calendar test method = 예약 1개 보기
+//	@GetMapping("/cal/{book_id}")
+//	public ModelAndView getCal(@PathVariable("book_id") int book_id) {
+//		ModelAndView mav = new ModelAndView();
+//		BookingVO vo = service.getBooking(book_id);
+//		
+//		String json = new Gson().toJson(vo);
+//
+//		mav.setViewName("booking/bookingCal");
+//		mav.addObject("event", json);
+//		
+//		log.info("cal controller..........................mav.......................");
+//		log.info(mav);
+//		log.info("json결과: ---------------------------------------"+json);
+//
+//		return mav;
+//	}
 	
 	
 	//예약폼 페이지로 이동

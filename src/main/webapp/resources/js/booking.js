@@ -45,7 +45,7 @@ var bookingService = (function(){
 			error();
 		}
 	});
-	}//end listBookingCal
+	}//end listBookingCall
 	
 	function getCalList(callback,error){
 		$.getJSON("/booking/list2.json", 
@@ -58,7 +58,13 @@ var bookingService = (function(){
 				error();
 			}
 		});
-	}
+	}//end getCalList
+	
+	
+	
+	
+	
+	
 	
 
 	
@@ -67,6 +73,6 @@ var bookingService = (function(){
 			insertBooking:insertBooking,
 			getCalList:getCalList,
 			listBookingCal:listBookingCal,
-			getCal:listBookingCall
+			listBookingCall:listBookingCall
 			};
 })();

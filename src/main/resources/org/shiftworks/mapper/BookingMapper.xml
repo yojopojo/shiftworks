@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.BookingMapper">
-
+	
 	
 	<!-- 선택한 자원의 해당일자 예약 목록 불러오기 -->
 	<resultMap type="org.shiftworks.domain.BookingVO" id="bookingListMap">
@@ -24,7 +24,7 @@
 		(#{book_id}, #{rsc_id}, #{emp_id}, #{dept_id}, TO_DATE(#{book_date}, 'yyyy-MM-dd'), #{book_begin}, #{book_begin}+2, #{book_title}, #{book_content})
 	</insert>
 	
-	<!-- 예약 1개 상세보기 -->
+ 	<!-- 예약 1개 상세보기 -->
 	<select id="getBooking" parameterType="int" resultType="org.shiftworks.domain.BookingVO">
 		select * from rsc_booking where book_id = #{book_id}
 	</select>

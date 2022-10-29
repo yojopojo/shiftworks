@@ -18,30 +18,74 @@
 
 
 
-      document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function () {
+    $(function () {
+        var request = $.ajax({
+            url: "/booking/getCal.json",
+            method: "GET",
+            dataType: "json"
+        });
+
+        request.done(function (data) {
+            console.log(data); //가져온 data 확인
+
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                editable: true,
+                droppable: true, // things to be dropped onto the calendar
+                
+                events:[data]
+            });
+
+            calendar.render();
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         /* var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth'
         }); */
         
-		bookingService.getCalList(function(result){
+		/* bookingService.getCalList(function(result){
     		console.log("RESULT: "+result);
-    	})
+    	}) */
     	
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-     });
+/*         var calendar = new FullCalendar.Calendar(calendarEl, {
+     		
+        }); 
         
         calendar.render();
         
-      });
+      }); */
       
       
-		/* events = [
-    		{
-    			start: result.book_date
-    		}
-    		] */
-   
       
 /*       	   events: [
        	    {
@@ -60,25 +104,6 @@
        	    }
        	  ] */
        	  
-/*          	 eventSources: [{
-        		events: function(info, successCallback, failureCallback) {
-        			$.ajax({
-        				type: 'GET',
-            			url: 'booking/list2',
-        				dataType: 'json',
-        				data: {
-        					start : 
-        						moment(info.startStr).format('YYYY-MM-DD'),
-        				},
-        				success: function(data) {
-        					successCallback(data);
-        				}
-        			});
-        		}
-        	}] */
-       	  
-       	  
-        	
         	
 /*         	events:function(callback){
         		
