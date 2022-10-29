@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 <!-- JQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
 
@@ -44,9 +44,36 @@
 				</div>
 				
 				
-				<button id ='signBtn' data-oper='1' class="btn btn-default update-status">승인</button>
-				<button id = 'rejectBtn' data-oper='2' class="btn btn-default update-status">반려</button>
-				<button id = 'commentBtn' data-oper='' class="btn btn-default">의견</button>
+				<button id = 'aprHandleBtn' data-oper='' class="btn btn-default">결재 처리</button>
+				
+				
+				<!-- 결재 처리 모달 구현 -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				     aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h4 class="modal-title" id="myModalLabel">결재 의견 입력</h4>
+				      </div>
+				      <div class="modal-body">
+				        <div class="form-group">
+				          <label>결재 의견</label>
+				          <textarea class="form-control" rows="3" name='apr_content'></textarea>
+				        </div>
+				
+				      </div>
+				      <div class="modal-footer">
+				        <button id ='signBtn' data-oper='1' class="btn btn-default update-status">승인</button>
+						<button id = 'rejectBtn' data-oper='2' class="btn btn-default update-status">반려</button>
+						<button id = 'cancleBtn' data-oper='' class="btn btn-default">취소</button>
+				      </div>          </div>
+				    <!-- /.modal-content -->
+				  </div>
+				  <!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+				
+				
 				
 								
 				<script type="text/javascript">
@@ -54,7 +81,7 @@
 				 
 				 $(document).ready(function () {
 					
-					// 승인 버튼 선택 시 결재 문서 상태를 승인으로 변경하고 전체 문서 리스트로 이동
+					// 승인, 반려 버튼 선택 시 결재 문서 상태 변경하고 전체 문서 리스트로 이동
 					$(".update-status").on("click",function(e){
 						e.preventDefault();
 						var status = $(this).data('oper');
@@ -69,7 +96,24 @@
 							}
 						})
 					});
-					
+				    var modal = $(".modal");
+/* 				    var modalInputReply = modal.find("input[name='reply']");
+				    var modalInputReplyer = modal.find("input[name='replyer']");
+				    var modalInputReplyDate = modal.find("input[name='replyDate']");
+
+				    var modalModBtn = $("#modalModBtn");
+				    var modalRemoveBtn = $("#modalRemoveBtn");
+				    var modalRegisterBtn = $("#modalRegisterBtn"); */
+
+				    
+				    $("#aprHandleBtn").on("click", function (e) {
+
+				        modal.find("input").val("");
+/* 				        modalInputReplyDate.closest("div").hide(); */
+
+				        $(".modal").modal("show");
+
+				      });
 				})
 				
 				
