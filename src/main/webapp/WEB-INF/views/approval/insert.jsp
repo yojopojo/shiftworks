@@ -14,18 +14,19 @@
           <div class="form-group">
           <div>
           <label>결재 양식</label> 
-          <select>
+          <select name="af_id">
           	<option value="">선택하세요</option>
-          	<option value="">기안서</option>
-          	<option value="">휴가신청서</option>
-          	<option value="">품의서</option>
+          	<option value="1">기안서</option>
+          	<option value="3">휴가신청서</option>
+          	<option value="2">품의서</option>
           </select>
+          <div>
+            <label>작성자</label> <input class="form-control" name='emp_id' readonly value="user1">
           </div>
+          <div>
             <label>결재명</label> <input class="form-control" name='apr_title'>
           </div>
-          <div class="form-group">
-            <label>작성자</label> <input class="form-control" name='emp_id'>
-          </div>
+
           <div class="form-group">
             <label>결재 내용</label>
             <textarea class="form-control" rows="3" name='apr_content'></textarea>

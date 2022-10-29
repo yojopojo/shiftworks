@@ -15,6 +15,7 @@
 	<table border="1" width="800">
 		<tr>
 			<th>결재 번호</th>
+			<th>결재 유형</th>
 			<th>작성자</th>
 			<th>작성일</th>
 			<th>결재명</th>
@@ -28,6 +29,7 @@
 		
 		<tr>	
 			<td><c:out value="${approval.apr_id }"/></td>
+			<td><c:out value="${approval.af_id }"/></td>
 			<td><c:out value="${approval.emp_id }"/></td>
 			<td><fmt:formatDate pattern="yyyy-MM-dd"
 			 value="${approval.apr_receivedate }"/></td>
