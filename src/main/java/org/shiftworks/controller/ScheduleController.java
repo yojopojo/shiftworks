@@ -32,7 +32,7 @@ public class ScheduleController {
 
 	private ScheduleService service;
 	
-	@GetMapping("")
+	@GetMapping("/main")
 	public ModelAndView schedule() {
 		ModelAndView mav = new ModelAndView();
 		

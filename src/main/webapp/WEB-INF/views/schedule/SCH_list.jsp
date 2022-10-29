@@ -122,6 +122,7 @@
         // 캘린더를 만들 때 필요한 요소 생성
         var makeDate = function() {
         	
+        	
         	if (selectedDate == undefined) {
         		// 날짜가 선택되지 않은 경우
         		var today = new Date();
@@ -130,17 +131,20 @@
                 day = ('0' + today.getDate()).slice(-2);
                 selectedDate = year + '-' + month  + '-' + day;
                 
+
         	} else {
         		// 날짜가 선택된 경우
         		let str = selectedDate.split('-');
         		year = str[0];
         		month = str[1];
-        		day = str[1];
+        		day = str[2];
+        		
         	}
         	
         	realDate = new Date(year, month, day);
         	
         	listparam.selectedDate = selectedDate;
+        	
         	
         } // end makeDate()
 
@@ -220,6 +224,7 @@
         	// 캘린더 날짜칸 생성
          	$('#calendarBody').html(makeCalendar);
         	
+        	
         }
         
         
@@ -236,7 +241,7 @@
         	
 	  		// 기준 날짜를 상단에 기입
 			$('.refDate a').text(year + '-' + month);
-        	
+	  		
         	// DB에서 선택 일정에 맞는 데이터 가져오기
 			getList();
 
@@ -352,13 +357,14 @@
 		// 전월 보기
 		function prevMonth() {
 			month = eval(month+'-1');
-
+        	
 			if(month<=9 && month>0) {
 				month = '0' + month;
 			} else if(month <= 0) {
 				year--;
 				month = '12';
 			}
+			
         }
         
         // 익월 보기
@@ -372,18 +378,22 @@
 				month = '01';
 			}
         }
+        
+        
 		
-		
-		$('.page-link').on("click", function(){
+		$('.page-link').on("click", function(e){
+			e.preventDefault();
 
 			if($(this).hasClass("prevMonth")) {
+				// 전월 보기
 				
 				prevMonth();
-				
+
 				selectedDate = year + '-' + month + '-' + day;
 				$("#month").trigger("click");
 
 			} else if($(this).hasClass("nextMonth")) {
+				// 익월 보기
 				
 				nextMonth();
 				
@@ -392,35 +402,41 @@
 				
 			} else if($(this).hasClass("prevWeek")) {
 				// 전주 보기
+				
 				day = eval(day+'-7');
 				if (day <= 0) {
 					let last = new Date(year, month-1, 0);
-					day = last - day;
+					day = lastday.getDate() - day;
 					prevMonth();
 				} else if (day>0 && day<10) {
 					day = '0' + day;
 				}
-				
+
 				selectedDate = year + '-' + month + '-' + day;
 				console.log(selectedDate);
 				$("#week").trigger("click");
 				
 			} else if($(this).hasClass("nextWeek")) {
 				// 다음주 보기
+				
 				day = eval(day+'+7');
+				
 				let last = new Date(year, month, 0);
+				last = last.getDate();
 				if (day < 10) {
 					day = '0' + day;
 				} else if(day > last) {
-					day = day - last;
+					day = '0' + (day - last);
 					nextMonth();
 				}
-				
+
 				selectedDate = year + '-' + month + '-' + day;
+				console.log(selectedDate);
 				$("#week").trigger("click");
 				
 			} else if($(this).hasClass("prevDay")) {
 				// 전일 보기
+
 				day = eval(day+'-1');
 				if (day == 0) {
 					day = new Date(year, month-1, 0);
@@ -428,21 +444,22 @@
 				} else if(day>0 && day<10) {
 					day = '0' + day;
 				}
-				
+
 				selectedDate = year + '-' + month + '-' + day;
 				$("#day").trigger("click");
 				
 			} else if($(this).hasClass("nextDay")) {
 				// 익일 보기
+				
+				day = 0;
 				day = eval(day+'+1');
 				let last = new Date(year, month, 0);
 				if (day < 10) {
 					day = '0' + day;
 				} else if(day > last) {
 					day = '01';
-					nextMonth();
 				}
-				
+
 				selectedDate = year + '-' + month + '-' + day;
 				$("#day").trigger("click");
 			}
