@@ -4,12 +4,18 @@ import java.lang.ProcessBuilder.Redirect;
 
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.service.ApprovalService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -62,6 +68,14 @@ public class ApprovalController {
 	@GetMapping("/insert")
 	public void insert() {}
 	
-	
-	
+	@PutMapping("/sign/{apr_id}")
+	@ResponseBody
+	public ResponseEntity<String> updateStatus(@PathVariable int apr_id, @RequestParam String status){
+		log.info("approval sign controller.......");
+		log.info("apr_id : " + apr_id);
+		
+		service.updateStatus(apr_id, status);
+		
+		return new ResponseEntity<String>("ok", HttpStatus.OK);
+	}
 }

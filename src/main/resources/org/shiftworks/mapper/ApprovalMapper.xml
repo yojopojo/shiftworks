@@ -30,5 +30,10 @@
 		where apr_id = #{apr_id}
 	</update>
 	
+	<update id="updateStatus">
+		update approval 
+		set apr_status = #{status}
+		where apr_id = #{apr_id}
+	</update>
 
 </mapper>

@@ -38,6 +38,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.update(approval) == 1;
 	}
 
+	@Override
+	public void updateStatus(int apr_id, String status) {
+		
+		mapper.updateStatus(apr_id, status);
+	}
+
 	
 
 }

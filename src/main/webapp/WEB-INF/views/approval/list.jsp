@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<h1>결재 내역 LIST 페이지</h1>
+<h1>전체 결재 문서 LIST 페이지</h1>
 	<a href="/approval/insert">결재문서 작성</a>
 	<table border="1" width="800">
 		<tr>
