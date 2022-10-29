@@ -7,6 +7,12 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+<!-- timePicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+
 <meta charset="UTF-8">
 <title>Book your meetings here</title>
 </head>
@@ -28,7 +34,7 @@
 			<div class="form-group">dept_id <input name="dept_id" type="text" value=""><br></div>
 			<!-- <div class="form-group">예약일자 <input name="book_date" type="text"><br></div> -->
 			예약일자 선택<input type="text" name="book_date" id="Date"><br>
-			
+
 			<!-- <div class="form-group">예약 시작시간 <input name="book_begin" type="text"><br></div> -->
 			<label>시작 시간 선택&ensp;</label><select name="book_begin" id="book_begin">
 					<option>----- 09:00-19:00 -----</option>

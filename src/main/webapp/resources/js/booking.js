@@ -60,12 +60,6 @@ var bookingService = (function(){
 		});
 	}//end getCalList
 	
-	
-	
-	
-	
-	
-	
 
 	
 	//이름 정리

@@ -36,13 +36,32 @@ import lombok.extern.log4j.Log4j;
 public class BookingController {
 	
 	private BookingService service;
-	
+
 	
 	//getList 테스트 메서드(list만 가져오고 view없음)
+	@GetMapping("/getCal2")
+	public List<Map<String, Object>> getCalbookings() {
+		List<BookingVO> bookingList = service.getList();
+		
+		List<Map<String, Object>> calList = new ArrayList<Map<String,Object>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		for(int i=0;i<bookingList.size();i++) {
+			map.put("title", bookingList.get(i).getBook_title());
+			map.put("start", bookingList.get(i).getBook_date());
+			
+			calList.add(i, map);
+		}
+		
+		return calList;
+	}
+	
+	
+	
+	//예약1개 보기 테스트 메서드(booking만 반환, view없음)
 	@GetMapping("/getCal")
-	@ResponseBody
 	public Map<String, Object> getCal() {
-		BookingVO getOne = service.getBooking(3);
+		BookingVO getOne = service.getBooking(1);
 		
 		String bookdate = getOne.getBook_date();
 		log.info(bookdate); //10개
@@ -85,7 +104,7 @@ public class BookingController {
 	}
 	
 	
-	//calendar test method
+	//calendar test method -> calendar view 출력용(list 못가져옴)
 	@GetMapping("/cal")
 	public ModelAndView getCalList() {
 		ModelAndView mav = new ModelAndView();
@@ -103,25 +122,6 @@ public class BookingController {
 
 		return mav;
 	}
-	
-	
-//	//calendar test method = 예약 1개 보기
-//	@GetMapping("/cal/{book_id}")
-//	public ModelAndView getCal(@PathVariable("book_id") int book_id) {
-//		ModelAndView mav = new ModelAndView();
-//		BookingVO vo = service.getBooking(book_id);
-//		
-//		String json = new Gson().toJson(vo);
-//
-//		mav.setViewName("booking/bookingCal");
-//		mav.addObject("event", json);
-//		
-//		log.info("cal controller..........................mav.......................");
-//		log.info(mav);
-//		log.info("json결과: ---------------------------------------"+json);
-//
-//		return mav;
-//	}
 	
 	
 	//예약폼 페이지로 이동
