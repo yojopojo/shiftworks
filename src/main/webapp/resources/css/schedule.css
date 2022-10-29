@@ -27,7 +27,7 @@ tr[class^=week] {
 }
 
 .pagination {
-	width: 175px;
+	width: 220px;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -37,7 +37,7 @@ tr[class^=week] {
 }
 
 .refDate {
-	width: 108px;
+	width: 140px;
 }
 
 #memoTable {

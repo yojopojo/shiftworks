@@ -40,10 +40,6 @@
 					<table class="table align-middle">
 						<thead id="calendarHead">
 							<tr>
-
-
-							</tr>
-							<tr>
 								<td colspan="6">
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
@@ -99,24 +95,35 @@
 	    listparam.selectedDate;
 	    listparam.sch_group;
 	    
+	    
+	    /* * * * * * * * * * * * * * * * * * *
+				DB 출력 전 데이터 처리
+		* * * * * * * * * * * * * * * * * * */
+		// 선택된 그룹이 없는 경우
+		if(typeof listparam.sch_group === 'undefined') {
+			listparam.sch_group = 'all';
+		}
+	    
 	    // 월별, 주별, 일별 탭 선택 시 타입 변경
 	    $('.nav li').on("click", function() {
 	    	$('.nav *').removeClass('active');
 	    	$(this).children('a').addClass('active');
 	    });
 
-        // 선택 날짜를 원하는 형태로 변경('yyyy-MM-dd')
-        
+        // 선택 날짜를 원하는 형태로 변경하여 사용하기 위한 변수('yyyy-MM-dd')
         var selectedDate;
         var year;
         var month;
         var day;
         
+        // 선택 날짜를 Date 형식으로 저장하기 위한 변수
+        var realDate;
+        
+        // 캘린더를 만들 때 필요한 요소 생성
         var makeDate = function() {
         	
-        	if (selectedDate == 'undefined') {
+        	if (selectedDate == undefined) {
         		// 날짜가 선택되지 않은 경우
-        		
         		var today = new Date();
         		year = today.getFullYear();
                 month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -128,22 +135,20 @@
         		let str = selectedDate.split('-');
         		year = str[0];
         		month = str[1];
-        		
+        		day = str[1];
         	}
         	
-        }
+        	realDate = new Date(year, month, day);
+        	
+        	listparam.selectedDate = selectedDate;
+        	
+        } // end makeDate()
 
 
         
-
-        
-
-
         /* * * * * * * * * * * * * * * * * * *
 					캘린더 틀 생성
 		* * * * * * * * * * * * * * * * * * */
-
-       
         // 요일 로우 생성
         var makeDOW = function() {
         	$('.dayOfWeek').html('<td>일</td>'+
@@ -214,18 +219,27 @@
          	
         	// 캘린더 날짜칸 생성
          	$('#calendarBody').html(makeCalendar);
+        	
         }
         
         
         // '월별' 클릭 시 캘린더 출력
         $('#month').on("click", function(e) {
+        	
+        	// 기본 이벤트 차단
         	e.preventDefault();
+        	
+        	// 선택일에 맞는 캘린더 생성
+        	makeDate();
         	makeDOW();
         	makeDOM();
-         	
+        	
+	  		// 기준 날짜를 상단에 기입
+			$('.refDate a').text(year + '-' + month);
+        	
         	// DB에서 선택 일정에 맞는 데이터 가져오기
 			getList();
-			
+
 			// 이전, 다음 버튼 월 단위로 변경
 			$('a[aria-label]').removeClass("prevWeek nextWeek prevDay nextDay");
 			$('a[aria-label=Previous]').addClass("prevMonth");
@@ -235,16 +249,25 @@
         });// end month onclick(월별 캘린더 생성 후 데이터 가져오기)
         
         
-        
         // '주별' 클릭 시 캘린더 생성
         $('#week').on("click", function(e) {
+        	// 기본 이벤트 차단
         	e.preventDefault();
+
+        	// 선택일에 맞는 캘린더 생성
+        	makeDate();
         	makeDOW();
         	makeDOM();
-   	
+
         	// 선택 주 빼고 숨김 처리
         	var selectedWeek = $('td[class=' + selectedDate + ']').parent();
         	$('#calendarBody tr').not(selectedWeek).hide();
+        	
+        	// 선택 주차를 변수에 저장
+        	var weekNum = selectedWeek.attr("class").replace('week', '');
+
+	  		// 기준 날짜를 상단에 기입
+			$('.refDate a').text(year + '-' + month + ' ' + weekNum + '주차');
         	
         	// DB에서 선택 일정에 맞는 데이터 가져오기
         	getList();
@@ -254,28 +277,37 @@
 			$('a[aria-label=Previous]').addClass("prevWeek");
 			$('a[aria-label=Next]').addClass("nextWeek");
         	
-        }); // end week onclick(주별 캘린더 생성)
+        }); // end week onclick(주별 캘린더 생성 후 데이터 출력)
         
         
      	// '일별' 클릭 시 캘린더 생성
     	$('#day').on("click", function(e) {
+    		// 기본 이벤트 차단
         	e.preventDefault();
+    		
+    		// 선택일에 맞는 캘린더 생성
+        	makeDate();
         	makeCalendar = "";
         	
-        	let d = today.getDay();
         	
-        	switch(d) {
-        	case 0: d = '일요일'; break;
-        	case 1: d = '월요일'; break;
-        	case 2: d = '화요일'; break;
-        	case 3: d = '수요일'; break;
-        	case 4: d = '목요일'; break;
-        	case 5: d = '금요일'; break;
-        	case 6: d = '토요일'; break;
+	  		// 기준 날짜를 상단에 기입
+			$('.refDate a').text(selectedDate);
+
+        	// 요일 정보 가져오기
+        	let dayNum = realDate.getDay();
+        	
+        	switch(dayNum) {
+        	case 0: dayNum = '일요일'; break;
+        	case 1: dayNum = '월요일'; break;
+        	case 2: dayNum = '화요일'; break;
+        	case 3: dayNum = '수요일'; break;
+        	case 4: dayNum = '목요일'; break;
+        	case 5: dayNum = '금요일'; break;
+        	case 6: dayNum = '토요일'; break;
         	}
         	
         	// 선택 요일 출력
-        	$('.dayOfWeek').html('<td colspan="7">' + d + '</td>')
+        	$('.dayOfWeek').html('<td colspan="7">' + dayNum + '</td>')
         	
         	// 왼쪽에 타임라인 출력
         	var timeline = (function() {
@@ -310,43 +342,117 @@
 			$('a[aria-label=Previous]').addClass("prevDay");
 			$('a[aria-label=Next]').addClass("nextDay");
         	
-        }); // end day onclick(일별 캘린더 생성)
+        }); // end day onclick(일별 캘린더 생성 후 데이터 출력)
         
-        
-     	
-     	/* * * * * * * * * * * * * * * * * * *
-     			DB 출력 전 데이터 처리
-     	* * * * * * * * * * * * * * * * * * */
-     	// 별도로 출력 날짜를 지정하지 않은 경우
-        if(typeof listparam.selectedDate === 'undefined') {
-            listparam.selectedDate = selectedDate;
-        }
 
-        // 기준 날짜를 상단에 기입
-        $('.refDate a').text(listparam.selectedDate);
-
-        // 선택된 그룹이 없을 경우
-        if(typeof listparam.sch_group === 'undefined') {
-            listparam.sch_group = 'all';
-        }
-        
      	/* * * * * * * * * * * * * * * * * * *
 			이전, 이후 버튼 클릭 시 달력 이동
 		* * * * * * * * * * * * * * * * * * */
-		$('.page-link').on("click", function(){
+		
+		// 전월 보기
+		function prevMonth() {
+			month = eval(month+'-1');
+
+			if(month<=9 && month>0) {
+				month = '0' + month;
+			} else if(month <= 0) {
+				year--;
+				month = '12';
+			}
+        }
+        
+        // 익월 보기
+        function nextMonth() {
+			month = eval(month+'+1');
 			
-			if($(this).hasClass(prevMonth)) {
+			if(month<=9) {
+				month = '0' + month;
+			} else if(month == 13) {
+				year++;
+				month = '01';
+			}
+        }
+		
+		
+		$('.page-link').on("click", function(){
+
+			if($(this).hasClass("prevMonth")) {
 				
+				prevMonth();
+				
+				selectedDate = year + '-' + month + '-' + day;
+				$("#month").trigger("click");
+
+			} else if($(this).hasClass("nextMonth")) {
+				
+				nextMonth();
+				
+				selectedDate = year + '-' + month + '-' + day;
+				$("#month").trigger("click");
+				
+			} else if($(this).hasClass("prevWeek")) {
+				// 전주 보기
+				day = eval(day+'-7');
+				if (day <= 0) {
+					let last = new Date(year, month-1, 0);
+					day = last - day;
+					prevMonth();
+				} else if (day>0 && day<10) {
+					day = '0' + day;
+				}
+				
+				selectedDate = year + '-' + month + '-' + day;
+				console.log(selectedDate);
+				$("#week").trigger("click");
+				
+			} else if($(this).hasClass("nextWeek")) {
+				// 다음주 보기
+				day = eval(day+'+7');
+				let last = new Date(year, month, 0);
+				if (day < 10) {
+					day = '0' + day;
+				} else if(day > last) {
+					day = day - last;
+					nextMonth();
+				}
+				
+				selectedDate = year + '-' + month + '-' + day;
+				$("#week").trigger("click");
+				
+			} else if($(this).hasClass("prevDay")) {
+				// 전일 보기
+				day = eval(day+'-1');
+				if (day == 0) {
+					day = new Date(year, month-1, 0);
+					prevMonth();
+				} else if(day>0 && day<10) {
+					day = '0' + day;
+				}
+				
+				selectedDate = year + '-' + month + '-' + day;
+				$("#day").trigger("click");
+				
+			} else if($(this).hasClass("nextDay")) {
+				// 익일 보기
+				day = eval(day+'+1');
+				let last = new Date(year, month, 0);
+				if (day < 10) {
+					day = '0' + day;
+				} else if(day > last) {
+					day = '01';
+					nextMonth();
+				}
+				
+				selectedDate = year + '-' + month + '-' + day;
+				$("#day").trigger("click");
 			}
 			
 		}); // 이전, 이후 버튼 클릭 시 달력 이동
-		
-        
-        
+
 	
-		// getList를 통해 DB에서 데이터 받아오기
+		/** getList를 통해 DB에서 데이터 받아오기 */
 	   	function getList() {scheduleService.getList(listparam, function(list) {
-	    	
+	   		
 	    	var html;
 	    	
 	    	list.forEach((item) => {
@@ -364,14 +470,13 @@
 	    		}
 	    		// end if ~ else
 	    		
-	    	}) // end forEach   	
+	    	}) // end forEach
 	    });} // end getList
 	    
 
      	// 기본으로 '월별' 캘린더가 클릭된 상태로 만듦
 		$("#month").trigger("click");
-		
-	
+
 	}) // end document ready
 
 </script>
