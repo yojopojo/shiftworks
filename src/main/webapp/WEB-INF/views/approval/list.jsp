@@ -33,7 +33,7 @@
 			<td><c:out value="${approval.emp_id }"/></td>
 			<td><fmt:formatDate pattern="yyyy-MM-dd"
 			 value="${approval.apr_receivedate }"/></td>
-			 <td><c:out value="${approval.apr_title}"/></td>
+			 <td><a href="/approval/get?apr_id=${approval.apr_id}"><c:out value="${approval.apr_title}"/></a></td>
 			<td><c:out value="${approval.apr_content }"/></td>
 			<td><c:out value="${approval.apr_status }"/></td>
 			<td><c:out value="${approval.apr_comment }"/></td>
