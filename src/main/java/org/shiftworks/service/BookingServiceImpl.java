@@ -3,6 +3,7 @@ package org.shiftworks.service;
 import java.util.List;
 
 import org.shiftworks.domain.BookingVO;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.mapper.BookingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,6 +134,14 @@ public class BookingServiceImpl implements BookingService {
 		int re = mapper.deleteBooking(book_id);
 		
 		return re;
+	}
+
+
+	@Override
+	public List<BookingVO> getListwithPaging(Criteria cri) {
+		log.info("get List with criteria from Service: "+cri);
+		
+		return mapper.getListwithPaging(cri);
 	}
 
 }

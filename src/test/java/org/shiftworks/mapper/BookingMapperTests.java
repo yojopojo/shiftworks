@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.BookingVO;
+import org.shiftworks.domain.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -79,59 +80,59 @@ public class BookingMapperTests {
 	
 	
 	
-	@Test
-	public void testGetBookingList() {
-		log.info("get bookingList by mapper.................");
-		
-		//선택한 날짜, 자원
-		String selectDate = "2022-10-25";
-		String selectRsc = "CFR305";
-		//선택한 시간
-	    int selectTime = 15;
- 	    
-	    try {
-//	       	// 포맷터        
-//		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//	    	Date selectBook_date = formatter.parse(selectDate);
-//	    	log.info("자원조건(rsc_id): ----------------------------->"+selectRsc);
-//	    	log.info("날짜조건(format된 날짜): ------------------------>"+selectBook_date);
-		    
-		    //선택된 날짜, 자원 parameter세팅
-		    BookingVO selectedVO = new BookingVO();
-		    selectedVO.setRsc_id(selectRsc);
-		    selectedVO.setBook_date(selectDate);
-
-		    //선택한 자원, 시간의 예약 리스트 불러오기
-		    List<BookingVO> bookingList = mapper.getBookingList(selectedVO);
-		    log.info("선택된 일자의 자원 예약목록 ----------------------------->"+bookingList);
-		    
-		    
-		    BookingVO newBooking = new BookingVO();
-		    newBooking.setBook_id(31);
-		    newBooking.setBook_date(selectDate);
-		    newBooking.setRsc_id(selectRsc);
-		    newBooking.setEmp_id("IMP3056");
-		    newBooking.setDept_id("sales");
-		    newBooking.setBook_begin(selectTime);
-		    newBooking.setBook_title("새로운 예약 중복 테스트");
-		    newBooking.setBook_content("plz don't");
-			log.info(newBooking);
-		    
-			boolean isAble = true;
-		
-		    for(int i=0;i<bookingList.size();i++) {
-		    	if(bookingList.get(i).getBook_begin() == selectTime) {
-		    		isAble = false;
-		    		return;
-		    	}
-		    }
-		    
-		    if(isAble == true) {
-		    	int num = mapper.insertBooking(newBooking);
-		    	log.info("예약 가능 및 예약 수----------------------->"+num);
-		    }else{
-		    	log.info("예약 불가능해용..............................");
-		    }
+//	@Test
+//	public void testGetBookingList() {
+//		log.info("get bookingList by mapper.................");
+//		
+//		//선택한 날짜, 자원
+//		String selectDate = "2022-10-25";
+//		String selectRsc = "CFR305";
+//		//선택한 시간
+//	    int selectTime = 15;
+// 	    
+//	    try {
+////	       	// 포맷터        
+////		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+////	    	Date selectBook_date = formatter.parse(selectDate);
+////	    	log.info("자원조건(rsc_id): ----------------------------->"+selectRsc);
+////	    	log.info("날짜조건(format된 날짜): ------------------------>"+selectBook_date);
+//		    
+//		    //선택된 날짜, 자원 parameter세팅
+//		    BookingVO selectedVO = new BookingVO();
+//		    selectedVO.setRsc_id(selectRsc);
+//		    selectedVO.setBook_date(selectDate);
+//
+//		    //선택한 자원, 시간의 예약 리스트 불러오기
+//		    List<BookingVO> bookingList = mapper.getBookingList(selectedVO);
+//		    log.info("선택된 일자의 자원 예약목록 ----------------------------->"+bookingList);
+//		    
+//		    
+//		    BookingVO newBooking = new BookingVO();
+//		    newBooking.setBook_id(31);
+//		    newBooking.setBook_date(selectDate);
+//		    newBooking.setRsc_id(selectRsc);
+//		    newBooking.setEmp_id("IMP3056");
+//		    newBooking.setDept_id("sales");
+//		    newBooking.setBook_begin(selectTime);
+//		    newBooking.setBook_title("새로운 예약 중복 테스트");
+//		    newBooking.setBook_content("plz don't");
+//			log.info(newBooking);
+//		    
+//			boolean isAble = true;
+//		
+//		    for(int i=0;i<bookingList.size();i++) {
+//		    	if(bookingList.get(i).getBook_begin() == selectTime) {
+//		    		isAble = false;
+//		    		return;
+//		    	}
+//		    }
+//		    
+//		    if(isAble == true) {
+//		    	int num = mapper.insertBooking(newBooking);
+//		    	log.info("예약 가능 및 예약 수----------------------->"+num);
+//		    }else{
+//		    	log.info("예약 불가능해용..............................");
+//		    }
 		    
 		    	
 //		    	if(bookingList.get(i).getBook_begin()==selectTime) {
@@ -154,14 +155,20 @@ public class BookingMapperTests {
 //		    	return;
 		    
 		    
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	
+	@Test
+	public void testPage() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(3);
+		cri.setAmount(3);
+		List<BookingVO> list = mapper.getListwithPaging(cri);
+		list.forEach(booking -> log.info(booking));
 	}
-	
-	
-	
-	
 	
 	
 	

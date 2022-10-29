@@ -56,7 +56,15 @@ public class BookingControllerTests {
 	
 	
 	
-	
+	@Test
+	public void testListPaging() throws Exception{
+		
+		log.info(mockMvc.perform(
+				MockMvcRequestBuilders.get("/booking/list")
+				.param("pageNum", "2")
+				.param("amount", "4"))
+				.andReturn().getModelAndView().getModelMap());
+	}
 	
 	
 	

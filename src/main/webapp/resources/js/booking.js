@@ -35,17 +35,6 @@ var bookingService = (function(){
 	});
 	}//end listBookingCal
 	
-	function listBookingCall(callback, error){
-		$.getJSON("/booking/cal", function(JSONdata){
-			if(callback){
-				callback(JSONdata);
-			}
-	}).fail(function(xhr, status, err){
-		if(error){
-			error();
-		}
-	});
-	}//end listBookingCall
 	
 	function getCalList(callback,error){
 		$.getJSON("/booking/list2.json", 
@@ -66,7 +55,6 @@ var bookingService = (function(){
 	return {name:"Reservation",
 			insertBooking:insertBooking,
 			getCalList:getCalList,
-			listBookingCal:listBookingCal,
-			listBookingCall:listBookingCall
+			listBookingCal:listBookingCal
 			};
 })();

@@ -21,7 +21,7 @@
 	
 	<div class="insertForm" id="insertForm">
 			<div class="form-body">
-			<div class="form-group">book_id <input name='book_id' type="text"><br></div>
+			<!-- <div class="form-group">book_id <input name='book_id' type="text"><br></div> -->
 			<!-- <div class="form-group">rsc_id <input name="rsc_id" type="text"><br></div> -->
 				<label>자원 선택&ensp;</label><select name="rsc_id" id="rsc_id">
 					<option>----- 자원 -----</option>

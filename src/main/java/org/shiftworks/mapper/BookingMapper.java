@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.shiftworks.domain.BookingVO;
+import org.shiftworks.domain.Criteria;
 
 public interface BookingMapper {
 	
@@ -20,7 +21,10 @@ public interface BookingMapper {
 	
 	
 	public BookingVO getBooking(int book_id);
+	//예약 목록 리스트
 	public List<BookingVO> getList();
+	//예약 목록 리스트(페이징)
+	public List<BookingVO> getListwithPaging(Criteria cri);
 	public List<BookingVO> getMyList(String emp_id);
 	public int deleteBooking(int book_id);
 	

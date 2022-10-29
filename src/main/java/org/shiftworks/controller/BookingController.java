@@ -1,13 +1,13 @@
 package org.shiftworks.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.shiftworks.domain.BookingPageDTO;
 import org.shiftworks.domain.BookingVO;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.service.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -159,16 +156,30 @@ public class BookingController {
 		return mav;
 	}
 	
-	//전체 예약 현황보기(게시판 이동)
+	
+	//전체 예약 현황보기(+페이징)(게시판 이동)
 	@GetMapping("/list")
-	public ModelAndView getList() {
+	public ModelAndView getList(Criteria cri, ModelAndView mav) {
 		//List<BookingVO> list = service.getList();
-		ModelAndView mav = new ModelAndView();
+		//ModelAndView mav = new ModelAndView();
 		mav.setViewName("booking/bookingList");
-		mav.addObject("event", service.getList());
+		mav.addObject("event", service.getListwithPaging(cri));
+		mav.addObject("pageMaker", new BookingPageDTO(cri, 23));
 		
 		return mav;
 	}
+	
+	
+//	//전체 예약 현황보기(게시판 이동)
+//	@GetMapping("/list")
+//	public ModelAndView getList() {
+//		//List<BookingVO> list = service.getList();
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("booking/bookingList");
+//		mav.addObject("event", service.getList());
+//		
+//		return mav;
+//	}
 	
 	//내 예약 현황보기(게시판 형식)
 	@GetMapping("/list/{emp_id}")

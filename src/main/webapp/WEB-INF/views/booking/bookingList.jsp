@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -30,11 +31,42 @@
 						<td><c:out value="${reserv.book_id }"></c:out></td>
 						<td><a href="/booking/${reserv.book_id}"><c:out value="${reserv.book_title }"></c:out></a></td>
 						<td><c:out value="${reserv.emp_id }"></c:out></td>
-						<td><c:out value="${reserv.book_date }"></c:out></td>
+						<td><c:out value="${reserv.book_date } ${reserv.book_begin }시"></c:out></td>
+						<%-- <td><fmt:formatDate pattern="yyyy-MM-dd" value="${reserv.book_date}"/></td> --%>
 					</tr>				
 				</c:forEach>
 					
-			</table>		
+			</table>
+			
+
+		
+		
+<%-- 					<div class="pull-right">
+				<ul class="pagination">
+				
+					<c:if test="${pageMaker.prev }">
+						<li class="paginate_button previous"><a href="#">Previous</a></li>
+					</c:if>
+					
+					<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+						<li class="paginate_button"><a href="#"> ${num} </a> </li>
+					</c:forEach>
+					<c:if test="${pageMaker.next }">
+						<li class="paginate_button"><a href="#">Next</a></li>
+					</c:if>
+				</ul>
+			</div>	 --%>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		</div>
 	</div>
 </body>

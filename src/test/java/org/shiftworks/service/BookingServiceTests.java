@@ -1,12 +1,10 @@
 package org.shiftworks.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.BookingVO;
+import org.shiftworks.domain.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -70,28 +68,28 @@ public class BookingServiceTests {
 //	
 	
 	
-	@Test
-	public void insertBookingConditionTest() {
-		log.info("insertBooking Condition Check Testing..................");
-		
-  		//선택한 자원, 날짜
-  		String selectDate = "2022-12-25";
-  		String selectRsc = "CFR305";
-  		//선택한 시간
-  	    int selectTime = 13;
-  	    
-  		BookingVO vo = new BookingVO();
-  		vo.setBook_id(32);
-  		vo.setRsc_id(selectRsc);
-  		vo.setDept_id("SALES");
-  		vo.setEmp_id("SALES");
-  		vo.setBook_begin(selectTime);
-  		vo.setBook_date(selectDate);
-  		vo.setBook_title("서비스 예약 테스트");
-  		vo.setBook_content("서비스 테스트");
-  		
-  		service.insertBookingCondition(vo);
-  		log.info("service.insertBookingCondition done---------------------------->"+vo);
+//	@Test
+//	public void insertBookingConditionTest() {
+//		log.info("insertBooking Condition Check Testing..................");
+//		
+//  		//선택한 자원, 날짜
+//  		String selectDate = "2022-12-25";
+//  		String selectRsc = "CFR305";
+//  		//선택한 시간
+//  	    int selectTime = 13;
+//  	    
+//  		BookingVO vo = new BookingVO();
+//  		vo.setBook_id(32);
+//  		vo.setRsc_id(selectRsc);
+//  		vo.setDept_id("SALES");
+//  		vo.setEmp_id("SALES");
+//  		vo.setBook_begin(selectTime);
+//  		vo.setBook_date(selectDate);
+//  		vo.setBook_title("서비스 예약 테스트");
+//  		vo.setBook_content("서비스 테스트");
+//  		
+//  		service.insertBookingCondition(vo);
+//  		log.info("service.insertBookingCondition done---------------------------->"+vo);
   		//log.info(re);
 
 //	      try {
@@ -126,8 +124,13 @@ public class BookingServiceTests {
 
 		//int re = service.insertBookingCondition(vo);
 		//log.info("vo결과값: (22/10/25...................................)"+re);
-	}
+//	}
 	
+	
+	@Test
+	public void testGetListPagin() {
+		service.getListwithPaging(new Criteria(2,4)).forEach(booking -> log.info(booking));
+	}
 	
 	
 	
