@@ -75,7 +75,7 @@ public class BookingServiceTests {
 		log.info("insertBooking Condition Check Testing..................");
 		
   		//선택한 자원, 날짜
-  		String selectDate = "2022-10-25";
+  		String selectDate = "2022-12-25";
   		String selectRsc = "CFR305";
   		//선택한 시간
   	    int selectTime = 13;

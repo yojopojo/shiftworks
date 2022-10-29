@@ -18,10 +18,9 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private BookingMapper mapper;
 	
-	//예약하기(+조건)
+	//예약하기(+예약 중복 검증)
 	@Override
 	public int insertBookingCondition(BookingVO vo) {
-		
 		
 		log.info("insertBooking Service with Condition...............");
 		String selectRsc = vo.getRsc_id();
@@ -45,14 +44,12 @@ public class BookingServiceImpl implements BookingService {
 	    	log.info("예약 가능! 예약된 자원----------------------->"+re+"개 입니다");
 	    	return re;
 	    }else{
-	    	log.info("예약 불가능해욥..............................");
+	    	log.info("예약 불가능..............................");
 	    	int re = -1;
 	    	return re;
 	    }
 	    
 	    
-	    //date변환?
-		
 		//선택한 자원의 예약 목록...
 //		if(selectRsc) {
 //			
@@ -72,7 +69,7 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	
-
+	//예약하기
 	@Override
 	public int insertBooking(BookingVO vo) {
 		log.info("insertBooking Service...............");
@@ -81,6 +78,8 @@ public class BookingServiceImpl implements BookingService {
 		return re;
 	}
 
+	
+	//예약 상세 보기(1개)
 	@Override
 	public BookingVO getBooking(int book_id) {
         
@@ -107,6 +106,8 @@ public class BookingServiceImpl implements BookingService {
         return vo;
 	}
 
+	
+	//예약 전체 현황(예약 리스트)
 	@Override
 	public List<BookingVO> getList() {
 		log.info("getList Service.....................");
@@ -115,7 +116,8 @@ public class BookingServiceImpl implements BookingService {
 		
 		return list;
 	}
-
+	
+	//내 예약 현황(내 예약 리스트)
 	@Override
 	public List<BookingVO> getMyList(String emp_id) {
 		log.info("getMyList Service.................");
@@ -125,6 +127,7 @@ public class BookingServiceImpl implements BookingService {
 		return myList;
 	}
 
+	//예약 취소
 	@Override
 	public int deleteBooking(int book_id) {
 		log.info("deleteBooking Service..............");

@@ -15,8 +15,8 @@
 	<h5><a href="/booking/new"><c:out value="예약하기"></c:out></a></h5><br>
 	
 	<div class="bookingList">
-		<div class="list-body">
-			<table class="table table-striped table-bordered table-hover">
+		 <div class="list-body">
+			<table class="table table-sm">
 				<thead>
 					<tr>
 						<th>예약번호</th>
@@ -25,7 +25,6 @@
 						<th>예약일자</th>
 					</tr>
 				</thead>
-				
 				<c:forEach items="${event }" var="reserv">
 					<tr>
 						<td><c:out value="${reserv.book_id }"></c:out></td>

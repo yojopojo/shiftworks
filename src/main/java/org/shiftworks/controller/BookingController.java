@@ -42,8 +42,6 @@ public class BookingController {
 	}
 	
 	
-	
-	
 	//calendar test method
 	@GetMapping("/cal")
 	public ModelAndView getCalList() {
@@ -101,11 +99,12 @@ public class BookingController {
 		log.info(re);
 		
 		return re == 1
-				? new ResponseEntity<>("success Reservation", HttpStatus.OK)
+				? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>("fail", HttpStatus.OK);
 		//return new ResponseEntity<String>("success Reservation", HttpStatus.OK);
 	}
 	
+	//예약 1개 상세보기
 	@GetMapping("/{book_id}")
 	public ModelAndView getBooking(@PathVariable("book_id") int book_id) {
 		
@@ -116,6 +115,7 @@ public class BookingController {
 		return mav;
 	}
 	
+	//전체 예약 현황보기(게시판 이동)
 	@GetMapping("/list")
 	public ModelAndView getList() {
 		//List<BookingVO> list = service.getList();
@@ -126,6 +126,7 @@ public class BookingController {
 		return mav;
 	}
 	
+	//내 예약 현황보기(게시판 형식)
 	@GetMapping("/list/{emp_id}")
 	public ModelAndView getMyList(@PathVariable("emp_id") String emp_id){
 		log.info("getMyList controller....................");
@@ -138,6 +139,7 @@ public class BookingController {
 		return mav;
 	}
 	
+	//예약 취소하기
 	@PostMapping("/{book_id}")
 	public ResponseEntity<String> deleteBooking(@PathVariable("book_id") int book_id) {
 		log.info("deleteBooking controller..................");
