@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <script 
-	src="https://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp"%>
+<%@include file="index.jsp"%>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -74,7 +71,6 @@
 
 <script type="text/javascript" src="/resources/js/post.js"></script>
 <script type="text/javascript">
-
 $(document).ready(function () {
 	
 	var form = $("#form")
@@ -90,7 +86,7 @@ $(document).ready(function () {
 	      var post = {
 	            b_id: 1,
 	            post_name:formInputTitle.val(),
-	            emp_id:1,
+	            emp_id:'U2946709',
 	            dept_id:formInputDept.val(),
 	            post_content:formInputContent.val(),
 	            post_receivedept:formInputReceive.val()

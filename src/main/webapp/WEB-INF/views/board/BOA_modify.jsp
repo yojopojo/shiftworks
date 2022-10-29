@@ -19,7 +19,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
 
-      <form id="form" action="/board/update" method="post">
+      <form id="form" action="/board/modify" method="post">
         <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
         <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 	    <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
@@ -115,7 +115,6 @@ $(document).ready(function() {
 		    formObj.submit(); 
 		  });
 	
-
 });
 </script>
   

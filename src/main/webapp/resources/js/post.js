@@ -24,23 +24,8 @@ var postService = (function(){
 	
 	
 	
-	function getList(post, callback, error) {
-
-		$.getJSON('/pages/'+type+"/"+ keyword+"/"+ pageNum,
-			function(data) {
-				if (callback) {
-					callback(data);
-				}
-			}).fail( function(xhr, status, er) {
-				if (error) {
-					error();
-				}
-			});
-	}
-	
 	return {
-		add:add,
-		getList: getList
+		add:add
 		};
 	
 	

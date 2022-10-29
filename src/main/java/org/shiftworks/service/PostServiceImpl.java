@@ -23,27 +23,7 @@ public class PostServiceImpl implements PostService {
 		
 	}
 
-<<<<<<< HEAD
-	@Override
-	public List<PostVO> getList(Criteria cri) {
-		return mapper.getListWithPaging(cri);
-	}
 
-	@Override
-	public int updatePost(PostVO postvo) {
-		return mapper.updatePost(postvo);
-	}
-
-	@Override
-	public int deletePost(int post_id) {
-		return mapper.deletePost(post_id);
-	}
-
-	@Override
-	public PostVO getPost(int post_id) {
-		return mapper.getPost(post_id);
-	}
-=======
 	/*
 	 * @Override public List<PostVO> getList(Criteria cri) { return
 	 * mapper.getListWithPaging(cri); }
@@ -74,8 +54,6 @@ public class PostServiceImpl implements PostService {
 		return mapper.getTotal();
 	}
 
-	
->>>>>>> branch 'feature-boa' of https://github.com/brightvvater/shiftworks.git
 	
 
 }

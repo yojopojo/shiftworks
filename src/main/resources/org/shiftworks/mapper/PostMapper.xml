@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.PostMapper">
 
-
+	<!--데이터 입력-->
 	<insert id="insertPost" parameterType="org.shiftworks.domain.PostVO">
 		insert into post (post_id, b_id, emp_id, dept_id, post_name, post_content,
 		post_regno, post_regdate, post_updatedate, post_fix, post_receivedept)
@@ -17,15 +17,15 @@
 	</select> -->
 	
 	
-	
-	<!-- <select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
+	 <!--검색을 더한 조회-->
+	 <select id="getListWithPagingSearch" resultType="org.shiftworks.domain.PostVO">
 		<![CDATA[
-			select post_id, b_id, post_name, post_content,
+			select post_id, b_id, dept_id, post_name, post_content, emp_id,
 				post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, name
 			from
 				( select /*+INDEX_DESC(post post_pk) */
-				  rownum rn, post_id, b_id,  post_name, post_content,
-				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, name
+				  rownum rn, p.post_id as post_id, b_id, p.dept_id as dept_id, post_name, post_content, p.emp_id as emp_id,
+				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, e.name as name
 				from post p JOIN employee e
 				ON e.emp_id =p.emp_id 
 				where
@@ -52,9 +52,10 @@
 			where rn >(#{pageNum}-1)*#{amount}
 		]]>
 		
-	</select> -->
+	</select> 
 	
-	<select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
+	<!-- 조회페이지 검색 시 pageNum만 넘어왔을 시 -->
+	<!-- <select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
 		<![CDATA[
 			select post_id, b_id, post_name, post_content,emp_id,dept_id,
 				post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
@@ -64,29 +65,33 @@
 				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
 				from post 
 				where
-		]]>
-			
-				
-		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
 				)
 			where rn >(#{pageNum}-1)*#{amount}
 		]]>
 		
-	</select>
+	</select> -->
 	
+	<!--데이터 수정-->
 	<update id="updatePost" parameterType="org.shiftworks.domain.PostVO">
 		update post set 	post_name =#{post_name}, post_content = #{post_content},
 		post_updatedate = sysdate, post_receivedept = #{post_receivedept}
 		where post_id = #{post_id}
 	</update>
-
+	
+	<!-- 데이터 삭제-->
 	<delete id="deletePost" parameterType="int" >
 		delete from post where post_id = #{post_id}
 	</delete>
 	
+	
 	<select id="getPost"  parameterType="int" resultType="org.shiftworks.domain.PostVO">
 		select * from post where post_id = #{post_id}
+	</select>
+	
+	<!-- 총 게시글 수 조회-->
+	<select id="getTotal" resultType="int">
+		select count(*) from post
 	</select>
 	
 	

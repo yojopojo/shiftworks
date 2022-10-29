@@ -5,6 +5,7 @@
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
+<%@include file="index.jsp"%>
 
 
 <div class="row">
@@ -63,7 +64,7 @@
 				<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
 
 
-				<form id='operForm' action="/board/update" method="get">
+				<form id='operForm' action="/board/modify" method="get">
 					<input type='hidden' id='post_id' name='post_id' 
 						value='<c:out value="${post.post_id}"/>'>
 					<input type='hidden' name='pageNum' 
@@ -98,8 +99,8 @@
 				<i class="fa fa-comments fa-fw">댓글</i> 
 				<div class="form-group">
 					<label></label> 
-					<input class="form-control" name='post_updatedate'
-						value='<c:out value=""/>' readonly="readonly">
+					<input class="form-control" name='r_content'
+						value='<c:out value=""/>'>
 				</div>
 				<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>댓글등록</button>
 			</div>
@@ -122,8 +123,7 @@
 
 			
 	
-
-<script type="text/javascript" src="/resources/js/post.js"></script>
+<script type="text/javascript" src="/resources/js/reply.js"></script>
 <script>
 $(document).ready(function () {
 	
@@ -133,10 +133,30 @@ $(document).ready(function () {
 				$("#operForm").submit();
 	});
 	
+	
+	//댓글등록 버튼 누를 시 reply/new 호출하기
+	var addReplyBtn =  $("#addReplyBtn");
+	
+	addReplyBtn.on("click", function(){
+		var formInsertContent = $(".panel").find("input[name='r_content']");
+		
+		var post ={
+				r_content : formInsertContent.val()
+		}
+		
+		
+		replyService.addReply(post, function(result){
+			
+			alert(result);
+			formInsertContent.val("");
+		})
+		
+	});
+	
+	
+	
 });
 	
-
-
 </script>
 
 
