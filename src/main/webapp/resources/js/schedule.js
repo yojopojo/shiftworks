@@ -57,7 +57,7 @@ var scheduleService = (function(){
     function updateSchedule(param, callback) {
         $.ajax({
             type: 'put',
-            url: '/schedule/' + param,
+            url: '/schedule/' + param.sch_id,
             data: JSON.stringify(param),
             contentType : "application/json; charset=utf-8",
             success : function(result) {
@@ -181,10 +181,10 @@ $(document).ready(function(){
     } // end makeDate()
 
 
-    
     /* * * * * * * * * * * * * * * * * * *
                 캘린더 틀 생성
     * * * * * * * * * * * * * * * * * * */
+
     // 요일 로우 생성
     var makeDOW = function() {
         $('.dayOfWeek').html('<td>일</td>'+
@@ -218,13 +218,16 @@ $(document).ready(function(){
         for (var i = prevDate - prevDay; i <= prevDate; i++) {
             dayCount++;
             makeCalendar += '<td class="prevDay ';
-            if(month == '01') {
-                makeCalendar += (year - 1);
-            } else {
-                makeCalendar += year;
+
+            let prevM = month - 1;
+            if (prevM == 0) {
+                prevM = 12;
+                year--;
+            } else if (prevM>0 || prevM<10) {
+                prevM = '0' + prevM;
             }
             
-            makeCalendar +=  '-' + month + '-' + i + '">' + i + '</td>';
+            makeCalendar += year + '-' + prevM + '-' + i + '">' + i + '</td>';
         }
         // 이번달 날짜만큼 칸 생성
         for (var i = 1; i <= nextDate; i++) {
@@ -244,13 +247,15 @@ $(document).ready(function(){
         for (var i = 1; i < (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
             makeCalendar += '<td class="nextDay ';
             
-            if(month == '12') {
-                makeCalendar += (year+1);
-            } else {
-                makeCalendar += year;
+            let nextM = month + 1;
+            if (nextM == 13) {
+                nextM = '01';
+                year++;
+            } else if (nextM>0 || nextM<10) {
+                nextM = '0' + nextM;
             }
             
-            makeCalendar += '-' + month + '-0' + i +'">' + i + '</td>'
+            makeCalendar += year + '-' + nextM + '-0' + i +'">' + i + '</td>'
         }
          
         // 캘린더 날짜칸 생성
@@ -258,7 +263,7 @@ $(document).ready(function(){
         
         
     }
-    
+
     
     // '월별' 클릭 시 캘린더 출력
     $('#month').on("click", function(e) {
@@ -514,7 +519,7 @@ $(document).ready(function(){
             if(item.sch_title != null) {
                 
                 html += '<tr>';
-                html += '<td class="eachSch">' + item.sch_title + '</td>';
+                html += '<td id="' + item.sch_id + '" class="eachSch">' + item.sch_title + '</td>';
                 html += '</tr>';
                 $('#calendarBody .' + item.sch_date).append(html);
             } else {
