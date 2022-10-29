@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Board Register</h1>
+		<h1 class="page-header">새로운 글 등록</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -18,11 +18,11 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 
-			<div class="panel-heading">게시판</div>
+			<div class="panel-heading"></div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<button id ="previewBtn" type="button" class="btn btn-preview">미리보기</button>
-				<button id="temporalBtn" type="button" class="btn btn-temporal">임시저장</button>
+				<button id ="previewBtn" type="button" class="btn btn-primary">미리보기</button>
+				<button id="temporalBtn" type="button" class="btn btn-primary">임시저장</button>
 
 				<form id="form">
 					<div class="form-group">
@@ -42,7 +42,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label>게시일</label> <input class="form-control" name='regdate' value="2022/10/25" readonly="readonly"/>
+						<label>게시일</label> <input class="form-control" name='post_regdate' value="" readonly="readonly"/>
 					</div>
 
 					<div class="form-group">
@@ -80,13 +80,18 @@ $(document).ready(function () {
 	var formInputDept = form.find("input[name='dept_id']");
 	var formInputContent = form.find("textarea[name='post_content']");
 	var formInputReceive = form.find("input[name='post_receivedept']");
+	var formInputRegdate = form.find("input[name='post_regdate']");
 	
+	var today = new Date();
+	formInputRegdate.attr("value",today);
+	
+	//글 등록 버튼 클릭 시 post db에 저장하기 
 	  $("#registerBtn").on("click",function(e){
 	      
 	      var post = {
 	            b_id: 1,
 	            post_name:formInputTitle.val(),
-	            emp_id:'U2946709',
+	            emp_id:formInputEmp.val(), //추후 로그인 세션으로 변경예정 
 	            dept_id:formInputDept.val(),
 	            post_content:formInputContent.val(),
 	            post_receivedept:formInputReceive.val()
@@ -98,9 +103,33 @@ $(document).ready(function () {
 	        alert(result);
 	        
 	        form.find("input").val(""); 
+	        form.find("textarea").val(""); 
 	      }); 
 	      
-	    });
+	    });//end register
+	    
+	
+	    
+	    
+	  //임시저장 버튼 클릭 시 임시저장 db저장하기 
+	   var temporalBtn = $("#temporalBtn");
+	 
+	    temporalBtn.on("click",function(){
+	    	
+	    	 var post = {
+	 	            b_id: 1,
+	 	            post_name:formInputTitle.val(),
+	 	            emp_id:formInputEmp.val(), //추후 로그인 세션으로 변경예정 
+	 	            dept_id:formInputDept.val(),
+	 	            post_content:formInputContent.val()
+	 	          };
+	    	 
+	    	 postService.temporalPost(post, function(result){
+	    		 alert(result);
+	    		 form.find("input").val(""); 
+	    		 form.find("textarea").val(""); 
+	    	 })
+	    })
 		
 	    	
 	  

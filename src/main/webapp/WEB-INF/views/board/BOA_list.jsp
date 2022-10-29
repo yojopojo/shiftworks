@@ -59,7 +59,7 @@
 				<!--검색버튼 -->
 				 <div class='row'>
 					<div class="col-lg-12">
-						<form id='searchForm' action="/board/list" method="post">
+						<form id='searchForm' action="/board/BOA_list" method="post">
 							<select name='type'>
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
@@ -101,7 +101,7 @@
 			</div>
 			<!-- end panelBody-->
 
-			<form id='actionForm' action='/board/list' method='get'>
+			<form id='actionForm' action='/board/BOA_list' method='get'>
 					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type}"/>'>

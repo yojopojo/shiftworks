@@ -1,11 +1,16 @@
 package org.shiftworks.mapper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
+import org.shiftworks.domain.ScrapVO;
+import org.shiftworks.domain.Temp_BoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,7 +25,7 @@ public class PostMapperTests {
 	@Autowired
 	private PostMapper mapper;
 	
-	
+
 //	 @Test 
 //	 public void testInsert() { 
 //		 PostVO postvo = new PostVO();
@@ -77,6 +82,47 @@ public class PostMapperTests {
 //		List<PostVO> list = mapper.getListWithPaging(cri);
 //		list.forEach(post -> log.info(post));
 //	}
-
+	
+//	@Test
+//	public void testInsertScrap() throws ParseException {
+//		ScrapVO vo = new ScrapVO();
+//		vo.setEmp_id("11");
+//		vo.setPost_id(8);
+//		vo.setDept_id("12");
+//		vo.setPost_name("홍길동입니다");
+//		vo.setPost_content("scrap test중입니다");
+//
+//
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//		Date tempdate = df.parse("2022-10-28");
+//		vo.setPost_regdate(tempdate);
+//		
+//		mapper.scrapPost(vo);
+//		
+//	}
+	
+//	@Test
+//	public void testInsertTemporal() {
+//		Temp_BoardVO vo = new Temp_BoardVO();
+//		vo.setB_id(5);
+//		vo.setDept_id("12");
+//		vo.setEmp_id("17");
+//		vo.setPost_name("임시");
+//		vo.setPost_content("임시저장 테스트중");
+//		
+//		mapper.temporalPost(vo);
+//	}
+	
+	
+	@Test
+	public void testTemporalSelect() {
+		
+		Temp_BoardVO vo = new Temp_BoardVO();
+		vo.setB_id(2);
+		vo.setEmp_id("17");
+		
+		log.info(mapper.temporalSelect(vo));
+		
+	}
 
 }

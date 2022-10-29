@@ -8,6 +8,8 @@ import org.shiftworks.domain.Criteria;
 
 import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
+import org.shiftworks.domain.ScrapVO;
+import org.shiftworks.domain.Temp_BoardVO;
 import org.shiftworks.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -106,7 +108,7 @@ public class PostController {
 //		? new ResponseEntity<String>("success", HttpStatus.OK)
 //		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		
-		log.info("modify.....................................................................................");
+		log.info("modify..................");
 		if(service.updatePost(post)==1) {
 			rttr.addFlashAttribute("result","success");
 		}
@@ -128,8 +130,42 @@ public class PostController {
 		
 	}
 	
+	//스크랩하기
+	@ResponseBody
+	@PostMapping(value="/scrap")
+	public ResponseEntity<String> scrapPost(@RequestBody ScrapVO vo){
+		log.info("scrap..........");
+	
+		
+		return service.scrapPost(vo)==1
+		? new ResponseEntity<String>("scraped!", HttpStatus.OK)
+		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
+	//임시저장/업데이트하기 
+	@ResponseBody
+	@PostMapping(value = "/temporal")
+	public ResponseEntity<String> temporalPost(@RequestBody Temp_BoardVO vo){
+		log.info("temporal......");
+		
+		return service.temporalPost(vo)==1
+		? new ResponseEntity<String>("temporal success",HttpStatus.OK)
+		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 	
+	//임시저장 불러오기 
+	//추후 session 넣고나면 register 눌렀을 때 임시저장 불러오도록 구현 
+	@ResponseBody
+	@GetMapping(value = "/temporal/{b_id}")
+	public ResponseEntity<Temp_BoardVO> temporalSelect(@PathVariable("b_id") int b_id){
+		log.info("temporalSelect.....");
+		
+		Temp_BoardVO vo = new Temp_BoardVO();
+		vo.setB_id(b_id);
+		return new ResponseEntity<Temp_BoardVO>(service.temporalSelect(vo),HttpStatus.OK);
+	}
 	
 	
 

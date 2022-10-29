@@ -38,6 +38,7 @@ public class ReplyController {
 	@GetMapping("/{post_id}")
 	public ResponseEntity<List<ReplyVO>> getListReply(@PathVariable("post_id") int post_id){
 		
+		log.info("reply......");
 		return new ResponseEntity<>(service.getReply(post_id),HttpStatus.OK);
 		
 	}

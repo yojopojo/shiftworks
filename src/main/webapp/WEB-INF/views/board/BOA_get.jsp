@@ -15,13 +15,15 @@
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
+<!--게시글 상세 폼-->
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
+		
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
+			<button id='scrapBtn' class='btn btn-primary btn-xs pull-right'>스크랩하기</button>
 
 				<div class="form-group">
 					<label>게시판번호</label> 
@@ -61,6 +63,11 @@
 					<input class="form-control" name='post_updatedate'
 						value='<c:out value=""/>' readonly="readonly">
 				</div>
+				<div class="form-group" hidden="hidden">
+					<label>emp_id</label> 
+					<input class="form-control" name='emp_id'
+						value='<c:out value="${post.emp_id }"/>' readonly="readonly">
+				</div>
 				<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
 
 
@@ -74,7 +81,7 @@
 						value='<c:out value="${cri.keyword}"/>'>
 					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 				</form>
-
+<!-- 게시글 상세 폼-->
 
 
 			</div>
@@ -122,40 +129,94 @@
 
 
 			
-	
+<script type="text/javascript" src="/resources/js/post.js"></script>	
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script>
 $(document).ready(function () {
+	
+	//form value 가져오기 
+	var post_id = $(".panel-body").find("input[name='post_id']").val(); 
+	var dept_id = $(".panel-body").find("input[name='dept_id']").val(); 
+	var emp_id = $(".panel-body").find("input[name='emp_id']").val(); 
+	var post_name = $(".panel-body").find("input[name='post_name']").val(); 
+	var post_content = $(".panel-body").find("textarea[name='post_content']").val(); 
+	var post_regdate = $(".panel-body").find("input[name='post_regdate']").val(); 
+	
+	//추후 scrap 에 regdate넣기 console.log(typeof(post_regdate));
+	
+	
 	
 	//글 수정 버튼 클릭 시 수정폼으로 가기 
 	$("#modifyBtn").on("click",function(){
 		
 				$("#operForm").submit();
+	});//end modifyform
+	
+	
+	//댓글 조회 자동 실행되기
+	var replyUl =  $(".chat") //새로 생긴 reply를 추가할 ul 태그
+	replyService.getReplyList({post:post_id}, function(list){
+		
+		var str ="";
+		for(var i=0;i<list.length;i++){
+			str +="<li class='left clearfix' data-reply_id='"+list[i].reply_id+"'>";
+			str +="<div>"+list[i].r_writer+"</div>";
+			str +="<div>"+list[i].r_content +"</div>";
+			str +="<div>"+list[i].r_regdate +"</div>"; //추후 시간 바꾸기 
+		}
+		
+		replyUl.html(str);
+		
 	});
 	
 	
 	//댓글등록 버튼 누를 시 reply/new 호출하기
 	var addReplyBtn =  $("#addReplyBtn");
 	
+	
 	addReplyBtn.on("click", function(){
 		var formInsertContent = $(".panel").find("input[name='r_content']");
 		
 		var post ={
+				post_id:post_id,
+				r_writer:"조현수", //나중에 sesssion 으로 변경해야함 
 				r_content : formInsertContent.val()
 		}
-		
 		
 		replyService.addReply(post, function(result){
 			
 			alert(result);
 			formInsertContent.val("");
-		})
+		});
+		
+		
+	});//end addReply
+	
+	
+	
+	//스크랩하기 클릭 시 스크랩에 문서함에 저장하기 
+	 var scrapBtn =  $('#scrapBtn');
+	
+	scrapBtn.on("click",function(){
+		
+		var post ={
+				post_id:post_id,
+				dept_id:dept_id,
+				emp_id:emp_id,
+				post_name:post_name,
+				post_content:post_content
+		}
+		
+		postService.scrapPost(post, function(result){
+			alert(result);
+		});
+		
 		
 	});
 	
 	
 	
-});
+});//end script
 	
 </script>
 

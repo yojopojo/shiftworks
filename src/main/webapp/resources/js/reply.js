@@ -25,12 +25,14 @@ var replyService = (function(){
 	
 	
 	
-	function getReplyList(post, callback, error) {
-
-		$.ajax({
+	function getReplyList(param, callback, error) {
+		
+		var post_id = param.post;
+		console.log(post_id);
+		
+			$.ajax({
 			type : 'get',
-			url : '/reply/'+post_id,
-			data : JSON.stringify(post),
+			url : '/reply/'+post_id+'.json',
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
@@ -47,7 +49,8 @@ var replyService = (function(){
 	
 	
 	return {
-		addReply:addReply
+		addReply:addReply,
+		getReplyList:getReplyList
 		};
 	
 	

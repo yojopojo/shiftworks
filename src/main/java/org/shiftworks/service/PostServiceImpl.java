@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
+import org.shiftworks.domain.ScrapVO;
+import org.shiftworks.domain.Temp_BoardVO;
 import org.shiftworks.mapper.PostMapper;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +54,24 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public int getTotal() {
 		return mapper.getTotal();
+	}
+
+
+	@Override
+	public int scrapPost(ScrapVO vo) {
+		return mapper.scrapPost(vo);
+	}
+
+
+	@Override
+	public int temporalPost(Temp_BoardVO vo) {
+		return mapper.temporalPost(vo);
+	}
+
+
+	@Override
+	public Temp_BoardVO temporalSelect(Temp_BoardVO vo) {
+		return mapper.temporalSelect(vo);
 	}
 
 	

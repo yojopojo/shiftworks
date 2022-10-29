@@ -84,7 +84,7 @@
 		delete from post where post_id = #{post_id}
 	</delete>
 	
-	
+	<!--하나의 post 만 가져오기-->
 	<select id="getPost"  parameterType="int" resultType="org.shiftworks.domain.PostVO">
 		select * from post where post_id = #{post_id}
 	</select>
@@ -93,6 +93,30 @@
 	<select id="getTotal" resultType="int">
 		select count(*) from post
 	</select>
+	
+	<!--스크랩하기-->
+	<insert id="scrapPost" parameterType="org.shiftworks.domain.ScrapVO">
+		insert into scrap (scrap_id, dept_id, emp_id,post_id, scrap_date, post_name,post_content)
+			values(scrap_seq.nextval, #{dept_id}, #{emp_id},#{post_id},sysdate,#{post_name},#{post_content})
+	</insert>
+	
+	
+	<!--emp_id, b_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트하기 -->
+	<update id="temporalPost" parameterType="org.shiftworks.domain.Temp_BoardVO">
+		merge into temp_board
+		using dual on(b_id = #{b_id} and emp_id = #{emp_id})
+		when matched then update set post_name=#{post_name}, post_content= #{post_content}
+		when not matched then
+			insert (temp_id, b_id, dept_id, emp_id, post_name, post_content) 
+			values (temp_board_seq.nextval,#{b_id},#{dept_id},#{emp_id}, #{post_name},#{post_content})
+	</update>
+	
+	<!--임시저장 불러오기-->
+	<select id="temporalSelect" parameterType="org.shiftworks.domain.Temp_BoardVO" resultType="org.shiftworks.domain.Temp_BoardVO">
+		select * from temp_board where emp_id = #{emp_id} and b_id=#{b_id}
+	</select>
+	
+
 	
 	
 </mapper>
