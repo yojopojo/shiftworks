@@ -163,11 +163,17 @@ public class BookingController {
 		//List<BookingVO> list = service.getList();
 		//ModelAndView mav = new ModelAndView();
 		mav.setViewName("booking/bookingList");
-		mav.addObject("event", service.getListwithPaging(cri));
 		mav.addObject("pageMaker", new BookingPageDTO(cri, 23));
-		
+		mav.addObject("event", service.getListwithPaging(cri));
+
 		return mav;
 	}
+	
+
+	
+	
+	
+	
 	
 	
 //	//전체 예약 현황보기(게시판 이동)

@@ -42,7 +42,7 @@
 	<!-- 전체 예약목록 with paging -->
  	<select id="getListwithPaging" resultMap="bookingPagingMap">
 		<![CDATA[
-			SELECT  emp_id, book_title, TO_DATE(book_date, 'yyyy-mm-dd'), book_id, book_begin
+			SELECT  emp_id, book_title, book_date, book_id, book_begin
 			FROM 
 			(
 				select /*+INDEX_DESC(rsc_booking pk_booking) */
