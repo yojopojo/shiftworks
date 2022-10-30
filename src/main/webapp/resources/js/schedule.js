@@ -1,4 +1,3 @@
-console.log("schedule.js........");
 
 // 즉시 실행 함수(프로퍼티를 갖는 객체로 리턴)
 // 일정 CRUD, 일정 검색
@@ -6,98 +5,154 @@ var scheduleService = (function(){
 
   
     // 리스트 불러오기
-    function getList(param, callback) {
+    function getList(param, callback, error) {
 
         $.ajax({
             type: 'get',
             url: '/schedule/' + param.sch_group + "/" + param.selectedDate,
             success: function(result) {
-                callback(result)
-            }
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function getList()
 
 
     // 일정 검색
-    function search(param, callback) {
+    function search(param, callback, error) {
         $.ajax({
             type: 'get',
             url: '/schedule/search/' + param,
             success: function(result) {
-                callback(result)
-            }
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function search()
 
     // 일정 상세 보기
-    function getSchedule(param, callback) {
+    function getSchedule(param, callback, error) {
         $.ajax({
             type: 'get',
             url: '/schedule/' + param,
             success: function(result) {
-                callback(result)
-            }
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function getSchedule()
 
     // 일정 등록
-    function insertSchedule(param, callback) {
+    function insertSchedule(param, callback, error) {
         $.ajax({
             type: 'post',
             url: '/schedule/new',
             data: JSON.stringify(param),
             contentType : "application/json; charset=utf-8",
-            success : function(result) {
-                callback(result);
-            }
+            success : function(result, status, xhr) {
+                if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function insertschedule()
 
     // 일정 수정
-    function updateSchedule(param, callback) {
+    function updateSchedule(param, callback, error) {
         $.ajax({
             type: 'put',
             url: '/schedule/' + param.sch_id,
             data: JSON.stringify(param),
             contentType : "application/json; charset=utf-8",
-            success : function(result) {
-                callback(result);
-            }
+            success: function(result) {
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function updateSchedule()
 
     // 일정 삭제
-    function deleteSchedule(param, callback) {
+    function deleteSchedule(param, callback, error) {
         $.ajax({
             type: 'delete',
             url: '/schedule/' + param,
-            success : function(result) {
-                callback(result);
-            }
+            success: function(result) {
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function deleteSchedule()
 
     // 메모 가져오기
-    function getMemo(callback) {
+    function getMemo(callback, error) {
         $.ajax({
             type: 'get',
             url: '/schedule/memo',
             success: function(result) {
-                callback(result);
-            }
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function getMemo()
 
     // 메모 업데이트
-    function updateMemo(param, callback) {
+    function updateMemo(param, callback, error) {
         $.ajax({
             type: 'put',
             url: '/schedule/memo',
             data: JSON.stringify(param),
             contentType : "application/json; charset=utf-8",
             success: function(result) {
-                callback(result);
-            }
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
         })
     } // end function updateMemo()
 
@@ -154,7 +209,6 @@ $(document).ready(function(){
     // 캘린더를 만들 때 필요한 요소 생성
     var makeDate = function() {
         
-        
         if (selectedDate == undefined) {
             // 날짜가 선택되지 않은 경우
             var today = new Date();
@@ -170,9 +224,9 @@ $(document).ready(function(){
             year = str[0];
             month = str[1];
             day = str[2];
-            
         }
         
+
         realDate = new Date(year, month, day);
         
         listparam.selectedDate = selectedDate;
@@ -214,21 +268,35 @@ $(document).ready(function(){
         weekCount = 0;
         makeCalendar = "";
         makeCalendar = '<tr class="week0">';
+
+        // 1월, 12월에서 이동 시 년 단위 변경을 위한 변수
+        var isChange;
+        var changeY;
+
         // 시작주 칸 생성(지난달 날짜분)
         for (var i = prevDate - prevDay; i <= prevDate; i++) {
             dayCount++;
             makeCalendar += '<td class="prevDay ';
 
             let prevM = month - 1;
+            isChange = false;
             if (prevM == 0) {
                 prevM = 12;
-                year--;
+                isChange = true;
             } else if (prevM>0 || prevM<10) {
                 prevM = '0' + prevM;
             }
+
+            if (isChange == true) {
+                changeY = year - 1;
+            } else {
+                changeY = year;
+            }
             
-            makeCalendar += year + '-' + prevM + '-' + i + '">' + i + '</td>';
+            makeCalendar += changeY + '-' + prevM + '-' + i + '">' + i + '</td>';
+            
         }
+
         // 이번달 날짜만큼 칸 생성
         for (var i = 1; i <= nextDate; i++) {
             if(dayCount == 7) {
@@ -242,22 +310,29 @@ $(document).ready(function(){
             }
             makeCalendar += i +'">' + i + '</td>'
         }
-        
+
          // 마지막주 칸 생성(다음달 날짜분)
         for (var i = 1; i < (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
             makeCalendar += '<td class="nextDay ';
             
             let nextM = month + 1;
+            isChange = false;
             if (nextM == 13) {
                 nextM = '01';
-                year++;
+                isChange = true;
             } else if (nextM>0 || nextM<10) {
                 nextM = '0' + nextM;
+            }
+
+            if (isChange == true) {
+                changeY = year + 1;
+            } else {
+                changeY = year;
             }
             
             makeCalendar += year + '-' + nextM + '-0' + i +'">' + i + '</td>'
         }
-         
+
         // 캘린더 날짜칸 생성
          $('#calendarBody').html(makeCalendar);
         
@@ -270,7 +345,7 @@ $(document).ready(function(){
         
         // 기본 이벤트 차단
         e.preventDefault();
-        
+
         // 선택일에 맞는 캘린더 생성
         makeDate();
         makeDOW();
@@ -405,13 +480,12 @@ $(document).ready(function(){
             year--;
             month = '12';
         }
-        
     }
     
     // 익월 보기
     function nextMonth() {
         month = eval(month+'+1');
-        
+
         if(month<=9) {
             month = '0' + month;
         } else if(month == 13) {
@@ -454,7 +528,6 @@ $(document).ready(function(){
             }
 
             selectedDate = year + '-' + month + '-' + day;
-            console.log(selectedDate);
             $("#week").trigger("click");
             
         } else if($(this).hasClass("nextWeek")) {
@@ -472,7 +545,7 @@ $(document).ready(function(){
             }
 
             selectedDate = year + '-' + month + '-' + day;
-            console.log(selectedDate);
+        
             $("#week").trigger("click");
             
         } else if($(this).hasClass("prevDay")) {
@@ -480,7 +553,7 @@ $(document).ready(function(){
 
             day = eval(day+'-1');
             if (day == 0) {
-                day = new Date(year, month-1, 0);
+                day = new Date(year, month-1, 0).getDate();
                 prevMonth();
             } else if(day>0 && day<10) {
                 day = '0' + day;
@@ -492,13 +565,13 @@ $(document).ready(function(){
         } else if($(this).hasClass("nextDay")) {
             // 익일 보기
             
-            day = 0;
             day = eval(day+'+1');
-            let last = new Date(year, month, 0);
+            let last = new Date(year, month, 0).getDate();
             if (day < 10) {
                 day = '0' + day;
             } else if(day > last) {
                 day = '01';
+                nextMonth();
             }
 
             selectedDate = year + '-' + month + '-' + day;
@@ -535,4 +608,6 @@ $(document).ready(function(){
      // 기본으로 '월별' 캘린더가 클릭된 상태로 만듦
     $("#month").trigger("click");
 
-}) // end document ready
+}) // 캘린더 생성
+
+

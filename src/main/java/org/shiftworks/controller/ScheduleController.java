@@ -81,7 +81,7 @@ public class ScheduleController {
 	
 	// 일정 등록
 	@PostMapping(value="/new",
-					produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+					produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
 		
 		return service.insertSchedule(scheduleVO) ?
@@ -93,7 +93,7 @@ public class ScheduleController {
 	// 일정 수정
 	@RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT},
 					value="/{sch_id}",
-					produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+					produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> updateSchedule(@RequestBody ScheduleVO scheduleVO) {
 		
 		return service.updateSchedule(scheduleVO) ?
@@ -102,7 +102,8 @@ public class ScheduleController {
 	}
 	
 	// 일정 삭제
-	@DeleteMapping(value="/{sch_id}")
+	@DeleteMapping(value="/{sch_id}",
+					produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> deleteSchedule(@PathVariable Integer sch_id, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
@@ -127,7 +128,7 @@ public class ScheduleController {
 	// 메모 업데이트
 	@RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT},
 			value="/memo",
-			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+			produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> updateMemo(HttpServletRequest request, @RequestBody String memo) {
 	
 		HttpSession session = request.getSession();

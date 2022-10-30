@@ -58,7 +58,7 @@ public class ScheduleServiceTests {
 		vo.setSch_content("test.");
 		vo.setParticipant(arr);
 		
-		service.insertSchedule(vo);
+		log.info(service.insertSchedule(vo));;
 	}
 	
 	// 일정 수정

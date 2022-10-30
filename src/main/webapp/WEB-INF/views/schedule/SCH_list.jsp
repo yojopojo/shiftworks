@@ -94,7 +94,6 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">새 일정 등록</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>
@@ -144,155 +143,188 @@
 
 	<script type="text/javascript">
 	
-		// 일정 CRUD 모달 관련
-		$(document).ready(function() {
-			
-			/* * * * * * * * * * * * * * * * * * *
-            			일정 CRUD
-			* * * * * * * * * * * * * * * * * * */
-			
-			var sch_group = $('.modal').find("input[name='sch_group']");
-			var start_date= $('.modal').find("input[name='start_date']");
-			var end_date= $('.modal').find("input[name='end_date']");
-			var sch_title= $('.modal').find("input[name='sch_title']");
-			var sch_content = $('.modal').find("input[name='sch_content']");
-			var participant = $('.modal').find("input[name='participant']");
-			var book_id = $('.modal').find("input[name='book_id']");
-			
+	// 일정 CRUD 모달 관련
+	$(document).ready(function() {
+				
+	    /* * * * * * * * * * * * * * * * * * *
+	                일정 CRUD
+	    * * * * * * * * * * * * * * * * * * */
+	    
+	    var sch_group = $('.modal').find("input[name='sch_group']");
+	    var start_date= $('.modal').find("input[name='start_date']");
+	    var end_date= $('.modal').find("input[name='end_date']");
+	    var sch_title= $('.modal').find("input[name='sch_title']");
+	    var sch_content = $('.modal').find("input[name='sch_content']");
+	    var participant = $('.modal').find("input[name='participant']");
+	    var book_id = $('.modal').find("input[name='book_id']");
+	    
 
-			// 일정 등록 버튼 클릭 시 이벤트
-			$('.newSchedule').on("click", function() {
-				
-				// 불필요한 버튼 숨김
-				$('.modal-footer *').show();
-				$('.modal-footer *').not('#modalCloseBtn').not('#schInsertBtn').hide();
-				
-				// 모달창 내용 비우고 현재 시간 기입하여 보여주기
-				$('.modal').find("input").val("");
-				$('input[name*="date"]').val($('.refDate p').text());
-				$('.modal').modal("show");
+	    // 일정 등록 버튼 클릭 시 이벤트
+	    $('.newSchedule').on("click", function() {
+	        
+	        // 불필요한 버튼 숨김
+	        $('.modal-footer *').show();
+	        $('.modal-footer *').not('#modalCloseBtn').not('#schInsertBtn').hide();
+	        
+	        // 모달창 내용 비우고 현재 시간 기입하여 보여주기
+	        $('.modal').find("input").val("");
+	        $('input[name*="date"]').val($('.refDate p').text());
+	        $('.modal').modal("show");
 
-			}); // end newSchedule onclick
-			// 일정 등록 요청 생성
-			$('#schInsertBtn').on("click", function() {
-				
-				let schedule = {
-					sch_group: sch_group.val(),
-					start_date: start_date.val(),
-					end_date: end_date.val(),
-					sch_title: sch_title.val(),
-					participant: participant.val().split(","),
-					sch_content: sch_content.val(),
-					dept_id: 'dept',
-					emp_id: 'S8945709',
-					book_id: book_id.val()
-				}
-				
-				scheduleService.insertSchedule(schedule, function(result){
-					
-					if(result != 'success') {
-						alert("등록 실패");
-					}
-					
-					// 등록 완료 시 모달 숨김
-					$('.modal').hide();
-					
-					// 등록 일정 표시를 위해 캘린더영역 새로 불러오기
-					$("#month").trigger("click");
-					
-				}) // end insertSchedule
-				
-			}); // end schInsertBtn onclick
+	    }); // end newSchedule onclick
+	    // 일정 등록 요청 생성
+	    $('#schInsertBtn').on("click", function() {
+	        
+	        let schedule = {
+	            sch_group: sch_group.val(),
+	            start_date: start_date.val(),
+	            end_date: end_date.val(),
+	            sch_title: sch_title.val(),
+	            participant: participant.val().split(","),
+	            sch_content: sch_content.val(),
+	            dept_id: 'dept',
+	            emp_id: 'S8945709',
+	            book_id: book_id.val()
+	        }
+	        
+	        scheduleService.insertSchedule(schedule, function(result){
+	            
+                
+                // 수정 완료 시 모달 숨김
+                $('.modal').modal("hide");
+                
+             	// 등록 성공 안내
+                if (result == 'success') {
+                    alert('정상적으로 등록되었습니다.');
+                }
+                
+                // 수정한 일정 표시를 위해 캘린더영역 새로 불러오기
+                $("#month").trigger("click");
+                
+             	
+	            
+	        }) // end insertSchedule
+	        
+	    }); // end schInsertBtn onclick
+	    
+	    
+	    // 개별 일정 클릭 시 이벤트
+	    // eachSch onclick
+	    $('#calendarBody').on("click", '.eachSch', function(e) {
+	        
+	        // 해당 일정 PK값 변수에 저장
+	        let sch_id = $(this).attr("id");
+	        console.log(sch_id);
+	        
+	        // 불필요한 버튼 숨긴 후 모달 표시
+	        $('.modal-footer *').show();
+	        $('#schInsertBtn').hide();
+	        $('.modal').modal("show");
+	        
+	        // 선택한 일정 상세보기
+	        scheduleService.getSchedule(sch_id, function(result){
+	            
+	            sch_group.val(result.sch_group);
+	            start_date.val(result.start_date);
+	            end_date.val(result.end_date);
+	            sch_title.val(result.sch_title);
+	            participant.val(result.participant);
+	            sch_content.val(result.sch_content);
+	            book_id.val(result.book_id);				
+	            
+	        }) // end getSchedule
+	        
+	        
+	        // 일정 수정하기
+	        $('#schUpdateBtn').on("click", function(e) {
+	            
+	            let schedule = {
+	                    sch_id: eval(sch_id),
+	                    sch_group: sch_group.val(),
+	                    start_date: start_date.val(),
+	                    end_date: end_date.val(),
+	                    sch_title: sch_title.val(),
+	                    sch_content: sch_content.val(),
+	                    book_id: book_id.val()
+	            }
+	            
+	            scheduleService.updateSchedule(schedule, function(result) {
+	                
+	                // 수정 완료 시 모달 숨김
+	                $('.modal').modal("hide");
+	                
+	             	// 수정 성공 안내
+	                if (result == 'success') {
+	                    alert('정상적으로 수정되었습니다.');
+	                }
+	                
+	                // 수정 반영을 위해 캘린더영역 새로 불러오기
+	                $("#month").trigger("click");
+	                
+	            });// end updateSchedule
+	            
+	        }); // end schUpdate onclick
+	        
+	        
+	        $('#schDeleteBtn').on("click", function(){
+	            
+	           scheduleService.deleteSchedule(sch_id, function(result) {
+	                
+	                // 작업 완료 시 모달 숨김
+	                $('.modal').modal("hide");
+	                
+	             	// 삭제 성공 안내
+	                if (result == 'success') {
+	                    alert('정상적으로 삭제되었습니다.');
+	                }
+	                
+	                // 삭제 반영을 위해 캘린더영역 새로 불러오기
+	                $("#month").trigger("click");
+	                
+	             	
+	            });// end deleteSchedule
+	            
+	        });
+	        
+	    }); // end each onclick
+	    
+	    
+	    // 모달창 닫기 이벤트
+	    $("#modalCloseBtn").on("click", function(e){
+	        $('.modal').modal("hide");
+	    });
+	    $(".close").on("click", function(e){
+	        $('.modal').modal("hide");
+	    });
+	    
+	    
+	});// 일정 CRUD 모달
+	
+	
+		// 세션 적용 후 test
+		/* // 메모 작성 및 저장
+		$(document).ready(function(){
 			
+			// 페이지 로드 시 DB에서 메모 불러오기
+			$('#memoTable').text(scheduleService.getMemo(function(result){
+				return result();
+			}));
 			
-			// 개별 일정 클릭 시 이벤트
-			// eachSch onclick
-			$('#calendarBody').on("click", '.eachSch', function(e) {
+			// 메모장에 메모 입력 시 저장 버튼 없이도 데이터 저장(업데이트)
+			$('#memoTable').on("keyup", function(){
+				var memo = $(this).text();
 				
-				// 해당 일정 PK값 변수에 저장
-				let sch_id = $(this).attr("id");
-				console.log(sch_id);
-				
-				// 불필요한 버튼 숨긴 후 모달 표시
-				$('.modal-footer *').show();
-				$('#schInsertBtn').hide();
-				$('.modal').modal("show");
-				
-				// 선택한 일정 상세보기
-				scheduleService.getSchedule(sch_id, function(result){
-					
-					sch_group.val(result.sch_group);
-					start_date.val(result.start_date);
-					end_date.val(result.end_date);
-					sch_title.val(result.sch_title);
-					participant.val(result.participant);
-					sch_content.val(result.sch_content);
-					book_id.val(result.book_id);				
-					
-				}) // end getSchedule
-				
-				
-				// 일정 수정하기
-				$('#schUpdateBtn').on("click", function(e) {
-					
-					let schedule = {
-							sch_id: eval(sch_id),
-							sch_group: sch_group.val(),
-							start_date: start_date.val(),
-							end_date: end_date.val(),
-							sch_title: sch_title.val(),
-							sch_content: sch_content.val(),
-							book_id: book_id.val()
-					}
-					
-					scheduleService.updateSchedule(schedule, function(result) {
-						
-						if (result != 'success') {
-							alert("등록 실패");
-						}
-						
-						// 수정 완료 시 모달 숨김
-						$('.modal').hide();
-						
-						// 수정한 일정 표시를 위해 캘린더영역 새로 불러오기
-						$("#month").trigger("click");
-						
-					});// end updateSchedule
-					
-				}); // end schUpdate onclick
-				
-				
-				$('#schDeleteBtn').on("click", function(){
-					
-						scheduleService.deleteSchedule(sch_id, function(result) {
-						
-						if (result != 'success') {
-							alert("등록 실패");
-						}
-						
-						// 수정 완료 시 모달 숨김
-						$('.modal').hide();
-						
-						// 수정한 일정 표시를 위해 캘린더영역 새로 불러오기
-						$("#month").trigger("click");
-						
-					});// end updateSchedule
+				scheduleService.insertMemo(memo, function (result){
 					
 				});
 				
-			}); // end each onclick
+			});
 			
 			
-			
-			// 모달창 닫기 이벤트
-			$("#modalCloseBtn").on("click", function(e){
-				$('.modal').modal("hide");
-		    });
-			$(".close").on("click", function(e){
-				$('.modal').modal("hide");
-		    });
-
-		});// end document ready function
+		}); // 메모 작성 및 저장 */
+	
+	
+		
 	</script>
 
 </body>

@@ -47,6 +47,7 @@ tr[class^=week] {
 	vertical-align: top;
 	text-align: left;
 	padding: 20px;
+	border: 1px darkgray !important;
 }
 
 .timeline {
