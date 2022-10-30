@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +11,11 @@
 </head>
 <body>
 	<h2>Detail Reservation Page</h2>
-	
+ 	
+  	<div class="col-8">
+	    <div class="col-4">column1</div>
+	    <div class="col-4">column2</div>
+	    <div class="col-4">column3</div>
 	<table>
 		<thead>
 			<tr>
@@ -21,7 +26,9 @@
 		</thead>
 			<tr>
 				<td>일정</td>
-				<td><c:out value="${event.book_date } ${event.book_begin }시~${event.book_end }시"></c:out></td>
+				<td><c:set var="book_date" value="${event.book_date }"></c:set>
+				<c:out value="${fn:substring(book_date,0,10) }">&ensp;</c:out>
+				<c:out value="${event.book_begin }시~${event.book_begin+2 }시"></c:out></td>
 			</tr>
 			
 			<tr>
@@ -42,6 +49,75 @@
 			<th><a href="#"><c:out value="삭제"></c:out></a></th>
 		</tr>
 	</table>
+	</div>
+	
+	
+	
+	
+	
+<%-- 	<table class="table table-hover">
+        <colgroup>
+            <col width=15%>
+            <col width=70%>
+            <col width=15%>
+        </colgroup>
+        <tr>
+            <th>${event.book_id}</th>
+            <th>${event.book_title }</th>
+            <th>${event.emp_id }</th>
+        </tr>
+    </table>
+    <table>
+		<colgroup>
+			<col width=50%>
+			<col width=50%>
+		</colgroup>
+		<tr>
+			<th>${event.book_date}</th>
+			<th>${event.book_begin }</th>
+		</tr>
+		<colgroup>
+			<col width=100%>
+		</colgroup>
+		<tr>
+			<th>${event.book_content}</th>
+		</tr>
+	</table> --%>
+</body>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </body>
 </html>

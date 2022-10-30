@@ -33,9 +33,9 @@ import lombok.extern.log4j.Log4j;
 public class BookingController {
 	
 	private BookingService service;
-
 	
-	//getList 테스트 메서드(list만 가져오고 view없음)
+	
+	//getList 테스트 메서드(list만 가져오고 view없음) -> 리스트 출력은 ok, 달력에 출력은 x
 	@GetMapping("/getCal2")
 	public List<Map<String, Object>> getCalbookings() {
 		List<BookingVO> bookingList = service.getList();
@@ -55,7 +55,7 @@ public class BookingController {
 	
 	
 	
-	//예약1개 보기 테스트 메서드(booking만 반환, view없음)
+	//예약1개 보기 테스트 메서드(booking만 반환, view없음) -> 달력 출력ok
 	@GetMapping("/getCal")
 	public Map<String, Object> getCal() {
 		BookingVO getOne = service.getBooking(1);
@@ -169,23 +169,6 @@ public class BookingController {
 		return mav;
 	}
 	
-
-	
-	
-	
-	
-	
-	
-//	//전체 예약 현황보기(게시판 이동)
-//	@GetMapping("/list")
-//	public ModelAndView getList() {
-//		//List<BookingVO> list = service.getList();
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("booking/bookingList");
-//		mav.addObject("event", service.getList());
-//		
-//		return mav;
-//	}
 	
 	//내 예약 현황보기(게시판 형식)
 	@GetMapping("/list/{emp_id}")
