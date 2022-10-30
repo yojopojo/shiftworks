@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
+import org.shiftworks.domain.WorkScheduleVO;
 import org.shiftworks.mapper.ScheduleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,6 +90,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public boolean updateMemo(String emp_id, String memo) {
 		return mapper.updateMemo(emp_id, memo) == 1;
+	}
+
+	// 같은 부서 직원의 근무 스케쥴 불러오기
+	@Override
+	public List<WorkScheduleVO> getWorkerList(String dept_id) {
+		return mapper.getWorkerList(dept_id);
 	}
 
 }

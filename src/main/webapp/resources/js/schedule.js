@@ -156,6 +156,24 @@ var scheduleService = (function(){
         })
     } // end function updateMemo()
 
+    // 근무 직원 리스트
+    function getWorkerList(param, callback, error) {
+        $.ajax({
+            type: 'get',
+            url: '/schedule/worker/' + param,
+            success: function(result) {
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+        })
+    } // end function getMemo()
+
     return {
         getList: getList,
         search: search,
@@ -164,7 +182,8 @@ var scheduleService = (function(){
         updateSchedule: updateSchedule,
         deleteSchedule: deleteSchedule,
         getMemo: getMemo,
-        updateMemo: updateMemo
+        updateMemo: updateMemo,
+        getWorkerList: getWorkerList
     };
 
 })();
@@ -268,6 +287,9 @@ $(document).ready(function(){
         weekCount = 0;
         makeCalendar = "";
         makeCalendar = '<tr class="week0">';
+        // 근무자 확인 아이콘 생성을 위한 html 태그
+        var workers = '<a tabindex="0" class="btn">' 
+                            + '<i class="fa fa-users btn" aria-hidden="true"></i></a>';
 
         // 1월, 12월에서 이동 시 년 단위 변경을 위한 변수
         var isChange;
@@ -293,7 +315,8 @@ $(document).ready(function(){
                 changeY = year;
             }
             
-            makeCalendar += changeY + '-' + prevM + '-' + i + '">' + i + '</td>';
+            makeCalendar += changeY + '-' + prevM + '-' + i + '">' + i +
+                            workers + '</td>';
             
         }
 
@@ -308,7 +331,7 @@ $(document).ready(function(){
             if (i<10) {
                 makeCalendar += '0'
             }
-            makeCalendar += i +'">' + i + '</td>'
+            makeCalendar += i +'">' + i + workers + '</td>';
         }
 
          // 마지막주 칸 생성(다음달 날짜분)
@@ -330,13 +353,33 @@ $(document).ready(function(){
                 changeY = year;
             }
             
-            makeCalendar += year + '-' + nextM + '-0' + i +'">' + i + '</td>'
+            makeCalendar += year + '-' + nextM + '-0' + i +'">' + i 
+                        + workers + '</td>';
         }
 
         // 캘린더 날짜칸 생성
-         $('#calendarBody').html(makeCalendar);
+          $('#calendarBody').html(makeCalendar);
         
-        
+        // // 날짜에 맞게 근무표 로드
+        // scheduleService.getWorkerList('dept', function(result) {
+
+        // result.forEach((item) => {
+
+        //     let workStart = item.start_time.split(' ');
+
+        //     let start_day = workStart[0];
+        //     let start_time = (workStart[1].split(':'))[0] + ':' + (workStart[1].split(':'))[1];
+
+        //     if(start_day == selectedDate) {
+                
+        //     }
+        //     // end if ~ else
+            
+        // }) // end forEach
+
+        // }); // end getWorkerList()
+
+
     }
 
     
@@ -444,7 +487,7 @@ $(document).ready(function(){
                     t = i + ':00';
                 }
                 
-                tHTML += '<li><b>' + t + '</b></li>';
+                tHTML += '<tr><td><b>' + t + '</b></td><tr>';
             }
             
             return tHTML;
@@ -452,8 +495,8 @@ $(document).ready(function(){
         })();
         
         // 선택 날짜를 출력할 칸 만들기
-        $('#calendarBody').html('<tr><td><ul class="timeline">' + timeline + '</ul></td>'
-            + '<td colspan="7" class="' + selectedDate + '"></td></tr>');
+        $('#calendarBody').html('<tr><td colspan="1" class="timeline">' + timeline + '</td>'
+            + '<td colspan="6" class="' + selectedDate + '"></td></tr>');
         
         // DB에서 선택 일정에 맞는 데이터 가져오기
         getList();
@@ -581,6 +624,10 @@ $(document).ready(function(){
     }); // 이전, 이후 버튼 클릭 시 달력 이동
 
 
+    
+
+
+
     /** getList를 통해 DB에서 데이터 받아오기 */
        function getList() {scheduleService.getList(listparam, function(list) {
            
@@ -590,13 +637,9 @@ $(document).ready(function(){
             html = "";
 
             if(item.sch_title != null) {
-                
                 html += '<tr>';
                 html += '<td id="' + item.sch_id + '" class="eachSch">' + item.sch_title + '</td>';
                 html += '</tr>';
-                $('#calendarBody .' + item.sch_date).append(html);
-            } else {
-                html +="<tr></tr>"
                 $('#calendarBody .' + item.sch_date).append(html);
             }
             // end if ~ else

@@ -16,7 +16,7 @@
 }
 
 .eachSch {
-	color: darkblue;
+	color: #1C3359;
 }
 
 .prevDay, .nextDay {
@@ -50,7 +50,7 @@ tr[class^=week] {
 	border: 1px darkgray !important;
 }
 
-.timeline {
+.timeline, .searchResult {
 	list-style: none;
 }
 
@@ -64,4 +64,14 @@ tr[class^=week] {
 
 .refDate p{
 	display: none;
+}
+
+.fa {
+	color: #1C3359 !important;
+	float: right;
+}
+
+.search {
+	float: right;
+	width: 300px;
 }

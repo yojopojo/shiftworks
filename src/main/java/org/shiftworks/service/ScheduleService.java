@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
+import org.shiftworks.domain.WorkScheduleVO;
 
 public interface ScheduleService {
 
@@ -18,5 +19,7 @@ public interface ScheduleService {
 	
 	String getMemo(String emp_id);
 	boolean updateMemo(String emp_id, String memo);
+	
+	List<WorkScheduleVO> getWorkerList(String dept_id);
 	
 }

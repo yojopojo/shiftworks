@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
+import org.shiftworks.domain.WorkScheduleVO;
 
 public interface ScheduleMapper {
 
@@ -23,6 +24,8 @@ public interface ScheduleMapper {
 	
 	String getMemo(String emp_id);
 	int updateMemo(@Param("emp_id") String emp_id, @Param("memo") String memo);
+	
+	List<WorkScheduleVO> getWorkerList(String dept_id);
 	
 	//boolean insertAlarm(AlarmVO alarmVO);
 }

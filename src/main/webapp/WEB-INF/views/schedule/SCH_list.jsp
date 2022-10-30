@@ -6,8 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <script type="text/javascript" src="/resources/js/schedule.js"></script>
 <link rel="stylesheet" href="/resources/css/schedule.css">
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
@@ -20,6 +23,13 @@
 <title>일정 관리</title>
 </head>
 <body>
+
+	<div class="search" role="search">
+        <input class="form-control me-2" type="search" placeholder="일정 검색" aria-label="Search">
+        <ul class="searchResult">
+        	
+        </ul>
+    </div>
 
 	<div class="table-responsive">
 		<table>
@@ -138,7 +148,9 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-
+	
+	<!-- 스케쥴 모달 -->
+<!-- 	<div class="modal-dialog modal-sm">...</div> -->
 
 
 	<script type="text/javascript">
@@ -190,15 +202,18 @@
 	        scheduleService.insertSchedule(schedule, function(result){
 	            
                 
-                // 수정 완료 시 모달 숨김
+                // 등록 완료 시 모달 숨김
                 $('.modal').modal("hide");
                 
              	// 등록 성공 안내
                 if (result == 'success') {
                     alert('정상적으로 등록되었습니다.');
                 }
+             	
+             	// 등록 스케쥴의 시작일로 선택일자 변경
+             	selectedDate = schedule.start_date;
                 
-                // 수정한 일정 표시를 위해 캘린더영역 새로 불러오기
+                // 등록한 일정 표시를 위해 캘린더영역 새로 불러오기
                 $("#month").trigger("click");
                 
              	

@@ -82,12 +82,12 @@ public class ScheduleMapperTests {
 //	}
 	
 	// 일정 불러오기
-	@Test
-	public void testGetList() {
-		ScheduleCriteria cri = new ScheduleCriteria(null, "2022-09-02");
-		
-		mapper.getList(cri);
-	}
+//	@Test
+//	public void testGetList() {
+//		ScheduleCriteria cri = new ScheduleCriteria(null, "2022-09-02");
+//		
+//		mapper.getList(cri);
+//	}
 	
 	// 일정 검색하기
 //	@Test
@@ -113,5 +113,11 @@ public class ScheduleMapperTests {
 //	public void testGetParticipant() {
 //		mapper.getParticipant(5);
 //	}
+	
+	// 스케쥴 리스트 불러오기
+	@Test
+	public void testGetWorkerList() {
+		mapper.getWorkerList("dept");
+	}
 	
 }

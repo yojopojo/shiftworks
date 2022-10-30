@@ -126,5 +126,13 @@
 		UPDATE employee SET memo = #{memo}
 			WHERE emp_id = #{emp_id}
 	</update>
+	
+	<!-- 같은 부서 근무자 명단 불러오기 -->
+	<select id="getWorkerList" resultType="org.shiftworks.domain.WorkScheduleVO">
+		SELECT e.emp_id as emp_id, name, start_time, end_time
+			FROM employee e JOIN work_sch w
+			ON e.emp_id = w.emp_id
+			WHERE w.dept_id = #{dept_id}
+	</select>
 
 </mapper>

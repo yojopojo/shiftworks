@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
+import org.shiftworks.domain.WorkScheduleVO;
 import org.shiftworks.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -137,6 +138,16 @@ public class ScheduleController {
 		return service.updateMemo(emp_id, memo) ?
 			new ResponseEntity<String>("success", HttpStatus.OK) :
 			new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	// 같은 부서 직원 스케쥴 불러오기
+	@GetMapping(value="/worker/{dept_id}",
+			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<WorkScheduleVO>> getWorkerList(@PathVariable String dept_id) {
+		
+		List<WorkScheduleVO> list = service.getWorkerList(dept_id);
+		
+		return new ResponseEntity<List<WorkScheduleVO>>(list, HttpStatus.OK);
 	}
 	
 }
