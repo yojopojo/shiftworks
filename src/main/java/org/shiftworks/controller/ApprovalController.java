@@ -68,6 +68,8 @@ public class ApprovalController {
 	@GetMapping("/insert")
 	public void insert() {}
 	
+	
+	// 결재 처리(결재 상태 변경)
 	@PutMapping("/sign/{apr_id}")
 	@ResponseBody
 	public ResponseEntity<String> updateStatus(@PathVariable int apr_id, @RequestParam String status){

@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- JQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<title>결재문서 상세보기</title>
 </head>
 <body>
 
@@ -53,6 +59,8 @@
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 				      <div class="modal-header">
+				      <button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
 				        <h4 class="modal-title" id="myModalLabel">결재 의견 입력</h4>
 				      </div>
 				      <div class="modal-body">
@@ -65,8 +73,10 @@
 				      <div class="modal-footer">
 				        <button id ='signBtn' data-oper='1' class="btn btn-default update-status">승인</button>
 						<button id = 'rejectBtn' data-oper='2' class="btn btn-default update-status">반려</button>
-						<button id = 'cancleBtn' data-oper='' class="btn btn-default">취소</button>
-				      </div>          </div>
+						<button id = 'modalCloseBtn' data-oper='' class="btn btn-default">취소</button>
+				      </div>  
+				              
+				     </div>
 				    <!-- /.modal-content -->
 				  </div>
 				  <!-- /.modal-dialog -->
@@ -96,30 +106,26 @@
 							}
 						})
 					});
-				    var modal = $(".modal");
-/* 				    var modalInputReply = modal.find("input[name='reply']");
-				    var modalInputReplyer = modal.find("input[name='replyer']");
-				    var modalInputReplyDate = modal.find("input[name='replyDate']");
-
-				    var modalModBtn = $("#modalModBtn");
-				    var modalRemoveBtn = $("#modalRemoveBtn");
-				    var modalRegisterBtn = $("#modalRegisterBtn"); */
-
 				    
+					var modal = $(".modal");
 				    $("#aprHandleBtn").on("click", function (e) {
-
 				        modal.find("input").val("");
-/* 				        modalInputReplyDate.closest("div").hide(); */
-
-				        $(".modal").modal("show");
-
+				        $(".modal").modal("show")
 				      });
-				})
+
+				 })
+				 
+				   // 모달창 닫기 이벤트
+			    $("#modalCloseBtn").on("click", function(e){
+			        $('.modal').modal("hide");
+			    });
+			    $(".close").on("click", function(e){
+			        $('.modal').modal("hide");
+			    });
 				
 				
 				
 				</script>
 				
-
 </body>
 </html>

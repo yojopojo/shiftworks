@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">	
-<title>Insert title here</title>
+<meta charset="UTF-8">
 </head>
 <body>
 	<h1>결재문서 작성</h1>
@@ -17,8 +19,8 @@
           <select name="af_id">
           	<option value="">선택하세요</option>
           	<option value="1">기안서</option>
-          	<option value="3">휴가신청서</option>
           	<option value="2">품의서</option>
+          	<option value="3">휴가신청서</option>
           </select>
           <div>
             <label>작성자</label> <input class="form-control" name='emp_id' readonly value="user1">
