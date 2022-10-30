@@ -33,14 +33,24 @@ public class TaskController {
 
 	private TaskService service;
 	
+	@GetMapping(value="/main")
+	public ModelAndView main() {
+		
+		ModelAndView mav = new ModelAndView("/task/TSK_list");
+
+		return mav;
+		
+	}
+	
 	// 검색기능 적용 페이징 처리
-	@GetMapping(value="/pages/{dept_id}/{category}/{type}/{keyword}/{pageNum}",
-				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<List<TaskVO>> getList(
+	@GetMapping(value="/pages/{dept_id}/{category}/{type}/{keyword}/{pageNum}")
+	public ModelAndView getList(
 			@PathVariable() String dept_id, @PathVariable String category, @PathVariable String type,
 			@PathVariable String keyword, @PathVariable Integer pageNum) {
 		
 		log.info("Controller: getList.........");
+
+		ModelAndView mav = new ModelAndView("TSK_list");
 		
 		if(dept_id == "all") {
 			dept_id = null;
@@ -57,28 +67,34 @@ public class TaskController {
 		
 		// 검색 설정과 일치하는 로우 페이징처리하여 가져오기
 		TaskCriteria cri = new TaskCriteria(pageNum, type, keyword, category, keyword);
-		TaskPageDTO dto = service.getList(cri);
 		
-		return new ResponseEntity<List<TaskVO>>(dto.getList(), HttpStatus.OK);
+		mav.addObject("dto", service.getList(cri));
+		
+		return mav;
 	}
 	
 	// 업무 개별 보기
-	@GetMapping(value="/pages/{dept_id}/{category}/{type}/{keyword}/{pageNum}/{task_id}",
-				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<TaskVO> getTask(
+	@GetMapping(value="/pages/{dept_id}/{category}/{type}/{keyword}/{pageNum}/{task_id}")
+	public ModelAndView getTask(
 			@PathVariable() String dept_id, @PathVariable String category, @PathVariable String type,
-			@PathVariable String keyword, @PathVariable Integer pageNum, @PathVariable Integer task_id, Model model) {
+			@PathVariable String keyword, @PathVariable Integer pageNum, @PathVariable Integer task_id) {
 		
-		model.addAttribute("category", category);
-		model.addAttribute("type", type);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("pageNum", pageNum);
+		ModelAndView mav = new ModelAndView("TSK_get");
 		
-		return new ResponseEntity<TaskVO>(service.getTask(task_id), HttpStatus.OK);
+		mav.addObject("category", category);
+		mav.addObject("type", type);
+		mav.addObject("keyword", keyword);
+		mav.addObject("pageNum", pageNum);
+		
+		return mav;
 	}
 	
 	@GetMapping(value="/new")
-	public void insertForm() {
+	public ModelAndView insertForm() {
+		
+		ModelAndView mav = new ModelAndView("TSK_new");
+		
+		return mav;
 		
 	}
 	
@@ -86,15 +102,15 @@ public class TaskController {
 	@PostMapping(
 			value="/new",
 			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<String> insertTask(@RequestBody TaskVO vo, Model model) {
+	public ResponseEntity<Model> insertTask(@RequestBody TaskVO vo, Model model) {
 		
 		// 등록 후 해당 카테고리, 부서로 페이징
 		model.addAttribute("category", vo.getCategory());
 		model.addAttribute("dept_id", vo.getDept_id());
 	
 		return service.insertTask(vo) ?
-			new ResponseEntity<String>("success", HttpStatus.OK) :
-			new ResponseEntity<String>("a", HttpStatus.INTERNAL_SERVER_ERROR);
+			new ResponseEntity<Model>(model, HttpStatus.OK) :
+			new ResponseEntity<Model>(model, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	// 업무 수정

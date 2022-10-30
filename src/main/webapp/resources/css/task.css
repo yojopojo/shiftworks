@@ -1,0 +1,14 @@
+@charset "EUC-KR";
+
+.table {
+	margin: 0 auto;
+	width: 80%;
+}
+
+.title {
+	width: 50%;
+}
+
+.writer {
+	width: 20%;
+}
