@@ -12,6 +12,6 @@ public interface ApprovalService {
 	public ApprovalVO get(int apr_id);
 	public List<ApprovalVO> getList();
 	public boolean update(ApprovalVO approval);
-	void updateStatus(int apr_id, String status);
+	public void updateStatus(int apr_id, String status);
 
 }

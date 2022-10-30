@@ -95,6 +95,7 @@
 					$(".update-status").on("click",function(e){
 						e.preventDefault();
 						var status = $(this).data('oper');
+						
 						$.ajax({
 							url: "/approval/sign/" + ${approval.apr_id } +"?status=" + status,
 							type: 'put',
@@ -121,7 +122,9 @@
 			    });
 			    $(".close").on("click", function(e){
 			        $('.modal').modal("hide");
-			    });
+			    }); 
+			    
+			    // end onclick event
 				
 				
 				

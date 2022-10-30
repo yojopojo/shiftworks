@@ -11,5 +11,5 @@ public interface ApprovalMapper {
 	public int insert(ApprovalVO approval);
 	public ApprovalVO read(int apr_id);
 	public int update(ApprovalVO approval);
-	void updateStatus(@Param("apr_id") int apr_id,@Param("status") String status);
+	public void updateStatus(@Param("apr_id") int apr_id,@Param("status") String status);
 }
