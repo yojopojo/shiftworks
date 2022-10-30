@@ -13,11 +13,17 @@
 	href='https://fonts.googleapis.com/css?family=Montserrat'>
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
-<link rel="stylesheet" href="../../resources/css/messenger.css">
+	
+<!-- JQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- 소켓 통신을 위함 -->
-<script
-	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	
+	
+	
+<link rel="stylesheet" href="../../resources/css/messenger/messenger.css">
 </head>
 <body>
 	<!-- partial:index.partial.html -->
@@ -41,7 +47,7 @@
 				</ul>
 			</nav>
 
-			<!-- 친구 목록 -->
+			<!-- 채팅방 목록 -->
 			<section class="discussions">
 				<div class="discussion search">
 					<div class="searchbar">
@@ -173,12 +179,87 @@
 					<p class="time">15h09</p>
 				</div>
 				<div class="footer-chat">
-					<i class="icon fa fa-paperclip clickable" style="font-size: 25pt;" aria-hidden="true"></i>
-					<input type="text" class="write-message" placeholder="Type your message here"></input> 
-					<i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true"></i>
+					<i class="icon fa fa-paperclip clickable" style="font-size: 25pt;"
+						aria-hidden="true"></i> <input type="text" class="write-message"
+						placeholder="Type your message here"></input> <i
+						class="icon send fa fa-paper-plane-o clickable" id="send" aria-hidden="true"></i>
 				</div>
 			</section>
 		</div>
 	</div>
+	
+	<script type="text/javascript" src="/resources/js/messenger/messenger.js"/>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"/>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#send').on("click", function(e) {
+			messengerService.sendMessage();
+			$('.write-message').val('');
+		});
+	});
+	
+	var sock = new SockJS('http://localhost:8081/messenger/echo');
+	sock.onmessage = onMessage;
+	sock.onclose = onClose;
+	sock.onopen = onOpen;
+
+	  function onMessage(msg){
+	        var data = msg.date;
+	        var sessionId = null; // 데이터를 보낸 사람
+	        var message = null;
+
+	        var arr = date.script(":");
+
+	        for(var i=0; i<arr.length; i++){
+	            console.log('arr[' + i + ']: ' + arr[i]);
+	        }
+	        
+	        var cur_session = '${userid}'; //현재 세션에 로그인 한 사람
+	        console.log("cur_session : " + cur_session);
+	        
+	        sessionId = arr[0];
+	        message = arr[1];
+	        
+	        //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+	        if(sessionId == cur_session){
+	            
+	            var str = "<div class='col-6'>";
+	            str += "<div class='alert alert-secondary'>";
+	            str += "<b>" + sessionId + " : " + message + "</b>";
+	            str += "</div></div>";
+	            
+	            $("#msgArea").append(str);
+	        }
+	        else{
+	            
+	            var str = "<div class='col-6'>";
+	            str += "<div class='alert alert-warning'>";
+	            str += "<b>" + sessionId + " : " + message + "</b>";
+	            str += "</div></div>";
+	            
+	            $("#msgArea").append(str);
+	        }
+	        
+	    }
+	    //채팅창에서 나갔을 때
+	    function onClose(evt) {
+	        
+	        var user = '${pr.username}';
+	        var str = user + " 님이 퇴장하셨습니다.";
+	        
+	        $("#msgArea").append(str);
+	    }
+	    
+	    //채팅창에 들어왔을 때
+	    function onOpen(evt) {
+	        
+	        var user = '${pr.username}';
+	        var str = user + "님이 입장하셨습니다.";
+	        
+	        $("#msgArea").append(str);
+	    }
+	    
+
+	</script>
 </body>
 </html>
