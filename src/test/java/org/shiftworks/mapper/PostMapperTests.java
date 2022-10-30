@@ -31,15 +31,15 @@ public class PostMapperTests {
 //		 PostVO postvo = new PostVO();
 //	 
 //	 	postvo.setB_id(1); 
-//	 	postvo.setEmp_id("1000"); 
-//	 	postvo.setDept_id("10");
-//	 	postvo.setPost_name("첫 등록");
-//	 	postvo.setPost_content("첫등록입니다");
-//	 	postvo.setPost_receivedept("11");
+//	 	postvo.setEmp_id("23"); 
+//	 	postvo.setDept_id("13");
+//	 	postvo.setPost_name("둘 등록");
+//	 	postvo.setPost_content("둘등록입니다");
+//	 	postvo.setPost_receivedept("17");
 //	  
 //	  mapper.insertPost(postvo);
-//	  
 //	  log.info(postvo);
+//	  
 //	  }
 	 
 	
@@ -114,15 +114,18 @@ public class PostMapperTests {
 //	}
 	
 	
-	@Test
-	public void testTemporalSelect() {
-		
-		Temp_BoardVO vo = new Temp_BoardVO();
-		vo.setB_id(2);
-		vo.setEmp_id("17");
-		
-		log.info(mapper.temporalSelect(vo));
-		
-	}
+//	@Test
+//	public void testTemporalSelect() {
+//		
+//		Temp_BoardVO vo = new Temp_BoardVO();
+//		vo.setB_id(2);
+//		vo.setEmp_id("17");
+//		
+//		log.info(mapper.temporalSelect(vo));
+//		
+//	}
+	
 
+	
+	
 }

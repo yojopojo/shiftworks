@@ -116,7 +116,7 @@
 		select * from temp_board where emp_id = #{emp_id} and b_id=#{b_id}
 	</select>
 	
-
 	
+
 	
 </mapper>

@@ -3,6 +3,7 @@ package org.shiftworks.mapper;
 import java.util.List;
 
 import org.shiftworks.domain.Criteria;
+
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -28,6 +29,7 @@ public interface PostMapper {
 	public int temporalPost(Temp_BoardVO vo);
 	
 	public Temp_BoardVO temporalSelect(Temp_BoardVO vo);
+	
 	
 
 }

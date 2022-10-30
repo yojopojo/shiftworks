@@ -18,7 +18,8 @@ import lombok.extern.log4j.Log4j;
 public class PostServiceImpl implements PostService {
 	
 	private PostMapper mapper;
-
+	
+	
 	@Override
 	public int insertPost(PostVO postvo) {
 		return mapper.insertPost(postvo);
