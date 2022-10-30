@@ -2,7 +2,6 @@ package org.shiftworks.service;
 
 import java.util.List;
 
-import org.shiftworks.domain.Dept_DocVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 
@@ -16,9 +15,9 @@ public interface DocumentService {
 	
 	public ScrapVO getScrap(ScrapVO vo);
 	
-	public List<Dept_DocVO> getDepartmentDocumentList(String dept_id);
+	public List<PostVO> deptSelectList(String post_receivedept);
 	
-	public Dept_DocVO getDepartmentDocument(Dept_DocVO vo);
+	public PostVO deptSelect(PostVO vo);
 	
 	
 

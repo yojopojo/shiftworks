@@ -94,5 +94,40 @@ public class DocumentController {
 		return mav;
 		
 	}
+	
+	//부서수신함 조회
+	@ResponseBody
+	@GetMapping(value = "/deptDoc/{post_receivedept}")
+	public ModelAndView getDeptDocList(
+					@PathVariable("post_receivedept") String post_receivedept){
+		
+		log.info("deptdoclist........");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/document/DOC_deptdoclist");
+		mav.addObject("list", service.deptSelectList(post_receivedept));
+		
+		return mav;
+	}
+	
+	
+	//부서수신함 상세보기
+	@ResponseBody
+	@GetMapping(value = "/deptDocDetail")
+	public ModelAndView getDeptDoc(@RequestParam("post_id")int post_id){
+		
+		log.info("deptdoc........");
+		
+		PostVO vo = new PostVO();
+		vo.setPost_id(post_id);
+		vo.setPost_receivedept("12"); 	//세션 구현 후 지워야 할 부분 
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/document/DOC_deptdoc");
+		mav.addObject("post", service.deptSelect(vo));
+		
+		return mav;
+		
+	}
 
 }

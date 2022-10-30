@@ -45,16 +45,32 @@ public class DocumnetMapperTests {
 //		
 //		mapper.getScrapList(emp_id).forEach(scrap -> log.info(scrap));
 //	}
+//	
+//	@Test
+//	public void testGetScrap() {
+//		
+//		ScrapVO vo = new ScrapVO();
+//		vo.setPost_id(8);
+//		vo.setEmp_id("12");
+//		
+//		log.info(mapper.getScrap(vo));
+//		
+//	}
+	
+//	@Test
+//	public void testDeptSelectList() {
+//		String post_receivedept = "12";
+//		
+//		mapper.deptSelectList(post_receivedept).forEach(post -> log.info(post));
+//	}
 	
 	@Test
-	public void testGetScrap() {
+	public void testDeptSelect() {
+		PostVO vo = new PostVO();
+		vo.setPost_id(21);
+		vo.setPost_receivedept("12");
 		
-		ScrapVO vo = new ScrapVO();
-		vo.setPost_id(8);
-		vo.setEmp_id("12");
-		
-		log.info(mapper.getScrap(vo));
-		
+		log.info(mapper.deptSelect(vo));
 	}
 
 }

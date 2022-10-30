@@ -25,16 +25,14 @@
 	</select>
 	
 	<!--부서문서함 리스트 조회-->
- 	<select id="getDepartmentDocumentList" resultType="org.shiftworks.domain.Dept_DocVO"> 
-		select * from Dept_DocVO d, Post p where d.dept_id =p.post_receivedept 
-			and d.dept_id = #{dept_id}
+	<select id="deptSelectList" parameterType="String" resultType="org.shiftworks.domain.PostVO">
+		select * from post where post_receivedept=#{post_receivedept}
 	</select>
 	
 	<!--부서문서 게시물 상세보기-->
-		<select id="getDepartmentDocument" resultType="org.shiftworks.domain.Dept_DocVO">
-		select * from Dept_DocVO d, Post p where d.dept_id =p.post_receivedept 
-			and d.dept_id = #{dept_id} and post_id= #{post_id}
-	</select>
+	<select id="deptSelect" parameterType="org.shiftworks.domain.PostVO" resultType="org.shiftworks.domain.PostVO">
+		select * from post where post_receivedept=#{post_receivedept} and post_id =#{post_id}
+	</select>	
 	
 	<!--결재문서 완료함 리스트 조회-->
 	

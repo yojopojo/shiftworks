@@ -2,10 +2,10 @@ package org.shiftworks.service;
 
 import java.util.List;
 
-import org.shiftworks.domain.Dept_DocVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.mapper.DocumentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -39,15 +39,15 @@ public class DocumentSerivceImpl implements DocumentService {
 	}
 
 	@Override
-	public List<Dept_DocVO> getDepartmentDocumentList(String dept_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PostVO> deptSelectList(String post_receivedept) {
+		return mapper.deptSelectList(post_receivedept);
 	}
 
 	@Override
-	public Dept_DocVO getDepartmentDocument(Dept_DocVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public PostVO deptSelect(PostVO vo) {
+		return mapper.deptSelect(vo);
 	}
+
+
 
 }

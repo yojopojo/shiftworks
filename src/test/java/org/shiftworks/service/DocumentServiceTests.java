@@ -44,15 +44,32 @@ public class DocumentServiceTests {
 //		service.getScrapList(emp_id).forEach(scrap -> log.info(scrap));
 //	}
 	
-	@Test
-	public void testScrap() {
-		ScrapVO vo = new ScrapVO();
-		vo.setEmp_id("12");
-		vo.setPost_id(8);
-		
-		log.info(service.getScrap(vo));
-	}
+//	@Test
+//	public void testScrap() {
+//		ScrapVO vo = new ScrapVO();
+//		vo.setEmp_id("12");
+//		vo.setPost_id(8);
+//		
+//		log.info(service.getScrap(vo));
+//	}
 	
+//	@Test
+//	public void testDeptSelectList() {
+//		
+//		String post_receivededept = "12";
+//		
+//		service.deptSelectList(post_receivededept).forEach(post -> log.info(post));
+//	}
+	
+	@Test
+	public void testDeptSelect() {
+		
+		PostVO vo = new PostVO();
+		vo.setPost_id(21);
+		vo.setPost_receivedept("12");
+		
+		log.info(service.deptSelect(vo));
+	}
 	
 
 }
