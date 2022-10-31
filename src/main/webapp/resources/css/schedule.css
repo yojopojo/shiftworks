@@ -75,3 +75,10 @@ tr[class^=week] {
 	float: right;
 	width: 300px;
 }
+
+.searchResult {
+	width: 300px;
+	position: absolute;
+	z-index: 1;
+	background-color: white;
+}

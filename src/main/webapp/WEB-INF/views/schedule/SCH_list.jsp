@@ -148,10 +148,6 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-	
-	<!-- 스케쥴 모달 -->
-<!-- 	<div class="modal-dialog modal-sm">...</div> -->
-
 
 	<script type="text/javascript">
 	
@@ -313,6 +309,43 @@
 	    });
 	    
 	    
+	    
+	    // 검색
+	    $('.search input').on("keyup", function(e){
+	    	e.preventDefault();
+	    	
+	    	var text = $(this).val();
+	    	
+	    	if(text == '' || text == null) {
+	    		$('.searchResult').html('');
+	    		return;
+    		}
+	    	
+	    	
+	    	let resultList = '';
+	    	scheduleService.search(text, function(result){
+	    	
+	    		if (result.length >= 1) {
+	    			result.forEach((item) => {
+	    				
+	    				let date = new Date(item.start_date);
+		    			
+		    			resultList += '<li id="' + item.sch_id + '">';
+		    			resultList += '<a>' + item.sch_title + ' ';
+		    			resultList += '' + date.getFullYear() + '년 '+ date.getMonth() + '월' + '</a>';
+		    			resultList += '</li>';
+		    			
+		    		}); // end forEach()
+		    		
+		    	
+		    		
+	    		}
+	    	$('.searchResult').html(resultList);
+	    	
+	    	}) // end search()
+	    }); // end input keyup event
+	    
+	    
 	});// 일정 CRUD 모달
 	
 	
@@ -337,7 +370,8 @@
 			
 			
 		}); // 메모 작성 및 저장 */
-	
+		
+
 	
 		
 	</script>

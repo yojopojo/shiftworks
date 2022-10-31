@@ -288,8 +288,12 @@ $(document).ready(function(){
         makeCalendar = "";
         makeCalendar = '<tr class="week0">';
         // 근무자 확인 아이콘 생성을 위한 html 태그
-        var workers = '<a tabindex="0" class="btn">' 
-                            + '<i class="fa fa-users btn" aria-hidden="true"></i></a>';
+        var workers = '<a id="workers" tabindex="0" class="btn"'
+                    + 'data-bs-toggle="popover"' + 'data-bs-title="workerList"'
+                    + 'data-bs-trigger="focus"' + 'data-bs-content="근무자 명단"'
+                    + '>' + '<i class="fa fa-users btn" aria-hidden="true"></i></a>';
+        
+              
 
         // 1월, 12월에서 이동 시 년 단위 변경을 위한 변수
         var isChange;
@@ -305,7 +309,7 @@ $(document).ready(function(){
             if (prevM == 0) {
                 prevM = 12;
                 isChange = true;
-            } else if (prevM>0 || prevM<10) {
+            } else if (prevM>0 && prevM<10) {
                 prevM = '0' + prevM;
             }
 
@@ -343,7 +347,7 @@ $(document).ready(function(){
             if (nextM == 13) {
                 nextM = '01';
                 isChange = true;
-            } else if (nextM>0 || nextM<10) {
+            } else if (nextM>0 && nextM<10) {
                 nextM = '0' + nextM;
             }
 
@@ -359,25 +363,6 @@ $(document).ready(function(){
 
         // 캘린더 날짜칸 생성
           $('#calendarBody').html(makeCalendar);
-        
-        // // 날짜에 맞게 근무표 로드
-        // scheduleService.getWorkerList('dept', function(result) {
-
-        // result.forEach((item) => {
-
-        //     let workStart = item.start_time.split(' ');
-
-        //     let start_day = workStart[0];
-        //     let start_time = (workStart[1].split(':'))[0] + ':' + (workStart[1].split(':'))[1];
-
-        //     if(start_day == selectedDate) {
-                
-        //     }
-        //     // end if ~ else
-            
-        // }) // end forEach
-
-        // }); // end getWorkerList()
 
 
     }
@@ -507,7 +492,7 @@ $(document).ready(function(){
         $('a[aria-label=Next]').addClass("nextDay");
         
     }); // end day onclick(일별 캘린더 생성 후 데이터 출력)
-    
+   
 
      /* * * * * * * * * * * * * * * * * * *
         이전, 이후 버튼 클릭 시 달력 이동
@@ -624,12 +609,39 @@ $(document).ready(function(){
     }); // 이전, 이후 버튼 클릭 시 달력 이동
 
 
-    
 
+    /* * * * * * * * * * * * * * * * * * *
+        버튼 클릭 시 직원 스케쥴 출력 이벤트
+    * * * * * * * * * * * * * * * * * * */
+    $('#calendarBody').on("click", "a", function(e) {
+        e.preventDefault();
+
+        let content = '';
+
+        scheduleService.getWorkerList('dept', function(result){
+           
+            result.forEach((item) => {
+
+                let arr1 = item.start_time.split(' ');
+                let arr2 = arr1[1].split(':');
+
+                
+                content += item.name + ' (' + arr2[0] + ':' + arr2[1] + ') ';
+                
+
+                
+            }); // end forEach 
+
+            $('#workers').attr("data-bs-content", content);
+            $('#workers').popover("show");
+            
+        }); // end getWorkerList()      
+
+    }); // 버튼 클릭 시 직원 스케쥴 출력
 
 
     /** getList를 통해 DB에서 데이터 받아오기 */
-       function getList() {scheduleService.getList(listparam, function(list) {
+    function getList() {scheduleService.getList(listparam, function(list) {
            
         var html;
         
@@ -642,8 +654,8 @@ $(document).ready(function(){
                 html += '</tr>';
                 $('#calendarBody .' + item.sch_date).append(html);
             }
-            // end if ~ else
-            
+            // end if
+
         }) // end forEach
     });} // end getList
     
