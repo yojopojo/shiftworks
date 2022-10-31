@@ -66,16 +66,18 @@ public class BookingController {
 		List<BookingVO> bookingList = service.getList();
 		
 		List<Map<String, Object>> calList = new ArrayList<Map<String,Object>>();
-		Map<String, Object> map = new HashMap<String, Object>();
 
 
 		for(int i=0;i<bookingList.size();i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("title", bookingList.get(i).getBook_title());
 			map.put("start", bookingList.get(i).getBook_date());
 			
 			calList.add(i, map);
+			//calList.add(map);
 		}
-		
+		//calList.add(map);
+
 		return calList;
 	}
 	

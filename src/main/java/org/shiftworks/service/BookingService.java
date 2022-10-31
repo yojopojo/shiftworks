@@ -7,7 +7,7 @@ import org.shiftworks.domain.Criteria;
 
 public interface BookingService {
 	//예약하기
-	public int insertBooking(BookingVO vo);
+	//public int insertBooking(BookingVO vo);
 	//예약(+조건식)
 	public int insertBookingCondition(BookingVO vo);
 	//예약 상세보기(1개)

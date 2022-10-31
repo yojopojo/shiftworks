@@ -25,6 +25,7 @@ public class BookingServiceImpl implements BookingService {
 		log.info("insertBooking Service with Condition...............");
 		String selectRsc = vo.getRsc_id();
 		String selectDate = vo.getBook_date();
+		log.info("date형태 확인......................>"+selectDate);
 		
 		int selectTime = vo.getBook_begin();
 		
@@ -70,13 +71,14 @@ public class BookingServiceImpl implements BookingService {
 	
 	
 	//예약하기
-	@Override
-	public int insertBooking(BookingVO vo) {
-		log.info("insertBooking Service...............");
-		int re = mapper.insertBooking(vo);
-		
-		return re;
-	}
+//	@Override
+//	public int insertBooking(BookingVO vo) {
+//		log.info("insertBooking Service...............");
+//		
+//		int re = mapper.insertBooking(vo);
+//		
+//		return re;
+//	}
 
 	
 	//예약 상세 보기(1개)
