@@ -5,6 +5,8 @@ import java.util.List;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.service.DocumentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +40,19 @@ public class DocumentController {
 		mav.addObject("list", service.getMyDocumentList(emp_id));
 		
 		return mav;
+	}
+	
+	//전체 게시물에서 내가 쓴 게시물 보기 
+	@ResponseBody
+	@GetMapping(value = "/totalDoc/{emp_id}")
+	public ModelAndView getTotalDocumentList(@PathVariable("emp_id") String emp_id){
+		
+		log.info("totalDoc.........");
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/document/DOC_totaldoc");
+		return mav;
+		
 	}
 	
 	

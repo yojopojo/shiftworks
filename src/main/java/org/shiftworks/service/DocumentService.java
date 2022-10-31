@@ -19,6 +19,4 @@ public interface DocumentService {
 	
 	public PostVO deptSelect(PostVO vo);
 	
-	
-
 }
