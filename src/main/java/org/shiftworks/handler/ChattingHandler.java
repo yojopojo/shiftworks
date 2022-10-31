@@ -42,7 +42,8 @@ public class ChattingHandler extends TextWebSocketHandler {
 		
 		sessionVector.add(session);
 		
-		log.info(session.getPrincipal().getName() + "님이 입장하셨습니다."); 
+		log.info(session.getId() + "님이 입장하셨습니다.");
+		//log.info(session.getPrincipal().getName() + "님이 입장하셨습니다."); 
 		super.afterConnectionEstablished(session);
 	}
 	
@@ -62,8 +63,12 @@ public class ChattingHandler extends TextWebSocketHandler {
 		log.info("#ChattingHandler, handleTextMessage");
 		log.info(session.getId() + ": " + message);
 		
+//		for(WebSocketSession webSocketSession : sessionVector) {
+//			webSocketSession.sendMessage(new TextMessage(session.getPrincipal().getName() + ":" + message.getPayload()));
+//		}
+		
 		for(WebSocketSession webSocketSession : sessionVector) {
-			webSocketSession.sendMessage(new TextMessage(session.getPrincipal().getName() + ":" + message.getPayload()));
+			webSocketSession.sendMessage(new TextMessage(session.getId() + ":" + message.getPayload()));
 		}
 	}
 	
@@ -82,6 +87,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 		log.info("closeStatus : " + closeStatus);
 		sessionVector.remove(session);
 		
-		log.info(session.getPrincipal().getName() + "님이 퇴장하셨습니다.");
+		log.info(session.getId() + "님이 퇴장하셨습니다.");
+		//log.info(session.getPrincipal().getName() + "님이 퇴장하셨습니다.");
 	}
 }

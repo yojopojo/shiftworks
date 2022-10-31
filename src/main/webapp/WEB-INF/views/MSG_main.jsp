@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,17 +14,72 @@
 	href='https://fonts.googleapis.com/css?family=Montserrat'>
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
-	
-<!-- JQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="../../resources/css/messenger/messenger.css">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="/resources/js/messenger/messenger.js" />
+<script type="text/javascript">
+$(document).ready(function() {
+	/* var socket = null;
+
+	console.log('js start');
+
+	// 전송 버튼 눌렀을 때
+	$('.send').on("click", function(e) {
+		console.log("btn_send");
+		messengerService.sendMessage();
+		$('.write-message').val('');
+	});
+		
+	// 메시지를 입력하고 enter 키를 입력했을 때 
+	$('.write-message').on("keypress", function(e) {
+			
+		if(e.keyCode == '13'){
+			console.log("btn_send");
+			messengerService.sendMessage();
+			$('.write-message').val('');
+		}
+	});	
+});
 	
+var socket = new SockJS('http://localhost:8081/messenger/echo');
 	
+socket.onmessage = onMessage;
+socket.onclose = onClose;
+socket.onopen = onOpen;
+
 	
-<link rel="stylesheet" href="../../resources/css/messenger/messenger.css">
+// 서버로부터 메시지를 받았을 때
+function onMessage(msg) {
+		
+	var data = msg.data;
+	console.log("onMessage " + data);
+	$("#text").append(data + "<br/>");
+}
+	
+// 서버와 연결을 끊었을 때
+function onOpen(evt) {
+	console.log("onClose");
+	
+	$("#text").append("연결 끊김");
+}
+	
+// 서버와 연결을 끊었을 때
+function onClose(evt) {
+	console.log("onClose");
+	
+	$("#text").append("연결 끊김");
+}
+	
+function sendMessage(){
+	console.log("Messenger Module......., sendMessage");
+    socket.send($('.write-message').val());
+    
+    $('.chat').append("dd");
+}	 */
+</script>
 </head>
 <body>
 	<!-- partial:index.partial.html -->
@@ -93,7 +149,7 @@
 
 				<div class="discussion">
 					<div class="photo"
-						style="background-image: url(http://thomasdaubenton.xyz/portfolio/images/photo.jpg);">
+						style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
 						<div class="online"></div>
 					</div>
 					<div class="desc-contact">
@@ -145,6 +201,8 @@
 					<p class="name">Megan Leib</p>
 					<i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
 				</div>
+				
+				
 				<div class="messages-chat">
 					<div class="message">
 						<div class="photo"
@@ -182,84 +240,10 @@
 					<i class="icon fa fa-paperclip clickable" style="font-size: 25pt;"
 						aria-hidden="true"></i> <input type="text" class="write-message"
 						placeholder="Type your message here"></input> <i
-						class="icon send fa fa-paper-plane-o clickable" id="send" aria-hidden="true"></i>
+						class="icon send fa fa-paper-plane-o clickable" aria-hidden="true"></i>
 				</div>
 			</section>
 		</div>
 	</div>
-	
-	<script type="text/javascript" src="/resources/js/messenger/messenger.js"/>
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"/>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$('#send').on("click", function(e) {
-			messengerService.sendMessage();
-			$('.write-message').val('');
-		});
-	});
-	
-	var sock = new SockJS('http://localhost:8081/messenger/echo');
-	sock.onmessage = onMessage;
-	sock.onclose = onClose;
-	sock.onopen = onOpen;
-
-	  function onMessage(msg){
-	        var data = msg.date;
-	        var sessionId = null; // 데이터를 보낸 사람
-	        var message = null;
-
-	        var arr = date.script(":");
-
-	        for(var i=0; i<arr.length; i++){
-	            console.log('arr[' + i + ']: ' + arr[i]);
-	        }
-	        
-	        var cur_session = '${userid}'; //현재 세션에 로그인 한 사람
-	        console.log("cur_session : " + cur_session);
-	        
-	        sessionId = arr[0];
-	        message = arr[1];
-	        
-	        //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-	        if(sessionId == cur_session){
-	            
-	            var str = "<div class='col-6'>";
-	            str += "<div class='alert alert-secondary'>";
-	            str += "<b>" + sessionId + " : " + message + "</b>";
-	            str += "</div></div>";
-	            
-	            $("#msgArea").append(str);
-	        }
-	        else{
-	            
-	            var str = "<div class='col-6'>";
-	            str += "<div class='alert alert-warning'>";
-	            str += "<b>" + sessionId + " : " + message + "</b>";
-	            str += "</div></div>";
-	            
-	            $("#msgArea").append(str);
-	        }
-	        
-	    }
-	    //채팅창에서 나갔을 때
-	    function onClose(evt) {
-	        
-	        var user = '${pr.username}';
-	        var str = user + " 님이 퇴장하셨습니다.";
-	        
-	        $("#msgArea").append(str);
-	    }
-	    
-	    //채팅창에 들어왔을 때
-	    function onOpen(evt) {
-	        
-	        var user = '${pr.username}';
-	        var str = user + "님이 입장하셨습니다.";
-	        
-	        $("#msgArea").append(str);
-	    }
-	    
-
-	</script>
 </body>
 </html>

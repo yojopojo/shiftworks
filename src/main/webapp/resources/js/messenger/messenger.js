@@ -1,15 +1,70 @@
 /**
  * 
  */
- 
-console.log("Messenger Module.......");
+document.write("<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js'><"+"/script>");
 
+console.log("Messenger Module.......");
+	
+$(document).ready(function() {
+	var socket = null;
+
+	console.log('js start');
+
+	// 전송 버튼 눌렀을 때
+	$('.send').on("click", function(e) {
+		console.log("btn_send");
+		messengerService.sendMessage();
+		$('.write-message').val('');
+	});
+		
+	// 메시지를 입력하고 enter 키를 입력했을 때 
+	$('.write-message').on("keypress", function(e) {
+			
+		if(e.keyCode == '13'){
+			console.log("btn_send");
+			messengerService.sendMessage();
+			$('.write-message').val('');
+		}
+	});	
+});
+	
+var socket = new SockJS('http://localhost:8081/messenger/echo');
+	
+socket.onmessage = onMessage;
+socket.onclose = onClose;
+socket.onopen = onOpen;
+
+	
+// 서버로부터 메시지를 받았을 때
+function onMessage(msg) {
+		
+	var data = msg.data;
+	console.log("onMessage " + data);
+	$("#text").append(data + "<br/>");
+}
+	
+// 서버와 연결을 끊었을 때
+function onOpen(evt) {
+	console.log("onClose");
+	
+	$("#text").append("연결 끊김");
+}
+	
+// 서버와 연결을 끊었을 때
+function onClose(evt) {
+	console.log("onClose");
+	
+	$("#text").append("연결 끊김");
+}
+	
 	
 var messengerService = (function(){
 
     function sendMessage(){
     	console.log("Messenger Module......., sendMessage");
-        sock.send($('.write-message').val());
+        socket.send($('.write-message').val());
+        
+        $('.chat').append("dd");
     }
 
 	function add(reply, callback, error) {
