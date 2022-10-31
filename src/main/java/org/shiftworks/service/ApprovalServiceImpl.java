@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.mapper.ApprovalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public List<ApprovalDTO> getList() {
+	public List<ApprovalDTO> getList(Criteria cri) {
 		List<ApprovalVO> list = mapper.getList();
 		List<ApprovalDTO> dtos = new ArrayList<ApprovalDTO>();
 		
@@ -72,7 +73,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 			.apr_signdate(approval.getApr_signdate())
 			
 			.build();	
-			dtos.add(dto);
+			dtos.add(dto); 
 		}				
 		return dtos;
 	}
@@ -87,6 +88,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		mapper.updateStatus(apr_id, status);
 	}
+
+//	@Override
+//	public List<ApprovalDTO> getList(Criteria cri) {
+//		
+//		return mapper.getListWithPaging(cri);
+//	}
 
 	
 

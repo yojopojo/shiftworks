@@ -2,9 +2,12 @@ package org.shiftworks.mapper;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.ApprovalVO;
+import org.shiftworks.domain.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,10 +24,11 @@ public class ApprovalMapperTests {
 	@Autowired
 	private ApprovalMapper mapper;
 	
-//	@Test
-//	public void testGetList() {
-//		mapper.getList().forEach(approval -> log.info(approval));
-//	}
+	@Test
+	public void testGetList() {
+		mapper.getList().forEach(approval -> log.info(approval));
+		
+	}
 	
 //	@Test
 //	public void testInsert() {
@@ -44,15 +48,26 @@ public class ApprovalMapperTests {
 //		log.info(approval);
 //	}
 	
-	@Test
-	public void testUpdate() {
-		ApprovalVO approval = new ApprovalVO();
-		approval.setApr_id(1);
-		approval.setApr_status('3');
-		
-		int count = mapper.update(approval);
-		log.info("UPDATE COUNT: " + count);
-	}
+//	@Test
+//	public void testUpdate() {
+//		ApprovalVO approval = new ApprovalVO();
+//		approval.setApr_id(1);
+//		approval.setApr_status('3');
+//		
+//		int count = mapper.update(approval);
+//		log.info("UPDATE COUNT: " + count);
+//	}
+	
+	
+//	@Test
+//	public void testPaging() {
+//		Criteria cri = new Criteria();
+//		cri.setPageNum(3);
+//		cri.setAmount(10);
+//		List<ApprovalVO> list = mapper.getListWithPaging(cri);
+//		list.forEach(approval->log.info(approval.getApr_id()));
+//	}
+	
 	
 
 }

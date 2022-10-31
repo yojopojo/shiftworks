@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.shiftworks.domain.ApprovalVO;
+import org.shiftworks.domain.Criteria;
 
 public interface ApprovalMapper {
 
 	public List<ApprovalVO> getList();
+	public List<ApprovalVO> getListWithPaging(Criteria cri);
 	public int insert(ApprovalVO approval);
 	public ApprovalVO read(int apr_id);
 	public int update(ApprovalVO approval);

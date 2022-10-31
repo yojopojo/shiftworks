@@ -22,6 +22,26 @@
 		select * from approval where apr_id = #{apr_id}
 	</select>
 	
+	
+	<select id ="getListWithPaging" resultType="org.shiftworks.domain.ApprovalVO">
+		<![CDATA[
+			select
+				apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
+				apr_status, apr_comment, apr_signdate
+			from
+			(
+			select /*+INDEX_DESC(approval approval_pk) */
+				rownum rn, apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
+				apr_status, apr_comment, apr_signdate
+			from
+				approval
+			where rownum <= #{pageNum} * #{amount}	
+			)
+			where rn > (#{pageNum} -1) * #{amount}
+		]]>	
+	</select> 
+	
+	
 	<update id="update">
 		update approval
 		set apr_status = #{apr_status},

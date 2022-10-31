@@ -3,6 +3,7 @@ package org.shiftworks.controller;
 import java.lang.ProcessBuilder.Redirect;
 
 import org.shiftworks.domain.ApprovalVO;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.service.ApprovalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,9 @@ public class ApprovalController {
 	
 	// 결재 리스트
 	@GetMapping("/list")
-	public void list(Model model) {
-		log.info("list");
-		model.addAttribute("list", service.getList());
+	public void list(Criteria cri, Model model) {
+		log.info("list" + cri);
+		model.addAttribute("list", service.getList(cri));
 	}
 	
 	// 결재 문서 작성

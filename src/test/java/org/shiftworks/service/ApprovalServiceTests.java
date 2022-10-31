@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.ApprovalVO;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.mapper.ApprovalMapperTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -42,7 +43,8 @@ public class ApprovalServiceTests {
 	
 	@Test
 	public void testGetList() {
-		service.getList().forEach(approval->log.info(approval));
+		//service.getList().forEach(approval->log.info(approval));
+		service.getList(new Criteria(2,10)).forEach(approval->log.info(approval));
 	}
 	
 	@Test
