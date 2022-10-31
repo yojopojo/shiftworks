@@ -24,11 +24,11 @@ public class ApprovalMapperTests {
 	@Autowired
 	private ApprovalMapper mapper;
 	
-	@Test
-	public void testGetList() {
-		mapper.getList().forEach(approval -> log.info(approval));
-		
-	}
+//	@Test
+//	public void testGetList() {
+//		mapper.getListWithPaging(Criteria cri).forEach(approval -> log.info(approval));
+//		
+//	}
 	
 //	@Test
 //	public void testInsert() {

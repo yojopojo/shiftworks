@@ -34,7 +34,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	@Override
 	public List<ApprovalDTO> getList(Criteria cri) {
-		List<ApprovalVO> list = mapper.getList();
+		List<ApprovalVO> list = mapper.getListWithPaging(cri);
 		List<ApprovalDTO> dtos = new ArrayList<ApprovalDTO>();
 		
 		// 결재 상태, 결재 양식 String으로 변환
@@ -87,6 +87,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public void updateStatus(int apr_id, String status) {
 		
 		mapper.updateStatus(apr_id, status);
+	}
+
+	@Override
+	public int getTotal() {
+		return mapper.getTotal();
 	}
 
 //	@Override

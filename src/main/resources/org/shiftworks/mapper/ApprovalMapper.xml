@@ -56,5 +56,10 @@
 		set apr_status = #{status}
 		where apr_id = #{apr_id}
 	</update>
+	
+	<!-- 전체 페이지 조회 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from approval
+	</select>
 
 </mapper>

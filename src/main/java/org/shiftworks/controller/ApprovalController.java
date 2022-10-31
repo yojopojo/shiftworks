@@ -4,6 +4,7 @@ import java.lang.ProcessBuilder.Redirect;
 
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.PageDTO;
 import org.shiftworks.service.ApprovalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ public class ApprovalController {
 	public void list(Criteria cri, Model model) {
 		log.info("list" + cri);
 		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
 	}
 	
 	// 결재 문서 작성
