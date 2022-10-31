@@ -26,19 +26,19 @@
 
 				<form id="form">
 					<div class="form-group">
-						<label>게시판명</label> <input class="form-control" name='b_id' value=1 readonly="readonly">
+						<label>게시판명</label> <input class="form-control" name='b_id' value='<c:out value="${post.b_id}" />' readonly="readonly">
 					</div>
 					
 					<div class="form-group">
-						<label>제목</label> <input class="form-control" name='post_name' />
+						<label>제목</label> <input class="form-control" name='post_name'  value="<c:out value="${post.post_name}" />"/>
 					</div>
 					
 					<div class="form-group">
-						<label>게시자</label> <input class="form-control" name='emp_id' value=""/>
+						<label>게시자</label> <input class="form-control" name='emp_id' value="<c:out value="${post.emp_id}" />"/>
 					</div>
 					
 					<div class="form-group">
-						<label>게시부서</label> <input class="form-control" name='dept_id' value=""/>
+						<label>게시부서</label> <input class="form-control" name='dept_id' value="<c:out value="${post.dept_id}" />">
 					</div>
 					
 					<div class="form-group">
@@ -47,11 +47,13 @@
 
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="20" cols="150" name='post_content'></textarea>
+						<textarea class="form-control" rows="20" cols="150" name='post_content' >
+							<c:out value="${post.post_content}" />
+						</textarea>
 					</div>
 					
 					<div class="form-group">
-						<label>수신부서</label> <input class="form-control" name='post_receivedept'  value=""/>
+						<label>수신부서</label> <input class="form-control" name='post_receivedept'  value="<c:out value="" />"/>
 					</div>
 
 					<button id="registerBtn" type="button" class="btn btn-primary" value="">게시하기</button>
@@ -93,7 +95,7 @@ $(document).ready(function () {
 	  $("#registerBtn").on("click",function(e){
 	      
 	      var post = {
-	            b_id: 1,
+	            b_id: formInputBoard.val(),
 	            post_name:formInputTitle.val(),
 	            emp_id:formInputEmp.val(), //추후 로그인 세션으로 변경예정 
 	            dept_id:formInputDept.val(),
@@ -121,7 +123,7 @@ $(document).ready(function () {
 	    temporalBtn.on("click",function(){
 	    	
 	    	 var post = {
-	 	            b_id: 1,
+	 	            b_id: formInputBoard.val(),
 	 	            post_name:formInputTitle.val(),
 	 	            emp_id:formInputEmp.val(), //추후 로그인 세션으로 변경예정 
 	 	            dept_id:formInputDept.val(),
@@ -132,6 +134,7 @@ $(document).ready(function () {
 	    		 alert("임시저장되었습니다");
 	    		 form.find("input").val(""); 
 	    		 form.find("textarea").val(""); 
+	    		 location.href="/board/list";
 	    	 })
 	    })
 		

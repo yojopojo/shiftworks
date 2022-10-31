@@ -32,6 +32,8 @@ public interface PostMapper {
 	
 	public int insertHistory(HistoryVO vo);
 	
+	public List<HistoryVO> selectHistory(String emp_id);
+	
 	
 
 }

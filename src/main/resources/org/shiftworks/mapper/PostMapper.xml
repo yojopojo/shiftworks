@@ -127,6 +127,10 @@
 			insert (emp_id, dept_id, post_id, read_date)
 			values(#{emp_id},#{dept_id},#{post_id}, sysdate)
 	</insert>
-
+	
+	<!--해당 emp_id 와 일치하는 history 불러오기-->
+	<select id="selectHistory" resultType="org.shiftworks.domain.HistoryVO">
+		select * from history where emp_id =#{emp_id}
+	</select>
 	
 </mapper>

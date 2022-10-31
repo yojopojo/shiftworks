@@ -91,15 +91,17 @@ public class PostServiceTests {
 //		service.scrapPost(vo);
 //	}
 	
-	@Test
-	public void testInsertTemporal() {
-		Temp_BoardVO vo = new Temp_BoardVO();
-		vo.setB_id(3);
-		vo.setDept_id("12");
-		vo.setEmp_id("11");
-		vo.setPost_name("임시저장");
-		vo.setPost_content("임시저장 서비스 테스트중");
-	}
+//	@Test
+//	public void testInsertTemporal() {
+//		Temp_BoardVO vo = new Temp_BoardVO();
+//		vo.setB_id(3);
+//		vo.setDept_id("12");
+//		vo.setEmp_id("11");
+//		vo.setPost_name("임시저장");
+//		vo.setPost_content("임시저장 서비스 테스트중");
+//	}
+	
+	
 	
 
 }

@@ -82,6 +82,15 @@ public class PostServiceImpl implements PostService {
 		return mapper.insertHistory(vo);
 	}
 
+
+	@Override
+	public List<HistoryVO> selectHistory(String emp_id) {
+		return mapper.selectHistory(emp_id);
+	}
+
+
+
+
 	
 
 }

@@ -17,12 +17,39 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<button id='registerBtn' type="button" class="btn btn-xs pull-right">
+				<button id='registerBtn' type="button" class="btn btn-primary ">
 					새 게시물 등록</button>
 			</div>
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
+			
+			<!--검색버튼 -->
+				 <div class='row'>
+					<div class="col-lg-12">
+						<form id='searchForm' action="/board/list" method="get">
+							<select name='type' class="form-select" aria-label="Default select example">
+								<option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+								<option value="T"
+									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+								<option value="W"
+									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+								<option value="TW"
+									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>
+									제목 or 작성자
+								</option>
+							</select> 
+							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
+							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
+							<button id='searchBtn' class='btn btn-primary'>검색 </button>
+						</form>
+					</div>
+				</div>
+			
+			
+			
+				<!--메인 게시글-->
 				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
 					<thead>
 						<tr>
@@ -35,7 +62,7 @@
 							<th>수정일</th>
 						</tr>
 					</thead>
-					
+					<tbody>
 						<c:forEach items="${list}" var="list">
 							<tr>
 								<td><c:out value="${list.b_id}" /></td>
@@ -51,32 +78,11 @@
 									value="${list.post_updatedate}" /></td>
 							</tr>
 						</c:forEach> 
-					
+					</tbody>
 				</table>
 				
 				
-				<!--검색버튼 -->
-				 <div class='row'>
-					<div class="col-lg-12">
-						<form id='searchForm' action="/board/list" method="get">
-							<select name='type'>
-								<option value=""
-									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-								<option value="T"
-									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-								<option value="W"
-									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-								<option value="TW"
-									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>
-									제목 or 작성자
-								</option>
-							</select> 
-							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
-							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
-							<button id='searchBtn' class='btn btn-default'>검색 </button>
-						</form>
-					</div>
-				</div>
+				
 				
 
 				<!--페이지 처리 뷰-->
@@ -150,13 +156,14 @@ $(document).ready(function () {
 	var formKeyword = searchForm.find("input[name='keyword']");
 	var formPageNum = searchForm.find("input[name='pageNum']");
 	
-	 
 	
+
 	 //새 게시물 등록 선택 시 register.jsp 이동
 	  $("#registerBtn").on("click",function(e){
 		  
+		  
 		//onload 됐을 때 emp_id값과 b_id에 맞는 temp_board데이터가 있으면 불러오기
-		postService.temporalPost(function(result){
+		postService.temporalSelect(function(result){
 			if(result){
 				 $(".modal").show();
 				 $("#modalRemoveBtn").on("click",function(){
@@ -165,7 +172,7 @@ $(document).ready(function () {
 				 })
 				 $("#modalModBtn").on("click",function(){
 					 $(".modal").hide();
-					 //임시저장 불러오기추가하기
+					 location.href ="/board/temporalview";
 				 })
 				 
 			}
@@ -228,7 +235,17 @@ $(document).ready(function () {
 		
 	  });
 	  
+	 
+	  
 	 //안읽은 게시물 bold처리추가하기
+	  postService.getHistory(function(result){
+		  console.log(result);
+		  for(var i=0;i<result.length;i++){
+			  ($(".getPost").val()).filter(x =>!(result[i].post_id).includes(x))
+				 .closest("tr").css("font-weight","bold");
+		  }
+		 
+	  })
 	
 	    	
 	  

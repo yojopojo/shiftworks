@@ -70,7 +70,7 @@ var postService = (function(){
 	
 	
 	//글 임시저장불러오기
-	function temporalPost(callback, error) {
+	function temporalSelect(callback, error) {
 		
 		$.ajax({
 			type : 'get',
@@ -89,7 +89,7 @@ var postService = (function(){
 		})
 	}
 	
-
+	
 
 
 	//읽음 테이블에 추가하기
@@ -112,8 +112,29 @@ var postService = (function(){
 	}
 	
 	
+	//읽음 테이블에서 리스트 가져오기
+	function getHistory(callback, error) {
+		
+		$.ajax({
+			type : 'get',
+			url : '/board/history'+".json",
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
+	
+	
 	//글 수정하기 
-	function updatePost(post, callback, error) {
+	function updatePost(post,callback, error) {
 		
 		console.log(post.post_content);
 		console.log(post.post_receivedept);
@@ -134,6 +155,10 @@ var postService = (function(){
 			}
 		})
 	}
+	
+	
+	
+
 
 	
 	
@@ -141,8 +166,10 @@ var postService = (function(){
 		add:add,
 		scrapPost:scrapPost,
 		temporalPost:temporalPost,
+		temporalSelect:temporalSelect,
 		insertHistory:insertHistory,
-		updatePost:updatePost
+		updatePost:updatePost,
+		getHistory:getHistory
 	}
 	
 	
