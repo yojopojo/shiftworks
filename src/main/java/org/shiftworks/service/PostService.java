@@ -28,7 +28,7 @@ public interface PostService {
 	
 	public int temporalPost(Temp_BoardVO vo);
 	
-	public Temp_BoardVO temporalSelect(Temp_BoardVO vo);
+	public Temp_BoardVO temporalSelect(String emp_id);
 	
 	public int insertHistory(HistoryVO vo);
 

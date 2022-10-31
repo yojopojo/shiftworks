@@ -34,7 +34,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @RequestMapping("/board/*")
-@Controller
+@RestController
 @Log4j
 @AllArgsConstructor
 public class PostController {
@@ -43,7 +43,6 @@ public class PostController {
 	private PostService service;
 	
 	//register form 이동
-	@ResponseBody
 	@GetMapping(value = "/new")
 	public ModelAndView register() throws Exception{
 		
@@ -53,12 +52,10 @@ public class PostController {
 	}
 	
 	//register form에서 받아온 값 db에 넣기
-	@ResponseBody
 	@PostMapping(value = "/new")
 	public ResponseEntity<String> register(@RequestBody PostVO vo){
-		log.info("controller..............................");
+		log.info("register......");
 		int insertCount = service.insertPost(vo);
-		log.info("insertCount: " + insertCount);
 		
 		return insertCount ==1
 		? new ResponseEntity<String>("success", HttpStatus.OK)
@@ -68,18 +65,23 @@ public class PostController {
 	
 	
 	//BOA_list.jsp 호출
-	@GetMapping(value = "/BOA_list")
-	public void getList(Criteria cri, Model model) {
+	@GetMapping(value = "/list")
+	public ModelAndView getList(Criteria cri) {
 		
 		log.info("getList..........");
-		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(), service.getListSearch(cri)));
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", service.getListSearch(cri));
+		mav.addObject("pageMaker", new PageDTO(cri, service.getTotal()));
+		mav.setViewName("/board/BOA_list");
+		
+		return mav;
 	}
 	
 	
 	//글번호 클릭 시 BOA_get.jsp로 이동
-	@RequestMapping(method = RequestMethod.GET, value = "/getPost")
+	@GetMapping(value = "/get")
 	public ModelAndView getPost(@RequestParam("post_id") int post_id, 
-							  @ModelAttribute("cri") Criteria cri) throws Exception{
+												@ModelAttribute("cri") Criteria cri) throws Exception{
 		log.info("get.........");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/board/BOA_get");
@@ -88,9 +90,9 @@ public class PostController {
 	}
 	
 	//수정 클릭 시 BOA_modify.jsp로 이동
-		@RequestMapping(method = RequestMethod.GET, value = "/modify")
+	@GetMapping(value = "/modify")
 		public ModelAndView modify(@RequestParam("post_id") int post_id, 
-								  @ModelAttribute("cri") Criteria cri) throws Exception{
+								  					@ModelAttribute("cri") Criteria cri) throws Exception{
 			log.info("modify.........");
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/board/BOA_modify");
@@ -100,24 +102,13 @@ public class PostController {
 	
 	// 수정 데이터 값을 db 넣기
 	@PostMapping(value = "/modify")
-	public String modify(PostVO post,
-				@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
-		
-//		vo.setPost_id(post_id);
-//		return service.updatePost(vo)==1
-//		? new ResponseEntity<String>("success", HttpStatus.OK)
-//		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> modify(@RequestBody PostVO post){
 		
 		log.info("modify..................");
-		if(service.updatePost(post)==1) {
-			rttr.addFlashAttribute("result","success");
-		}
-		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount",cri.getAmount());
-		
-		return "redirect:/board/BOA_list";
-		
+		return service.updatePost(post)==1
+		? new ResponseEntity<String>("success",HttpStatus.OK)
+		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 	
 	//삭제하기
@@ -131,20 +122,18 @@ public class PostController {
 	}
 	
 	//스크랩하기
-	@ResponseBody
 	@PostMapping(value="/scrap")
 	public ResponseEntity<String> scrapPost(@RequestBody ScrapVO vo){
 		log.info("scrap..........");
 	
 		
 		return service.scrapPost(vo)==1
-		? new ResponseEntity<String>("scraped!", HttpStatus.OK)
+		? new ResponseEntity<String>("success", HttpStatus.OK)
 		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 	
 	//임시저장/업데이트하기 
-	@ResponseBody
 	@PostMapping(value = "/temporal")
 	public ResponseEntity<String> temporalPost(@RequestBody Temp_BoardVO vo){
 		log.info("temporal......");
@@ -157,19 +146,17 @@ public class PostController {
 	
 	//임시저장 불러오기 
 	//추후 session 넣고나면 register 눌렀을 때 임시저장 불러오도록 구현 
-	@ResponseBody
-	@GetMapping(value = "/temporal/{b_id}")
-	public ResponseEntity<Temp_BoardVO> temporalSelect(@PathVariable("b_id") int b_id){
+	@GetMapping(value = "/temporal")
+	public ResponseEntity<Temp_BoardVO> temporalSelect(){
 		log.info("temporalSelect.....");
 		
-		Temp_BoardVO vo = new Temp_BoardVO();
-		vo.setB_id(b_id);
-		return new ResponseEntity<Temp_BoardVO>(service.temporalSelect(vo),HttpStatus.OK);
+		String emp_id = "12"; 
+		
+		return new ResponseEntity<Temp_BoardVO>(service.temporalSelect(emp_id),HttpStatus.OK);
 	}
 	
 	
 	//게시글 클릭 시 history 테이블에 추가하기
-	@ResponseBody
 	@PostMapping(value = "/history/{post_id}")
 	public ResponseEntity<String> insertHistory(@PathVariable("post_id") int post_id){
 		

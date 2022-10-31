@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
 <%@include file="index.jsp"%>
+<%@include file="/resources/css/post.css"%>
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">게시판</h1>
@@ -35,22 +36,20 @@
 						</tr>
 					</thead>
 					
-						<c:forEach items="${pageMaker.list}" var="pageMaker">
-						<tbody>
+						<c:forEach items="${list}" var="list">
 							<tr>
-								<td><c:out value="${pageMaker.b_id}" /></td>
-								<td><a class="getPost" href='<c:out value="${pageMaker.post_id}"/>'>
-									<c:out value="${pageMaker.post_id}" /></a>
+								<td><c:out value="${list.b_id}" /></td>
+								<td><a class="getPost" href='<c:out value="${list.post_id}"/>'>
+									<c:out value="${list.post_id}" /></a>
 								</td>
-								<td><c:out value="${pageMaker.name}" /></td>
-								<td><c:out value="${pageMaker.dept_id}" /></td>
-								<td><c:out value="${pageMaker.post_name}" /></td>
+								<td><c:out value="${list.name}" /></td>
+								<td><c:out value="${list.dept_id}" /></td>
+								<td><c:out value="${list.post_name}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${pageMaker.post_regdate}" /></td>
+									value="${list.post_regdate}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${pageMaker.post_updatedate}" /></td>
+									value="${list.post_updatedate}" /></td>
 							</tr>
-						</tbody>
 						</c:forEach> 
 					
 				</table>
@@ -59,7 +58,7 @@
 				<!--검색버튼 -->
 				 <div class='row'>
 					<div class="col-lg-12">
-						<form id='searchForm' action="/board/BOA_list" method="post">
+						<form id='searchForm' action="/board/list" method="get">
 							<select name='type'>
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
@@ -101,7 +100,7 @@
 			</div>
 			<!-- end panelBody-->
 
-			<form id='actionForm' action='/board/BOA_list' method='get'>
+			<form id='actionForm' action='/board/list' method='get'>
 					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type}"/>'>
@@ -109,6 +108,29 @@
 			</form> 
 			
 		
+		
+		<!-- Modal -->
+      	<div class="modal" id="myModal">
+        	<div class="modal-dialog">
+          		<div class="modal-content">
+            		<div class="modal-header">
+              			<button type="button" class="close" data-dismiss="modal"></button>
+              			<h4 class="modal-title" id="myModalLabel">알림</h4>
+           		   </div>
+            		<div class="modal-body">
+                			<div>임시저장한 게시물이 있습니다.</div>
+                			<div>이어서 작성하시겠습니까?</div>
+            		</div>
+					<div class="modal-footer">
+        				<button id='modalModBtn' type="button" class="btn btn-primary">예</button>
+        				<button id='modalRemoveBtn' type="button" class="btn btn-primary">아니오</button>
+      				</div>         
+       		</div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
 
 		</div>
@@ -122,24 +144,45 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
+
 	var searchForm = $("#searchForm");
 	var formType = searchForm.find("select[name='type']");
 	var formKeyword = searchForm.find("input[name='keyword']");
 	var formPageNum = searchForm.find("input[name='pageNum']");
 	
-	  
-	
+	 
 	
 	 //새 게시물 등록 선택 시 register.jsp 이동
 	  $("#registerBtn").on("click",function(e){
-	      location.href = "/board/new";
+		  
+		//onload 됐을 때 emp_id값과 b_id에 맞는 temp_board데이터가 있으면 불러오기
+		postService.temporalPost(function(result){
+			if(result){
+				 $(".modal").show();
+				 $("#modalRemoveBtn").on("click",function(){
+					 $(".modal").hide();
+					 location.href = "/board/new";
+				 })
+				 $("#modalModBtn").on("click",function(){
+					 $(".modal").hide();
+					 //임시저장 불러오기추가하기
+				 })
+				 
+			}
+			else{
+				location.href = "/board/new";
+			}
+		})
+		
+	     
 	      
-	    });
+	  });//end register
 	 
 	 
 	 //pagination
 	  $(".paginate_button a").on("click", function(e) {
 					e.preventDefault();
+					
 					console.log('click');
 					$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
 					$("#actionForm").submit();
@@ -167,25 +210,25 @@ $(document).ready(function () {
 	  
 	  
 	  //글번호 클릭 시 get.jsp 이동하기
-	 
 	  $(".getPost").on("click",function(e){
 		  	
-		  console.log($(".getPost").attr("href"));
 			e.preventDefault();
 			var post_id = $(this).attr("href");
 			console.log(post_id);
 
-			//history 테이블에 넣어서 읽음 표시하기 추후 css에서 읽음 테이블안에 없을 시 bold 처리 필요 
+			//history 테이블에 넣어서 읽음 표시하기
 			postService.insertHistory({post_id:post_id});
 			
 			//get.jsp이동
 			  $("#actionForm") .
 				append("<input type='hidden' name='post_id' value='"+ $(this).attr("href")+ "'>");
 			
-			$("#actionForm").attr("action","/board/getPost");
+			$("#actionForm").attr("action","/board/get");
 			$("#actionForm").submit();  
 		
 	  });
+	  
+	 //안읽은 게시물 bold처리추가하기
 	
 	    	
 	  

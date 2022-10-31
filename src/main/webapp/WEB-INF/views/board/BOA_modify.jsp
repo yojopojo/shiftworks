@@ -17,15 +17,10 @@
 
 <div class="row">
   <div class="col-lg-12">
+  	<div class="panel panel-body">
+  
     <div class="panel panel-default">
-
-      <form id="form" action="/board/modify" method="post">
-        <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
-        <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-	    <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
-      
- 
+ 		<button id ="previewBtn" type="button" class="btn btn-primary">미리보기</button>
 		<div class="form-group">
 			<label>게시판번호</label> 
 			<input class="form-control" name='b_id'
@@ -70,52 +65,71 @@
 			<label>수신부서</label> 
 			<input class="form-control" name='post_receivedept' value = "${post.post_receivedept}"/>
 		</div>
-		<button type="submit" data-oper='modify' class="btn btn-default">글 수정하기</button>
-  		<button type="submit" data-oper='list' class="btn btn-info">목록보기</button>
-	  </form>
+		<button id="modifyBtn" class="btn btn-primary">글 수정하기</button>
+  		<button id="listBtn" class="btn btn-primary">목록보기</button>
       </div>
-      <!--  end panel-body -->
+   	
+   	
+   	<!--데이터 넘기는 form-->
+   	<form id="actionform" action="/board/list" method="get">
+        <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+        <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+	    <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
+      </form>
 
     </div>
     <!--  end panel-body -->
   </div>
   <!-- end panel -->
-
+</div>
 <!-- /.row -->
 
+
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	var formObj = $("#form");
+	var formObj = $(".form-group");
+	var actionform = $('#actionform');
+	
 	
 	//글 수정하기 버튼 클릭 했을 때 값을 postVO 객체로 받아서 db에 update하기 
-	  $('button').on("click", function(e){
+	  $('#modifyBtn').on("click", function(e){
+		  
+		var post_id = formObj.find("input[name='post_id']").val();
+		var post_name = formObj.find("input[name='post_name']").val();
+	 	var post_content = formObj.find("textarea[name='post_content']").val();
+		var post_receivedept = formObj.find("input[name='post_receivedept']").val();
 		    
+		  var post ={
+		    		post_id:post_id,
+		    		post_name:post_name,
+		    		post_content:post_content,
+		    		post_receivedept:post_receivedept
+		    }
+		  
 		    e.preventDefault(); 
 		    
-		    var operation = $(this).data("oper");
-		    console.log(operation);
+		    postService.updatePost(post, function(result){
+		    	alert(result);
+		    	 formObj.empty();
+		    	actionform.submit();
+		    });
 		    
-		    if(operation === 'list'){
-			      //move to list
-			      formObj.attr("action", "/board/list").attr("method","get");
-			      
-			      var pageNumTag = $("input[name='pageNum']").clone();
-			      var amountTag = $("input[name='amount']").clone();
-			      var keywordTag = $("input[name='keyword']").clone();
-			      var typeTag = $("input[name='type']").clone();      
-			      
-			      formObj.empty();
-			      
-			      formObj.append(pageNumTag);
-			      formObj.append(amountTag);
-			      formObj.append(keywordTag);
-			      formObj.append(typeTag);	       
-			    }
-		    formObj.submit(); 
-		  });
+	  });
 	
-});
+	//목록 버튼 클릭 시 BOA_list.jsp 로 이동
+	$('#listBtn').on("click",function(e){
+			     
+			      formObj.empty();
+			      actionform.submit();
+	});
+	
+	
+	
+	
+});//end script
 </script>
   
 

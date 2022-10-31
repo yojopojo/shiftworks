@@ -72,8 +72,8 @@ public class PostServiceImpl implements PostService {
 
 
 	@Override
-	public Temp_BoardVO temporalSelect(Temp_BoardVO vo) {
-		return mapper.temporalSelect(vo);
+	public Temp_BoardVO temporalSelect(String emp_id) {
+		return mapper.temporalSelect(emp_id);
 	}
 
 

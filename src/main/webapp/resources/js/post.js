@@ -2,6 +2,7 @@ console.log("Post module..");
 
 var postService = (function(){
 	
+	//글 등록하기
 	function add(post, callback, error) {
 
 		$.ajax({
@@ -22,10 +23,11 @@ var postService = (function(){
 		})
 	}
 	
-	
+	//글 스크랩하기
 	function scrapPost(post, callback, error) {
 		
-	
+		console.log(post.post_content);
+		
 		$.ajax({
 			type : 'post',
 			url : '/board/scrap',
@@ -36,16 +38,15 @@ var postService = (function(){
 					callback(result);
 				}
 			},
-			error : function(xhr, status, er) {
-				if (error) {
-					error(er);
-				}
+			error : function(request, status, error) {
+					alert("이미 스크랩되었습니다");
+				
 			}
-		})
+		})	
 	}
 	
 	
-	
+	//글 임시저장하기
 	function temporalPost(post, callback, error) {
 		
 	
@@ -66,10 +67,32 @@ var postService = (function(){
 			}
 		})
 	}
+	
+	
+	//글 임시저장불러오기
+	function temporalPost(callback, error) {
+		
+		$.ajax({
+			type : 'get',
+			url : '/board/temporal'+".json",
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
+	
 
 
 
-
+	//읽음 테이블에 추가하기
 	function insertHistory(post, callback, error) {
 		
 		
@@ -89,14 +112,38 @@ var postService = (function(){
 	}
 	
 	
+	//글 수정하기 
+	function updatePost(post, callback, error) {
+		
+		console.log(post.post_content);
+		console.log(post.post_receivedept);
+		$.ajax({
+			type : 'post',
+			url : '/board/modify',
+			data : JSON.stringify(post),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
+
 	
 	
 	return {
 		add:add,
 		scrapPost:scrapPost,
 		temporalPost:temporalPost,
-		insertHistory:insertHistory
-		};
+		insertHistory:insertHistory,
+		updatePost:updatePost
+	}
 	
 	
 	

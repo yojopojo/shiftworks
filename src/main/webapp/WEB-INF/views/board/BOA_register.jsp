@@ -85,6 +85,10 @@ $(document).ready(function () {
 	var today = new Date();
 	formInputRegdate.attr("value",today);
 	
+	
+	
+	
+	
 	//글 등록 버튼 클릭 시 post db에 저장하기 
 	  $("#registerBtn").on("click",function(e){
 	      
@@ -125,7 +129,7 @@ $(document).ready(function () {
 	 	          };
 	    	 
 	    	 postService.temporalPost(post, function(result){
-	    		 alert(result);
+	    		 alert("임시저장되었습니다");
 	    		 form.find("input").val(""); 
 	    		 form.find("textarea").val(""); 
 	    	 })

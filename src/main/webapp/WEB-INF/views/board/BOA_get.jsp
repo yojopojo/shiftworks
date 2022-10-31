@@ -69,6 +69,7 @@
 						value='<c:out value="${post.emp_id }"/>' readonly="readonly">
 				</div>
 				<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
+				<button id="listBtn" class="btn btn-info">목록보기</button>
 
 
 				<form id='operForm' action="/board/modify" method="get">
@@ -207,13 +208,23 @@ $(document).ready(function () {
 				post_content:post_content
 		}
 		
-		postService.scrapPost(post, function(result){
-			alert(result);
-		});
 		
-		
+		 postService.scrapPost(post, function(result){
+			alert("스크랩되었습니다!");
+		}); 
 	});
 	
+	
+	
+	//list버튼 클릭 시 목록이동
+	$('#listBtn').on("click",function(e){
+	     
+	      
+	      $("#operForm").attr("action","/board/list");
+	      $(".form-group").empty();
+	      $("#operForm").submit();
+	        
+	});
 	
 	
 });//end script

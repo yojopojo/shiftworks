@@ -96,8 +96,11 @@
 	
 	<!--스크랩하기-->
 	<insert id="scrapPost" parameterType="org.shiftworks.domain.ScrapVO">
-		insert into scrap (scrap_id, dept_id, emp_id,post_id, scrap_date, post_name,post_content)
-			values(scrap_seq.nextval, #{dept_id}, #{emp_id},#{post_id},sysdate,#{post_name},#{post_content})
+		merge into scrap 
+			using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id=#{dept_id})
+			when not matched then
+				insert (scrap_id, dept_id, emp_id,post_id, scrap_date, post_name,post_content)
+				values(scrap_seq.nextval, #{dept_id}, #{emp_id},#{post_id},sysdate,#{post_name},#{post_content})
 	</insert>
 	
 	
@@ -112,14 +115,17 @@
 	</update>
 	
 	<!--임시저장 불러오기-->
-	<select id="temporalSelect" parameterType="org.shiftworks.domain.Temp_BoardVO" resultType="org.shiftworks.domain.Temp_BoardVO">
-		select * from temp_board where emp_id = #{emp_id} and b_id=#{b_id}
+	<select id="temporalSelect" parameterType="String" resultType="org.shiftworks.domain.Temp_BoardVO">
+		select * from temp_board where emp_id = #{emp_id}
 	</select>
 	
-	<!-- 읽음 테이블에 게시글 추가-->
+	<!-- emp_id, b_id가 일치하는 것이 없으면 읽음 테이블에 게시글 추가-->
 	<insert id="insertHistory" parameterType="org.shiftworks.domain.HistoryVO">
-		insert into history (emp_id, dept_id, post_id, read_date)
-			values(#{emp_id},#{dept_id},#{post_id},sysdate)
+		merge into history
+		using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id =#{dept_id})
+		when not matched then
+			insert (emp_id, dept_id, post_id, read_date)
+			values(#{emp_id},#{dept_id},#{post_id}, sysdate)
 	</insert>
 
 	
