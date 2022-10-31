@@ -5,6 +5,10 @@
 	width: 80%;
 }
 
+.no {
+	width: 15%;
+}
+
 .title {
 	width: 50%;
 }
@@ -12,3 +16,34 @@
 .writer {
 	width: 20%;
 }
+
+.hasFile {
+	width: 15%
+}
+
+#searchForm {
+	width: 200px;
+}
+
+#searchButton {
+	width: 70px !important;
+}
+
+.d-flex {
+	float: right;
+}
+
+.dropdown {
+	float: left;
+}
+
+.confirm {
+	float: right;
+}
+
+.newContainer {
+	width: 750px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+

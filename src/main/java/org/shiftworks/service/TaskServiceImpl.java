@@ -2,7 +2,6 @@ package org.shiftworks.service;
 
 import java.util.List;
 
-import org.shiftworks.domain.AlarmVO;
 import org.shiftworks.domain.TaskCriteria;
 import org.shiftworks.domain.TaskPageDTO;
 import org.shiftworks.domain.TaskVO;
@@ -62,12 +61,6 @@ public class TaskServiceImpl implements TaskService {
 		return taskMapper.deleteTask(task_id) == 1;
 	}
 
-	// 알림 등록(미구현 상태)
-	@Override
-	public boolean insertAlarm(AlarmVO alarmVO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 
 

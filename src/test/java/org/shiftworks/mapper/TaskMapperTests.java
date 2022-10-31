@@ -78,7 +78,7 @@ public class TaskMapperTests {
 	// 검색 조건을 적용한 페이징 처리
 	@Test
 	public void testGetListWithPaging() {
-		TaskCriteria cri = new TaskCriteria(1, null, null, null, null);
+		TaskCriteria cri = new TaskCriteria(1, null, null, null);
 		
 		mapper.getListWithPaging(cri);
 		

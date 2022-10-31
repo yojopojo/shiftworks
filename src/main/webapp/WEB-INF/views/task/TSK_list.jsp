@@ -26,21 +26,18 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<td colspan="2"><select class="form-select"
-					aria-label="Default select example">
-						<option selected>부서</option>
-						<option value="1">영업</option>
-						<option value="2">인사</option>
-						<option value="3">개발</option>
-				</select>
-				<select class="form-select"
-					aria-label="Default select example">
-						<option selected>카테고리</option>
-						<option value="1">회의</option>
-						<option value="2">문서</option>
-						<option value="3">기타</option>
-				</select></td>
-				<td colspan="2">
+				<td colspan="4">
+					<div class="dropdown">
+						<button class="btn btn-outline-secondary dropdown-toggle" type="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							전체</button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">부서1</a></li>
+							<li><a class="dropdown-item" href="#">부서2</a></li>
+							<li><a class="dropdown-item" href="#">부서3</a></li>
+						</ul>
+						<button type="button" class="btn btn-outline-secondary">작성</button>
+					</div>
 					<form class="d-flex" role="search">
 						<input id="searchForm" class="form-control me-2" type="search"
 							placeholder="Search" aria-label="Search">
@@ -55,8 +52,16 @@
 				<td class="no">글 번호</td>
 				<td class="title">제목</td>
 				<td class="writer">작성자</td>
-				<td class="hasFile">파일첨부</td>
+				<td class="hasFile">파일</td>
 			</tr>
+			<c:forEach items="${dto.list}" var="task">
+				<tr>
+					<td><c:out value="${task.task_id}"/></td>
+					<td><c:out value="${task.task_title}"/></td>
+					<td><c:out value="${task.name}"/></td>
+					<td></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 		<tfoot>
 			<tr>
@@ -74,5 +79,8 @@
 			</tr>
 		</tfoot>
 	</table>
+
+<button type="button" class="btn btn-outline-primary">작성</button>
+
 </body>
 </html>

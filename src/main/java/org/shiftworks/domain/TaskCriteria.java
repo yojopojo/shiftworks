@@ -9,18 +9,17 @@ public class TaskCriteria {
 
 	private int amount = 10;
 	private int pageNum;
-	private String type, keyword, selectedCategory, selectedDept;
+	private String type, keyword, selectedDept;
 
 	public TaskCriteria() {
 		pageNum = 1;
 	}
 
-	public TaskCriteria(int pageNum, String type, String keyword, String selectedCategory, String selectedDept) {
+	public TaskCriteria(int pageNum, String type, String keyword, String selectedDept) {
 		super();
 		this.pageNum = pageNum;
 		this.type = type;
 		this.keyword = keyword;
-		this.selectedCategory = selectedCategory;
 		this.selectedDept = selectedDept;
 	}
 	

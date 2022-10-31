@@ -14,9 +14,6 @@ public class TaskVO {
 	private String task_content;
 	private String emp_id;
 	private String name;
-	private Date start_date;
-	private Date end_date;
-	private String category;
 	private Character t_private;
 	private Character notification;
 	private Date date_created;

@@ -6,9 +6,9 @@
 
 	<!-- 업무 등록 -->
 	<insert id="insertTask">
-		INSERT INTO task
+		INSERT INTO task(task_id, dept_id, task_title, task_content, emp_id, t_private, notification, date_created)
 			VALUES(task_seq.nextval, #{dept_id}, #{task_title}, TO_CLOB(#{task_content}), #{emp_id},
-					#{start_date}, #{end_date}, #{category}, #{t_private}, #{notification}, sysdate)
+					#{t_private}, #{notification}, sysdate)
 	</insert>
 	
 	<!-- 업무 수정 -->
@@ -17,9 +17,6 @@
 		UPDATE task SET dept_id = #{dept_id},
 						task_title = #{task_title},
 						task_content = TO_CLOB(#{task_content}),
-						start_date = #{start_date},
-						end_date = #{end_date},
-						category = #{category},
 						t_private = #{t_private}
 			WHERE task_id = ${task_id}
 	
@@ -55,13 +52,6 @@
 		</trim>
 	</sql>
 	
- 	<!-- 카테고리 설정을 위한 쿼리 -->
-	<sql id="selectedCategory">
-		<if test="selectedCategory != null">
-			category LIKE '%'||#{selectedCategory}||'%' AND
-		</if>
-	</sql>
-	
 	<!-- 부서 설정을 위한 쿼리 -->
 	<sql id="selectedDept">
 		<if test="selectedDept != null">
@@ -73,28 +63,24 @@
 	<select id="getListWithPaging" resultType="org.shiftworks.domain.TaskVO">
 	
 		<![CDATA[
-		SELECT task_id, dept_id, task_title, task_content, emp_id, name,
-				start_date, end_date, category, t_private, date_created
-			FROM (SELECT /*+INDEX_DESC(task task_pk) */
-				ROWNUM rn, task_id, t.dept_id as dept_id, task_title, DBMS_LOB.SUBSTR(task_content, 4000, 1) as task_content,
-				t.emp_id as emp_id, name, start_date, end_date, category, t_private, date_created
+		SELECT task_id, dept_id, task_title, task_content, emp_id, name, t_private, date_created
+			FROM (
+				SELECT /*+INDEX_DESC (t task_pk) */
+					ROWNUM rn, task_id, t.dept_id as dept_id, task_title,
+					DBMS_LOB.SUBSTR(task_content, 4000, 1) as task_content,
+					t.emp_id as emp_id, name, t_private, date_created
 	        	FROM task t JOIN employee e
 	        	ON t.emp_id = e.emp_id
 	        	WHERE
 		]]>
-
-		<include refid="selectedCategory"/> 
+ 
 		<include refid="selectedDept"/> 
+		<include refid="criteria"/>
 	      
 		<![CDATA[    
 				ROWNUM <= #{pageNum} * #{amount})
 			
 			WHERE
-		]]>
-		
-		<include refid="criteria"/>
-			
-		<![CDATA[
 			rn > (#{pageNum} -1) * #{amount}   
 		]]>
 		
@@ -107,6 +93,7 @@
 		SELECT COUNT(*) FROM task t JOIN employee e
 			ON t.emp_id = e.emp_id
 			WHERE
+			<include refid="selectedDept"/>
 			<include refid="criteria"/>
 			task_id > 0
 			
@@ -115,7 +102,9 @@
 	<!-- 업무(게시글) 개별 조회 -->
 	<select id="getTask" resultType="org.shiftworks.domain.TaskVO">
 	
-		SELECT * FROM task
+		SELECT task_id, dept_id, task_title, task_content, t.emp_id, name, t_private, notification, date_created
+			FROM task t JOIN employee e
+			ON t.emp_id = e.emp_id
 			WHERE task_id = #{task_id}
 	
 	</select>

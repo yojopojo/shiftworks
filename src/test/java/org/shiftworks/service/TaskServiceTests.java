@@ -25,7 +25,7 @@ public class TaskServiceTests {
 	@Test
 	public void testGetList() {
 		
-		TaskCriteria cri = new TaskCriteria(1, "T", "제목", null, "dept");
+		TaskCriteria cri = new TaskCriteria(1, "T", "제목", "dept");
 		
 		service.getList(cri);
 	}

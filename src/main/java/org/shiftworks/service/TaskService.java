@@ -1,6 +1,5 @@
 package org.shiftworks.service;
 
-import org.shiftworks.domain.AlarmVO;
 import org.shiftworks.domain.TaskCriteria;
 import org.shiftworks.domain.TaskPageDTO;
 import org.shiftworks.domain.TaskVO;
@@ -12,6 +11,5 @@ public interface TaskService {
 	boolean insertTask(TaskVO taskVO);
 	boolean updateTask(TaskVO taskVO);
 	boolean deleteTask(Integer task_id);
-	
-	boolean insertAlarm(AlarmVO alarmVO);
+
 }

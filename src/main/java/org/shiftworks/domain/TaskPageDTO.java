@@ -31,6 +31,9 @@ public class TaskPageDTO {
 		
 		// 하단 출력 페이지번호 - 시작번호
 		this.startPage = this.endPage - 9;
+		if(this.startPage < 1) {
+			this.startPage = 1;
+		}
 		
 		// 페이지 시작번호가 1보다 크면 '이전' 버튼 출력
 		this.prev = this.startPage > 1;

@@ -6,6 +6,7 @@ import org.shiftworks.domain.TaskCriteria;
 import org.shiftworks.domain.TaskPageDTO;
 import org.shiftworks.domain.TaskVO;
 import org.shiftworks.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,7 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class TaskController {
 
+	@Autowired
 	private TaskService service;
 	
 	@GetMapping(value="/main")
@@ -43,30 +45,29 @@ public class TaskController {
 	}
 	
 	// 검색기능 적용 페이징 처리
-	@GetMapping(value="/pages/{dept_id}/{category}/{type}/{keyword}/{pageNum}")
+	@GetMapping(value="/pages/{dept_id}/{type}/{keyword}/{pageNum}")
 	public ModelAndView getList(
-			@PathVariable() String dept_id, @PathVariable String category, @PathVariable String type,
+			@PathVariable String dept_id, @PathVariable String type,
 			@PathVariable String keyword, @PathVariable Integer pageNum) {
 		
 		log.info("Controller: getList.........");
 
-		ModelAndView mav = new ModelAndView("TSK_list");
+		// 출력 페이지
+		ModelAndView mav = new ModelAndView("/task/TSK_list");
 		
-		if(dept_id == "all") {
+		// 검색 조건 없을 경우 null 대입
+		if(dept_id.equals("all")) {
 			dept_id = null;
 		}
-		if(category == "all") {
-			category = null;
-		}
-		if(type == "empty") {
+		if(type.equals("empty")) {
 			type = null;
 		}
-		if(keyword == "empty") {
+		if(keyword.equals("empty")) {
 			keyword = null;
 		}
 		
 		// 검색 설정과 일치하는 로우 페이징처리하여 가져오기
-		TaskCriteria cri = new TaskCriteria(pageNum, type, keyword, category, keyword);
+		TaskCriteria cri = new TaskCriteria(pageNum, type, keyword, dept_id);
 		
 		mav.addObject("dto", service.getList(cri));
 		
@@ -74,54 +75,48 @@ public class TaskController {
 	}
 	
 	// 업무 개별 보기
-	@GetMapping(value="/pages/{dept_id}/{category}/{type}/{keyword}/{pageNum}/{task_id}")
+	@GetMapping(value="/pages/{dept_id}/{type}/{keyword}/{pageNum}/{task_id}")
 	public ModelAndView getTask(
-			@PathVariable() String dept_id, @PathVariable String category, @PathVariable String type,
-			@PathVariable String keyword, @PathVariable Integer pageNum, @PathVariable Integer task_id) {
+			@PathVariable() String dept_id, @PathVariable String type, @PathVariable String keyword,
+			@PathVariable Integer pageNum, @PathVariable Integer task_id) {
 		
-		ModelAndView mav = new ModelAndView("TSK_get");
+		ModelAndView mav = new ModelAndView("/task/TSK_get");
 		
-		mav.addObject("category", category);
 		mav.addObject("type", type);
 		mav.addObject("keyword", keyword);
 		mav.addObject("pageNum", pageNum);
+		mav.addObject("task", service.getTask(task_id));
 		
 		return mav;
 	}
 	
+	// 업무 등록 폼으로 이동
 	@GetMapping(value="/new")
 	public ModelAndView insertForm() {
 		
-		ModelAndView mav = new ModelAndView("TSK_new");
+		ModelAndView mav = new ModelAndView("/task/TSK_new");
 		
 		return mav;
 		
 	}
 	
 	// 업무 등록
-	@PostMapping(
-			value="/new",
-			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Model> insertTask(@RequestBody TaskVO vo, Model model) {
-		
-		// 등록 후 해당 카테고리, 부서로 페이징
-		model.addAttribute("category", vo.getCategory());
-		model.addAttribute("dept_id", vo.getDept_id());
-	
+	@PostMapping(value="/new")
+	public ResponseEntity<String> insertTask(@RequestBody TaskVO vo) {
+
 		return service.insertTask(vo) ?
-			new ResponseEntity<Model>(model, HttpStatus.OK) :
-			new ResponseEntity<Model>(model, HttpStatus.INTERNAL_SERVER_ERROR);
+			new ResponseEntity<String>("success", HttpStatus.OK) :
+			new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	// 업무 수정
 	@RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT},
-				value="/pages/{dept_id}/{category}/{type}/{keyword}/{pageNum}/{task_id}",
+				value="/pages/{dept_id}/{type}/{keyword}/{pageNum}/{task_id}",
 				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<String> updateTask(@RequestBody TaskVO vo,
-			@PathVariable() String dept_id, @PathVariable String category, @PathVariable String type,
-			@PathVariable String keyword, @PathVariable Integer pageNum, @PathVariable Integer task_id, Model model) {
-		
-		
+			@PathVariable String dept_id, @PathVariable String type, @PathVariable String keyword,
+			@PathVariable Integer pageNum, @PathVariable Integer task_id, Model model) {
+
 		return service.updateTask(vo) ?
 				new ResponseEntity<String>("success", HttpStatus.OK) :
 				new ResponseEntity<String>("a", HttpStatus.INTERNAL_SERVER_ERROR);
