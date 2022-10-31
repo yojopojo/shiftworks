@@ -35,7 +35,7 @@
 		<result column="book_date" property="book_date" jdbcType="DATE" javaType="String"/>
 		<result column="book_title" property="book_title" jdbcType="NVARCHAR" javaType="String"/>
 		<result column="book_id" property="book_id" jdbcType="NUMERIC" javaType="Integer"/>
-		<result column="book_begin" property="book_begin" jdbcType="NUMERIC" javaType="Integer"/>
+		<result column="book_begin" property="book_begin" jdbcType="NVARCHAR" javaType="String"/>
 	</resultMap>
 	
 	

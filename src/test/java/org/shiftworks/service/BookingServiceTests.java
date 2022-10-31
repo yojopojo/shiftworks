@@ -76,7 +76,7 @@ public class BookingServiceTests {
   		String selectDate = "2022-12-25 09:00";
   		String selectRsc = "CFR305";
   		//선택한 시간
-  	    int selectTime = 9;
+  	    String selectTime = "09";
   	    
   		BookingVO vo = new BookingVO();
   		//vo.setBook_id(32);

@@ -27,7 +27,7 @@ public class BookingServiceImpl implements BookingService {
 		String selectDate = vo.getBook_date();
 		log.info("date형태 확인......................>"+selectDate);
 		
-		int selectTime = vo.getBook_begin();
+		String selectTime = vo.getBook_begin();
 		
 		List<BookingVO> bookingList = mapper.getBookingList(vo);
 		log.info("예약된 리스트 from Service------------------------->"+bookingList);

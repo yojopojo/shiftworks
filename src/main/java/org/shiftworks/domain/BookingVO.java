@@ -9,7 +9,7 @@ public class BookingVO {
 	private String emp_id;
 	private String dept_id;
 	private String book_date;
-	private int book_begin;
+	private String book_begin;
 	private int book_end;
 	private String book_title;
 	private String book_content;
