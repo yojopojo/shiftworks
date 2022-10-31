@@ -41,7 +41,7 @@ var taskService = (function(){
 
     // 일정 등록
     function insertTask(param, callback, error) {
-        console.log(param)
+       
         $.ajax({
             type: 'post',
             url: "/task/new",
