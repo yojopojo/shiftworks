@@ -13,30 +13,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
 
-<!-- timePicker -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-
-    <!— Popperjs —>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"
-          crossorigin="anonymous"></script>
-    <!— Tempus Dominus JavaScript —>
-    <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"
-          crossorigin="anonymous"></script>
-
-    <!— Tempus Dominus Styles —>
-    <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css"
-          rel="stylesheet" crossorigin="anonymous">
- -->
- 
-
 <meta charset="UTF-8">
 <title>Book your meetings here</title>
 </head>
 <body>
 	<h2>insertBookingForm 입니다.</h2><br>
-	
-	
 	
 	
 	<div class="insertForm" id="insertForm">

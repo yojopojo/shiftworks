@@ -184,7 +184,6 @@ public class BookingController {
 	public ResponseEntity<String> insertBooking(@RequestBody BookingVO vo) {
 		
 		log.info("insertBooking controller.............");
-		//service.insertBooking(vo);
 		int re = service.insertBooking(vo);
 		log.info(vo);
 		log.info(re);

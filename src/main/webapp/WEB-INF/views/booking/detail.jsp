@@ -27,7 +27,7 @@
 			<tr>
 				<td>일정</td>
 				<td><c:set var="book_date" value="${event.book_date }"></c:set>
-				<c:out value="${fn:substring(book_date,0,10) }">&ensp;</c:out>
+				<c:out value="${fn:substring(book_date,0,13) }">&ensp;</c:out>
 				<c:out value="${event.book_begin }시~${event.book_begin+2 }시"></c:out></td>
 			</tr>
 			

@@ -68,64 +68,30 @@ public class BookingServiceTests {
 //	
 	
 	
-	@Test
-	public void insertBookingConditionTest() {
-		log.info("insertBooking Condition Check Testing..................");
-		
-  		//선택한 자원, 날짜
-  		String selectDate = "2022-12-25 09:00";
-  		String selectRsc = "CFR305";
-  		//선택한 시간
-  	    String selectTime = "09";
-  	    
-  		BookingVO vo = new BookingVO();
-  		//vo.setBook_id(32);
-  		vo.setRsc_id(selectRsc);
-  		vo.setDept_id("SALES");
-  		vo.setEmp_id("SALES");
-  		vo.setBook_begin(selectTime);
-  		vo.setBook_date(selectDate);
-  		vo.setBook_title("서비스 예약 테스트");
-  		vo.setBook_content("서비스 테스트");
-  		
-  		service.insertBookingCondition(vo);
-  		log.info("service.insertBookingCondition done---------------------------->"+vo);
-  		log.info("date타입 확인 serviceTest................: "+selectDate);
-//  		log.info(re);
-//
-//	      try {
-//	    	  
-//		  		
-//	    		log.info("date확인합니다...................................");
-//	            log.info(selectDate);
-//	            
-//	            // 포맷터        
-//	            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");         
-//	            // 문자열 -> Date
-//	            Date date = formatter.parse(selectDate);
-//	            log.info("formatter확인합니다..........................plz.......");
-//	            log.info(date);
-//	            
-//	           // vo.setBook_date(date);
-//	            
-//
-//	        } catch (Exception e) {
-//	  			e.printStackTrace();
-//	  		}
-	      
-	      
-//		vo.setBook_id(17);
-//		vo.setBook_title("Service Test-insert3");
-//		vo.setBook_begin(9);
-//		vo.setRsc_id("CFR505");
-//		vo.setDept_id("SALES");
-//		vo.setEmp_id("SALES3056");
-//		//vo.setBook_date("2022/10/25");
-//		vo.setBook_content("insertBooking Service Test");
-//
-//		int re = service.insertBookingCondition(vo);
-//		log.info("vo결과값: (22/10/25...................................)"+re);
-	}
+//	@Test
+//	public void insertBookingConditionTest() {
+//		log.info("insertBooking Condition Check Testing..................");
+//		
+//  		//선택한 자원, 날짜
+//  		String selectDate = "2022-12-25 09:00";
+//  		String selectRsc = "CFR305";
+//  		//선택한 시간
+//  	    String selectTime = "09";
+//  	    
+//  		BookingVO vo = new BookingVO();
+//  		//vo.setBook_id(32);
+//  		vo.setRsc_id(selectRsc);
+//  		vo.setDept_id("SALES");
+//  		vo.setEmp_id("SALES");
+//  		vo.setBook_begin(selectTime);
+//  		vo.setBook_date(selectDate);
+//  		vo.setBook_title("서비스 예약 테스트");
+//  		vo.setBook_content("서비스 테스트");
+//  		
+//  		service.insertBookingCondition(vo);
+//  		log.info("service.insertBookingCondition done---------------------------->"+vo);
+//  		log.info("date타입 확인 serviceTest................: "+selectDate);
+//	}
 	
 	
 //	@Test
