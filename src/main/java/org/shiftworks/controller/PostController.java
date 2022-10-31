@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.shiftworks.domain.Criteria;
-
+import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
@@ -165,6 +165,24 @@ public class PostController {
 		Temp_BoardVO vo = new Temp_BoardVO();
 		vo.setB_id(b_id);
 		return new ResponseEntity<Temp_BoardVO>(service.temporalSelect(vo),HttpStatus.OK);
+	}
+	
+	
+	//게시글 클릭 시 history 테이블에 추가하기
+	@ResponseBody
+	@PostMapping(value = "/history/{post_id}")
+	public ResponseEntity<String> insertHistory(@PathVariable("post_id") int post_id){
+		
+		log.info("history.......");
+		
+		HistoryVO vo = new HistoryVO();
+		vo.setEmp_id("U3948709");
+		vo.setDept_id("neuro234"); //추후 세션으로 처리예정
+		vo.setPost_id(post_id); 
+		
+		return service.insertHistory(vo)==1
+		?new ResponseEntity<String>("success", HttpStatus.OK)
+		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	

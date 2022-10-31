@@ -107,6 +107,8 @@
 					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type}"/>'>
 					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword}"/>'>
 			</form> 
+			
+		
 
 
 		</div>
@@ -165,15 +167,23 @@ $(document).ready(function () {
 	  
 	  
 	  //글번호 클릭 시 get.jsp 이동하기
+	 
 	  $(".getPost").on("click",function(e){
 		  	
 		  console.log($(".getPost").attr("href"));
 			e.preventDefault();
-			 $("#actionForm") .
+			var post_id = $(this).attr("href");
+			console.log(post_id);
+
+			//history 테이블에 넣어서 읽음 표시하기 추후 css에서 읽음 테이블안에 없을 시 bold 처리 필요 
+			postService.insertHistory({post_id:post_id});
+			
+			//get.jsp이동
+			  $("#actionForm") .
 				append("<input type='hidden' name='post_id' value='"+ $(this).attr("href")+ "'>");
 			
 			$("#actionForm").attr("action","/board/getPost");
-			$("#actionForm").submit(); 
+			$("#actionForm").submit();  
 		
 	  });
 	
@@ -183,4 +193,3 @@ $(document).ready(function () {
 </script>
 
 
-<%@include file="../includes/footer.jsp"%>

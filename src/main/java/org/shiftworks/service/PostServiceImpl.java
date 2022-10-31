@@ -3,6 +3,7 @@ package org.shiftworks.service;
 import java.util.List;
 
 import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -73,6 +74,12 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public Temp_BoardVO temporalSelect(Temp_BoardVO vo) {
 		return mapper.temporalSelect(vo);
+	}
+
+
+	@Override
+	public int insertHistory(HistoryVO vo) {
+		return mapper.insertHistory(vo);
 	}
 
 	

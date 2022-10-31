@@ -66,6 +66,27 @@ var postService = (function(){
 			}
 		})
 	}
+
+
+
+
+	function insertHistory(post, callback, error) {
+		
+		
+		$.ajax({
+			type : 'post',
+			url : '/board/history/' +post.post_id,
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+	
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
 	
 	
 	
@@ -73,7 +94,8 @@ var postService = (function(){
 	return {
 		add:add,
 		scrapPost:scrapPost,
-		temporalPost:temporalPost
+		temporalPost:temporalPost,
+		insertHistory:insertHistory
 		};
 	
 	

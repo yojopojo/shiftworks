@@ -116,7 +116,11 @@
 		select * from temp_board where emp_id = #{emp_id} and b_id=#{b_id}
 	</select>
 	
-	
+	<!-- 읽음 테이블에 게시글 추가-->
+	<insert id="insertHistory" parameterType="org.shiftworks.domain.HistoryVO">
+		insert into history (emp_id, dept_id, post_id, read_date)
+			values(#{emp_id},#{dept_id},#{post_id},sysdate)
+	</insert>
 
 	
 </mapper>
