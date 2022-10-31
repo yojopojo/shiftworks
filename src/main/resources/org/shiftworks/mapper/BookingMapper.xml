@@ -55,6 +55,13 @@
 		]]>
 	</select>
 	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from rsc_booking where book_id > 0
+	</select>
+	
+	
+	
+	
 	<!-- 전체 예약목록 -->
 	<select id="getList" resultType="org.shiftworks.domain.BookingVO">
 		select * from rsc_booking

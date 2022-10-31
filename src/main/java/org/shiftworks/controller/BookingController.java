@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -49,6 +51,9 @@ public class BookingController {
 			
 			calList.add(i, map);
 		}
+		
+		JsonArray jsonArray = new JsonArray();
+		
 		
 		return calList;
 	}
@@ -162,10 +167,15 @@ public class BookingController {
 	public ModelAndView getList(Criteria cri, ModelAndView mav) {
 		//List<BookingVO> list = service.getList();
 		//ModelAndView mav = new ModelAndView();
+		log.info("list: "+cri);
 		mav.setViewName("booking/bookingList");
-		mav.addObject("pageMaker", new BookingPageDTO(cri, 23));
 		mav.addObject("event", service.getListwithPaging(cri));
-
+		//mav.addObject("pageMaker", new BookingPageDTO(cri, 123));
+		
+		int total = service.getTotalCount(cri);
+		log.info("total: "+total);
+		mav.addObject("pageMaker", new BookingPageDTO(cri, total));
+		
 		return mav;
 	}
 	

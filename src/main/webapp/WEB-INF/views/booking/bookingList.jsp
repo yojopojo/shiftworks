@@ -93,7 +93,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
-			var actionForm = $('#acionForm');
+			var actionForm = $('#actionForm');
 			
 			$(".paginate_button a").on('click', function(e){
 				e.preventDefault();

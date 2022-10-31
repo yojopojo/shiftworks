@@ -22,7 +22,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     $(function () {
         var request = $.ajax({
-            url: "/booking/getCal.json",
+            url: "/booking/getCal2.json",
             method: "GET",
             dataType: "json"
         });

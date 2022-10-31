@@ -66,7 +66,7 @@
 					<td>
 					<select name="book_begin" id="book_begin">
 						<option>----- 09:00-19:00 -----</option>
-						<option value="9">09:00-11:00</option>
+						<option value="09">09:00-11:00</option>
 						<option value="11">11:00-13:00</option>
 						<option value="13">13:00-15:00</option>
 						<option value="15">15:00-17:00</option>

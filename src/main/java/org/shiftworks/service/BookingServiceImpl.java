@@ -136,12 +136,19 @@ public class BookingServiceImpl implements BookingService {
 		return re;
 	}
 
-
+	//예약목록(페이징)
 	@Override
 	public List<BookingVO> getListwithPaging(Criteria cri) {
 		log.info("get List with criteria from Service: "+cri);
 		
 		return mapper.getListwithPaging(cri);
+	}
+
+	//전체 예약 숫자 구하기
+	@Override
+	public int getTotalCount(Criteria cri) {
+		log.info("get total count from Service");
+		return mapper.getTotalCount(cri);
 	}
 
 }
