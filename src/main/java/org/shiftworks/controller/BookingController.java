@@ -37,14 +37,38 @@ public class BookingController {
 	private BookingService service;
 	
 	
+	
+	//getList 테스트 메서드(jsonArray 테스트)
+	@GetMapping("/cal3")
+	public String listTojsonArray() {
+		List<BookingVO> bookingList = service.getList();
+		
+		JsonArray jsonArr = new JsonArray();
+		JsonObject obj = new JsonObject();
+		
+		for(int i=0;i<bookingList.size();i++) {
+			obj.addProperty("title", bookingList.get(i).getBook_title());
+			obj.addProperty("start", bookingList.get(i).getBook_date());
+			
+			jsonArr.add(obj);
+		}
+		
+		log.info("jsonArr 형태----------------------------->"+jsonArr);
+		return jsonArr.toString();
+	}
+	
+	
+	
+	
 	//getList 테스트 메서드(list만 가져오고 view없음) -> 리스트 출력은 ok, 달력에 출력은 x
-	@GetMapping("/getCal2")
+	@GetMapping("/cal2")
 	public List<Map<String, Object>> getCalbookings() {
 		List<BookingVO> bookingList = service.getList();
 		
 		List<Map<String, Object>> calList = new ArrayList<Map<String,Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
+
 		for(int i=0;i<bookingList.size();i++) {
 			map.put("title", bookingList.get(i).getBook_title());
 			map.put("start", bookingList.get(i).getBook_date());
@@ -52,12 +76,29 @@ public class BookingController {
 			calList.add(i, map);
 		}
 		
-		JsonArray jsonArray = new JsonArray();
-		
-		
 		return calList;
 	}
 	
+	
+	//calendar test method -> calendar view 출력용(list 못가져옴)
+	@GetMapping("/cal")
+	public ModelAndView getCalList() {
+		ModelAndView mav = new ModelAndView();
+		List<BookingVO> list = service.getList();
+		log.info("list확인......................................>"+list);
+		
+		String json = new Gson().toJson(list);
+		log.info("json변환 확인....................................."+json);
+
+		mav.setViewName("booking/bookingCal");
+		mav.addObject("event", json);
+		
+		log.info("cal controller..........................mav.......................");
+		log.info(mav);
+		log.info("json결과: ---------------------------------------"+json);
+
+		return mav;
+	}
 	
 	
 	//예약1개 보기 테스트 메서드(booking만 반환, view없음) -> 달력 출력ok
@@ -65,8 +106,8 @@ public class BookingController {
 	public Map<String, Object> getCal() {
 		BookingVO getOne = service.getBooking(1);
 		
-		String bookdate = getOne.getBook_date();
-		log.info(bookdate); //10개
+//		String bookdate = getOne.getBook_date();
+//		log.info(bookdate); //10개
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("title", getOne.getBook_title());
@@ -106,24 +147,19 @@ public class BookingController {
 	}
 	
 	
-	//calendar test method -> calendar view 출력용(list 못가져옴)
-	@GetMapping("/cal")
-	public ModelAndView getCalList() {
-		ModelAndView mav = new ModelAndView();
-		List<BookingVO> list = service.getList();
-		log.info("list확인......................................>"+list);
-		
-		String json = new Gson().toJson(list);
-
-		mav.setViewName("booking/bookingCal");
-		mav.addObject("event", json);
-		
-		log.info("cal controller..........................mav.......................");
-		log.info(mav);
-		log.info("json결과: ---------------------------------------"+json);
-
-		return mav;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//예약폼 페이지로 이동

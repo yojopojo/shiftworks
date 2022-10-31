@@ -22,9 +22,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     $(function () {
         var request = $.ajax({
-            url: "/booking/getCal2.json",
-            method: "GET",
-            dataType: "json"
+            url: "/booking/cal2.json",
+            method: "GET"
         });
 
         request.done(function (data) {
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 editable: true,
                 droppable: true, // things to be dropped onto the calendar
                 
-                events:[data]
+                events:data
             });
 
             calendar.render();
