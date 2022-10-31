@@ -36,6 +36,13 @@ public class BookingController {
 	
 	private BookingService service;
 	
+	@GetMapping("/picker")
+	public ModelAndView picker() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("booking/datetimePicker");
+		return mav;
+	}
+	
 	
 	
 	//getList 테스트 메서드(jsonArray 테스트)
@@ -178,7 +185,7 @@ public class BookingController {
 		
 		log.info("insertBooking controller.............");
 		//service.insertBooking(vo);
-		int re = service.insertBookingCondition(vo);
+		int re = service.insertBooking(vo);
 		log.info(vo);
 		log.info(re);
 		

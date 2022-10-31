@@ -71,14 +71,14 @@ public class BookingServiceImpl implements BookingService {
 	
 	
 	//예약하기
-//	@Override
-//	public int insertBooking(BookingVO vo) {
-//		log.info("insertBooking Service...............");
-//		
-//		int re = mapper.insertBooking(vo);
-//		
-//		return re;
-//	}
+	@Override
+	public int insertBooking(BookingVO vo) {
+		log.info("insertBooking Service...............");
+		
+		int re = mapper.insertBooking(vo);
+		
+		return re;
+	}
 
 	
 	//예약 상세 보기(1개)

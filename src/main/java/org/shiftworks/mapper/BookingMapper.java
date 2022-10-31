@@ -3,7 +3,6 @@ package org.shiftworks.mapper;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Select;
 import org.shiftworks.domain.BookingVO;
 import org.shiftworks.domain.Criteria;
 
@@ -14,8 +13,11 @@ public interface BookingMapper {
 	
 	public String getBooking2();
 	
-	//예약하기
+	//예약하기(+조건)
+	public int insertBookingCondition(BookingVO vo);
+	//예약하기(조건x)
 	public int insertBooking(BookingVO vo);
+	
 	//예약목록불러오기(예약 중복 조건 비교)
 	public List<BookingVO> getBookingList(BookingVO vo);
 	
