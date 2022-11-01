@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +19,7 @@
 <link rel='stylesheet'
 	href='https://fonts.googleapis.com/css?family=Montserrat'>
 <link rel='stylesheet'
-	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'> 
 <link rel="stylesheet"
 	href="../../resources/css/messenger/messenger.css">
 
