@@ -36,7 +36,7 @@
 							<li><a class="dropdown-item" href="#">부서2</a></li>
 							<li><a class="dropdown-item" href="#">부서3</a></li>
 						</ul>
-						<button type="button" class="btn btn-outline-secondary">작성</button>
+						<button type="button" class="btn btn-outline-secondary new">작성</button>
 					</div>
 					<form class="d-flex" role="search">
 						<input id="searchForm" class="form-control me-2" type="search"
@@ -55,7 +55,7 @@
 				<td class="hasFile">파일</td>
 			</tr>
 			<c:forEach items="${dto.list}" var="task">
-				<tr>
+				<tr class="goDetail" id="${task.task_id}">
 					<td><c:out value="${task.task_id}"/></td>
 					<td><c:out value="${task.task_title}"/></td>
 					<td><c:out value="${task.name}"/></td>
@@ -80,7 +80,24 @@
 		</tfoot>
 	</table>
 
-<button type="button" class="btn btn-outline-primary">작성</button>
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		
+		// 작성 버튼 클릭 시 새 글(업무) 작성 화면으로 이동
+		$('.new').on("click", function(){
+			location.href="/task/new";
+		})
+		
+		// 업무 게시글 로우 클릭 시 해당 게시글 상세 페이지로 이동
+		$('tbody').on("click", ".goDetail", function(){
+			// 부서별 조회 기능, 검색 기능, 페이지 넘버링 추가 시 변경 필요
+			location.href="/task/pages/all/empty/empty/1/" + $(this).attr("id");
+		})
+		
+	}); //end document ready
+
+</script>>
 
 </body>
 </html>

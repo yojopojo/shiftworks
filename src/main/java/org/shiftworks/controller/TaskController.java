@@ -80,7 +80,7 @@ public class TaskController {
 			@PathVariable() String dept_id, @PathVariable String type, @PathVariable String keyword,
 			@PathVariable Integer pageNum, @PathVariable Integer task_id) {
 		
-		ModelAndView mav = new ModelAndView("/task/TSK_get");
+		ModelAndView mav = new ModelAndView("/task/TSK_detail");
 		
 		mav.addObject("type", type);
 		mav.addObject("keyword", keyword);
@@ -111,8 +111,7 @@ public class TaskController {
 	
 	// 업무 수정
 	@RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT},
-				value="/pages/{dept_id}/{type}/{keyword}/{pageNum}/{task_id}",
-				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+				value="/pages/{dept_id}/{type}/{keyword}/{pageNum}/{task_id}")
 	public ResponseEntity<String> updateTask(@RequestBody TaskVO vo,
 			@PathVariable String dept_id, @PathVariable String type, @PathVariable String keyword,
 			@PathVariable Integer pageNum, @PathVariable Integer task_id, Model model) {
@@ -123,9 +122,7 @@ public class TaskController {
 	}
 	
 	// 업무 삭제
-	@DeleteMapping(
-			value="/{task_id}",
-				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@DeleteMapping(value="/{task_id}")
 	public ResponseEntity<String> deleteTask(@PathVariable Integer task_id) {
 		
 		return service.deleteTask(task_id) ?

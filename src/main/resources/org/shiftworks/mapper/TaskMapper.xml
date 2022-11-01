@@ -102,7 +102,7 @@
 	<!-- 업무(게시글) 개별 조회 -->
 	<select id="getTask" resultType="org.shiftworks.domain.TaskVO">
 	
-		SELECT task_id, dept_id, task_title, task_content, t.emp_id, name, t_private, notification, date_created
+		SELECT task_id, t.dept_id as dept_id, task_title, task_content, t.emp_id, name, t_private, notification, date_created
 			FROM task t JOIN employee e
 			ON t.emp_id = e.emp_id
 			WHERE task_id = #{task_id}

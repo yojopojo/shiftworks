@@ -17,41 +17,32 @@
 	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
 	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
-<title>업무 등록</title>
+<title>업무 관리</title>
 </head>
 <body>
 
-<!-- 업무 등록을 위한 입력 폼 -->
 	<div class="newContainer">
 		<div class="mb-3">
+			<label for="task_id" class="form-label">글 번호</label>
+			<input type="text" class="form-control" value="${task.task_id}"
+			id="task_id" readonly>
+		</div>
+		<div class="mb-3">
 			<label for="dept_id" class="form-label">부서</label>
-			<input type="text" class="form-control"
-			id="dept_id" placeholder="부서">
+			<input type="text" class="form-control" value="${task.dept_id}"
+			id="dept_id" placeholder="부서" readonly>
 		</div>
 		<div class="mb-3">
 			<label for="task_title" class="form-label">제목</label>
-			<input type="text" class="form-control"
-			id="task_title" placeholder="글 제목">
+			<input type="text" class="form-control" value="${task.task_title}"
+			id="task_title" placeholder="글 제목" readonly>
 		</div>
 		<div class="mb-3">
-		<!-- 세션 추가 후 수정 -->
 			<label for="name" class="form-label">작성자</label>
-			<input class="form-control" type="text" value="홍길동"
+			<input class="form-control" type="text" value="${task.name}"
 				id="name" readonly>
-			<input class="form-control" type="hidden" value="U2946709"
+			<input class="form-control" type="hidden" value="${task.emp_id}"
 				id="emp_id">
-		</div>
-		<div class="mb-3 form-check">
-			<div>
-				<input class="form-check-input" type="radio" name="notification"
-					id="notification1" checked> <label
-					class="form-check-label" for="notification1"> E-mail 알림 허용 </label>
-			</div>
-			<div>
-				<input class="form-check-input" type="radio" name="notification"
-					id="notification2"> <label class="form-check-label"
-					for="notification2"> E-mail 알림 거부 </label>
-			</div>
 		</div>
 		<div class="mb-3 form-check">
 			<div>
@@ -67,14 +58,18 @@
 		</div>
 		<div class="mb-3">
 			<label for="task_content" class="form-label">내용</label>
-			<textarea class="form-control" id="task_content" rows="10"></textarea>
+			<textarea class="form-control" id="task_content" rows="10" readonly>
+				<c:out value="${task.task_content}"></c:out>
+			</textarea>
 		</div>
 		<div class="mb-3">
 			<label for="formFileSm" class="form-label file">첨부파일</label>
-			<input class="form-control form-control-sm" id="formFileSm" type="file">
+			<input class="form-control form-control-sm" id="formFileSm" type="file" readonly>
 		</div>
 		<div class="confirm">
-			<button id="submitBtn" type="submit" class="btn btn-primary mb-3">작성</button>
+			<button id="updateBtn" type="submit" class="btn btn-warning mb-3">수정</button>
+			<button id="updateSubmitBtn" type="submit" class="btn btn-warning mb-3">수정완료</button>
+			<button id="deleteBtn" type="submit" class="btn btn-danger mb-3">삭제</button>
 			<button id="resetBtn" type="reset"
 				class="btn btn-outline-primary mb-3">취소</button>
 		</div>
@@ -83,42 +78,69 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
-			// 폼 제출(작성) 버튼 클릭 시 이벤트
-			$('#submitBtn').on("click", function(e) {
+			// 게시글 상세 페이지 접속 시 공개여부 라디오버튼 숨김
+			$('.form-check *').hide();
+			// 수정 완료 게시글 버튼 숨김
+			$('#updateSubmitBtn').hide();
+			
+			// 게시글 수정 버튼 클릭 이벤트
+			$('#updateBtn').on("click", function(){
+				
+				// 수정 버튼 클릭 시 수정 가능한 사항들을 입력(수정) 가능한 상태로 바꿈
+				$('.form-check *').show();
+				$('#dept_id').attr("readonly", false);
+				$('#task_title').attr("readonly", false);
+				$('#task_content').attr("readonly", false);
+				
+				// '수정' 버튼을 '수정 완료' 버튼으로 변경
+				$('#updateBtn').hide();
+				$('#updateSubmitBtn').show();
+				
+				
+			}) // end update click
+			
+			// 수정 완료 버튼 클릭 시 이벤트
+			$('#updateSubmitBtn').on("click", function(e) {
 				e.preventDefault();
 				
 				// 항목 체크에 따른 값 저장
 				let isPrivate;
-				let isNotification;
 				if($('#t_private1').is(":checked")) {
 					isPrivate = 'Y';
 				} else {
 					isPrivate = 'N';
 				}
-				if($('#notification1').is(":checked")) {
-					isNotification = 'Y';
-				} else {
-					isNotification = 'N';
-				}
 				
 				// 폼 입력값 객체에 대입
-				var newTask = {
+				var updateTask = {
 					dept_id: $('#dept_id').val(),
 					task_title: $('#task_title').val(),
 					task_content: $('#task_content').val(),
-					// 세션 추가 후 아이디 부분 변경 필요
-					emp_id: 'U3948709',
 					t_private: isPrivate,
-					notification: isNotification
+					task_id: $('#task_id').val(),
+					type: 'empty',
+					keyword: 'empty',
+					pageNum: 1
 				}
 
 				// 객체 전달하여 DB에 저장 후 페이지 이동
-				taskService.insertTask(newTask, function(result){
+				taskService.updateTask(updateTask, function(result){
 					// href 대신 replace 이용하여 히스토리 남지 않게 처리
-					location.replace()="/task/pages/" + newTask.dept_id + "/empty/empty/1";
+					location.replace("/task/pages/" + updateTask.dept_id + "/" + updateTask.type + "/" + updateTask.keyword
+				            + "/" + updateTask.pageNum + "/" + updateTask.task_id);
 				});
 
-			}); // end submit click event
+			}); // end update data submit click event
+			
+			// 삭제 버튼 클릭 시 이벤트
+			$('#deleteBtn').on("click", function(){
+				
+				taskService.deleteTask($('#task_id').val(), function(result) {
+					location.replace("/task/pages/" + $('#dept_id').val() + "/empty/empty/1");
+				}); 
+				
+			}); // end delete click
+			
 			
 			
 			// 취소 버튼 클릭 시 이전 페이지(업무 목록)로 이동

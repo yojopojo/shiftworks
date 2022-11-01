@@ -70,8 +70,7 @@ var taskService = (function(){
             contentType : "application/json; charset=utf-8",
             success: function(result) {
                 if (callback) {
-					location.href="/task/pages/" + param.dept_id + "/" + param.type + "/" + param.keyword
-                    + "/" + param.pageNum + "/" + param.task_id;
+                    callback(result);
 				}
             },
 			error : function(xhr, status, er) {
@@ -89,7 +88,7 @@ var taskService = (function(){
             url: "/task/" + param,
             success: function(result) {
                 if (callback) {
-					location.href="/task/pages/all/empty/empty/1";
+					callback(result);
 				}
             },
 			error : function(xhr, status, er) {
