@@ -133,6 +133,30 @@ var postService = (function(){
 	}
 	
 	
+	//글 리스트 가져오기
+	function listEntity(param, callback,error) {
+		
+		
+		$.ajax({
+			type : 'get',
+			url : '/board/listEntity/'+param.pageNum+"/"+param.type+"/"+param.keyword+".json",
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
+		
+	
+	
+	
 	//글 수정하기 
 	function updatePost(post,callback, error) {
 		
@@ -169,7 +193,8 @@ var postService = (function(){
 		temporalSelect:temporalSelect,
 		insertHistory:insertHistory,
 		updatePost:updatePost,
-		getHistory:getHistory
+		getHistory:getHistory,
+		listEntity:listEntity
 	}
 	
 	

@@ -1,5 +1,7 @@
 package org.shiftworks.domain;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -13,11 +15,13 @@ public class PageDTO {
 
   private int total;
   private Criteria cri;
+  private List<PostVO> list;
 
-  public PageDTO(Criteria cri, int total) {
+  public PageDTO(Criteria cri, int total, List<PostVO> list) {
 
     this.cri = cri;
     this.total = total;
+    this.list = list;
 
     this.endPage = (int) (Math.ceil(cri.getPageNum() / 10.0)) * 10;
 

@@ -57,19 +57,38 @@ public class PostController {
 		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	
-	
 	//BOA_list.jsp 호출
-	@GetMapping(value = "/list")
-	public ModelAndView getList(Criteria cri) {
+		@GetMapping(value = "/list")
+		public ModelAndView getList(Criteria cri) {
+			
+			log.info("getList..........");
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/board/BOA_list");
 		
-		log.info("getList..........");
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", service.getListSearch(cri));
-		mav.addObject("pageMaker", new PageDTO(cri, service.getTotal()));
-		mav.setViewName("/board/BOA_list");
+			
+			return mav;
+		}
+
+	
+	//js에 리스트 전달해주기 
+	@GetMapping(value = "/listEntity/{pageNum}/{type}/{keyword}")
+	public ResponseEntity<PageDTO> getListEntity(@PathVariable("pageNum")int pageNum,
+																			@PathVariable("type") String type,
+																			@PathVariable("keyword") String keyword){
 		
-		return mav;
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		if(!type.equals("1")) {
+			cri.setType(type);
+		}
+		if(!keyword.equals("1")) {
+			cri.setKeyword(keyword);
+		}
+		
+		log.info("getListEntity......");
+		
+		return new ResponseEntity<PageDTO>(service.getListSearch(cri),HttpStatus.OK);
+		
 	}
 	
 	
