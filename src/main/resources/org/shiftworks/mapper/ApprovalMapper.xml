@@ -4,12 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.ApprovalMapper">
 
-	<!-- 결재 문서 리스트 가져오기 -->
+	<!-- 결재 문서 전체 리스트 조회 -->
 	<select id="getList" resultType="org.shiftworks.domain.ApprovalVO">
 		<![CDATA[
 			select*from approval where apr_id>0	
 		]]>	
 	</select>
+	
+	
+	<!-- 결재할 문서함 리스트 -->
+	<select id="getReceivedList" resultType="org.shiftworks.domain.ApprovalVO">
+	
+	
+	</select>
+	
+	
 	<!-- 결재 문서 작성 -->
 	<insert id="insert">
 		insert into approval (apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
@@ -58,7 +67,7 @@
 		where apr_id = #{apr_id}
 	</update>
 	
-	<!-- 전체 페이지수 조회 -->
+	<!-- 전체 결재 문서수 조회 -->
 	<select id="getTotal" resultType="int">
 		select count(*) from approval
 	</select>

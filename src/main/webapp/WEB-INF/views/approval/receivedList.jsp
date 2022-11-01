@@ -20,9 +20,8 @@
 </head>
 <body>
 
-<h1>전체 결재 문서 LIST 페이지</h1>
-	<a href="/approval/insert">결재문서작성</a>
-	<a href="/approval/receivedList">결재할 문서함</a>
+<h1>결재할 문서함</h1>
+	<a href="/approval/list">전체 문서함</a>
 	
 	<table border="1" width="800">
 		<tr>
