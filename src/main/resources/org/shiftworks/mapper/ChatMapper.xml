@@ -14,9 +14,10 @@
 	</insert>
 
 	<!-- 모든 메시지 검색 -->
-	<select id="getList" resultType="org.shiftworks.domain.ChatVO">
+	<select id="getList" parameterType="int" resultType="org.shiftworks.domain.ChatVO">
 		SELECT *
 			FROM chat
+			WHERE room_id = #{room_id}
 			ORDER BY sendtime desc
 	</select>
 

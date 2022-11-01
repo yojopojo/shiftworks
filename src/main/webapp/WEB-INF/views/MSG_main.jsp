@@ -108,6 +108,23 @@ function sendMessage(){
 					</li> -->
 				</ul>
 			</nav>
+			
+				<c:forEach items="${list}" var="board">
+						<tr>
+							<td><c:out value="${board.bno}" /></td>
+							<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
+
+							<td><a class='move' href='<c:out value="${board.bno}"/>'>
+									<c:out value="${board.title}" /> <b>[<c:out value="${board.replyCnt }"/>]</b>
+							</a></td>
+
+							<td><c:out value="${board.writer}" /></td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${board.regdate}" /></td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${board.updateDate}" /></td>
+						</tr>
+					</c:forEach>
 
 			<!-- 채팅방 목록 -->
 			<section class="discussions">
@@ -128,18 +145,21 @@ function sendMessage(){
 					</div>
 					<div class="timer">12 sec</div>
 				</div>
-
+				
+				
 				<div class="discussion">
-					<div class="photo"
-						style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
-						<div class="online"></div>
-					</div>
-					<div class="desc-contact">
-						<p class="name">Dave Corlew</p>
-						<p class="message">Let's meet for a coffee or something today
-							?</p>
-					</div>
-					<div class="timer">3 min</div>
+					<c:forEach items="${chatRoomList}" var="chatRoom">
+						<div class="photo"
+							style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
+							<div class="online"></div>
+						</div>
+						<div class="desc-contact">
+							<p class="name">Dave Corlew</p>
+							<p class="message">Let's meet for a coffee or something today
+								?</p>
+						</div>
+						<div class="timer">3 min</div>
+					</c:forEach>
 				</div>
 
 				<div class="discussion">

@@ -48,8 +48,8 @@ public class ChatHandler extends TextWebSocketHandler {
 //		}
 
 		for (WebSocketSession session : sessionVector) {
-			session.sendMessage(chat);
-			// session.sendMessage(new TextMessage(session.getId() + ":" + chat.getPayload()));
+			//session.sendMessage(session.getId() + " : " + chat);
+			session.sendMessage(new TextMessage(session.getId() + ":" + chat.getPayload()));
 		}
 	}
 	

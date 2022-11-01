@@ -19,22 +19,24 @@ public class ChatRoomTests {
 	@Autowired
 	ChatRoomMapper mapper;
 	
-	@Test
-	public void testInsert() {
-		ChatRoomVO chatRoom = new ChatRoomVO();
-		chatRoom.setRoom_id(2);
-		chatRoom.setRoom_name("test");
-		
-		log.info(mapper.insertChatRoom(chatRoom));
-	}
+//	@Test
+//	public void testInsert() {
+//		ChatRoomVO chatRoom = new ChatRoomVO();
+//		chatRoom.setRoom_id(2);
+//		chatRoom.setRoom_name("test");
+//		chatRoom.setEmp_id("U2946709");
+//		chatRoom.setDept_id("tdteam23");
+//		
+//		log.info(mapper.insertChatRoom(chatRoom));
+//	}
 	
 	@Test
 	public void testGetList() {
-		mapper.getList(1).forEach(chatRoom->log.info(chatRoom));
+		mapper.getList("U3948709").forEach(chatRoom->log.info(chatRoom));
 	}
 	
-	@Test
-	public void testDelete() {
-		mapper.deleteChatRoom(2);
-	}
+//	@Test
+//	public void testDelete() {
+//		mapper.deleteChatRoom(2);
+//	}
 }

@@ -28,12 +28,12 @@
 	  -->
 	
 	<insert id="insertChatRoom" parameterType="org.shiftworks.domain.ChatRoomVO">
-		INSERT INTO chatroom(room_id, room_name) 
-			VALUES(#{room_id}, #{room_name})
+		INSERT INTO chatroom(room_id, room_name, emp_id, dept_id) 
+			VALUES(#{room_id}, #{room_name}, #{emp_id}, #{dept_id})
 	</insert>
 	
-	<select id="getList" resultType="org.shiftworks.domain.ChatRoomVO">
-		SELECT * FROM chatroom WHERE room_id = #{room_id}
+	<select id="getList" parameterType="String" resultType="org.shiftworks.domain.ChatRoomVO">
+		SELECT * FROM chatroom WHERE emp_id = #{emp_id}
 	</select>
 	
 	<delete id="deleteChatRoom" parameterType="int">

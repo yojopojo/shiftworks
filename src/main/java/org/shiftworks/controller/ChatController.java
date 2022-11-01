@@ -8,7 +8,16 @@
 
 package org.shiftworks.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.shiftworks.domain.ChatRoomVO;
 import org.shiftworks.domain.ChatVO;
+import org.shiftworks.service.ChatService;
+import org.shiftworks.service.ChatServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,12 +34,22 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 public class ChatController {
+	
+	@Autowired
+	ChatService chatService;
 
 	@GetMapping("/messenger/chat")
-	public String chat(Model model) {
+	public String chat(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		
+		List<ChatRoomVO> chatRoomList = chatService.getChatRoomList("U3948709");
+		List<ChatVO> chatList = chatService.getChatList(1);
+		
+		model.addAttribute("chatRoomList", chatRoomList);
+		model.addAttribute("chatList", chatList);
 		
 //		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		
 //		
 //		log.info("==================================");
 //		log.info("@ChatController, GET Chat / Username : " + user.getUsername());

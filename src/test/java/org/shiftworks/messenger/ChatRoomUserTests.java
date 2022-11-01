@@ -20,7 +20,7 @@ public class ChatRoomUserTests {
 	ChatRoomUserMapper mapper;
 	
 	@Test
-	public void testGetReceiverList() {
+	public void testGetList() {
 		mapper.getList(1).forEach(chatRoomUser->log.info(chatRoomUser));
 	}
 	

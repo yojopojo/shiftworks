@@ -24,7 +24,7 @@ public class ChatTests {
 	@Test
 	public void testGetList() {
 				
-		mapper.getList().forEach(chat->log.info(chat));
+		mapper.getList(1).forEach(chat->log.info(chat));
 	}
 	
 //	// 채팅방에서 전송된 채팅 가져오기
