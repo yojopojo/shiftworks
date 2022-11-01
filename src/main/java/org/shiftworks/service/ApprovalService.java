@@ -14,6 +14,7 @@ public interface ApprovalService {
 	public ApprovalVO get(int apr_id);
 //	public List<ApprovalDTO> getList();
 	public List<ApprovalDTO> getList(Criteria cri);
+//	public List<ApprovalDTO> getReceivedList(Criteria cri);
 	public boolean update(ApprovalVO approval);
 	public void updateStatus(int apr_id, String status);
 	public int getTotal();

@@ -23,7 +23,7 @@
 <h1>결재할 문서함</h1>
 	<a href="/approval/list">전체 문서함</a>
 	
-	<table border="1" width="800">
+	<table border="1" width="900">
 		<tr>
 			<th>결재 번호</th>
 			<th>결재 유형</th>
@@ -37,21 +37,30 @@
 		</tr>
 		
 		<c:forEach var="approval" items="${list }">
-		
-		<tr>	
+		<%-- <c:if test="${approval.apr_status eq '대기중'}"> </c:if> --%>
+			<tr>
+			
 			<td><c:out value="${approval.apr_id }"/></td>
 			<td><c:out value="${approval.af_id }"/></td>
 			<td><c:out value="${approval.emp_id }"/></td>
 			<td><fmt:formatDate pattern="yyyy-MM-dd"
 			 	value="${approval.apr_receivedate }"/></td>
-			 <td><a href="/approval/get?apr_id=${approval.apr_id}">
-			 <c:out value="${approval.apr_title}"/></a></td>
+			 <td>
+			 <a href="/approval/get?apr_id=${approval.apr_id}">
+			 <c:out value="${approval.apr_title}"/></a>
+			 </td>
 			<td><c:out value="${approval.apr_content }"/></td>
 			<td><c:out value="${approval.apr_status }"/></td>
 			<td><c:out value="${approval.apr_comment }"/></td>
 			<td><fmt:formatDate pattern="yyyy-MM-dd" 
 			 value="${approval.apr_signdate }"/></td>
 		</tr>
+		
+		
+		
+		
+		
+		
 		</c:forEach>
 	</table>
 	<br><br>

@@ -13,18 +13,39 @@
 	</select>
 	
 	
-	<!-- 결재할 문서함 리스트 -->
-	 <!-- <select id="getReceivedList" resultType="org.shiftworks.domain.ApprovalVO">
-			select * from approval where apr_status = '0'
-		</select>  -->
+	<!-- 결재할 문서함 리스트 조회 -->
+	<!-- <select id="getReceivedList" resultType="org.shiftworks.domain.ApprovalVO">
+
+			select*from approval where apr_status = '0'
+			
+	</select>   -->
+	
+	<!-- 결재할 문서함 페이징 처리 -->
+	<!-- <select id ="getReceivedListWithPaging" resultType="org.shiftworks.domain.ApprovalVO">
+		<![CDATA[
+			select
+				apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
+				apr_status, apr_comment, apr_signdate
+			from
+			(
+			select /*+INDEX_DESC(approval approval_pk) */
+				rownum rn, apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
+				apr_status, apr_comment, apr_signdate	
+			from
+				approval
+			where rownum <= #{pageNum} * #{amount}	
+			)
+			where rn > (#{pageNum} -1) * #{amount} and apr_status = '0'
+		]]>	
+	</select> -->
 	
 	
 	<!-- 결재 문서 작성 -->
 	<insert id="insert">
 		insert into approval (apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
-			apr_status,apr_comment, apr_signdate) 
+			apr_status, apr_signdate) 
 		values(approval_seq.nextval,#{af_id},#{emp_id},sysdate
-		,#{apr_title},#{apr_content},'0','z',sysdate)
+		,#{apr_title},#{apr_content},'0',sysdate)
 	</insert>
 	
 	<!-- 결재 문서 상세 보기 -->
@@ -42,12 +63,12 @@
 			(
 			select /*+INDEX_DESC(approval approval_pk) */
 				rownum rn, apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
-				apr_status, apr_comment, apr_signdate
+				apr_status, apr_comment, apr_signdate	
 			from
 				approval
-			where rownum <= #{pageNum} * #{amount}	
+			where rownum <= #{pageNum} * #{amount} 	
 			)
-			where rn > (#{pageNum} -1) * #{amount}
+			where rn > (#{pageNum} -1) * #{amount} 
 		]]>	
 	</select> 
 	

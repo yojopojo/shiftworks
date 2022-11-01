@@ -31,7 +31,9 @@ public class ApprovalController {
 
 	private ApprovalService service;
 	
-	// 결재 리스트
+	/*
+	 * 결재 리스트
+	 */
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		log.info("list" + cri);
@@ -39,7 +41,10 @@ public class ApprovalController {
 		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
 	}
 	
-	// 결재할 문서함 
+	
+	/*
+	 * 결재할 문서함 
+	 */	
 	@GetMapping("/receivedList")
 	public void receivedList(Criteria cri, Model model) {
 		log.info("list" + cri);
@@ -47,7 +52,9 @@ public class ApprovalController {
 		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
 	}
 	
-	// 결재 문서 작성
+	/*
+	 * 결재 문서 작성
+	 */
 	@PostMapping("/insert")
 	public String insert(ApprovalVO approval, RedirectAttributes rttr) {
 		log.info("insert: "+ approval);
@@ -57,14 +64,18 @@ public class ApprovalController {
 		return "redirect:/approval/list";
 	}
 	
-	// 결재 문서 상세보기
+	/*
+	 * 결재 문서 상세보기
+	 */ 
 	@GetMapping("/get")
 	public void get(@RequestParam("apr_id") int apr_id, Model model) {
 		log.info("/get");
 		model.addAttribute("approval",service.get(apr_id));
 	}
 	
-	// 결재 수정(결재 상태 수정)
+	/*
+	 * 결재 수정(결재 상태 수정)
+	 */ 
 	@PostMapping("/update")
 	public String update(ApprovalVO approval, RedirectAttributes rttr) {
 		log.info("update: "+approval);
@@ -75,12 +86,15 @@ public class ApprovalController {
 		return "redirect:/approval/list";
 	}
 	
-	// 결재 양식 호출
+	/*
+	 * 결재 양식 호출
+	 */
 	@GetMapping("/insert")
 	public void insert() {}
 	
-	
-	// 결재 처리(결재 상태 변경)
+	/*
+	 * 결재 처리(결재 상태 변경)
+	 */
 	@PutMapping("/sign/{apr_id}")
 	@ResponseBody
 	public ResponseEntity<String> updateStatus(@PathVariable int apr_id, @RequestParam String status){

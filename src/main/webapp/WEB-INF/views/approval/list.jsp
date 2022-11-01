@@ -24,7 +24,7 @@
 	<a href="/approval/insert">결재문서작성</a>
 	<a href="/approval/receivedList">결재할 문서함</a>
 	
-	<table border="1" width="800">
+	<table border="1" width="900">
 		<tr>
 			<th>결재 번호</th>
 			<th>결재 유형</th>
