@@ -18,6 +18,6 @@ public class ChatVO {
 	private String sendtime;
 	private String sender;	// 보낸 사람 사번
 	
-	private List<ChatRoomVO> receivers;
+	private List<ChatRoomUserVO> receivers;
 	
 }

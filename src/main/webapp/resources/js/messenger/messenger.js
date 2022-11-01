@@ -28,7 +28,7 @@
      });	
  });
      
- var socket = new SockJS('http://localhost:8081/messenger/echo');
+ var socket = new SockJS('http://localhost:8081/messenger/chat');
      
  socket.onmessage = onMessage;
  socket.onclose = onClose;

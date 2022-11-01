@@ -3,7 +3,7 @@ package org.shiftworks.messenger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.ChatVO;
-import org.shiftworks.mapper.MessageMapper;
+import org.shiftworks.mapper.ChatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,10 +15,10 @@ import lombok.extern.log4j.Log4j;
 //context 경로를 알아야 테스트 가능
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class MessageTests {
+public class ChatTests {
 
 	@Autowired
-	MessageMapper mapper;
+	ChatMapper mapper;
 	
 	// 보낸 중요 메시지 검색
 	@Test
