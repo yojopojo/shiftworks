@@ -106,16 +106,6 @@
 		console.log("---------------------JS '***bookingService***' TESTING---------------------");
 		
 		
-		
-		//날짜 선택 UI(datepicker)
-		$(function() {
-		    $( "#Date" ).datepicker({
-		    	dateFormat: "yy-mm-dd"
-		    });
-		});
-		
-		
-		
 		//예약폼 데이터
 		var form = $(".insertForm");
 		var book_id = form.find("input[name='book_id']");
