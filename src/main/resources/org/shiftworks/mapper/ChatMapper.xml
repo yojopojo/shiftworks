@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.shiftworks.mapper.MessageMapper">
+<mapper namespace="org.shiftworks.mapper.ChatMapper">
 
 	<!-- 연관 관계 MessageVO - ReceiverVO - MessengerFileVO -->
 	<resultMap type="org.shiftworks.domain.MessageVO" id="messageMap">
