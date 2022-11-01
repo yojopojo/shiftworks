@@ -6,31 +6,33 @@
 
 	<!-- 업무 등록 -->
 	<insert id="insertTask">
-		INSERT INTO task(task_id, dept_id, task_title, task_content, emp_id, t_private, notification, date_created)
-			VALUES(task_seq.nextval, #{dept_id}, #{task_title}, TO_CLOB(#{task_content}), #{emp_id},
-					#{t_private}, #{notification}, sysdate)
+		INSERT INTO task(task_id, dept_id, task_title,
+		task_content, emp_id, t_private, notification, date_created)
+		VALUES(task_seq.nextval, #{dept_id}, #{task_title},
+		TO_CLOB(#{task_content}), #{emp_id},
+		#{t_private}, #{notification}, sysdate)
 	</insert>
-	
+
 	<!-- 업무 수정 -->
-	<update id="updateTask"> 
-	
+	<update id="updateTask">
+
 		UPDATE task SET dept_id = #{dept_id},
-						task_title = #{task_title},
-						task_content = TO_CLOB(#{task_content}),
-						t_private = #{t_private}
-			WHERE task_id = ${task_id}
-	
+		task_title = #{task_title},
+		task_content = TO_CLOB(#{task_content}),
+		t_private = #{t_private}
+		WHERE task_id = ${task_id}
+
 	</update>
-	
+
 	<!-- 업무 삭제 -->
 	<delete id="deleteTask">
-	
+
 		DELETE FROM task
-			WHERE task_id = #{task_id}
-	
+		WHERE task_id = #{task_id}
+
 	</delete>
-	
-	
+
+
 	<!-- 검색어 처리를 위한 쿼리 -->
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -51,16 +53,17 @@
 			</foreach>
 		</trim>
 	</sql>
-	
+
 	<!-- 부서 설정을 위한 쿼리 -->
 	<sql id="selectedDept">
-		<if test="selectedDept != null">
-			t.dept_id LIKE '%'||#{selectedDept}||'%' AND
+		<if test="dept_id != null">
+			t.dept_id LIKE '%'||#{dept_id}||'%' AND
 		</if>
 	</sql>
-	
+
 	<!-- 검색 기능 포함 페이징처리 -->
-	<select id="getListWithPaging" resultType="org.shiftworks.domain.TaskVO">
+	<select id="getListWithPaging"
+		resultType="org.shiftworks.domain.TaskVO">
 	
 		<![CDATA[
 		SELECT task_id, dept_id, task_title, task_content, emp_id, name, t_private, date_created
@@ -73,9 +76,9 @@
 	        	ON t.emp_id = e.emp_id
 	        	WHERE
 		]]>
- 
-		<include refid="selectedDept"/> 
-		<include refid="criteria"/>
+
+		<include refid="selectedDept" />
+		<include refid="criteria" />
 	      
 		<![CDATA[    
 				ROWNUM <= #{pageNum} * #{amount})
@@ -83,30 +86,34 @@
 			WHERE
 			rn > (#{pageNum} -1) * #{amount}   
 		]]>
-		
+
 	</select>
-	
-	
+
+
 	<!-- 총 업무(게시글) 개수 -->
 	<select id="getTotalTask" resultType="int">
-	
+
 		SELECT COUNT(*) FROM task t JOIN employee e
-			ON t.emp_id = e.emp_id
-			WHERE
-			<include refid="selectedDept"/>
-			<include refid="criteria"/>
-			task_id > 0
-			
+		ON t.emp_id = e.emp_id
+		WHERE
+		<include refid="selectedDept" />
+		<include refid="criteria" />
+		task_id > 0
+
 	</select>
-	
+
 	<!-- 업무(게시글) 개별 조회 -->
 	<select id="getTask" resultType="org.shiftworks.domain.TaskVO">
-	
-		SELECT task_id, t.dept_id as dept_id, task_title, task_content, t.emp_id, name, t_private, notification, date_created
-			FROM task t JOIN employee e
-			ON t.emp_id = e.emp_id
-			WHERE task_id = #{task_id}
-	
+
+		SELECT task_id, t.dept_id as dept_id, dept_name, task_title, task_content,
+		t.emp_id, name,
+		t_private, notification, date_created
+		FROM task t JOIN employee e
+		ON t.emp_id = e.emp_id
+		JOIN department d
+		ON t.dept_id = d.dept_id
+		WHERE task_id = #{task_id}
+
 	</select>
 
 </mapper>

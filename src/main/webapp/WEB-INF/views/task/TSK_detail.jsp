@@ -28,9 +28,12 @@
 			id="task_id" readonly>
 		</div>
 		<div class="mb-3">
-			<label for="dept_id" class="form-label">부서</label>
-			<input type="text" class="form-control" value="${task.dept_id}"
-			id="dept_id" placeholder="부서" readonly>
+		<!-- 부서 검색 가능하도록 변경 필요 -->
+			<label for="dept_name" class="form-label">부서</label>
+			<input type="text" class="form-control"
+			id="dept_name" value="${task.dept_name}" readonly>
+			<input type="hidden" class="form-control"
+			id="dept_id" value="${task.dept_id}">
 		</div>
 		<div class="mb-3">
 			<label for="task_title" class="form-label">제목</label>

@@ -24,9 +24,11 @@
 <!-- 업무 등록을 위한 입력 폼 -->
 	<div class="newContainer">
 		<div class="mb-3">
-			<label for="dept_id" class="form-label">부서</label>
+			<label for="dept_name" class="form-label">부서</label>
 			<input type="text" class="form-control"
-			id="dept_id" placeholder="부서">
+			id="dept_name" placeholder="부서명">
+			<input type="hidden" class="form-control"
+			id="dept_id" value="">
 		</div>
 		<div class="mb-3">
 			<label for="task_title" class="form-label">제목</label>

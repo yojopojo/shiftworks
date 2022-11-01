@@ -9,18 +9,18 @@ public class TaskCriteria {
 
 	private int amount = 10;
 	private int pageNum;
-	private String type, keyword, selectedDept;
+	private String type, keyword, dept_id;
 
 	public TaskCriteria() {
-		pageNum = 1;
+		this.pageNum = 1;
 	}
 
-	public TaskCriteria(int pageNum, String type, String keyword, String selectedDept) {
+	public TaskCriteria(int pageNum, String type, String keyword, String dept_id) {
 		super();
 		this.pageNum = pageNum;
 		this.type = type;
 		this.keyword = keyword;
-		this.selectedDept = selectedDept;
+		this.dept_id = dept_id;
 	}
 	
 	public String[] getTypeArr() {
@@ -28,6 +28,5 @@ public class TaskCriteria {
 		return type == null ? new String[] {}: type.split("");
 		
 	}
-
 	
 }
