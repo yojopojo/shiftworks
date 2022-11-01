@@ -7,16 +7,16 @@
 	<!-- 결재 문서 전체 리스트 조회 -->
 	<select id="getList" resultType="org.shiftworks.domain.ApprovalVO">
 		<![CDATA[
-			select*from approval where apr_id>0	
-		]]>	
+			select*from approval where apr_id>0 
+			]]>	
+			
 	</select>
 	
 	
 	<!-- 결재할 문서함 리스트 -->
-	<select id="getReceivedList" resultType="org.shiftworks.domain.ApprovalVO">
-	
-	
-	</select>
+	 <!-- <select id="getReceivedList" resultType="org.shiftworks.domain.ApprovalVO">
+			select * from approval where apr_status = '0'
+		</select>  -->
 	
 	
 	<!-- 결재 문서 작성 -->

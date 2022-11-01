@@ -94,11 +94,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.getTotal();
 	}
 
-//	@Override
-//	public List<ApprovalDTO> getList(Criteria cri) {
-//		
-//		return mapper.getListWithPaging(cri);
-//	}
+	
 
 	
 
