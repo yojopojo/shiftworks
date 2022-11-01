@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessengerFileVO {
+public class ChatRoomFileVO {
 	private String uuid;
 	private int msg_id;
 	private String file_name;

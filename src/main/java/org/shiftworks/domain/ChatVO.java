@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageVO {
+public class ChatVO {
 	
 	private int msg_id;
 	private char notice;
@@ -18,6 +18,6 @@ public class MessageVO {
 	private String sendtime;
 	private String sender;	// 보낸 사람 사번
 	
-	private List<ReceiverVO> receivers;
+	private List<ChatRoomVO> receivers;
 	
 }

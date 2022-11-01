@@ -2,7 +2,7 @@ package org.shiftworks.messenger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.shiftworks.domain.ReceiverVO;
+import org.shiftworks.domain.ChatRoomVO;
 import org.shiftworks.mapper.ReceiverMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

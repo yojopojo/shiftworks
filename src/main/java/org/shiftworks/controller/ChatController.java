@@ -8,7 +8,7 @@
 
 package org.shiftworks.controller;
 
-import org.shiftworks.domain.MessageVO;
+import org.shiftworks.domain.ChatVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,9 +24,9 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-public class ChattingController {
+public class ChatController {
 
-	@GetMapping("/messenger/echo")
+	@GetMapping("/messenger/chat")
 	public String chat(Model model) {
 		
 //		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

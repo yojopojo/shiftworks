@@ -22,7 +22,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class ChattingHandler extends TextWebSocketHandler {
+public class ChatHandler extends TextWebSocketHandler {
 	
 	private Vector<WebSocketSession> sessionVector = new Vector<WebSocketSession>();
 	
