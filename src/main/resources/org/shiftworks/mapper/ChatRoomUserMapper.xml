@@ -5,19 +5,20 @@
 <mapper namespace="org.shiftworks.mapper.ChatRoomUserMapper">
 	
 	<!-- 메시지 수신자 관련 -->
-	<select id="getReceiverList" resultType="org.shiftworks.domain.ReceiverVO">
-		SELECT * FROM receiver
+	<select id="getList" parameterType="int" resultType="org.shiftworks.domain.ChatRoomUserVO">
+		SELECT * FROM chatroom_user WHERE room_id = #{room_id}
 	</select>
 		
 	<!-- 수신자 저장 : 메시지 전송시 수신자도 저장 -->
-	<insert id="insertReceiver" parameterType="org.shiftworks.domain.ReceiverVO">
-		INSERT INTO receiver(msg_id, emp_id, dept_id) 
-		VALUES(#{msg_id}, #{emp_id}, #{dept_id})
+	<insert id="insertChatRoomUser" parameterType="org.shiftworks.domain.ChatRoomUserVO">
+		INSERT INTO chatroom_user(room_id, emp_id, dept_id) 
+		VALUES(#{room_id}, #{emp_id}, #{dept_id})
 	</insert>
 	
 	<!-- 읽음으로 변경 -->
-	<update id="updateChecking" parameterType="org.shiftworks.domain.ReceiverVO">
-		UPDATE receiver set checking = 'Y' where msg_id = #{msg_id} and emp_id = #{emp_id}
-	</update>
+	<delete id="deleteChatRoomUser" parameterType="String">
+		DELETE FROM chatroom_user
+           WHERE emp_id = #{emp_id}
+	</delete>
 	
 </mapper>

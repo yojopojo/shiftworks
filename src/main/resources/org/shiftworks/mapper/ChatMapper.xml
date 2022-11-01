@@ -4,95 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.ChatMapper">
 
-	<!-- 연관 관계 MessageVO - ReceiverVO - MessengerFileVO -->
-	<resultMap type="org.shiftworks.domain.MessageVO" id="messageMap">
-	
-		<result column="msg_id" property="msg_id" />
-		<result column="notice" property="notice" />
-		<result column="important" property="important" />
-		<result column="content" property="content" />
-		<result column="sendtime" property="sendtime" />
-		<result column="sender" property="sender" />
-		<collection property="receivers" resultMap="receiverMap"/>
-		<!-- 1 : 다 관계의 경우 데이터 매핑시켜준다. 
-			association => 1 : 1 관계 
-			collection => 1 : 다 관계 (한명의 유저가 작성한 글 목록) 일반 컬럼과 pk 구분 가능 pk 칼럼에게는 result 아닌 id 사용 -->
-	</resultMap>
-	
-	<resultMap type="org.shiftworks.domain.ReceiverVO" id="receiverMap">
-		<result column="msg_id" property="msg_id"/>
-		<result column="emp_id" property="emp_id"/>
-		<result column="dept_id" property="dept_id"/>
-		<result column="checking" property="checking"/>
-	</resultMap>
-	 
-	
 	<!-- Message 관련 기능 -->
 	<!-- 메시지 저장 -->
-	<insert id="insertMessage"
-		parameterType="org.shiftworks.domain.MessageVO">
-		INSERT INTO Message(msg_id, notice, important, content,
-		sendtime, sender)
-		VALUES(message_seq.nextval, #{notice}, #{important}, #{content}, #{sendtime}, #{sender})
+	<insert id="insertChat"
+		parameterType="org.shiftworks.domain.ChatVO">
+		INSERT INTO chat(chat_id, content,
+		sendtime, sender, room_id)
+		VALUES(chat_seq.nextval, #{content}, #{sendtime}, #{sender}, #{room_id})
 	</insert>
 
 	<!-- 모든 메시지 검색 -->
-	<select id="getList" resultMap="messageMap">
-		SELECT m.msg_id, m.notice, m.important, m.sendtime, m.sender, r.emp_id as emp_id, r.dept_id, r.checking as checking
-			FROM message m, receiver r 
-			WHERE m.msg_id = r.msg_id 
+	<select id="getList" resultType="org.shiftworks.domain.ChatVO">
+		SELECT *
+			FROM chat
+			ORDER BY sendtime desc
 	</select>
 
-	<!-- 메시지 번호를 통해 상세 메시지 검색 -->
-	<select id="getMessage" resultMap="messageMap" parameterType="int">
-		SELECT m.*
-		FROM message m WHERE m.msg_id = #{msg_id}
-	</select>
-
-	<!-- 공지로 보낸 메시지 검색 -->
-	<select id="getNoticeSendMessage" resultMap="messageMap" parameterType="String">
-		SELECT m.*, r.*
-			FROM message m, receiver r 
-			WHERE m.msg_id = r.msg_id AND m.sender = #{emp_id} AND m.notice = 'Y'
-	</select>
-	
-	<!-- 중요로 보낸 메시지 검색 -->
-	<select id="getImportantSendMessage" resultMap="messageMap" parameterType="String">
-		SELECT m.*, r.*
-			FROM message m, receiver r 
-			WHERE m.msg_id = r.msg_id AND m.sender = #{emp_id} AND m.important = 'Y'
-	</select>
-
-	<!-- 공지로 받은 메시지 검색 -->
-	<select id="getNoticeReceiveMessage" resultMap="messageMap" parameterType="String">
-		SELECT m.*, r.*
-			FROM message m, receiver r
-			WHERE m.msg_id = r.msg_id
-				AND r.emp_id = #{emp_id}
-				AND m.notice = 'Y'
-	</select>
-	
-	<!-- 중요로 받은 메시지 검색 -->
-	<select id="getImportantReceiveMessage" resultMap="messageMap" parameterType="String">
-		SELECT m.*, r.*
-			FROM message m, receiver r
-			WHERE m.msg_id = r.msg_id
-				AND r.emp_id = #{emp_id}
-				AND m.important = 'Y'
-	</select>
-
-	
-	<!-- 받은 메시지 검색 -->
-	<select id="getReceiveMessage" resultMap="messageMap" parameterType="String">
-		SELECT m.msg_id , m.notice, m.important, m.sendtime, m.sender, r.emp_id, r.checking
-			FROM message m, receiver r
-			WHERE m.msg_id = r.msg_id and r.emp_id = #{emp_id}
-	</select>
-
-	<!-- 보낸 메시지 검색 -->
-	<select id="getSendMessage" resultMap="messageMap" parameterType="String">
-		SELECT m.msg_id, m.notice, m.important, m.sendtime, m.sender, r.emp_id as emp_id, r.checking as checking
-			FROM message m, receiver r
-			WHERE m.msg_id = r.msg_id and m.sender = #{emp_id}
-	</select>
 </mapper>

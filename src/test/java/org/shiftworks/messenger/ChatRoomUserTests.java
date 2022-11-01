@@ -19,20 +19,23 @@ public class ChatRoomUserTests {
 	@Autowired
 	ChatRoomUserMapper mapper;
 	
+	@Test
+	public void testGetReceiverList() {
+		mapper.getList(1).forEach(chatRoomUser->log.info(chatRoomUser));
+	}
+	
 //	@Test
-//	public void testGetReceiverList() {
-//		mapper.getReceiverList().forEach(receiver->log.info(receiver));
+//	public void testInsert() {
+//		ChatRoomUserVO chatRoomUser = new ChatRoomUserVO();
+//		chatRoomUser.setRoom_id(1);
+//		chatRoomUser.setEmp_id("U3948709");
+//		chatRoomUser.setDept_id("msdept09");
+//		
+//		log.info("testInsert : " + mapper.insertChatRoomUser(chatRoomUser));
 //	}
 	
 //	@Test
-//	public void testUpdate() {
-//		log.info(mapper.updateChecking(new ReceiverVO(1, "S8891577", "infosecu8")));
-//	}
-
-//	@Test
-//	public void testInsert() {
-//		
-//		ReceiverVO receiver = new ReceiverVO(5, "S2385307", "hrpart01");
-//		log.info("testInsert : " + mapper.insertReceiver(receiver));
+//	public void testDelete() {
+//		log.info("testDelete : " + mapper.deleteChatRoomUser("U3948709"));
 //	}
 }

@@ -20,68 +20,25 @@ public class ChatTests {
 	@Autowired
 	ChatMapper mapper;
 	
-	// 보낸 중요 메시지 검색
+	// 채팅 저장하기
 	@Test
-	public void testImportantReceiveMessage() {
-		mapper.getImportantReceiveMessage("S8891577").forEach(message->log.info(message));
+	public void testGetList() {
+				
+		mapper.getList().forEach(chat->log.info(chat));
 	}
 	
-	// 보낸 공지 메시지 검색
-	@Test
-	public void testGetNoticeReceiveMessage() {
-		mapper.getNoticeReceiveMessage("S8891577").forEach(message ->log.info(message));
-	}
-	
-//	// 받은 중요 메시지 검색
-//	@Test
-//	public void testGetImportantSendMessage() {
-//		mapper.getImportantSendMessage("U2946709").forEach(message->log.info(message));
-//	}
-	
-//	// 받은 공지 메시지 검색
-//	@Test
-//	public void testGetNoticeSendMessage() {
-//		mapper.getNoticeSendMessage("U2946709").forEach(message->log.info(message));
-//	}
-	
-	// 사번으로 받은 메시지 검색
-//	@Test
-//	public void testReceiveMessage() {
-//		mapper.getReceiveMessage("S2385307").forEach(message ->log.info(message));
-//	}
-
-	// 사번으로 보낸 메시지 검색
-//	@Test
-//	public void testGetSendMessage() {
-//		mapper.getSendMessage("U3948709").forEach(message ->log.info(message));
-//	}
-
-	// 메시지 번호로 메시지 정보 조회 (수신인 제외)
-//	@Test
-//	public void testGetMessage() {
-//		log.info(mapper.getMessage(1));
-//	}
-	
-//	@Test
-//	public void testGetList() {
-//				
-//		mapper.getList().forEach(message->log.info(message));
-//	}
-	
-	
+//	// 채팅방에서 전송된 채팅 가져오기
 //	@Test
 //	public void testInsert() {
 //		
-//		MessageVO message = new MessageVO();
-//		message.setNotice('N');
-//		message.setImportant('N');
-//		message.setContent("notice message");
-//		message.setSender("U2946709");
-//		message.setSendtime("2022-10-25");
+//		ChatVO chat = new ChatVO();
+//		chat.setContent("test3");
+//		chat.setSender("U2946709");
+//		chat.setSendtime("2022-10-25 11:58:33");
+//		chat.setRoom_id(1);
 //		
-//		int re = mapper.insertMessage(message);
-//		log.info(message);
+//		int re = mapper.insertChat(chat);
+//		log.info(chat);
 //		log.info("re = " + re);
 //	}
-	
 }
