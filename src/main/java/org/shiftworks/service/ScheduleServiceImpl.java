@@ -2,9 +2,11 @@ package org.shiftworks.service;
 
 import java.util.List;
 
+import org.shiftworks.domain.AlarmVO;
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
 import org.shiftworks.domain.WorkScheduleVO;
+import org.shiftworks.mapper.AlarmMapper;
 import org.shiftworks.mapper.ScheduleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	
 	@Autowired
 	private ScheduleMapper mapper;
+	
+	@Autowired
+	private AlarmMapper alarmMapper;
 
 	// 월별 일정 가져오기
 	@Override
@@ -41,12 +46,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Transactional
 	@Override
 	public boolean insertSchedule(ScheduleVO scheduleVO) {
+		// 일정 생성
 		boolean result1 = mapper.insertSchedule(scheduleVO) == 1;
 		boolean result2 = false;
 		int count = 0;
+		
+		// 일정 참가자가 두 명 이상일 경우 해당 인원 모두가 일정을 확인할 수 있게 함
 		for(String p : scheduleVO.getParticipant()) {
 			scheduleVO.setEmp_id(p);
+			// 일정 캘린더에 표시될 수 있도록 함
 			mapper.insertParticipant(scheduleVO);
+			
+			// 일정에 대한 알림 생성(세션 받아온 뒤 수정)
+//			AlarmVO vo = new AlarmVO();
+//			
+//			log.info(alarmMapper.insertAlarm(null));
+			
 			count++;
 		}
 		

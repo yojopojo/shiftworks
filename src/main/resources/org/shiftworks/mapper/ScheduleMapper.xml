@@ -92,7 +92,7 @@
 	<!-- 그룹별 보기 선택 -->
 	<sql id="selectGroup">
 		<if test="sch_group != null">
-			sch_group = #{sch_group}
+			AND sch_group = #{sch_group}
 		</if>
 	</sql>
 	

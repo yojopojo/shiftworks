@@ -52,12 +52,13 @@
 									<div class="dropdown">
 										<button
 											class="btn btn-outline-secondary dropdown-toggle sch_group"
-											type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											type="button" data-bs-toggle="dropdown" aria-expanded="false"
+											value="all">
 											그룹 선택</button>
 										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="/my">내 일정</a></li>
-											<li><a class="dropdown-item" href="/dept">부서 일정</a></li>
-											<li><a class="dropdown-item" href="/comp">회사 일정</a></li>
+											<li><a class="dropdown-item group" href="my">내 일정</a></li>
+											<li><a class="dropdown-item group" href="dept">부서 일정</a></li>
+											<li><a class="dropdown-item group" href="comp">회사 일정</a></li>
 										</ul>
 									</div>
 									<div class="newSchedule">
@@ -185,8 +186,8 @@
 	        
 	        let schedule = {
 	            sch_group: sch_group.val(),
-	            start_date: start_date.val(),
-	            end_date: end_date.val(),
+	            start_date: (start_date.val().split(' '))[0],
+	            end_date: (end_date.val().split(' '))[0],
 	            sch_title: sch_title.val(),
 	            participant: participant.val().split(","),
 	            sch_content: sch_content.val(),
@@ -225,7 +226,6 @@
 	        
 	        // 해당 일정 PK값 변수에 저장
 	        let sch_id = $(this).attr("id");
-	        console.log(sch_id);
 	        
 	        // 불필요한 버튼 숨긴 후 모달 표시
 	        $('.modal-footer *').show();
@@ -310,36 +310,43 @@
 	    
 	    
 	    
-	    // 검색
+	    // 일정 검색 기능
 	    $('.search input').on("keyup", function(e){
+	    	//기본 이벤트 취소처리
 	    	e.preventDefault();
 	    	
+	    	// 입력값 저장
 	    	var text = $(this).val();
 	    	
+	    	// 입력값이 없을 경우 function 종료
 	    	if(text == '' || text == null) {
 	    		$('.searchResult').html('');
 	    		return;
     		}
 	    	
-	    	
+	    	// 검색 결과값을 저장할 변수 선언
 	    	let resultList = '';
+	    	
+	    	// 입력값을 검색어로 검색 실행
 	    	scheduleService.search(text, function(result){
 	    	
 	    		if (result.length >= 1) {
 	    			result.forEach((item) => {
 	    				
+	    				// 일정 시작일 저장
 	    				let date = new Date(item.start_date);
 		    			
-		    			resultList += '<li id="' + item.sch_id + '">';
-		    			resultList += '<a>' + item.sch_title + ' ';
-		    			resultList += '' + date.getFullYear() + '년 '+ date.getMonth() + '월' + '</a>';
+	    				// 일정 PK, 일정 제목, 일정 시작일 출력
+		    			resultList += '<li class="' + item.start_date + '">';
+		    			resultList += item.sch_title + ' ' + date.getFullYear() + '년 '+ date.getMonth() + '월 ' 
+		    							+ date.getDate() + '일';
 		    			resultList += '</li>';
 		    			
 		    		}); // end forEach()
-		    		
 		    	
-		    		
-	    		}
+	    		} // end if
+	    		
+	    	// 결과 목록을 출력
 	    	$('.searchResult').html(resultList);
 	    	
 	    	}) // end search()

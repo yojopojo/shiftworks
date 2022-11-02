@@ -205,10 +205,8 @@ $(document).ready(function(){
     /* * * * * * * * * * * * * * * * * * *
             DB 출력 전 데이터 처리
     * * * * * * * * * * * * * * * * * * */
-    // 선택된 그룹이 없는 경우
-    if(typeof listparam.sch_group === 'undefined') {
-        listparam.sch_group = 'all';
-    }
+    // 페이지 로딩 시 선택된 그룹 값을 프로퍼티에 할당
+    listparam.sch_group = $('.sch_group').val();
     
     // 월별, 주별, 일별 탭 선택 시 타입 변경
     $('.nav li').on("click", function() {
@@ -342,7 +340,7 @@ $(document).ready(function(){
         for (var i = 1; i < (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
             makeCalendar += '<td class="nextDay ';
             
-            let nextM = month + 1;
+            let nextM = eval(month) + 1;
             isChange = false;
             if (nextM == 13) {
                 nextM = '01';
@@ -609,6 +607,21 @@ $(document).ready(function(){
     }); // 이전, 이후 버튼 클릭 시 달력 이동
 
 
+    // 그룹 선택 시 값 변경
+    $('.group').on("click", function(e){
+        e.preventDefault();
+
+        // 그룹 선택 결과 반영
+        $('.sch_group').val($(this).attr("href"));
+        listparam.sch_group = $('.sch_group').val();
+        $('.sch_group').text($(this).text());
+
+        // 월 캘린더 출력
+        $('#month').trigger("click");
+
+    }); // 그룹 선택 시 값 변경
+
+
 
     /* * * * * * * * * * * * * * * * * * *
         버튼 클릭 시 직원 스케쥴 출력 이벤트
@@ -638,6 +651,17 @@ $(document).ready(function(){
         }); // end getWorkerList()      
 
     }); // 버튼 클릭 시 직원 스케쥴 출력
+
+
+    // 검색 결과 클릭 시 해당 일자로 이동
+    $('.searchResult').on("click", "li", function(){
+	    
+        // 일정 시작일을 선택일 변수에 저장
+	    selectedDate = ($(this).attr("class").split(' '))[0];
+        // 해당 일자로 이동
+        $('#day').trigger("click");
+	    	
+    });
 
 
     /** getList를 통해 DB에서 데이터 받아오기 */
