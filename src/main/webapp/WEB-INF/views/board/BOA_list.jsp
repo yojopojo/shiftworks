@@ -4,7 +4,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
 <%@include file="index.jsp"%>
-<%@include file="/resources/css/post.css"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="/resources/css/post.css">
+
+<meta charset="UTF-8">
+<title>일정 관리</title>
+</head>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -18,35 +26,18 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<button id='registerBtn' type="button" class="btn btn-xs pull-right">
+				<button id='registerBtn' type="button" class="btn btn-primary ">
 					새 게시물 등록</button>
 			</div>
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
-					<thead>
-						<tr>
-							<th>게시판번호</th>
-							<th>게시글번호</th>
-							<th>작성자</th>
-							<th>작성부서</th>
-							<th>제목</th>
-							<th>작성일</th>
-							<th>수정일</th>
-						</tr>
-					</thead>
-					<tbody class=main>
-					
-					</tbody>
-				</table>
-				
-				
-				<!--검색버튼 -->
+			
+			<!--검색버튼 -->
 				 <div class='row'>
 					<div class="col-lg-12">
 						<form id='searchForm' action="/board/list" method="get">
-							<select name='type'>
+							<select name='type' class="form-select" aria-label="Default select example">
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
 								<option value="T"
@@ -60,27 +51,77 @@
 							</select> 
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
-							<button id='searchBtn' class='btn btn-default'>검색 </button>
+							<button id='searchBtn' class='btn btn-primary'>검색 </button>
 						</form>
 					</div>
 				</div>
+			
+			
+			
+				<!--메인 게시글-->
+				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
+					<thead>
+						<tr>
+							<th>게시판번호</th>
+							<th>게시글번호</th>
+							<th>작성자</th>
+							<th>작성부서</th>
+							<th>제목</th>
+							<th>작성일</th>
+							<th>수정일</th>
+						</tr>
+					</thead>
+					<tbody class="getPost">
+						<c:forEach items="${pageMaker.list}" var="list">
+							<tr>
+								<td><c:out value="${list.b_id}" /></td>
+								<td><a id ='<c:out value="${list.post_id}"/>' href ='<c:out value="${list.post_id}"/>'>
+									<c:out value="${list.post_id}" /></a>
+								</td>
+								<td><c:out value="${list.name}" /></td>
+								<td><c:out value="${list.dept_id}" /></td>
+								<td><c:out value="${list.post_name}" /></td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${list.post_regdate}" /></td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${list.post_updatedate}" /></td>
+							</tr>
+						</c:forEach> 
+					</tbody>
+				</table>
+				
+				
+				
 				
 
 				<!--페이지 처리 뷰-->
 				<div class='pull-right'>
 					<ul class="pagination">
-
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous">
+							<a href="${pageMaker.startPage -1}">이전</a></li>
+						</c:if>
+						 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
+								<a href="${num}">${num}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${pageMaker.next}">
+							<li class="paginate_button next"><a href="${pageMaker.endPage +1 }">이후</a></li>
+						</c:if>
 					</ul>
 				</div>
 				<!--  end Pagination -->
 			</div>
 			<!-- end panelBody-->
 
-			<div class="action-body">
-					<input hidden="hidden" name="pageNum" value="">
-					<input hidden="hidden" name="type" value="">
-					<input hidden="hidden" name="keyword" value="">
-			</div>
+			<form id='actionForm' action='/board/list' method='get'>
+					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type}"/>'>
+					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword}"/>'>
+			</form> 
+			
 		
 		
 		<!-- Modal -->
@@ -99,6 +140,8 @@
         				<button id='modalModBtn' type="button" class="btn btn-primary">예</button>
         				<button id='modalRemoveBtn' type="button" class="btn btn-primary">아니오</button>
       				</div>         
+      				
+      			
        		</div>
           <!-- /.modal-content -->
         </div>
@@ -118,91 +161,13 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
-	//글 리스트 가져오기
-	var getList = function(){
-		postService.listEntity(Criteria, function(pageDTO){
-			var list = pageDTO.list;
-			var cri = pageDTO.cri;
-			
-			
-			//글목록 가져오기
-			var str ="";
-			for(var i=0;i<list.length;i++){
-				str += "<tr>";
-				str += "<td>"+list[i].b_id +"</td>";
-				str += "<td><a class='getPost' href='" + list[i].post_id +"'>"+list[i].post_id +"</a></td>";
-				str += "<td>" + list[i].name+ "</td>";
-				str += "<td>" + list[i].dept_id+ "</td>"; 
-				str += "<td>" + list[i].post_name+ "</td>"; 
-				str += "<td>" + list[i].post_regdate+ "</td>";
-				str += "<td>" + list[i].post_updatedate+ "</td>";  
-				str += "</tr>";
-			}
-			
-			//글 페이지 가져오기
-			var pag = "";
-			
-			if(pageDTO.prev){
-				pag +="<li class='paginate_button previous'>";
-				pag += "<a href='" +(pageDTO.startPage -1) +"'>이전</a></li>";
-			}
-			
-			for(var i=1;i<(pageDTO.endPage-pageDTO.startPage)+1;i++){
-				var num = (pageDTO.endPage-pageDTO.startPage);
-				pag += "<li class='paginate_button'>"
-				pag += "<a href='"+ i + "'>"+ i + "</a>";
-				pag +="</li>"
-			}
-			
-			if(pageDTO.next){
-				pag +="<li class='paginate_button next'>";
-				pag += "<a href='"+ (pageDTO.startPage +1) +"'>이후</a></li>";
-			}
-			
-			
-			
-			$(".main").html(str);//글 목록 가져오기
-			$(".pagination").html(pag);//글 페이징 처리 뷰
-			
-		})
-	}
-	
 
-	/* var searchForm = $("#searchForm");
+	var searchForm = $("#searchForm");
 	var formType = searchForm.find("select[name='type']");
 	var formKeyword = searchForm.find("input[name='keyword']");
-	var formPageNum = searchForm.find("input[name='pageNum']");  */
+	var formPageNum = searchForm.find("input[name='pageNum']");
 	
-	
-	var pageNum = $(".action-body").find("input[name='pageNum']");
-	var keyword = $(".action-body").find("input[name='keyword']");
-	var type = $(".action-body").find("input[name='type']");
-	
-	var Criteria ={
-			pageNum: 1 || pageNum.val(),
-			keyword: "1" || keyword.val(),
-			type: "1" ||type.val()
-	}
-	
-	 getList(); //글 리스트 및 페이지 가져오기
-	
-	
-	
-	
-	
-	
-		//pagination
-	  $(".pagination").on("click","li", function(e) {
-					e.preventDefault();
-					console.log($(this).find("a").attr("href"));		
-		
-		$(".action-body").find("input[name=pageNum]").attr('value',$(this).find("a").attr("href"));
-		
-		getList();
-		
-	   });
-	
-	
+
 
 	 //새 게시물 등록 선택 시 register.jsp 이동
 	  $("#registerBtn").on("click",function(e){
@@ -227,11 +192,22 @@ $(document).ready(function () {
 			}
 		})
 		
+	     
+	      
 	  });//end register
 	 
 	 
-	
+	 //pagination
+	  $(".paginate_button a").on("click", function(e) {
+					e.preventDefault();
+					
+					console.log('click');
+					$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
+					$("#actionForm").submit();
+	   });
 		
+	  
+	  
 	 //검색 버튼 클릭 시 검색한 list 불러오기
 	 var searchForm = $("#searchForm");
 	  
@@ -252,7 +228,7 @@ $(document).ready(function () {
 	  
 	  
 	  //글번호 클릭 시 get.jsp 이동하기
-	  $(".main").on("click","tr a", function(e){
+	  $(".getPost").on("click",function(e){
 		  	
 			e.preventDefault();
 			var post_id = $(this).attr("href");
@@ -270,28 +246,33 @@ $(document).ready(function () {
 		
 	  });
 	  
-	
-	
-	
-	 
-	
 	 
 	  
 	 //안읽은 게시물 bold처리추가하기
-	/*  postService.getHistory(function(result){
-		  console.log(result);
+	  postService.getHistory(function(result){
 		  
-		  
-		  
-		  for(var i=0;i<result.length;i++){
-			  
-			if(number !=(result[i].post_id)){
-				$(number).closest("tr").css("font-weight","bold");
+		 	 var list = [];
+			<c:forEach items="${pageMaker.list}" var="post">
+				list.push("${post.post_id}");
+			</c:forEach>
+			
+		
+			console.log(result[0].post_id);
+			var arr= [];
+			for(var i=0;i<result.length;i++){
+				arr.push(result[i].post_id+"");
 			}
-				
-		  }
-		 
-	  }) */
+			
+			console.log(list);
+			console.log(arr);
+			var x = list.filter(x=> !arr.includes(x));
+			console.log(x); //안읽은 게시물의 게시물 번호
+			 
+			
+			x.forEach(u => {
+				$('#' + u).parent().parent().addClass("getBold");
+			})
+	  })
 	
 	    	
 	  

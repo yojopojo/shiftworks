@@ -64,6 +64,8 @@ public class PostController {
 			log.info("getList..........");
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/board/BOA_list");
+			
+			mav.addObject("pageMaker", service.getListSearch(cri));
 		
 			
 			return mav;
