@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
@@ -19,13 +19,14 @@
 <link rel='stylesheet'
 	href='https://fonts.googleapis.com/css?family=Montserrat'>
 <link rel='stylesheet'
-	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'> 
+	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
 <link rel="stylesheet"
 	href="../../resources/css/messenger/messenger.css">
 
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script type="text/javascript" src="/resources/js/messenger/messenger.js" />
+<script type="text/javascript"
+	src="/resources/js/messenger/messenger.js" />
 <script type="text/javascript">
 $(document).ready(function() {
 	/* var socket = null;
@@ -108,23 +109,6 @@ function sendMessage(){
 					</li> -->
 				</ul>
 			</nav>
-			
-				<c:forEach items="${list}" var="board">
-						<tr>
-							<td><c:out value="${board.bno}" /></td>
-							<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
-
-							<td><a class='move' href='<c:out value="${board.bno}"/>'>
-									<c:out value="${board.title}" /> <b>[<c:out value="${board.replyCnt }"/>]</b>
-							</a></td>
-
-							<td><c:out value="${board.writer}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.regdate}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.updateDate}" /></td>
-						</tr>
-					</c:forEach>
 
 			<!-- 채팅방 목록 -->
 			<section class="discussions">
@@ -134,90 +118,20 @@ function sendMessage(){
 							placeholder="Search..."></input>
 					</div>
 				</div>
-				<div class="discussion message-active">
-					<div class="photo"
-						style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
-						<div class="online"></div>
-					</div>
-					<div class="desc-contact">
-						<p class="name">Megan Leib</p>
-						<p class="message">9 pm at the bar if possible 😳</p>
-					</div>
-					<div class="timer">12 sec</div>
-				</div>
 				
-				
-				<div class="discussion">
-					<c:forEach items="${chatRoomList}" var="chatRoom">
+				<c:forEach items="${chatRoomList}" var="chatRoom">
+					<div class="discussion">
 						<div class="photo"
 							style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
 							<div class="online"></div>
 						</div>
 						<div class="desc-contact">
-							<p class="name">Dave Corlew</p>
-							<p class="message">Let's meet for a coffee or something today
-								?</p>
+							<p class="name">${chatRoom.room_name }</p>
+							<p class="message">${chatRoom.lastchat }</p>
 						</div>
-						<div class="timer">3 min</div>
-					</c:forEach>
-				</div>
-
-				<div class="discussion">
-					<div class="photo"
-						style="background-image: url(https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80);">
+						<div class="timer">${chatRoom.lastchat_time }</div>
 					</div>
-					<div class="desc-contact">
-						<p class="name">Jerome Seiber</p>
-						<p class="message">I've sent you the annual report</p>
-					</div>
-					<div class="timer">42 min</div>
-				</div>
-
-				<div class="discussion">
-					<div class="photo"
-						style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
-						<div class="online"></div>
-					</div>
-					<div class="desc-contact">
-						<p class="name">Thomas Dbtn</p>
-						<p class="message">See you tomorrow ! 🙂</p>
-					</div>
-					<div class="timer">2 hour</div>
-				</div>
-
-				<div class="discussion">
-					<div class="photo"
-						style="background-image: url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80);">
-					</div>
-					<div class="desc-contact">
-						<p class="name">Elsie Amador</p>
-						<p class="message">What the f**k is going on ?</p>
-					</div>
-					<div class="timer">1 day</div>
-				</div>
-
-				<div class="discussion">
-					<div class="photo"
-						style="background-image: url(https://images.unsplash.com/photo-1541747157478-3222166cf342?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80);">
-					</div>
-					<div class="desc-contact">
-						<p class="name">Billy Southard</p>
-						<p class="message">Ahahah 😂</p>
-					</div>
-					<div class="timer">4 days</div>
-				</div>
-
-				<div class="discussion">
-					<div class="photo"
-						style="background-image: url(https://images.unsplash.com/photo-1435348773030-a1d74f568bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80);">
-						<div class="online"></div>
-					</div>
-					<div class="desc-contact">
-						<p class="name">Paul Walker</p>
-						<p class="message">You can't see me</p>
-					</div>
-					<div class="timer">1 week</div>
-				</div>
+				</c:forEach>
 			</section>
 
 
@@ -227,8 +141,8 @@ function sendMessage(){
 					<p class="name">Megan Leib</p>
 					<i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
 				</div>
-				
-				
+
+
 				<div class="messages-chat">
 					<div class="message">
 						<div class="photo"

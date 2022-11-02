@@ -10,14 +10,14 @@
  
      console.log('js start');
  
-     // 전송 버튼 눌렀을 때
+     // 전송 버튼 눌렀을 때 메시지 전송
      $('.send').on("click", function(e) {
          console.log("btn_send");
          messengerService.sendMessage();
          $('.write-message').val('').focus();
      });
          
-     // 메시지를 입력하고 enter 키를 입력했을 때 
+     // 메시지를 입력하고 enter 키를 입력했을 때 메시지 전송
      $('.write-message').on("keypress", function(e) {
              
          if(e.keyCode == '13'){
@@ -25,7 +25,41 @@
              messengerService.sendMessage();
              $('.write-message').val('').focus();
          }
-     });	
+     });
+     
+     // 메뉴를 눌렀을 때
+     $('.menu .items .item').on("click", function(e){
+     
+     	 $('.menu .items .item').each(function(index, element){
+     	 	$(element).attr("class", "item");
+     	 });
+     	 
+     	 $(this).attr("class", "item item-active");
+     
+     });
+     
+     // 채팅방 눌렀을 때
+     $('.discussions .discussion').on("click", function(e){
+     	
+     	// 각각의 채팅방 목록에 이벤트 추가
+     	 $('.discussion').each(function(index, item){
+     	 	
+     	 	// 검색창이 있는 div에 이벤트 방지를 위한 조건문
+     	 	var classValue = $(item).attr("class");
+     	 	if(classValue == 'discussion search'){     	 	
+     	 		$(item).attr("class", "discussion search");
+     	 	}else{
+     	 		$(item).attr("class", "discussion");
+     	 	}
+     	 });
+     	 
+     	 // 검색창이 있는 div에 이벤트 방지를 위한 조건문
+     	 if($(this).attr("class") != 'discussion search'){ 
+     		$(this).attr("class", "discussion message-active");
+     	 }
+     });
+     
+     
  });
      
  var socket = new SockJS('http://localhost:8081/messenger/chat');
