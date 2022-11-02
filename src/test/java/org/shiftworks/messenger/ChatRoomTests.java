@@ -19,6 +19,15 @@ public class ChatRoomTests {
 	@Autowired
 	ChatRoomMapper mapper;
 	
+	@Test
+	public void testUpdateLastchat() {
+		ChatRoomVO chatRoom = new ChatRoomVO();
+		chatRoom.setRoom_id(1);
+		chatRoom.setLastchat("test3");
+		chatRoom.setLastchat_time("2022-10-25 11:58:33");
+		log.info(mapper.updateLastchat(chatRoom));
+	}
+	
 //	@Test
 //	public void testInsert() {
 //		ChatRoomVO chatRoom = new ChatRoomVO();
@@ -30,10 +39,10 @@ public class ChatRoomTests {
 //		log.info(mapper.insertChatRoom(chatRoom));
 //	}
 	
-	@Test
-	public void testGetList() {
-		mapper.getList("U3948709").forEach(chatRoom->log.info(chatRoom));
-	}
+//	@Test
+//	public void testGetList() {
+//		mapper.getList("U3948709").forEach(chatRoom->log.info(chatRoom));
+//	}
 	
 //	@Test
 //	public void testDelete() {
