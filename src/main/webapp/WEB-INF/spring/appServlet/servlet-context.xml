@@ -35,7 +35,7 @@
 	
 	<!-- Web socket을 위한 핸들러 등록 -->
 	<websocket:handlers>
-		<websocket:mapping handler="chattingHandler" path="/messenger/echo"/>
+		<websocket:mapping handler="chatHandler" path="/messenger/chat"/>
 		<!-- Httpsession에 있는 값을 가로채서 WebSocketSession에 똑같이 넣어주는 역할 -->
 		 <websocket:handshake-interceptors>
         	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
@@ -44,6 +44,6 @@
 	</websocket:handlers>
 	
 	<!-- 핸들러 객체 생성 -->
-	<beans:bean id="chattingHandler" class="org.shiftworks.handler.ChattingHandler" />
+	<beans:bean id="chatHandler" class="org.shiftworks.handler.ChatHandler" />
 
 </beans:beans>

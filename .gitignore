@@ -5,4 +5,7 @@ application.properties
 target/
 
 # .setting Directory 버전관리 제외
-.setting/
+.settings/
+
+# .classpath 버전관리 제외
+.classpath
