@@ -11,7 +11,7 @@ public interface ApprovalMapper {
 
 	//public List<ApprovalVO> getList();
 	public List<ApprovalVO> getListWithPaging(Criteria cri);
-	//public List<ApprovalVO> getReceivedList(Criteria cri);
+	public List<ApprovalVO> getReceivedListWithPaging(Criteria cri);
 	public int insert(ApprovalVO approval);
 	public ApprovalVO read(int apr_id);
 	public int update(ApprovalVO approval);

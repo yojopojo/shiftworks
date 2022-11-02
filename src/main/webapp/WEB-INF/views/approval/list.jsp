@@ -20,10 +20,10 @@
 </head>
 <body>
 
-<h1>전체 결재 문서 LIST 페이지</h1>
+	<h1>전체 결재 문서 LIST 페이지</h1>
 	<a href="/approval/insert">결재문서작성</a>
 	<a href="/approval/receivedList">결재할 문서함</a>
-	
+
 	<table border="1" width="900">
 		<tr>
 			<th>결재 번호</th>
@@ -36,78 +36,82 @@
 			<th>결재 의견</th>
 			<th>결재 날짜</th>
 		</tr>
-		
+
 		<c:forEach var="approval" items="${list }">
-		
-		<tr>	
-			<td><c:out value="${approval.apr_id }"/></td>
-			<td><c:out value="${approval.af_id }"/></td>
-			<td><c:out value="${approval.emp_id }"/></td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd"
-			 	value="${approval.apr_receivedate }"/></td>
-			 <td><a href="/approval/get?apr_id=${approval.apr_id}">
-			 <c:out value="${approval.apr_title}"/></a></td>
-			<td><c:out value="${approval.apr_content }"/></td>
-			<td><c:out value="${approval.apr_status }"/></td>
-			<td><c:out value="${approval.apr_comment }"/></td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd" 
-			 value="${approval.apr_signdate }"/></td>
-		</tr>
+
+			<tr>
+				<td><c:out value="${approval.apr_id }" /></td>
+				<td><c:out value="${approval.af_id }" /></td>
+				<td><c:out value="${approval.emp_id }" /></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd"
+						value="${approval.apr_receivedate }" /></td>
+				<td><a class='move' href='<c:out value ="${approval.apr_id}"/>'>
+						<c:out value="${approval.apr_title}" />
+				</a></td>
+				<td><c:out value="${approval.apr_content }" /></td>
+				<td><c:out value="${approval.apr_status }" /></td>
+				<td><c:out value="${approval.apr_comment }" /></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd"
+						value="${approval.apr_signdate }" /></td>
+			</tr>
 		</c:forEach>
 	</table>
-	<br><br>
-	
-				<!-- 페이징 처리 뷰-->
-				<div class='pull-right'>
-					<ul class="pagination">
-						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous">
-							<a href="${pageMaker.startPage -1}">이전</a></li>
-						</c:if>
-						 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
-								<a href="${num}">${num}</a>
-							</li>
-						</c:forEach>
-						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next">
-							<a href="${pageMaker.endPage +1 }">이후</a></li>
-						</c:if>
-					</ul>
-				</div>
-				<!--  end Pagination -->
+	<br>
+	<br>
 
-			<form id='actionForm' action='/approval/list' method='get'>
-					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-			</form> 
-			
-		
-		
-			<script type="text/javascript">
-			
-			
-			//pagination
-			var actionForm = $("#actionForm");
-			
-			  $(".paginate_button a").on("click", function(e) {
-							e.preventDefault();
-							console.log('click');
-							$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
-							$("#actionForm").submit();
-			   });
-			  
-			  // 결재 상세 내역 보기 이후 첫 페이지 이동시 원래 보던 페이지 고정 => 다시 확인
-			  $(".move")
-				.on("click",function(e) {
-							e.preventDefault();
-							actionForm.append("<input type='hidden' name='bno' value='"
-											+ $(this).attr("href")+ "'>");
-							actionForm.attr("action","/approval/get");
-							actionForm.submit();
-						});
+	<!-- 페이징 처리 뷰-->
+	<div class='pull-right'>
+		<ul class="pagination">
+			<c:if test="${pageMaker.prev}">
+				<li class="paginate_button previous"><a
+					href="${pageMaker.startPage -1}">이전</a></li>
+			</c:if>
+			<c:forEach var="num" begin="${pageMaker.startPage}"
+				end="${pageMaker.endPage}">
+				<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
+					<a href="${num}">${num}</a>
+				</li>
+			</c:forEach>
+			<c:if test="${pageMaker.next}">
+				<li class="paginate_button next"><a
+					href="${pageMaker.endPage +1 }">이후</a></li>
+			</c:if>
+		</ul>
+	</div>
+	<!--  end Pagination -->
 
-		</script>		
-	
+	<form id='actionForm' action='/approval/list' method='get'>
+		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+		<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+	</form>
+
+
+
+	<script type="text/javascript">
+		//pagination
+		var actionForm = $("#actionForm");
+
+		$(".paginate_button a").on(
+				"click",
+				function(e) {
+					e.preventDefault();
+					console.log('click');
+					$("#actionForm").find("input[name='pageNum']").val(
+							$(this).attr("href"));
+					$("#actionForm").submit();
+				});
+
+		// 결재 상세 내역 보기(결제명 누르면 상세보기)
+		$(".move").on(
+				"click",
+				function(e) {
+					e.preventDefault();
+					actionForm.append("<input type='hidden' name='apr_id' value='"
+							+ $(this).attr("href") + "'>");
+					actionForm.attr("action", "/approval/get");
+					actionForm.submit();
+				});
+	</script>
+
 </body>
 </html>

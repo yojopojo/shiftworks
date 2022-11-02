@@ -13,15 +13,8 @@
 	</select>
 	
 	
-	<!-- 결재할 문서함 리스트 조회 -->
-	<!-- <select id="getReceivedList" resultType="org.shiftworks.domain.ApprovalVO">
-
-			select*from approval where apr_status = '0'
-			
-	</select>   -->
-	
-	<!-- 결재할 문서함 페이징 처리 -->
-	<!-- <select id ="getReceivedListWithPaging" resultType="org.shiftworks.domain.ApprovalVO">
+	<!-- 결재할 문서함 전체 리스트 조회 및 페이징 처리 -->
+	 <select id ="getReceivedListWithPaging" resultType="org.shiftworks.domain.ApprovalVO">
 		<![CDATA[
 			select
 				apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
@@ -37,7 +30,7 @@
 			)
 			where rn > (#{pageNum} -1) * #{amount} and apr_status = '0'
 		]]>	
-	</select> -->
+	</select>
 	
 	
 	<!-- 결재 문서 작성 -->
@@ -48,10 +41,12 @@
 		,#{apr_title},#{apr_content},'0',sysdate)
 	</insert>
 	
+	
 	<!-- 결재 문서 상세 보기 -->
 	<select id="read" resultType="org.shiftworks.domain.ApprovalVO">
 		select * from approval where apr_id = #{apr_id}
 	</select>
+	
 	
 	<!-- 결재 문서 리스트 페이징 처리 -->
 	<select id ="getListWithPaging" resultType="org.shiftworks.domain.ApprovalVO">
@@ -68,9 +63,10 @@
 				approval
 			where rownum <= #{pageNum} * #{amount} 	
 			)
-			where rn > (#{pageNum} -1) * #{amount} 
+			where rn > (#{pageNum} -1) * #{amount}
 		]]>	
 	</select> 
+	
 	
 	<!-- 결재 상태 변경 및 의견 추가? -->
 	<update id="update">
@@ -81,6 +77,7 @@
 		where apr_id = #{apr_id}
 	</update>
 	
+	
 	<!-- 결재 처리(반려, 승인) -->
 	<update id="updateStatus">
 		update approval 
@@ -88,9 +85,11 @@
 		where apr_id = #{apr_id}
 	</update>
 	
+	
 	<!-- 전체 결재 문서수 조회 -->
 	<select id="getTotal" resultType="int">
 		select count(*) from approval
 	</select>
+
 
 </mapper>

@@ -21,47 +21,53 @@ public class ApprovalServiceTests {
 	@Autowired
 	private ApprovalService service;
 	
-	@Test
-	public void testExists() {
-		log.info(service);
-		assertNotNull(service);
-	}
+//	@Test
+//	public void testExists() {
+//		log.info(service);
+//		assertNotNull(service);
+//	}
+//	
+//	@Test
+//	public void testInsertTest() {
+//		ApprovalVO vo = new ApprovalVO();
+//		vo.setAf_id(4);
+//		vo.setEmp_id("def");
+//		vo.setApr_title("def");
+//		vo.setApr_content("def");
+//		vo.setApr_status('4');
+//		vo.setApr_comment("작동 여부 확인4");
+//		
+//		int a = service.insertForm(vo);
+//		log.info("a:"+ a);
+//	}
+//	
+//	@Test
+//	public void testGetList() {
+//		//service.getList().forEach(approval->log.info(approval));
+//		service.getList(new Criteria(2,10)).forEach(approval->log.info(approval));
+//	}
+//	
+//	@Test
+//	public void testGet() {
+//		log.info(service.get(1));
+//	}
+//	
+//	@Test
+//	public void testUpdate() {
+//		ApprovalVO approval = service.get(44);
+//		if (approval == null) {
+//			return;
+//		}
+//		approval.setApr_title("결재 제목 수정 확인");
+//		approval.setApr_comment("코멘트 수정 여부 확인");
+//		log.info("UPDATE RESULT: " + service.update(approval));
+//	}
+	
 	
 	@Test
-	public void testInsertTest() {
-		ApprovalVO vo = new ApprovalVO();
-		vo.setAf_id(4);
-		vo.setEmp_id("def");
-		vo.setApr_title("def");
-		vo.setApr_content("def");
-		vo.setApr_status('4');
-		vo.setApr_comment("작동 여부 확인4");
-		
-		int a = service.insertForm(vo);
-		log.info("a:"+ a);
-	}
-	
-	@Test
-	public void testGetList() {
+	public void testGetListWithReceived() {
 		//service.getList().forEach(approval->log.info(approval));
-		service.getList(new Criteria(2,10)).forEach(approval->log.info(approval));
+		service.getReceivedList(new Criteria(1, 500)).forEach(approval -> log.info(approval));
 	}
-	
-	@Test
-	public void testGet() {
-		log.info(service.get(1));
-	}
-	
-	@Test
-	public void testUpdate() {
-		ApprovalVO approval = service.get(44);
-		if (approval == null) {
-			return;
-		}
-		approval.setApr_title("결재 제목 수정 확인");
-		approval.setApr_comment("코멘트 수정 여부 확인");
-		log.info("UPDATE RESULT: " + service.update(approval));
-	}
-	
 
 }

@@ -46,9 +46,9 @@
 			<td><fmt:formatDate pattern="yyyy-MM-dd"
 			 	value="${approval.apr_receivedate }"/></td>
 			 <td>
-			 <a href="/approval/get?apr_id=${approval.apr_id}">
-			 <c:out value="${approval.apr_title}"/></a>
-			 </td>
+			 	<a class='move' href='<c:out value ="${approval.apr_id}"/>'>
+				<c:out value="${approval.apr_title}" /></a>
+			</td>
 			<td><c:out value="${approval.apr_content }"/></td>
 			<td><c:out value="${approval.apr_status }"/></td>
 			<td><c:out value="${approval.apr_comment }"/></td>
@@ -105,11 +105,11 @@
 							$("#actionForm").submit();
 			   });
 			  
-			  // 결재 상세 내역 보기 이후 첫 페이지 이동시 원래 보던 페이지 고정 => 다시 확인
+			  // 결재 상세 내역 보기(결제명 누르면 상세보기)
 			  $(".move")
 				.on("click",function(e) {
 							e.preventDefault();
-							actionForm.append("<input type='hidden' name='bno' value='"
+							actionForm.append("<input type='hidden' name='apr_id' value='"
 											+ $(this).attr("href")+ "'>");
 							actionForm.attr("action","/approval/get");
 							actionForm.submit();

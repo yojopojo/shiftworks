@@ -69,5 +69,15 @@ public class ApprovalMapperTests {
 //	}
 	
 	
+	@Test
+	public void testPagingWithReceived() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(1);
+		cri.setAmount(500);
+		List<ApprovalVO> list = mapper.getReceivedListWithPaging(cri);
+		list.forEach(approval->log.info(approval));
+	}
+	
+	
 
 }

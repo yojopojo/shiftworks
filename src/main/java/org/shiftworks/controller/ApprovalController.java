@@ -48,7 +48,7 @@ public class ApprovalController {
 	@GetMapping("/receivedList")
 	public void receivedList(Criteria cri, Model model) {
 		log.info("list" + cri);
-		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("list", service.getReceivedList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
 	}
 	
