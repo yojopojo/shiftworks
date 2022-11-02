@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.TempApprovalVO;
 import org.shiftworks.mapper.ApprovalMapperTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -64,10 +65,21 @@ public class ApprovalServiceTests {
 //	}
 	
 	
+//	@Test
+//	public void testGetListWithReceived() {
+//		//service.getList().forEach(approval->log.info(approval));
+//		service.getReceivedList(new Criteria(1, 500)).forEach(approval -> log.info(approval));
+//	}
+	
 	@Test
-	public void testGetListWithReceived() {
-		//service.getList().forEach(approval->log.info(approval));
-		service.getReceivedList(new Criteria(1, 500)).forEach(approval -> log.info(approval));
+	public void testInsertTemporal() {
+		TempApprovalVO vo = new TempApprovalVO();
+		vo.setAf_id(0);
+		vo.setDept_id("dept2");
+		vo.setEmp_id("emp2");
+		vo.setTemp_title("임시저장");
+		vo.setTemp_content("임시저장 서비스 테스트");
+		
+		
 	}
-
 }

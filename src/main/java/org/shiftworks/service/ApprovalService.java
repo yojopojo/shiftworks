@@ -6,7 +6,7 @@ import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.TempApprovalVO;
-import org.shiftworks.domain.Temp_AprVO;
+
 
 public interface ApprovalService {
 	
@@ -19,7 +19,9 @@ public interface ApprovalService {
 	public boolean update(ApprovalVO approval);
 	public void updateStatus(int apr_id, String status);
 	public int getTotal();
-	public int temporalApr(Temp_AprVO vo);
-	public Temp_AprVO temporalSelect(String emp_id);
+	public void temporalApr(TempApprovalVO vo);
+	public List<TempApprovalVO> tempList(String emp_id);
+	public TempApprovalVO tempSelect(int temp_id);
+//	public TempApprovalVO temporalSelect(String emp_id);
 	
 }

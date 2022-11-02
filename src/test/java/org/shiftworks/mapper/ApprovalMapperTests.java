@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.TempApprovalVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -69,14 +70,40 @@ public class ApprovalMapperTests {
 //	}
 	
 	
-	@Test
-	public void testPagingWithReceived() {
-		Criteria cri = new Criteria();
-		cri.setPageNum(1);
-		cri.setAmount(500);
-		List<ApprovalVO> list = mapper.getReceivedListWithPaging(cri);
-		list.forEach(approval->log.info(approval));
-	}
+//	@Test
+//	public void testPagingWithReceived() {
+//		Criteria cri = new Criteria();
+//		cri.setPageNum(1);
+//		cri.setAmount(500);
+//		List<ApprovalVO> list = mapper.getReceivedListWithPaging(cri);
+//		list.forEach(approval->log.info(approval));
+//	}
+	
+//	@Test
+//	public void testInsertTemporal() {
+//		TempApprovalVO vo = new TempApprovalVO();
+//		vo.setDept_id("dept1");
+//		vo.setEmp_id("user1");
+//		vo.setAf_id(2);
+//		vo.setTemp_title("임시");
+//		vo.setTemp_content("임시저장 테스트 중");
+//		
+//		mapper.temporalApr(vo);
+//		
+//	}
+	
+//	@Test
+//	public void testTemporalSelect() {
+//		TempApprovalVO vo = new TempApprovalVO();
+//		vo.setApr_id(43);
+//		vo.setEmp_id("abc");
+//		
+//		log.info(mapper.temporalSelect());
+//	}
+	
+	
+	
+	
 	
 	
 

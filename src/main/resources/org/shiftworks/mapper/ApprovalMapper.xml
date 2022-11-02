@@ -92,20 +92,45 @@
 	</select>
 	
 	
-	<!-- emp_id, apr_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트 -->
-	<update id="temporalApr" parameterType="org.shiftworks.domain.Temp_AprVO">
+	<!-- emp_id, af_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트 -->
+<!-- 	<update id="temporalApr" parameterType="org.shiftworks.domain.TempApprovalVO">
 		merge into temp_apr
-		using dual on(apr_id = #{apr_id} and emp_id = #{emp_id})
-		when matched then update set af_id = #{af_id}, apr_title = #{apr_title}, apr_content = #{apr_content}
+		using dual on(af_id = #{af_id} and emp_id = #{emp_id})
+		when matched then update set temp_title = #{temp_title}, temp_content = #{temp_content}
 		when not matched then
-			insert (temp_id, apr_id, dept_id, emp_id, af_id, apr_title, apr_content)
-			values (temp_apr_seq.nextval, #{apr_id}, #{dept_id}, #{emp_id}, #{af_id}, #{apr_title}, #{apr_content})
-	</update>
+			insert (temp_id, dept_id, emp_id, af_id, temp_title, temp_content)
+			values (temp_apr_seq.nextval, #{dept_id}, #{emp_id}, #{af_id}, #{temp_title}, #{temp_content})
+	</update> -->
+	
+	<!--  임시저장 등록 -->
+	<insert id="temporalApr">
+		insert into temp_apr(temp_id, dept_id, emp_id, af_id, temp_title, temp_content)
+		values(temp_apr_seq.nextval, #{dept_id}, #{emp_id}, #{af_id}, #{temp_title}, #{temp_content})
+	</insert>
 	
 	<!-- 임시저장 불러오기 -->
-	<select id="temporalSelect" parameterType="String" resultType="org.shiftworks.domain.Temp_AprVO">
-		select * from temp_apr where emp_id = #{emp_id}	
+<!-- 	<select id="temporalSelect" parameterType="String" resultType="org.shiftworks.domain.TempApprovalVO">
+		select * from TempApprovalVO where emp_id = #{emp_id}	
+	</select> -->
+	
+	<!-- 부서번호를 얻기 위한 임시 쿼리문 -->
+	<select id="getDept" resultType="String">
+		select dept_id from employee where emp_id = #{emp_id}
 	</select>
+	
+	<!-- 임시저장 불러오기 -->
+	<select id="tempList" resultType="org.shiftworks.domain.TempApprovalVO">
+		select * from temp_apr where emp_id=#{emp_id}
+	</select>
+	
+	<!-- 임시저장 삭제 -->
+	<delete id="deleteTemp">
+		delete from temp_apr where temp_id = #{temp_id}
+	</delete>
 
+	<select id="tempSelect" resultType="org.shiftworks.domain.TempApprovalVO">
+		select * from temp_apr where temp_id = #{temp_id}
+	</select>
+	
 
 </mapper>

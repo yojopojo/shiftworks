@@ -8,11 +8,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 </head>
 <body>
 	<h1>결재문서 작성</h1>
-	<form role="form" action="/approval/insert" method="post">
+	<form id="insertForm" role="form" action="/approval/insert" method="post">
           <div class="form-group">
           <div>
           <label>결재 양식</label> 
@@ -35,7 +43,8 @@
           </div>
           
           <button type="submit" class="btn btn-default">제출하기</button>
-          <button id="temporalBtn" type="submit" class="btn btn-default">임시저장</button>
+          <button id="temporalBtn" type="button" class="btn btn-default">임시저장</button>
+          <button id="load" type="button">불러오기</button>
         </form>
         
         
@@ -50,12 +59,10 @@
               			<h4 class="modal-title" id="myModalLabel">알림</h4>
            		   </div>
             		<div class="modal-body">
-                			<div>임시저장한 게시물이 있습니다.</div>
-                			<div>이어서 작성하시겠습니까?</div>
+						
             		</div>
 					<div class="modal-footer">
-        				<button id='modalModBtn' type="button" class="btn btn-primary">예</button>
-        				<button id='modalRemoveBtn' type="button" class="btn btn-primary">아니오</button>
+        				<button id='modalRemoveBtn' type="button" class="btn btn-primary">닫기</button>
       				</div>         
        		</div>
           <!-- /.modal-content -->
@@ -68,35 +75,113 @@
         
         
         <script type="text/javascript">
+      
         
         
-	     //임시저장 버튼 클릭 시 임시저장 db저장하기 
-	  /*  var temporalBtn = $("#temporalBtn");
-	 
-	    temporalBtn.on("click",function(){
-	    	
-	    	 var post = {
-	 	            b_id: formInputBoard.val(),
-	 	            post_name:formInputTitle.val(),
-	 	            emp_id:formInputEmp.val(), //추후 로그인 세션으로 변경예정 
-	 	            dept_id:formInputDept.val(),
-	 	            post_content:formInputContent.val()
-	 	          };
-	    	 
-	    	 postService.temporalPost(post, function(result){
-	    		 alert("임시저장되었습니다");
-	    		 form.find("input").val(""); 
-	    		 form.find("textarea").val(""); 
-	    		 location.href="/approval/list";
-	    	 })
-	    })
-		
-	    	
-	  
-}); */
+        $(document).ready(function(){
+        	
+        	//임시저장 버튼 클릭 시 임시저장 db저장하기 
+        	var form = $('#insertForm')
+    	    var temporalBtn = $("#temporalBtn");
+    	 
+    	    temporalBtn.on("click",function(e){
+    	    	
+    	    	e.preventDefault();
+    	    	
+    	    	 var post = {
+    	 	            'af_id': form.find('select[name="af_id"]').val(),
+    	 	            'emp_id': form.find('input[name="emp_id"]').val(),
+    	 	            'temp_title': form.find('input[name="apr_title"]').val(),
+    	 	            'temp_content': form.find('textarea[name="apr_content"]').val(),
+    	 	          };
+    	    	 
+    	    	 $.ajax({
+    	    		 url:"/approval/temporal",
+    	    		 type:'post',
+    	    		 data: JSON.stringify(post),
+    	    		 contentType: "application/json; charSet=UTF-8",
+    	    		 success: function(result){
+    	    			 alert("임시저장이 완료되었습니다.");
+    	    			 self.location="/approval/list"
+    	    		 },error: function(xhr){
+    	    			 alert("잘못된 요청입니다.")
+    	    			 
+    	    		 }
+    	    		 
+    	    	 })
+    	    })
+    	    
+    	    var modal = $(".modal");
+    	    
+    	    $('#load').on('click',function(e){
+
+    	    	e.preventDefault();
+    	    	
+    	    	$.ajax({
+    	    		url:"/approval/tempList?emp_id=" + form.find('input[name="emp_id"]').val(),
+    	    		type: 'get',
+    	    		success:function(result){
+    	    			console.log(result)
+    	    			
+    	    			var body = $('.modal-body');
+    	    			
+    	    			// 모달 바디 초기화
+    	    			body.empty();
+    	    			body.append("<ul>")
+    	    			$.each(result, function(index, item){
+    	    				console.log(item)
+    	    				var str = '<li><a href="/approval/tempSelect/' +item.temp_id +'" class="tempBtn">' + 	    				
+    	    				 item.temp_title + '</a></li>';
+    	    				body.append(str);
+    	    			})
+    	    			body.append("</ul>")
+    	    		}
+    	    	})
+
+			    $(".modal").modal("show")
+
+    	    })
+    	    
+			   // 모달창 닫기 이벤트
+		    $("#modalCloseBtn").on("click", function(e){
+		        $('.modal').modal("hide");
+		    });
+    	    
+		    $(".close").on("click", function(e){
+		        $('.modal').modal("hide");
+		    }); 
+    		
+            $(document).on("click", ".tempBtn", function(e) {
+            	e.preventDefault();
+                
+            	$.ajax({
+            		url:$(this).attr('href'),
+            		type:'get',
+            		success:function(result){
+            			console.log(result)
+            			form.find('select[name="af_id"]').val(result.af_id)
+    	 	            form.find('input[name="emp_id"]').val(result.emp_id)
+    	 	            form.find('input[name="apr_title"]').val(result.temp_title)
+    	 	            form.find('textarea[name="apr_content"]').val(result.temp_content)
+    	 	            alert("불러오기 완료")
+    			        $('.modal').modal("hide");
+            		}
+            	})
+            });
+    	    	
+    	  
+    }); 
+        	
+        	
+        	
+
         
         
-        </script>
+        
+	   
+        
+        
+</script>
         
 
 </body>

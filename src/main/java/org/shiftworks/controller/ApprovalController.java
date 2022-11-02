@@ -1,10 +1,13 @@
 package org.shiftworks.controller;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PageDTO;
+import org.shiftworks.domain.TempApprovalVO;
 import org.shiftworks.service.ApprovalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+
 
 @Controller
 @Log4j
@@ -97,11 +102,14 @@ public class ApprovalController {
 	 */
 	@PutMapping("/sign/{apr_id}")
 	@ResponseBody
-	public ResponseEntity<String> updateStatus(@PathVariable int apr_id, @RequestParam String status){
+	public ResponseEntity<String> updateStatus(@PathVariable int apr_id, @RequestBody ApprovalVO approval){
 		log.info("approval sign controller.......");
-		log.info("apr_id : " + apr_id);
 		
-		service.updateStatus(apr_id, status);
+		approval.setApr_id(apr_id);
+		
+		log.info("approval : " + approval);
+		
+		service.update(approval);
 		
 		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}
@@ -110,16 +118,63 @@ public class ApprovalController {
 	/*
 	 임시저장 업데이트 하기
 	*/
+	@PostMapping("/temporal")
+	@ResponseBody
+	public ResponseEntity<String> temporalPost(@RequestBody TempApprovalVO vo){
+		log.info("vo : " + vo);
+		log.info("temporal.....");
+		
+		service.temporalApr(vo);
+		
+		return new ResponseEntity<String>("ok", HttpStatus.OK);
+	}
 	
+	@GetMapping(value="/tempList", produces="application/json; charSet=UTF-8")
+	@ResponseBody
+	public ResponseEntity<List<TempApprovalVO>> tempList(@RequestParam String emp_id){
+		
+		log.info("emp_id : " + emp_id);
+		
+		return new ResponseEntity<List<TempApprovalVO>>(service.tempList(emp_id), HttpStatus.OK);
 	
+	}
+	
+	@GetMapping(value="/tempSelect/{temp_id}", produces="application/json; charSet=UTF-8")
+	@ResponseBody
+	public ResponseEntity<TempApprovalVO> tempSelect(@PathVariable int temp_id){
+		
+		log.info("tempSelect.....tempId : " + temp_id);
+		
+		return new ResponseEntity<TempApprovalVO>(service.tempSelect(temp_id), HttpStatus.OK);
+	}
 	
 	
 	/*
 	 임시저장 불러오기
 	*/
+//	@GetMapping(value = "/temporal")
+//	public ResponseEntity<TempApprovalVO> temporalSelect(){
+//		log.info("temporalSelect.....");
+//		
+//		String emp_id = "user1";
+//		
+//		return new ResponseEntity<TempApprovalVO>(service.temporalSelect(emp_id),HttpStatus.OK);
+//	}
 	
 
 	/*
 	 임시저장 뷰
+	 session 추가 후 결재문서 작성(insert) 시 임시저장 불러오도록 구현
 	*/
+//	@GetMapping(value = "temporalview")
+//	public ModelAndView temporalview() {
+//		log.info("temporalSelect......");
+//		
+//		String emp_id = "user1";
+//		
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("/approval/insert");
+//		mav.addObject("post", service.temporalSelect(emp_id));
+//		return mav;
+//	}
 }

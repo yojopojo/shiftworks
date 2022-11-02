@@ -7,10 +7,11 @@ import java.util.List;
 import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
-import org.shiftworks.domain.Temp_AprVO;
+import org.shiftworks.domain.TempApprovalVO;
 import org.shiftworks.mapper.ApprovalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -146,20 +147,39 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	/*
-	
+	 임시저장
 	*/
 	@Override
-	public int temporalApr(Temp_AprVO vo) {
-		return mapper.temporalApr(vo);
+	public void temporalApr(TempApprovalVO vo) {
+		vo.setDept_id(mapper.getDept(vo.getEmp_id()));
+		mapper.temporalApr(vo);
+	}
+
+	@Override
+	public List<TempApprovalVO> tempList(String emp_id) {
+		
+		return mapper.tempList(emp_id);
+	}
+
+	@Override
+	@Transactional
+	public TempApprovalVO tempSelect(int temp_id) {
+		log.info("temp_id : " + temp_id);
+		
+		TempApprovalVO temp = mapper.tempSelect(temp_id);
+		
+		mapper.deleteTemp(temp_id);
+		
+		return temp;
 	}
 
 	/*
-	
+	임시저장
 	*/
-	@Override
-	public Temp_AprVO temporalSelect(String emp_id) { 
-		return mapper.temporalSelect(emp_id);
-	}
+//	@Override
+//	public TempApprovalVO temporalSelect(String emp_id) { 
+//		return mapper.temporalSelect(emp_id);
+//	}
 	
 	
 

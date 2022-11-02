@@ -66,7 +66,7 @@
 				      <div class="modal-body">
 				        <div class="form-group">
 				          <label>결재 의견</label>
-				          <textarea class="form-control" rows="3" name='apr_content'></textarea>
+				          <textarea id="apr_comment" class="form-control" rows="3" name='apr_content'></textarea>
 				        </div>
 				
 				      </div>
@@ -95,10 +95,15 @@
 					$(".update-status").on("click",function(e){
 						e.preventDefault();
 						var status = $(this).data('oper');
+						var approval = {'apr_comment': $('#apr_comment').val(),
+										'apr_status' : status+""}
+						
 						
 						$.ajax({
-							url: "/approval/sign/" + ${approval.apr_id } +"?status=" + status,
+							url: "/approval/sign/" + ${approval.apr_id },
 							type: 'put',
+							data: JSON.stringify(approval),
+							contentType:"application/json; charset=UTF-8",
 							success: function(data){
 								alert("처리가 완료되었습니다.");
 								self.location="/approval/list"
@@ -113,18 +118,20 @@
 				        modal.find("input").val("");
 				        $(".modal").modal("show")
 				      });
+				    
+					   // 모달창 닫기 이벤트
+				    $("#modalCloseBtn").on("click", function(e){
+				        $('.modal').modal("hide");
+				    });
+				    $(".close").on("click", function(e){
+				        $('.modal').modal("hide");
+				    }); 
+				    
+				    // end onclick event
 
 				 })
 				 
-				   // 모달창 닫기 이벤트
-			    $("#modalCloseBtn").on("click", function(e){
-			        $('.modal').modal("hide");
-			    });
-			    $(".close").on("click", function(e){
-			        $('.modal').modal("hide");
-			    }); 
-			    
-			    // end onclick event
+
 				
 			    
 					    
