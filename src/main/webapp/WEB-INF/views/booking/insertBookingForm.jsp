@@ -4,20 +4,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<!-- timePicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+    <!— Popperjs —>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"
+          crossorigin="anonymous"></script>
+    <!— Tempus Dominus JavaScript —>
+    <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"
+          crossorigin="anonymous"></script>
+
+    <!— Tempus Dominus Styles —>
+    <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css"
+          rel="stylesheet" crossorigin="anonymous">
 
 <meta charset="UTF-8">
 <title>Book your meetings here</title>
 </head>
 <body>
 	<h2>insertBookingForm 입니다.</h2><br>
+	
+	
 	
 	
 	<div class="insertForm" id="insertForm">
@@ -48,13 +60,12 @@
 				</tr>
 				<tr>
 					<td>예약일자 선택</td>
-					<td><input type='text' class='datetimepicker' name='book_date' style='width:200px;' placeholder="날짜 및 시간을 선택하세요"><br></td>
-					<!-- <td><input type="text" name="book_date" id="Date" placeholder="날짜를 선택하세요"><br></td> -->
+					<td><input type="text" name="book_date" id="Date" placeholder="날짜를 선택하세요"><br></td>
 				</tr>
-<!-- 				<tr>
+				<tr>
 					<td><label>시작 시간 선택&ensp;</label></td>
 					<td>
-					<select name="book_date" id="book_begin">
+					<select name="book_begin" id="book_begin">
 						<option>----- 09:00-19:00 -----</option>
 						<option value="09">09:00-11:00</option>
 						<option value="11">11:00-13:00</option>
@@ -63,7 +74,7 @@
 						<option value="17">17:00-19:00</option>
 					</select>
 					</td>
-				</tr> -->
+				</tr>
 				<tr>
 					<div class="form-group">
 					<td>예약명</td>
@@ -84,6 +95,7 @@
 	</div> <!-- end insertForm class -->
 
 
+	<b><input id="datetimepicker" type="text" name="book_date"><br></b>
 
 
 
@@ -92,18 +104,22 @@
 	<script type="text/javascript" src="/resources/js/booking.js"></script>
 	<script type="text/javascript">
 	
-	$(function() {
-		$(".datetimepicker").datetimepicker({ 
-			format: "Y-m-d H:i",
-			allowTimes:['09:00', '11:00', '13:00', '15:00', '17:00']
-		});
-	});
 	
 	
 	$(document).ready(function(){
 		
 		console.log(bookingService);
 		console.log("---------------------JS '***bookingService***' TESTING---------------------");
+		
+		
+		
+		//날짜 선택 UI(datepicker)
+		$(function() {
+		    $( "#Date" ).datepicker({
+		    	dateFormat: "yy-mm-dd"
+		    });
+		});
+		
 		
 		
 		//예약폼 데이터
@@ -113,7 +129,7 @@
 		var emp_id = form.find("input[name='emp_id']");
 		var dept_id = form.find("input[name='dept_id']");
 		var book_date = form.find("input[name='book_date']");
-//		var book_begin = form.find("select[name='book_begin']");
+		var book_begin = form.find("select[name='book_begin']");
 		var book_title = form.find("input[name='book_title']");
 		var book_content = form.find("textarea[name='book_content']");
 		
@@ -124,7 +140,7 @@
 					rsc_id: rsc_id.val(),
 					emp_id: emp_id.val(),
 					dept_id: dept_id.val(),
-//					book_begin: book_begin.val(),
+					book_begin: book_begin.val(),
 					book_date: book_date.val(),
 					book_title: book_title.val(),
 					book_content: book_content.val(),

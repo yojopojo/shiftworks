@@ -35,7 +35,9 @@ public class BookingServiceImpl implements BookingService {
 		boolean isAble = true;
 		
 		for(int i=0;i<bookingList.size();i++) {
-	    	if(bookingList.get(i).getBook_begin() == selectTime || bookingList.get(i).getBook_begin()+1 == selectTime) {
+			log.info("예약된 자원들의 시간 목록은...................."+bookingList.get(i).getBook_begin());
+			log.info("선택한 시간은.............................."+selectTime);
+	    	if(bookingList.get(i).getBook_begin().equals(selectTime)) {
 	    		isAble = false;
 	    	}
 	    }
@@ -152,5 +154,6 @@ public class BookingServiceImpl implements BookingService {
 		log.info("get total count from Service");
 		return mapper.getTotalCount(cri);
 	}
+
 
 }

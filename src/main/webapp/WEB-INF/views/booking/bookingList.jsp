@@ -38,6 +38,7 @@
 						<th>예약명</th>
 						<th>예약자</th>
 						<th>예약일자</th>
+						<th>예약시간</th>
 					</tr>
 				</thead>
 				
@@ -47,7 +48,8 @@
 						<td><a href="/booking/${reserv.book_id}"><c:out value="${reserv.book_title }"></c:out></a></td>
 						<td><c:out value="${reserv.emp_id }"></c:out></td>
 						<td><c:set var="book_date" value="${reserv.book_date }"></c:set>
-						<c:out value="${fn:substring(book_date,0,13) }:00~"></c:out></td>
+						<c:out value="${fn:substring(book_date,0,10) }"></c:out></td>
+						<td><c:out value="${reserv.book_begin }시~${reserv.book_begin+2 }시"></c:out> </td>
 						<%-- <c:out value="${reserv.book_date } ${reserv.book_begin }시" ></c:out>
 						<c:set var="TextValue" value="${reserv.book_date }" />
 						    <br>${fn:substring(TextValue,0,10) } --%>

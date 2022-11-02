@@ -1,6 +1,5 @@
 package org.shiftworks.mapper;
 
-import java.util.Date;
 import java.util.List;
 
 import org.shiftworks.domain.BookingVO;
@@ -13,11 +12,8 @@ public interface BookingMapper {
 	
 	public String getBooking2();
 	
-	//예약하기(+조건)
-	public int insertBookingCondition(BookingVO vo);
-	//예약하기(조건x)
+	//예약하기
 	public int insertBooking(BookingVO vo);
-	
 	//예약목록불러오기(예약 중복 조건 비교)
 	public List<BookingVO> getBookingList(BookingVO vo);
 	

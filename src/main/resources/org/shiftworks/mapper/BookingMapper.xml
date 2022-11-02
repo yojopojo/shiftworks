@@ -13,24 +13,11 @@
 
 	<select id="getBookingList" parameterType="org.shiftworks.domain.BookingVO" resultMap="bookingListMap">
 		select * from rsc_booking 
-		where rsc_id=#{rsc_id} AND book_date = #{book_date}
+		where rsc_id=#{rsc_id} AND book_date = TO_DATE(#{book_date}, 'yyyy-MM-dd')
 	</select>
-	
 	
 	<!-- 예약하기 -->
 	<insert id="insertBooking" parameterType="org.shiftworks.domain.BookingVO"> 
-		insert into rsc_booking (book_id, rsc_id, emp_id, dept_id, book_date, book_title, book_content)
-		values 
-		(book_seq.nextVal, #{rsc_id}, #{emp_id}, #{dept_id}, TO_DATE(#{book_date}, 'yyyy-MM-dd hh24:mi'), #{book_title}, #{book_content})
-	</insert>
-	
-	
-	
-	
-	
-	
-	<!-- 예약하기(+조건) -->
-	<insert id="insertBookingCondition" parameterType="org.shiftworks.domain.BookingVO"> 
 		insert into rsc_booking (book_id, rsc_id, emp_id, dept_id, book_date, book_begin, book_end, book_title, book_content)
 		values 
 		(book_seq.nextVal, #{rsc_id}, #{emp_id}, #{dept_id}, TO_DATE(#{book_date}, 'yyyy-MM-dd hh24:mi'), #{book_begin}, #{book_begin}+2, #{book_title}, #{book_content})
