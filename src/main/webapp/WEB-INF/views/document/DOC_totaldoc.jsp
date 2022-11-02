@@ -6,7 +6,7 @@
 <%@include file="../includes/header.jsp"%>
 <%@include file="../board/index.jsp"%>
 
-    
+ <div class="container"> 
  <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">문서함 메인페이지</h1>
@@ -23,20 +23,20 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 			
-				<div class="form-group">
-					<h3>내가 쓴 게시물</h3>
+				<div class="myDoc">
+					<h3><a href="#">내가 쓴 게시물</a></h3>
 					<ul class="scrapDoc">
 					<iframe class="iframe" src="/WEB-INF/views/document/DOC_mydoclist.jsp"></iframe>
 					</ul>
 				</div>
 				<div class="form-group">
-					<h3>스크랩</h3>
+					<h3><a>스크랩</a></h3>
 					<ul class="scrapDoc">
 					<iframe class="iframe" src="/WEB-INF/views/document/document/DOC_scraplist.jsp"></iframe>
 					</ul>
 				</div>
 				<div class="form-group">
-					<h3>부서문서함</h3>
+					<h3><a>부서문서함</a></h3>
 					<ul class="deptDoc">
 					<iframe class="iframe" src="/WEB-INF/views/document/DOC_deptdoclist.jsp"></iframe>
 					</ul>
@@ -65,7 +65,10 @@
 <script>
 $(document).ready(function(){
 	
-	
+	$(".myDoc").find("a").on("click", function(e){
+		e.preventDefault();
+		location.href ="/document//myDoc/1";
+	})
 	
 	
 	

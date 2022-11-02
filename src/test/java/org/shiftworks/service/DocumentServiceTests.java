@@ -2,6 +2,7 @@ package org.shiftworks.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class DocumentServiceTests {
 //	@Test
 //	public void testGetDocumentList() {
 //		
-//		String emp_id = "2";
-//		service.getMyDocumentList(emp_id).forEach(post -> log.info(post));
+//		Criteria cri = new Criteria();
+//		service.getMyDocumentListWithPaging(cri).forEach(post -> log.info(post));
 //	}
 	
 	
@@ -61,15 +62,15 @@ public class DocumentServiceTests {
 //		service.deptSelectList(post_receivededept).forEach(post -> log.info(post));
 //	}
 	
-	@Test
-	public void testDeptSelect() {
-		
-		PostVO vo = new PostVO();
-		vo.setPost_id(21);
-		vo.setPost_receivedept("12");
-		
-		log.info(service.deptSelect(vo));
-	}
+//	@Test
+//	public void testDeptSelect() {
+//		
+//		PostVO vo = new PostVO();
+//		vo.setPost_id(21);
+//		vo.setPost_receivedept("12");
+//		
+//		log.info(service.deptSelect(vo));
+//	}
 	
 
 }

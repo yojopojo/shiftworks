@@ -2,6 +2,8 @@ package org.shiftworks.service;
 
 import java.util.List;
 
+import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.mapper.DocumentMapper;
@@ -19,8 +21,12 @@ public class DocumentSerivceImpl implements DocumentService {
 	private DocumentMapper mapper;
 
 	@Override
-	public List<PostVO> getMyDocumentList(String emp_id) {
-		return mapper.getMyDocumentList(emp_id);
+	public PageDTO getMyDocumentListWithPaging(Criteria cri){
+			List<PostVO>list = mapper.getListMyDocWithPagingSearch(cri);
+			
+			String emp_id ="U3948709"; //세션 변경
+			PageDTO dto = new PageDTO(cri, mapper.getTotalMyDoc(emp_id), list);
+			return dto;
 	}
 
 	@Override
@@ -48,6 +54,7 @@ public class DocumentSerivceImpl implements DocumentService {
 		return mapper.deptSelect(vo);
 	}
 
+	
 	
 
 

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ public class DocumnetMapperTests {
 	private DocumentMapper mapper;
 
 //	@Test
-//	public void testGetMyDocumentList() {
+//	public void testgetListMyDocWithPagingSearch() {
 //		
-//		String emp_id = "2";
+//		Criteria cri = new Criteria();
+//		cri.setPageNum(1);
+//		cri.setAmount(10);
 //	
-//		mapper.getMyDocumentList(emp_id).forEach(post -> log.info(post));
+//		mapper.getListMyDocWithPagingSearch(cri).forEach(post -> log.info(post));
 //	}
 	
 //	@Test
@@ -64,13 +67,19 @@ public class DocumnetMapperTests {
 //		mapper.deptSelectList(post_receivedept).forEach(post -> log.info(post));
 //	}
 	
+//	@Test
+//	public void testDeptSelect() {
+//		PostVO vo = new PostVO();
+//		vo.setPost_id(21);
+//		vo.setPost_receivedept("12");
+//		
+//		log.info(mapper.deptSelect(vo));
+//	}
+	
 	@Test
-	public void testDeptSelect() {
-		PostVO vo = new PostVO();
-		vo.setPost_id(21);
-		vo.setPost_receivedept("12");
-		
-		log.info(mapper.deptSelect(vo));
+	public void getTotal() {
+		String emp_id ="U3948709";
+		log.info(mapper.getTotalMyDoc(emp_id));
 	}
 
 }

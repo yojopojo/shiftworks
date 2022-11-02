@@ -2,6 +2,8 @@ package org.shiftworks.controller;
 
 import java.util.List;
 
+import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.service.DocumentService;
@@ -30,17 +32,42 @@ public class DocumentController {
 
 	//내가쓴 게시물 list
 	@ResponseBody
-	@GetMapping(value = "/myDoc/{emp_id}")
-	public ModelAndView getMyDocumentList(@PathVariable("emp_id") String emp_id){
+	@GetMapping(value = "/myDoc/{pageNum}")
+	public ModelAndView getMyDocumentListWithPaging(@PathVariable("pageNum")int pageNum){
 		
 		log.info("mydoclist.........");
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_mydoclist");
-		mav.addObject("list", service.getMyDocumentList(emp_id));
+		mav.addObject("pageMaker", service.getMyDocumentListWithPaging(cri));
 		
 		return mav;
 	}
+	
+		//내가쓴 게시물 list
+		@ResponseBody
+		@GetMapping(value = "/myDoc/{pageNum}/{type}/{keyword}")
+		public ResponseEntity<PageDTO> MyDocumentListWithPaging(@PathVariable("pageNum")int pageNum,
+																				@PathVariable("type") String type,
+																				@PathVariable("keyword")String keyword){
+			
+			log.info("mydoclist.........");
+			Criteria cri = new Criteria();
+			cri.setPageNum(pageNum);
+			if(type.equals("empty")) {
+				type = null;
+			}
+			if(keyword.equals("empty")) {
+				keyword = null;
+			}
+			cri.setType(type);
+			cri.setKeyword(keyword);
+			
+			return new ResponseEntity <PageDTO>(service.getMyDocumentListWithPaging(cri),HttpStatus.OK);
+		}
 	
 	//전체 게시물에서 내가 쓴 게시물 보기 
 	@ResponseBody
