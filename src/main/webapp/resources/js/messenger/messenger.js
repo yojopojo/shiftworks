@@ -69,10 +69,12 @@
      	 
      	 // 채팅방의 크기 줄이고, 채팅 내용을 보여줌
      	 $('.discussions').css('width', '35%');
-     	 $('.chat').show();
+     	 $('.chat').fadeIn().show();
+     	 $('.timer').css('font-size', '9px');
      	 
      	 
-     	 // ajax로 
+     	 // ajax로 채팅방 정보 가져오기
+     	 $ajax
      });
     
  });
