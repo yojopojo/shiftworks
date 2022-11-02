@@ -27,10 +27,8 @@
 <title>Book your meetings here</title>
 </head>
 <body>
-	<h2>insertBookingForm 입니다.</h2><br>
-	
-	
-	
+	<div class="container">
+	<div class="col-12">회의실 예약</div>
 	
 	<div class="insertForm" id="insertForm">
 			<table>
@@ -95,8 +93,8 @@
 	</div> <!-- end insertForm class -->
 
 
-	<b><input id="datetimepicker" type="text" name="book_date"><br></b>
-
+	<!-- <b><input id="datetimepicker" type="text" name="book_date"><br></b> -->
+	</div> <!-- end container -->
 
 
 	

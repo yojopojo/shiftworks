@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 editable: true,
                 droppable: true, // things to be dropped onto the calendar
-                
                 events:data
             });
 
@@ -154,9 +153,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
 
-	
-<h2>Booking Calendar</h2>
-<div id='calendar'></div>
+	<div class="container">
+		<h2>Booking Calendar</h2>
+		<div id='calendar'></div>
+	</div>
 
 
 

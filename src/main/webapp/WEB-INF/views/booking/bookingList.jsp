@@ -13,22 +13,10 @@
 </head>
 <body>
 
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
 	<h2>All Booking List</h2>
-	<h5><a href="/booking/list/${emp_id }"><c:out value="내 예약목록 보기"></c:out></a></h5>
-	<h5><a href="/booking/new"><c:out value="예약하기"></c:out></a></h5><br>
-	
-	
-	<!-- naviBar -->
-	<nav class="nav flex-column">
-	  <a class="nav-link active" href="#">Active</a>
-	  <a class="nav-link" href="#">Link</a>
-	  <a class="nav-link" href="#">Link</a>
-	  <a class="nav-link disabled">Disabled</a>
-	</nav>
-	
-	
-	
-	<div class="col-8">
 	<div class="bookingList">
 		 <div class="list-body">
 			<table class="table table-sm">
@@ -59,7 +47,7 @@
 					
 			</table>
 			
-			<div class="pull-right">
+			<div class="table-bottom">
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev }">
 						<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">Previous</a></li>
@@ -72,9 +60,9 @@
 					<c:if test="${pageMaker.next }">
 						<li class="paginate_button next"><a href="${pageMaker.endPage +1 }">Next</a></li>
 					</c:if>
+					<li style="margin-left: 200px;"><a href="/booking/list/${emp_id }"><c:out value="내 예약목록 보기"></c:out></a></li>
+					<li style="margin-left: 10px;"><a href="/booking/new"><c:out value="예약하기"></c:out></a></li>
 				</ul>
-				
-				
 			</div>
 
 			
@@ -85,11 +73,11 @@
 		
 		
 		
-		</div>
-	</div>
+		</div> <!-- end listbody -->
+	</div> <!-- end bookinglist -->
+	</div><!-- end col-12 -->
+	</div><!--end row-->
 	</div><!-- end container -->
-	
-	
 	
 	<script type="text/javascript">
 		$(document).ready(function(){

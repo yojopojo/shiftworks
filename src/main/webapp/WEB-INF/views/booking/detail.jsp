@@ -10,12 +10,11 @@
 <title>Your Detail Reservation</title>
 </head>
 <body>
-	<h2>Detail Reservation Page</h2>
+
+	<div class="container">
+	<div class="col-12">예약 상세</div>
  	
   	<div class="col-8">
-	    <div class="col-4">column1</div>
-	    <div class="col-4">column2</div>
-	    <div class="col-4">column3</div>
 	<table>
 		<thead>
 			<tr>
@@ -45,12 +44,12 @@
 	
 	<table>
 		<tr>
-			<th><a href="/booking/list"><c:out value="목록보기"></c:out></a></th>
+			<th><a href="/booking/list"><c:out value="목록보기"></c:out>&ensp;</a></th>
 			<th><a href="#"><c:out value="삭제"></c:out></a></th>
 		</tr>
 	</table>
-	</div>
-	
+	</div> <!-- end col-8 -->
+	</div> <!-- end container -->
 	
 	
 	
