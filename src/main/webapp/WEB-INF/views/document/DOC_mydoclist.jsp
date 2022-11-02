@@ -33,11 +33,11 @@
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
 								<option value="T"
 									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-								<option value="W"
-									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-								<option value="TW"
+								<option value="C"
+									<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+								<option value="TC"
 									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>
-									제목 or 작성자
+									제목 or 내용
 								</option>
 							</select> 
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
@@ -80,9 +80,7 @@
 					</tbody>
 				</table>
 				
-				<form id='actionForm' action='/document/detail' method='get'>
-					
-				</form> 
+				
 				
 				
 				<!--페이지 처리 뷰-->
@@ -104,7 +102,11 @@
 				</div>
 				<!--  end Pagination -->
 				
-				
+				<form id='actionForm' action='/document/detail' method='get'>
+					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
+					<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
+					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>' /> 	
+				</form> 
 				
 				
 				
@@ -134,6 +136,8 @@ $(document).ready(function () {
 	
 			//검색 버튼 클릭 시 검색한 list 불러오기
 			$("#searchBtn").on("click", function(e){
+				e.preventDefault();
+				
 				var searchForm = $("#searchForm");
 				
 				 if (!searchForm.find("option:selected").val()) {
@@ -145,9 +149,9 @@ $(document).ready(function () {
 							return false;
 				}
 				
-				var pageNum = searchForm.find("input[name='pageNum']").val("1");
+				//var pageNum = searchForm.find("input[name='pageNum']").val("1");
 				var keyword = searchForm.find("input[name='keyword']").val();
-				var type = searchForm.find("input[name='type']").val();
+				var type = searchForm.find("select[name='type']").val();
 				
 				var Criteria ={
 						pageNum:$(this).attr("href") || 1,
@@ -155,10 +159,34 @@ $(document).ready(function () {
 						type: type 
 				}
 				
-				documentService.getList(Criteria, function(result){
+				console.log(keyword);
+				console.log(type);
+				
+				
+				
+				 documentService.getList(Criteria, function(result){
 					console.log(result); 
-				});
-							
+					
+					$("#main").html('');
+					var list = result.list;
+					var str ="";
+					for(var i=0;i<list.length;i++){
+						console.log(list[i]);
+						//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+						//Date list[i].post_regdate = format.parse(list[i].post_regdate);
+						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
+						
+						str += "<tr>";
+						str +="<td>"+list[i].b_id+"</td>";
+						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
+						str +="<td>"+list[i].emp_id+"</td>";
+						str +="<td>"+list[i].dept_id+"</td>";
+						str +="<td>"+list[i].post_name+"</td>";
+						str +="</tr>";
+					}
+					$("#main").html(str);
+				}); 
+				 			
 			});
 	
 	
@@ -166,10 +194,11 @@ $(document).ready(function () {
 	  $(".paginate_button a").on("click", function(e) {
 					e.preventDefault();
 					console.log($(this).attr("href"));   
-					var searchForm = $("#searchForm");
+					var actionForm = $("#actionForm");
 					
-					var keyword = searchForm.find("input[name='keyword']").val();
-					var type = searchForm.find("input[name='type']").val();
+					var pageNum = actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+					var keyword = actionForm.find("input[name='keyword']").val();
+					var type = actionForm.find("input[name='type']").val();
 					
 					
 					var Criteria ={

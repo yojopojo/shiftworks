@@ -47,7 +47,7 @@ public class DocumentController {
 		return mav;
 	}
 	
-		//내가쓴 게시물 list
+		//게시물 list ajax
 		@ResponseBody
 		@GetMapping(value = "/myDoc/{pageNum}/{type}/{keyword}")
 		public ResponseEntity<PageDTO> MyDocumentListWithPaging(@PathVariable("pageNum")int pageNum,
@@ -69,7 +69,7 @@ public class DocumentController {
 			return new ResponseEntity <PageDTO>(service.getMyDocumentListWithPaging(cri),HttpStatus.OK);
 		}
 	
-	//전체 게시물에서 내가 쓴 게시물 보기 
+	//전체 게시물에서 내가 쓴 게시물 보기 ????
 	@ResponseBody
 	@GetMapping(value = "/totalDoc/{emp_id}")
 	public ModelAndView getTotalDocumentList(@PathVariable("emp_id") String emp_id){
@@ -92,7 +92,7 @@ public class DocumentController {
 		
 		PostVO vo = new PostVO();
 		vo.setPost_id(post_id);
-		vo.setEmp_id("2"); 	//세션 구현 후 지워야 할 부분 
+		vo.setEmp_id("3"); 	//세션 구현 후 지워야 할 부분 
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_mydoc");
@@ -105,14 +105,17 @@ public class DocumentController {
 	
 	//스크랩한 게시물 리스트 보기
 	@ResponseBody
-	@GetMapping(value = "/scrap/{emp_id}")
-	public ModelAndView getScrapList(@PathVariable("emp_id") String emp_id){
+	@GetMapping(value = "/scrap/{pageNum}")
+	public ModelAndView getScrapList(@PathVariable("pageNum")int pageNum){
 		
 		log.info("scraplist.........");
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_scraplist");
-		mav.addObject("list", service.getScrapList(emp_id));
+		mav.addObject("pageMaker", service.getScrapListWithPaging(cri));
 		
 		return mav;
 	}
@@ -139,15 +142,18 @@ public class DocumentController {
 	
 	//부서수신함 조회
 	@ResponseBody
-	@GetMapping(value = "/deptDoc/{post_receivedept}")
+	@GetMapping(value = "/deptDoc/{pageNum}")
 	public ModelAndView getDeptDocList(
-					@PathVariable("post_receivedept") String post_receivedept){
+					@PathVariable("pageNum") int pageNum){
 		
 		log.info("deptdoclist........");
 		
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_deptdoclist");
-		mav.addObject("list", service.deptSelectList(post_receivedept));
+		mav.addObject("pageMaker", service.deptSelectList(cri));
 		
 		return mav;
 	}

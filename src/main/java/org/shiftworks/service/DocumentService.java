@@ -5,6 +5,7 @@ import java.util.List;
 import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
+import org.shiftworks.domain.ScrapDTO;
 import org.shiftworks.domain.ScrapVO;
 
 public interface DocumentService {
@@ -13,11 +14,11 @@ public interface DocumentService {
 	
 	public PostVO getMyDocument(PostVO vo);
 	
-	public List<ScrapVO> getScrapList(String emp_id);
+	public ScrapDTO getScrapListWithPaging(Criteria cri);
 	
 	public ScrapVO getScrap(ScrapVO vo);
 	
-	public List<PostVO> deptSelectList(String post_receivedept);
+	public PageDTO deptSelectList(Criteria cri);
 	
 	public PostVO deptSelect(PostVO vo);
 	

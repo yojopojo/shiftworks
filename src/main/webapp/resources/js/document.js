@@ -2,11 +2,9 @@ console.log("document module...")
 
 var documentService = (function(){
 
-  	
+  	//myDoc 게시물 리스트 받아오기
 	function getList(param, callback, error) {
 
-	    var page = param.page || 1;
-	    
 	    $.getJSON("/document/myDoc/" + param.pageNum + "/" + param.type +"/"+param.keyword +".json",
 	        function(data) {
 	    	
@@ -21,6 +19,10 @@ var documentService = (function(){
 	    });
 	  
 	  }
+	  
+	  
+	  
+	  
 	  return{
 	  getList:getList
 	  }

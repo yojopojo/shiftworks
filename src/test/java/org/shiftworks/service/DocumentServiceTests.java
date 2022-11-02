@@ -23,7 +23,9 @@ public class DocumentServiceTests {
 //	public void testGetDocumentList() {
 //		
 //		Criteria cri = new Criteria();
-//		service.getMyDocumentListWithPaging(cri).forEach(post -> log.info(post));
+//		cri.setType("W");
+//		cri.setKeyword("3");
+//		service.getMyDocumentListWithPaging(cri).getList().forEach(post -> log.info(post));
 //	}
 	
 	
@@ -38,12 +40,13 @@ public class DocumentServiceTests {
 //	}
 	
 	
-//	@Test
-//	public void testScrapList() {
-//		
-//		String emp_id ="2";
-//		service.getScrapList(emp_id).forEach(scrap -> log.info(scrap));
-//	}
+	@Test
+	public void testScrapList() {
+		
+		Criteria cri = new Criteria();
+		String emp_id ="2";
+		service.getScrapListWithPaging(cri).getList().forEach(scrap -> log.info(scrap));
+	}
 	
 //	@Test
 //	public void testScrap() {

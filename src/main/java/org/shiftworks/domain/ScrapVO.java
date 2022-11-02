@@ -13,8 +13,7 @@ public class ScrapVO {
 	private String dept_id;
 	private String emp_id;
 	private int post_id;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date scrap_date;
+	private String scrap_date;
 	private String post_name;
 	private String post_content;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

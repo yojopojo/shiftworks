@@ -78,7 +78,12 @@
 
 
 <script>
-
-
+$(document).ready(function () {
+	
+		$("#listBtn").on("click", function(){
+			location.href = "myDoc/1";
+		})
+	
+});
 
 </script>

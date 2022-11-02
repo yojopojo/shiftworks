@@ -12,14 +12,18 @@ public interface DocumentMapper {
 	
 	public PostVO getMyDocument(PostVO vo);
 	
-	public List<ScrapVO> getScrapList(String emp_id);
+	public List<ScrapVO> getScrapList(Criteria cri);
 	
 	public ScrapVO getScrap(ScrapVO vo);
 	
-	public List<PostVO> deptSelectList(String post_receivedept);
+	public List<PostVO> deptSelectList(Criteria cri);
 	
 	public PostVO deptSelect(PostVO vo);
 	
 	public int getTotalMyDoc(String emp_id);
+	
+	public int getTotalScrap(String emp_id);
+	
+	public int getTotalDept(String post_receivedept);
 
 }
