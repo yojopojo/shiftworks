@@ -23,11 +23,14 @@
 <link rel="stylesheet"
 	href="../../resources/css/messenger/messenger.css">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script type="text/javascript"
 	src="/resources/js/messenger/messenger.js" />
+		
 <script type="text/javascript">
+
 $(document).ready(function() {
 	/* var socket = null;
 
@@ -129,7 +132,19 @@ function sendMessage(){
 							<p class="name">${chatRoom.room_name }</p>
 							<p class="message">${chatRoom.lastchat }</p>
 						</div>
-						<div class="timer">${chatRoom.lastchat_time }</div>
+						<div class="timer" id="timer"></div>
+						<script type="text/javascript">
+							
+							var time = '${chatRoom.lastchat_time }';
+							var lastchat = new Date(time).toISOString();
+							
+							var timeago = moment(lastchat).fromNow();
+							console.log(timeago);
+							document.getElementById("timer").innerText = timeago;
+						
+						</script>
+						
+						
 					</div>
 				</c:forEach>
 			</section>
