@@ -113,7 +113,8 @@ function sendMessage(){
 				</ul>
 			</nav>
 
-			<!-- 채팅방 목록 -->
+			<!-- 왼쪽 : 채팅방 목록 -->
+			<!-- 검색창 -->
 			<section class="discussions">
 				<div class="discussion search">
 					<div class="searchbar">
@@ -122,7 +123,9 @@ function sendMessage(){
 					</div>
 				</div>
 				
+				<!-- ChatRoom DB에서 채팅방 리스트 출력 -->
 				<c:forEach items="${chatRoomList}" var="chatRoom">
+		
 					<div class="discussion">
 						<div class="photo"
 							style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
@@ -132,7 +135,7 @@ function sendMessage(){
 							<p class="name">${chatRoom.room_name }</p>
 							<p class="message">${chatRoom.lastchat }</p>
 						</div>
-						<div class="timer" id="timer"></div>
+						<div class="timer" id="${chatRoom.room_id }"></div>
 						<script type="text/javascript">
 							
 							var time = '${chatRoom.lastchat_time }';
@@ -140,8 +143,9 @@ function sendMessage(){
 							
 							var timeago = moment(lastchat).fromNow();
 							console.log(timeago);
-							document.getElementById("timer").innerText = timeago;
-						
+							
+							document.getElementById("${chatRoom.room_id }").innerText = timeago;
+					
 						</script>
 						
 						
@@ -153,7 +157,7 @@ function sendMessage(){
 			<section class="chat">
 				<div class="header-chat">
 					<i class="icon fa fa-user-o" aria-hidden="true"></i>
-					<p class="name">Megan Leib</p>
+					<p class="name"></p>
 					<i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
 				</div>
 

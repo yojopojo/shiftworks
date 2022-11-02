@@ -9,6 +9,12 @@
      var socket = null;
  
      console.log('js start');
+     
+     // 즉시 실행 함수 : 채팅방이 선택되지 않았을 때 채팅 내용이 보이지 않도록 함
+     var init = function(){
+     	$('.chat').hide();
+     
+     }();
  
      // 전송 버튼 눌렀을 때 메시지 전송
      $('.send').on("click", function(e) {
@@ -38,13 +44,14 @@
      
      });
      
+      
      // 채팅방 눌렀을 때
-     $('.discussions .discussion').on("click", function(e){
+     $('.discussions .search').nextAll().on("click", function(e){
      	
      	// 각각의 채팅방 목록에 이벤트 추가
      	 $('.discussion').each(function(index, item){
      	 	
-     	 	// 검색창이 있는 div에 이벤트 방지를 위한 조건문
+     	 	// 검색창이 있는 div에 이벤트 방지를 위한 조건
      	 	var classValue = $(item).attr("class");
      	 	if(classValue == 'discussion search'){     	 	
      	 		$(item).attr("class", "discussion search");
@@ -54,12 +61,20 @@
      	 });
      	 
      	 // 검색창이 있는 div에 이벤트 방지를 위한 조건문
+     	 // 선택된 채팅방에 선택 표시
      	 if($(this).attr("class") != 'discussion search'){ 
      		$(this).attr("class", "discussion message-active");
+     		
      	 }
+     	 
+     	 // 채팅방의 크기 줄이고, 채팅 내용을 보여줌
+     	 $('.discussions').css('width', '35%');
+     	 $('.chat').show();
+     	 
+     	 
+     	 // ajax로 
      });
-     
-     
+    
  });
      
  var socket = new SockJS('http://localhost:8081/messenger/chat');
