@@ -7,6 +7,7 @@ import java.util.List;
 import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.Temp_AprVO;
 import org.shiftworks.mapper.ApprovalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -142,6 +143,22 @@ public class ApprovalServiceImpl implements ApprovalService {
 			dtos.add(dto); 
 		}				
 		return dtos;
+	}
+
+	/*
+	
+	*/
+	@Override
+	public int temporalApr(Temp_AprVO vo) {
+		return mapper.temporalApr(vo);
+	}
+
+	/*
+	
+	*/
+	@Override
+	public Temp_AprVO temporalSelect(String emp_id) { 
+		return mapper.temporalSelect(emp_id);
 	}
 	
 	

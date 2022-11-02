@@ -35,8 +35,69 @@
           </div>
           
           <button type="submit" class="btn btn-default">제출하기</button>
-          <button type="submit" class="btn btn-default">임시저장</button>
+          <button id="temporalBtn" type="submit" class="btn btn-default">임시저장</button>
         </form>
+        
+        
+        
+        	<!-- 임시저장 모달 구현 -->
+			<!-- Modal -->
+      	<div class="modal" id="myModal">
+        	<div class="modal-dialog">
+          		<div class="modal-content">
+            		<div class="modal-header">
+              			<button type="button" class="close" data-dismiss="modal"></button>
+              			<h4 class="modal-title" id="myModalLabel">알림</h4>
+           		   </div>
+            		<div class="modal-body">
+                			<div>임시저장한 게시물이 있습니다.</div>
+                			<div>이어서 작성하시겠습니까?</div>
+            		</div>
+					<div class="modal-footer">
+        				<button id='modalModBtn' type="button" class="btn btn-primary">예</button>
+        				<button id='modalRemoveBtn' type="button" class="btn btn-primary">아니오</button>
+      				</div>         
+       		</div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+        
+        
+        
+        
+        <script type="text/javascript">
+        
+        
+	     //임시저장 버튼 클릭 시 임시저장 db저장하기 
+	  /*  var temporalBtn = $("#temporalBtn");
+	 
+	    temporalBtn.on("click",function(){
+	    	
+	    	 var post = {
+	 	            b_id: formInputBoard.val(),
+	 	            post_name:formInputTitle.val(),
+	 	            emp_id:formInputEmp.val(), //추후 로그인 세션으로 변경예정 
+	 	            dept_id:formInputDept.val(),
+	 	            post_content:formInputContent.val()
+	 	          };
+	    	 
+	    	 postService.temporalPost(post, function(result){
+	    		 alert("임시저장되었습니다");
+	    		 form.find("input").val(""); 
+	    		 form.find("textarea").val(""); 
+	    		 location.href="/approval/list";
+	    	 })
+	    })
+		
+	    	
+	  
+}); */
+        
+        
+        </script>
+        
 
 </body>
 </html>

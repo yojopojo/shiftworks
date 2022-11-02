@@ -90,6 +90,22 @@
 	<select id="getTotal" resultType="int">
 		select count(*) from approval
 	</select>
+	
+	
+	<!-- emp_id, apr_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트 -->
+	<update id="temporalApr" parameterType="org.shiftworks.domain.Temp_AprVO">
+		merge into temp_apr
+		using dual on(apr_id = #{apr_id} and emp_id = #{emp_id})
+		when matched then update set af_id = #{af_id}, apr_title = #{apr_title}, apr_content = #{apr_content}
+		when not matched then
+			insert (temp_id, apr_id, dept_id, emp_id, af_id, apr_title, apr_content)
+			values (temp_apr_seq.nextval, #{apr_id}, #{dept_id}, #{emp_id}, #{af_id}, #{apr_title}, #{apr_content})
+	</update>
+	
+	<!-- 임시저장 불러오기 -->
+	<select id="temporalSelect" parameterType="String" resultType="org.shiftworks.domain.Temp_AprVO">
+		select * from temp_apr where emp_id = #{emp_id}	
+	</select>
 
 
 </mapper>

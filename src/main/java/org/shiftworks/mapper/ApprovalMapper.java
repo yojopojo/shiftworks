@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.Temp_AprVO;
 
 public interface ApprovalMapper {
 
@@ -17,4 +18,6 @@ public interface ApprovalMapper {
 	public int update(ApprovalVO approval);
 	public void updateStatus(@Param("apr_id") int apr_id,@Param("status") String status);
 	public int getTotal();
+	public int temporalApr(Temp_AprVO vo);
+	public Temp_AprVO temporalSelect(String emp_id);
 }
