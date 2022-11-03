@@ -21,6 +21,7 @@
 <body>
 <h1>결재문서 작성</h1>
 	<form id="insertForm" role="form" action="/approval/insert" method="post">
+	<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
           <div class="form-group">
           	<div>
           		<label>결재 양식</label> 
@@ -216,7 +217,7 @@
         /* * * * * * * * * * * * * * * * * * *
  			파일 업로드 관련
 		* * * * * * * * * * * * * * * * * * */
-        $(document).ready(function(e){
+         $(document).ready(function(e){
         
         	var formObj = $("form[role='form']");
         	
@@ -226,63 +227,66 @@
         		console.log("submit clicked");
         		
         	});
+        	
+        	 var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+           	var maxSize = 5242880; //5MB
+           
+         	function checkExtension(fileName, fileSize){
+             
+             	if(fileSize >= maxSize){
+             		alert("파일 사이즈 초과");
+               		return false;
+             	}
+             
+             	if(regex.test(fileName)){
+               		alert("해당 종류의 파일은 업로드할 수 없습니다.");
+               		return false;
+             	}
+             
+             	return true;
+           	}
+           	
+         	var csrfHeaderName = "${_csrf.headerName}"; 
+         	var csrfTokenValue = "${_csrf.token}";
+           
+         	
+         	$("input[type='file']").change(function(e){
+
+             	var formData = new FormData();
+             
+             	var inputFile = $("input[name='uploadFile']");
+             
+             	var files = inputFile[0].files;
+             
+         		for(var i=0; i < files.length; i++){
+
+               		if(!checkExtension(files[i].name, files[i].size)){
+                 		return false;
+               		}
+               		
+               		formData.append("uploadFile", files[i]);	      
+         		}
+             
+         		$.ajax({
+             		url: "/uploadAjaxAction",
+               		processData: false, 
+               		contentType: false,
+               		beforeSend: function(xhr) {
+                         xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+                     },
+               		data:formData,
+               		type: "POST",
+               		dataType:"json",
+                 	success: function(result){
+                 		console.log(result); 
+         		  		//showUploadResult(result);
+               		}
+             	});  // $.ajax  
+           	});   
+        	
         });
         
-        var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-      	var maxSize = 5242880; //5MB
-      
-    	function checkExtension(fileName, fileSize){
-        
-        	if(fileSize >= maxSize){
-        		alert("파일 사이즈 초과");
-          		return false;
-        	}
-        
-        	if(regex.test(fileName)){
-          		alert("해당 종류의 파일은 업로드할 수 없습니다.");
-          		return false;
-        	}
-        
-        	return true;
-      	}
-      	
-    	var csrfHeaderName = "${_csrf.headerName}"; 
-    	var csrfTokenValue = "${_csrf.token}";
-      
-    	
-    	$("input[type='file']").change(function(e){
-
-        	var formData = new FormData();
-        
-        	var inputFile = $("input[name='uploadFile']");
-        
-        	var files = inputFile[0].files;
-        
-    		for(var i=0; i < files.length; i++){
-
-          		if(!checkExtension(files[i].name, files[i].size)){
-            		return false;
-          		}
-          		
-          		formData.append("uploadFile", files[i]);	      
-    		}
-        
-    		$.ajax({
-        		url: "/uploadAjaxAction",
-          		processData: false, 
-          		contentType: false,
-          		beforeSend: function(xhr) {
-                    xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-                },
-          		data:formData,
-          		type: "POST",
-          		dataType:"json",
-            	success: function(result){
-            		console.log(result); 
-    		  		//showUploadResult(result);
-          		}
-        	});  // $.ajax  
-      	});  
+       
         
         
         

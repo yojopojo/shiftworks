@@ -28,4 +28,7 @@ public interface ApprovalService {
 	public TempApprovalVO tempSelect(int temp_id);
 //	public TempApprovalVO temporalSelect(String emp_id);
 	
+	// 파일 업로드
+	
+	
 }

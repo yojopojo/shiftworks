@@ -85,6 +85,7 @@
 	<form id='actionForm' action='/approval/list' method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+		
 	</form>
 
 
