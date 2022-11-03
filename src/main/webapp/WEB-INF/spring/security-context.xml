@@ -4,16 +4,11 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<bean id ="customAccessDenied" class="org.shiftworks.security.CustomAccessDeniedHandler"/>
-
 <!-- <bean id ="customLoginSuccessHandler" class="org.shiftworks.security.CustomLoginSuccessHandler"/> -->
 	
 	<bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
-	<bean id="customUserDetailsService"
-		class="org.shiftworks.security.CustomUserDetailsService"/>
 	
 	<security:http>
 	
