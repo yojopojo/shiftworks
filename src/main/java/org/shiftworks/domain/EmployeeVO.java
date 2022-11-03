@@ -13,4 +13,8 @@ public class EmployeeVO {
 	// private boolean enabled;
 	
 	private List<DepartmentVO> authList;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 48babc45ad899a002b86d9ea5b08aff601049fa6
