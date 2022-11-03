@@ -31,8 +31,4 @@ public interface FileMapper {
 	
 	public int deleteChatRoomFile(String uuid);
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 48babc45ad899a002b86d9ea5b08aff601049fa6

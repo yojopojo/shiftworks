@@ -25,4 +25,30 @@
 			ON e.dept_id = d.dept_id
 			WHERE emp_id = #{emp_id}
 	</select>
+	
+	
+	<!--계정관리-->
+		<!--전체 list-->
+	<select id="getList" resultType="org.shiftworks.domain.EmployeeVO">
+		select emp_id, dept_id, name from employee
+	</select>
+		<!-- 계정추가 -->
+	<insert id="insert">
+		insert into employee(emp_id, dept_id, name, password) 
+			values (#{emp_id}, #{dept_id}, #{name}, #{password})
+	</insert>
+		<!-- 계정상세보기 -->
+	<select id="detail" resultType="org.shiftworks.domain.EmployeeVO">
+		select emp_id, dept_id, name from employee where emp_id = #{emp_id}
+	</select>
+		<!-- 계정삭제 -->
+	<delete id="delete">
+		delete from employee where emp_id = #{emp_id}
+	</delete>
+		<!-- 계정정보수정 -->
+	<update id="update">
+		update employee set dept_id=#{dept_id} where emp_id=#{emp_id}
+	</update>
+	
+	
 </mapper>

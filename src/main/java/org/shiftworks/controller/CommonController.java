@@ -1,58 +1,9 @@
 package org.shiftworks.controller;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 48babc45ad899a002b86d9ea5b08aff601049fa6
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.PostMapping;
-
-import lombok.extern.log4j.Log4j;
-
-@Controller
-@Log4j
-public class CommonController {
-	
-	
-	@GetMapping("/accessError")
-	public void accessDenied(Authentication auth, Model model) {
-		model.addAttribute("msg","Access Denied");
-	}
-	
-	@GetMapping("/customLogin")//customLogin
-	public void loginInput(String error, String logout, Model model) {
-		log.info("error : "+error);
-		log.info("logout : "+logout);
-		
-		if(error != null) {
-			model.addAttribute("error", "Login Error Check Your Account");
-		}
-		
-		if(logout != null) {
-			model.addAttribute("logout", "Log out!!");
-		}
-	}
-	
-
-	
-	@GetMapping("/customLogout")
-	public void logoutGET() {
-		
-		log.info("user log out.........."  );
-	}
-	
-	@PostMapping("/customLogout")
-	public void logoutPost() {
-
-		log.info("post custom logout");
-	}
-
-	
-=======
 
 import lombok.extern.log4j.Log4j;
 
@@ -60,37 +11,36 @@ import lombok.extern.log4j.Log4j;
 @Controller
 public class CommonController {
 	
-	// ë¡œê·¸ì¸ í•„ìš” ì‹œ ì»¤ìŠ¤í…€ ë¡œê·¸ì¸ íŽ˜ì´ì§€ë¡œ ì´ë™
+	// ·Î±×ÀÎ ÇÊ¿ä ½Ã Ä¿½ºÅÒ ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿
 	@GetMapping("/customLogin")
 	public void loginInput(String error, String logout, Model model) {
 		log.info("error: " + error + ", logout:" + logout);
 		
-		// ì—ëŸ¬ ë°œìƒ ì‹œ viewì— ë©”ì‹œì§€ ì „ë‹¬
+		// ¿¡·¯ ¹ß»ý ½Ã view¿¡ ¸Þ½ÃÁö Àü´Þ
 		if(error != null) {
 			model.addAttribute("error", "Login Error");
 		}
 		
-		// ë¡œê·¸ì•„ì›ƒ ì‹œ viewì— ë©”ì‹œì§€ ì „ë‹¬
+		// ·Î±×¾Æ¿ô ½Ã view¿¡ ¸Þ½ÃÁö Àü´Þ
 		if(logout != null) {
 			model.addAttribute("logout", "Logout");
 		}
 	}
 	
-	// ë¡œê·¸ì•„ì›ƒ ì‹œ ì¿ í‚¤, ì„¸ì…˜ ì‚­ì œ ìœ ë„(ì‹¤ì œ ìž‘ì—…ì€ ìŠ¤í”„ë§ ë‚´ë¶€ì—ì„œ!)
+	// ·Î±×¾Æ¿ô ½Ã ÄíÅ°, ¼¼¼Ç »èÁ¦ À¯µµ(½ÇÁ¦ ÀÛ¾÷Àº ½ºÇÁ¸µ ³»ºÎ¿¡¼­!)
 	@GetMapping("/customLogout")
 	public void logoutGET() {
 		log.info("custom Logout");
 	}
 	
 	
-	// ì ‘ê·¼ ê¶Œí•œì´ ì—†ëŠ” íŽ˜ì´ì§€ì— ì ‘ê·¼ ì‹œ ì ‘ê·¼ ë¶ˆê°€ íŽ˜ì´ì§€ ì¶œë ¥
+	// Á¢±Ù ±ÇÇÑÀÌ ¾ø´Â ÆäÀÌÁö¿¡ Á¢±Ù ½Ã Á¢±Ù ºÒ°¡ ÆäÀÌÁö Ãâ·Â
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
 		log.info("access Denied: " + auth);
 		
-		// viewì— ì ‘ê·¼ ë¶ˆê°€ ë©”ì‹œì§€ ì „ë‹¬
+		// view¿¡ Á¢±Ù ºÒ°¡ ¸Þ½ÃÁö Àü´Þ
 		model.addAttribute("message", "Access Denied");
 	}
 
->>>>>>> 48babc45ad899a002b86d9ea5b08aff601049fa6
 }
