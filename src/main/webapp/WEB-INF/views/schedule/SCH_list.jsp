@@ -8,6 +8,9 @@
 <head>
 
 <script type="text/javascript" src="/resources/js/schedule.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/css/schedule.css">
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
@@ -25,11 +28,12 @@
 <body>
 
 	<div class="search" role="search">
-        <input class="form-control me-2" type="search" placeholder="일정 검색" aria-label="Search">
-        <ul class="searchResult">
-        	
-        </ul>
-    </div>
+		<input class="form-control me-2" type="search" placeholder="일정 검색"
+			aria-label="Search">
+		<ul class="searchResult">
+
+		</ul>
+	</div>
 
 	<div class="table-responsive">
 		<table>
@@ -53,8 +57,7 @@
 										<button
 											class="btn btn-outline-secondary dropdown-toggle sch_group"
 											type="button" data-bs-toggle="dropdown" aria-expanded="false"
-											value="all">
-											그룹 선택</button>
+											value="all">그룹 선택</button>
 										<ul class="dropdown-menu">
 											<li><a class="dropdown-item group" href="my">내 일정</a></li>
 											<li><a class="dropdown-item group" href="dept">부서 일정</a></li>
@@ -72,7 +75,7 @@
 											</a></li>
 											<li class="page-item refDate"><a class="page-link"
 												href="#"></a>
-											<p></p></li>
+												<p></p></li>
 											<li class="page-item"><a class="page-link" href="#"
 												aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 											</a></li>
@@ -99,7 +102,7 @@
 
 
 
-	<!-- 일정 등록 Modal -->
+	<!-- 일정 Modal -->
 	<div class="modal fade" id="scheduleModal" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -109,31 +112,37 @@
 						aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
+					<label>일정 그룹 &nbsp;</label>
+					<button class="btn btn-outline-secondary dropdown-toggle selectedGroup"
+						type="button" data-bs-toggle="dropdown" aria-expanded="false"
+						value="my">내 일정</button>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item addGroup" href="my">내 일정</a></li>
+						<li><a class="dropdown-item addGroup" href="dept">부서 일정</a></li>
+						<li><a class="dropdown-item addGroup" href="comp">회사 일정</a></li>
+					</ul>
 					<div class="form-group">
-						<label>그룹</label> <input class="form-control" name="sch_group"
-						placeholder="그룹 입력 시 검색">
+						<label>시작일</label> <input type="text" class="form-control" name="start_date"
+							id="start_date">
 					</div>
 					<div class="form-group">
-						<label>시작일</label> <input class="form-control" name="start_date"
-							placeholder="yyyy-MM-dd">
-					</div>
-					<div class="form-group">
-						<label>종료일</label> <input class="form-control" name="end_date"
-							placeholder="yyyy-MM-dd">
+						<label>종료일</label> <input type="text" class="form-control" name="end_date"
+							id="end_date">
 					</div>
 					<div class="form-group">
 						<label>제목</label> <input class="form-control" name="sch_title">
 					</div>
-					<div class="form-group">
+					<div class="form-group participant">
 						<label>참가자목록</label> <input class="form-control"
 							name="participant" placeholder="이름 입력 시 검색">
 					</div>
 					<div class="form-group">
 						<label>내용</label> <input class="form-control" name="sch_content">
 					</div>
+					<div class="invalid-feedback">내용을 입력하세요.</div>
 					<div class="form-group">
 						<label>예약 회의실</label> <input class="form-control" name="book_id"
-						placeholder="회의실 예약 코드 입력 시 검색">
+							placeholder="회의실 예약 코드 입력 시 검색">
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -159,13 +168,34 @@
 	                일정 CRUD
 	    * * * * * * * * * * * * * * * * * * */
 	    
-	    var sch_group = $('.modal').find("input[name='sch_group']");
+	    var sch_group = $('.modal').find(".selectedGroup");
 	    var start_date= $('.modal').find("input[name='start_date']");
 	    var end_date= $('.modal').find("input[name='end_date']");
 	    var sch_title= $('.modal').find("input[name='sch_title']");
 	    var sch_content = $('.modal').find("input[name='sch_content']");
 	    var participant = $('.modal').find("input[name='participant']");
 	    var book_id = $('.modal').find("input[name='book_id']");
+	    
+	    
+	    // 시작일, 종료일을 캘린더를 통해 선택 가능하도록 함
+	    $(function(){
+	    	// 날짜를 yyyy-MM-dd 형태로 출력하도록 지정
+	    	$('#start_date').datepicker({
+	    		dateFormat: 'yy-mm-dd',
+	    		onSelect: function (date) {
+	    			// start_date 이전 날짜 선택 불가하게 지정
+	    			var endDate = $('#end_date');
+	    			var startDate = $(this).datepicker('getDate');
+	    			var minDate = $(this).datepicker('getDate');
+	    			endDate.datepicker('setDate', minDate);
+	    			startDate.setDate(startDate.getDate() + 30);
+	    			endDate.datepicker('option', 'maxDate', startDate);
+	    			endDate.datepicker('option', 'minDate', minDate)
+	    		}
+	    	});
+	    	
+	    	$('#end_date').datepicker({ dateFormat: 'yy-mm-dd' });
+	    })
 	    
 
 	    // 일정 등록 버튼 클릭 시 이벤트
@@ -177,6 +207,7 @@
 	        
 	        // 모달창 내용 비우고 현재 시간 기입하여 보여주기
 	        $('.modal').find("input").val("");
+	        $('.participant').show();
 	        $('input[name*="date"]').val($('.refDate p').text());
 	        $('.modal').modal("show");
 
@@ -230,14 +261,15 @@
 	        // 불필요한 버튼 숨긴 후 모달 표시
 	        $('.modal-footer *').show();
 	        $('#schInsertBtn').hide();
+	        $('.participant').hide();
 	        $('.modal').modal("show");
 	        
 	        // 선택한 일정 상세보기
 	        scheduleService.getSchedule(sch_id, function(result){
 	            
 	            sch_group.val(result.sch_group);
-	            start_date.val(result.start_date);
-	            end_date.val(result.end_date);
+	            start_date.val((result.start_date.split(" "))[0]);
+	            end_date.val((result.end_date.split(" "))[0]);
 	            sch_title.val(result.sch_title);
 	            participant.val(result.participant);
 	            sch_content.val(result.sch_content);
@@ -299,6 +331,16 @@
 	        
 	    }); // end each onclick
 	    
+	 	// 일정 모달에서 그룹 선택 시 값 변경
+	    $('.addGroup').on("click", function(e){
+	        e.preventDefault();
+
+	        // 그룹 선택 결과 반영
+	        $('.selectedGroup').val($(this).attr("href"));
+	        $('.selectedGroup').text($(this).text());
+
+	    });
+	    
 	    
 	    // 모달창 닫기 이벤트
 	    $("#modalCloseBtn").on("click", function(e){
@@ -351,6 +393,10 @@
 	    	
 	    	}) // end search()
 	    }); // end input keyup event
+	    
+	    
+	    // 유효성 검사
+	    
 	    
 	    
 	});// 일정 CRUD 모달

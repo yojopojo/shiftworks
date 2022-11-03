@@ -321,11 +321,12 @@ $(document).ready(function(){
                             workers + '</td>';
             
         }
+        
 
         // 이번달 날짜만큼 칸 생성
         for (var i = 1; i <= nextDate; i++) {
             if(dayCount == 7) {
-                makeCalendar += '</tr><tr class="week'+ ++weekCount +'">'
+                makeCalendar += '</tr><tr class="week'+ weekCount +'">'
                 dayCount = 0;
             }
             dayCount++;
@@ -470,7 +471,8 @@ $(document).ready(function(){
                     t = i + ':00';
                 }
                 
-                tHTML += '<tr><td><b>' + t + '</b></td><tr>';
+                tHTML += '<tr><td class="timeline"><b>' + t 
+                        + '</b></td><td class="' + t + '"></td><tr>';
             }
             
             return tHTML;
@@ -478,8 +480,7 @@ $(document).ready(function(){
         })();
         
         // 선택 날짜를 출력할 칸 만들기
-        $('#calendarBody').html('<tr><td colspan="1" class="timeline">' + timeline + '</td>'
-            + '<td colspan="6" class="' + selectedDate + '"></td></tr>');
+        $('#calendarBody').html('<tr class="'+selectedDate+'"></tr>' + timeline);
         
         // DB에서 선택 일정에 맞는 데이터 가져오기
         getList();
