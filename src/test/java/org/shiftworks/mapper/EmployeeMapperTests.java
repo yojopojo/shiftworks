@@ -17,6 +17,7 @@ public class EmployeeMapperTests {
 	@Autowired
 	private EmployeeMapper mapper;
 	
+<<<<<<< HEAD
 //	@Test
 //	public void testRead() {
 //		EmployeeVO vo = mapper.read("user1");
@@ -66,5 +67,13 @@ public class EmployeeMapperTests {
 //		log.info("Update Count: " + empVO);
 //		
 //	}
+=======
+	// 인증정보 조회 test
+	@Test
+	public void testRead() {
+		EmployeeVO vo = mapper.read("user1");
+		log.info(vo);
+	}
+>>>>>>> refs/remotes/origin/feature-mgt
 	
 }

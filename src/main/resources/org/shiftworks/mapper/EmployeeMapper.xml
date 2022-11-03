@@ -25,6 +25,7 @@
 			ON e.dept_id = d.dept_id
 			WHERE emp_id = #{emp_id}
 	</select>
+<<<<<<< HEAD
 	
 	
 	<!--계정관리-->
@@ -68,4 +69,6 @@
 	</select> 
 	
 	
+=======
+>>>>>>> refs/remotes/origin/feature-mgt
 </mapper>
