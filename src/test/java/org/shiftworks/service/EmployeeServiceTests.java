@@ -1,5 +1,5 @@
-package org.shiftworks.mapper;
-
+package org.shiftworks.service;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.EmployeeVO;
@@ -12,59 +12,52 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class EmployeeMapperTests {
-
+public class EmployeeServiceTests {
+	
 	@Autowired
-	private EmployeeMapper mapper;
-	
+	private EmployeeService service;
+
 //	@Test
-//	public void testRead() {
-//		EmployeeVO vo = mapper.read("user1");
-//		log.info(vo);
-//	}
-	
-	@Test
-	public void testGetList() {
-		mapper.getList().forEach(employee->log.info(employee));
-	}
-	
-//	@Test
-//	public void testInsert() {
+//	public void testRegister() {
+//		
 //		EmployeeVO empVO = new EmployeeVO();
 //		empVO.setEmp_id("user11");
 //		empVO.setDept_id("dept2");
 //		empVO.setName("u11");
 //		empVO.setPassword("pw11");
 //		
-//		mapper.insert(empVO);
-//		
-//		log.info(empVO);
-//	}
-	
-//	@Test
-//	public void testDetail() {
-//		
-//		EmployeeVO empVO = mapper.detail("admin7");
-//		
-//		log.info(empVO);
-//	}
-	
-//	@Test
-//	public void testDelete() {
-//		
-//		log.info("Delete Count: " + mapper.delete("user11"));
-//	}
+//		service.register(empVO);
+//		log.info("새로 등록된 사번: " + empVO.getEmp_id());
 //	
+//	}
+	
+//	@Test
+//	public void testGetList() {
+//		
+//		service.getList().forEach(employee->log.info(employee));
+//	}
+	
+//	@Test
+//	public void testGet() {
+//		log.info(service.get("user3"));
+//	}
+	
 //	@Test
 //	public void testUpdate() {
-//		
 //		EmployeeVO empVO = new EmployeeVO();
-//		empVO.setEmp_id("user1");
-//		empVO.setDept_id("dept2");
+//		empVO = service.get("user11");
 //		
-//		int count = mapper.update(empVO);
-//		log.info("Update Count: " + empVO);
-//		
+//		if(empVO == null) {
+//			return;
+//		}
+//		empVO.setDept_id("dept_3");
+//		log.info("modify result: " + service.modify(empVO));
 //	}
 	
+	@Test
+	public void testDelete() {
+		log.info("remove result: " + service.remove("user11"));
+	}
+	
+
 }

@@ -2,41 +2,58 @@ package org.shiftworks.service;
 
 import java.util.List;
 
+import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.mapper.EmployeeMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+@Service
+@AllArgsConstructor
+@Log4j
 public class EmployeeServiceImpl implements EmployeeService {
-	
+	@Autowired
 	private EmployeeMapper mapper;
 
 	@Override
 	public void register(EmployeeVO empVO) {
-		// TODO Auto-generated method stub
+		log.info("register..............."+empVO);
+		mapper.insert(empVO);
 
 	}
 
 	@Override
 	public EmployeeVO get(String emp_id) {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("get..........."+ emp_id);
+		return mapper.detail(emp_id);
 	}
 
 	@Override
 	public boolean modify(EmployeeVO empVO) {
-		// TODO Auto-generated method stub
-		return false;
+		log.info("modify..............." + empVO);
+		return mapper.update(empVO) ==1;
 	}
 
 	@Override
 	public boolean remove(String emp_id) {
-		// TODO Auto-generated method stub
-		return false;
+		log.info("remove..............." + emp_id);
+		return mapper.delete(emp_id) ==1;
 	}
 
 	@Override
 	public List<EmployeeVO> getList() {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("get list....................");
+		return mapper.getList();
+	}
+
+	@Override
+	public List<EmployeeVO> empSearch(Criteria cri) {
+		List<EmployeeVO> list = mapper.getEmployeeForSearching(cri);
+		return list;
+		
 	}
 
 }
