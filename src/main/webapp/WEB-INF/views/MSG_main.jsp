@@ -26,9 +26,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script type="text/javascript"
-	src="/resources/js/messenger/messenger.js" />
-		
+
+<script type="text/javascript" src="/resources/js/messenger/event.js" />
+<script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
+<script type="text/javascript" src="/resources/js/messenger/service.js" />
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -126,7 +127,7 @@ function sendMessage(){
 				<!-- ChatRoom DB에서 채팅방 리스트 출력 -->
 				<c:forEach items="${chatRoomList}" var="chatRoom">
 		
-					<div class="discussion">
+					<div class="discussion" id="${chatRoom.room_id }" >
 						<div class="photo"
 							style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
 							<div class="online"></div>
@@ -135,7 +136,7 @@ function sendMessage(){
 							<p class="name">${chatRoom.room_name }</p>
 							<p class="message">${chatRoom.lastchat }</p>
 						</div>
-						<div class="timer" id="${chatRoom.room_id }"></div>
+						<div class="timer" id="timer_${chatRoom.room_id }"></div>
 						<script type="text/javascript">
 							
 							var time = '${chatRoom.lastchat_time }';
@@ -144,10 +145,9 @@ function sendMessage(){
 							var timeago = moment(lastchat).fromNow();
 							console.log(timeago);
 							
-							document.getElementById("${chatRoom.room_id }").innerText = timeago;
+							document.getElementById("timer_${chatRoom.room_id }").innerText = timeago;
 					
 						</script>
-						
 						
 					</div>
 				</c:forEach>

@@ -14,15 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.shiftworks.domain.ChatRoomVO;
-import org.shiftworks.domain.ChatVO;
+import org.shiftworks.domain.ChatDTO;
 import org.shiftworks.service.ChatService;
 import org.shiftworks.service.ChatServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +46,7 @@ public class ChatController {
 		HttpSession session = request.getSession();
 		
 		List<ChatRoomVO> chatRoomList = chatService.getChatRoomList("U3948709");
-		List<ChatVO> chatList = chatService.getChatList(1);
+		List<ChatDTO> chatList = chatService.getChatList(1);
 		
 		model.addAttribute("chatRoomList", chatRoomList);
 		model.addAttribute("chatList", chatList);
@@ -57,6 +59,12 @@ public class ChatController {
 //		model.addAttribute("userid", user.getUsername());
 		
 		return "MSG_main";
+	}
+	
+	@GetMapping("/messenger/chat/{room_id}")
+	@ResponseBody
+	public ResponseEntity<List<ChatDTO>> getChat(@PathVariable("room_id") Integer room_id){
+		return new ResponseEntity<>(chatService.getChatList(room_id), HttpStatus.OK);
 	}
 	
 //	@PostMapping("/messenger/send")

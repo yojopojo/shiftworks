@@ -2,7 +2,7 @@ package org.shiftworks.messenger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.shiftworks.domain.ChatVO;
+import org.shiftworks.domain.ChatDTO;
 import org.shiftworks.mapper.ChatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,14 +20,14 @@ public class ChatTests {
 	@Autowired
 	ChatMapper mapper;
 	
-	// 채팅 저장하기
+	// 지난 채팅 5개 가져오
 	@Test
 	public void testGetList() {
 				
 		mapper.getList(1).forEach(chat->log.info(chat));
 	}
 	
-//	// 채팅방에서 전송된 채팅 가져오기
+//	// 채팅 저장하기
 //	@Test
 //	public void testInsert() {
 //		

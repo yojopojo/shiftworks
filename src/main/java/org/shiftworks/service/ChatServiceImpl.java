@@ -2,8 +2,9 @@ package org.shiftworks.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.shiftworks.domain.ChatRoomVO;
-import org.shiftworks.domain.ChatVO;
+import org.shiftworks.domain.ChatDTO;
 import org.shiftworks.mapper.ChatMapper;
 import org.shiftworks.mapper.ChatRoomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,11 @@ public class ChatServiceImpl implements ChatService {
 	public List<ChatRoomVO> getChatRoomList(String emp_id) {
 		
 		log.info("#ChatServiceImpl, getChatRommList.................");
-		
 		return chatRoomMapper.getList(emp_id);
 	}
 
 	@Override
-	public List<ChatVO> getChatList(Integer room_id) {
+	public List<ChatDTO> getChatList(Integer room_id) {
 		
 		log.info("#ChatServiceImpl, getChatList....................");
 		
