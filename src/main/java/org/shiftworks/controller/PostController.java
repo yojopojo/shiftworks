@@ -1,6 +1,7 @@
 package org.shiftworks.controller;
 
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -57,7 +59,35 @@ public class PostController {
 		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	//BOA_list.jsp 호출
+	//파일 업로드
+	@PostMapping("/uploadAjaxAction")
+	public void uploadAjaxPost(MultipartFile[] uploadFile) {
+	
+		log.info("update ajax post.........");
+	
+		String uploadFolder = "C:\\upload";
+	
+		for (MultipartFile multipartFile : uploadFile) {
+	
+			log.info("-------------------------------------");
+			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
+			log.info("Upload File Size: " + multipartFile.getSize());
+	
+			String uploadFileName = multipartFile.getOriginalFilename();
+	
+
+	
+			File saveFile = new File(uploadFolder, uploadFileName);
+	
+			try {
+				multipartFile.transferTo(saveFile);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+	}
+	
+		//BOA_list.jsp 호출
 		@GetMapping(value = "/list")
 		public ModelAndView getList(Criteria cri) {
 			

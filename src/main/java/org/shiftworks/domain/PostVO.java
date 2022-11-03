@@ -1,6 +1,7 @@
 package org.shiftworks.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
@@ -28,5 +29,6 @@ public class PostVO {
 	private String post_receivedept;
 	private String name;
 	
+	private List<FileVO> list;
 
 }

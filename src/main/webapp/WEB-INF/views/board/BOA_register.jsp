@@ -23,6 +23,21 @@
 			<div class="panel-body">
 				<button id ="previewBtn" type="button" class="btn btn-primary">미리보기</button>
 				<button id="temporalBtn" type="button" class="btn btn-primary">임시저장</button>
+				
+					<!--파일 업로드-->
+				<div class="row">
+					<div class="col-lg-12">
+							<div class="panel-heading">파일 첨부</div>
+								<div class="form-group upload">
+								<input type="file" name="uploadFile" multiple> 
+						</div>
+					</div>
+				</div>
+				<div class="uploadDiv">
+					<ul>
+					</ul>
+				</div>
+				<button id="uploadBtn" type="button" class="btn btn-primary" value="">업로드</button>
 
 				<form id="form">
 					<div class="form-group">
@@ -55,10 +70,9 @@
 					<div class="form-group">
 						<label>수신부서</label> <input class="form-control" name='post_receivedept'  value="<c:out value="" />"/>
 					</div>
-
-					<button id="registerBtn" type="button" class="btn btn-primary" value="">게시하기</button>
-					
 				</form>
+				
+				<button id="registerBtn" type="button" class="btn btn-primary" value="">게시하기</button>
 
 			</div>
 			<!--  end panel-body -->
@@ -93,6 +107,18 @@ $(document).ready(function () {
 	
 	//글 등록 버튼 클릭 시 post db에 저장하기 
 	  $("#registerBtn").on("click",function(e){
+		  
+		  //파일명 및 파일 경로, uuid form에 첨부해서 post로 보내기 
+		  var str ="";
+		  $(".uploadResult ul li").each(function(i, obj){
+			  
+			  var jobj =$(obj);
+			  
+			  str +="<input type='hidden' name='fileList["+i+"].file_name' value='"+jobj.data("file_name")+"'>";
+			  str +="<input type='hidden' name='fileList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+			  str +="<input type='hidden' name='fileList["+i+"].file_src' value='"+jobj.data("file_src")+"'>";
+			  
+		  })
 	      
 	      var post = {
 	            b_id: formInputBoard.val(),
@@ -103,6 +129,7 @@ $(document).ready(function () {
 	            post_receivedept:formInputReceive.val()
 	          };
 	      
+	   
 	 
 	       postService.add(post, function(result){
 	        
@@ -122,6 +149,7 @@ $(document).ready(function () {
 	 
 	    temporalBtn.on("click",function(){
 	    	
+	    	
 	    	 var post = {
 	 	            b_id: formInputBoard.val(),
 	 	            post_name:formInputTitle.val(),
@@ -137,8 +165,84 @@ $(document).ready(function () {
 	    		 location.href="/board/list";
 	    	 })
 	    })
-		
-	    	
+	    
+	    var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	    var maxSize = 5242880; //5MB
+	    
+	    function checkExtension(fileName, fileSize){
+	      
+	      if(fileSize >= maxSize){
+	        alert("파일 사이즈 초과");
+	        return false;
+	      }
+	      
+	      if(regex.test(fileName)){
+	        alert("해당 종류의 파일은 업로드할 수 없습니다.");
+	        return false;
+	      }
+	      return true;
+	    }
+	    
+	    $("#uploadBtn").on("click", function(e){
+
+	      var formData = new FormData();
+	      
+	      var inputFile = $("input[name='uploadFile']");
+	      
+	      var files = inputFile[0].files;
+	      
+	      for(var i = 0; i < files.length; i++){
+
+	        if(!checkExtension(files[i].name, files[i].size) ){
+	          return false;
+	        }
+	        formData.append("uploadFile", files[i]);
+	        
+	      }
+	      
+	      $.ajax({
+	        url: '/board/uploadAjaxAction',
+	        processData: false, 
+	        contentType: false,
+	  	  data: formData,
+	  	  type: 'POST',
+	        dataType:'json',
+	          success: function(result){
+	            console.log(result); 
+	  		  showUploadResult(result); //업로드 결과 처리 함수 
+
+	        }
+	      }); //$.ajax
+	      
+	    });  
+	    
+	    //파일 화면 출력 처리 
+	    function showUploadResult(uploadResultArr){
+	  	    
+	      if(!uploadResultArr || uploadResultArr.length == 0){ return; }
+	      
+	      var uploadUL = $(".uploadDiv ul");
+	      
+	      var str ="";
+	      
+	      $(uploadResultArr).each(function(i, obj){
+	      
+	  			var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
+	  		    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+	  		      
+	  			str += "<li data-path='"+obj.file_src+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.file_name+"'><div>";
+	  			str += "<span> "+ obj.fileName+"</span>";
+	  			str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+	  			str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+	  			str += "<img src='/resources/img/attach.png'></a>";
+	  			str += "</div>";
+	  			str +"</li>";
+	  	
+
+	      });
+	      
+	      uploadUL.append(str);
+	    }
 	  
 });
 </script>

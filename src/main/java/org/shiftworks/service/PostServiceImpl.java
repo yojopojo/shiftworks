@@ -8,6 +8,7 @@ import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
+import org.shiftworks.mapper.FileMapper;
 import org.shiftworks.mapper.PostMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,11 @@ public class PostServiceImpl implements PostService {
 	
 	private PostMapper mapper;
 	
+	private FileMapper filemapper;
 	
 	@Override
 	public int insertPost(PostVO postvo) {
+		
 		return mapper.insertPost(postvo);
 		
 	}
