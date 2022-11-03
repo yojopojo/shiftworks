@@ -37,30 +37,22 @@
 		</tr>
 		
 		<c:forEach var="approval" items="${list }">
-		<%-- <c:if test="${approval.apr_status eq '대기중'}"> </c:if> --%>
 			<tr>
-			
-			<td><c:out value="${approval.apr_id }"/></td>
-			<td><c:out value="${approval.af_id }"/></td>
-			<td><c:out value="${approval.emp_id }"/></td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd"
-			 	value="${approval.apr_receivedate }"/></td>
-			 <td>
-			 	<a class='move' href='<c:out value ="${approval.apr_id}"/>'>
-				<c:out value="${approval.apr_title}" /></a>
-			</td>
-			<td><c:out value="${approval.apr_content }"/></td>
-			<td><c:out value="${approval.apr_status }"/></td>
-			<td><c:out value="${approval.apr_comment }"/></td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd" 
-			 value="${approval.apr_signdate }"/></td>
-		</tr>
-		
-		
-		
-		
-		
-		
+				<td><c:out value="${approval.apr_id }"/></td>
+				<td><c:out value="${approval.af_id }"/></td>
+				<td><c:out value="${approval.emp_id }"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd"
+			 		value="${approval.apr_receivedate }"/></td>
+				 <td>
+			 		<a class='move' href='<c:out value ="${approval.apr_id}"/>'>
+					<c:out value="${approval.apr_title}" /></a>
+				</td>
+				<td><c:out value="${approval.apr_content }"/></td>
+				<td><c:out value="${approval.apr_status }"/></td>
+				<td><c:out value="${approval.apr_comment }"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd" 
+					 value="${approval.apr_signdate }"/></td>
+			</tr>
 		</c:forEach>
 	</table>
 	<br><br>
@@ -85,17 +77,17 @@
 				</div>
 				<!--  end Pagination -->
 
-			<form id='actionForm' action='/approval/list' method='get'>
+			<form id='actionForm' action='/approval/receivedList' method='get'>
 					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 			</form> 
 			
 		
 		
-			<script type="text/javascript">
+<script type="text/javascript">
 			
 			
-			//pagination
+			//pagination(페이지 이동)
 			var actionForm = $("#actionForm");
 			
 			  $(".paginate_button a").on("click", function(e) {
@@ -115,7 +107,7 @@
 							actionForm.submit();
 						});
 
-		</script>		
+</script>		
 	
 </body>
 </html>

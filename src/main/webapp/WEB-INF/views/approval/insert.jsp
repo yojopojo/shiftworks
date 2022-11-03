@@ -19,64 +19,76 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	<h1>결재문서 작성</h1>
+<h1>결재문서 작성</h1>
 	<form id="insertForm" role="form" action="/approval/insert" method="post">
           <div class="form-group">
+          	<div>
+          		<label>결재 양식</label> 
+          			<select name="af_id">
+			          	<option value="">선택하세요</option>
+			          	<option value="1">기안서</option>
+			          	<option value="2">품의서</option>
+			          	<option value="3">휴가신청서</option>
+          			</select>
+          	<div>
+          		<label>파일 첨부</label>
+          			<button id="file" type="button" class="btn btn-default">첨부하기</button>	
+          	</div>	
+         	 <div>
+            	<label>작성자</label> 
+            		<input class ="" name='emp_id' readonly value="user1">
+          	</div>
           <div>
-          <label>결재 양식</label> 
-          <select name="af_id">
-          	<option value="">선택하세요</option>
-          	<option value="1">기안서</option>
-          	<option value="2">품의서</option>
-          	<option value="3">휴가신청서</option>
-          </select>
-          <div>
-            <label>작성자</label> <input class="form-control" name='emp_id' readonly value="user1">
-          </div>
-          <div>
-            <label>결재명</label> <input class="form-control" name='apr_title'>
-          </div>
-
-          <div class="form-group">
-            <label>결재 내용</label>
-            <textarea class="form-control" rows="3" name='apr_content'></textarea>
+            <label>결재명</label> 
+            	<input class="form-control" name='apr_title'>
           </div>
           
-          <button type="submit" class="btn btn-default">제출하기</button>
-          <button id="temporalBtn" type="button" class="btn btn-default">임시저장</button>
-          <button id="load" type="button">불러오기</button>
+          <div class="form-group">
+            	<label>결재 내용</label>
+            		<textarea class="form-control" rows="3" name='apr_content' ></textarea>
+          </div>
+          <div>
+          	<label></label>
+          		<button id="aprLineBtn" type="button" class="">결재선 추가</button>	
+          </div>
+          
+          	<button type="submit" class="btn btn-default">제출하기</button>
+          	<button id="temporalBtn" type="button" class="btn btn-default">임시저장</button>
+          	<button id="load" type="button" class="btn btn-default">불러오기</button>
         </form>
         
         
         
-        	<!-- 임시저장 모달 구현 -->
-			<!-- Modal -->
+        <!-- 임시저장 모달 구현 -->
+		<!-- Modal -->
       	<div class="modal" id="myModal">
         	<div class="modal-dialog">
           		<div class="modal-content">
             		<div class="modal-header">
-              			<button type="button" class="close" data-dismiss="modal"></button>
-              			<h4 class="modal-title" id="myModalLabel">알림</h4>
-           		   </div>
-            		<div class="modal-body">
+              			<h4 class="modal-title" id="myModalLabel">임시저장 목록</h4>
+           		   	</div>
+            	<div class="modal-body">
 						
-            		</div>
+            	</div>
 					<div class="modal-footer">
-        				<button id='modalRemoveBtn' type="button" class="btn btn-primary">닫기</button>
+						<button type="button" class="close" data-dismiss="modal">닫기</button>
+        				<!-- <button id='modalRemoveBtn' type="button" class="btn btn-primary">닫기</button> -->
       				</div>         
-       		</div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+       			</div>
+          		<!-- /.modal-content -->
+        	</div>
+        	<!-- /.modal-dialog -->
+      	</div>
+     	 <!-- /.modal -->
         
         
         
         
-        <script type="text/javascript">
+<script type="text/javascript">
       
-        
+        /* * * * * * * * * * * * * * * * * * *
+        		임시저장 관련
+		* * * * * * * * * * * * * * * * * * */
         
         $(document).ready(function(){
         	
@@ -84,6 +96,7 @@
         	var form = $('#insertForm')
     	    var temporalBtn = $("#temporalBtn");
     	 
+        	
     	    temporalBtn.on("click",function(e){
     	    	
     	    	e.preventDefault();
@@ -111,6 +124,7 @@
     	    	 })
     	    })
     	    
+    	    // 임시저장 글 목록 모달창으로 불러오기
     	    var modal = $(".modal");
     	    
     	    $('#load').on('click',function(e){
@@ -124,9 +138,10 @@
     	    			console.log(result)
     	    			
     	    			var body = $('.modal-body');
-    	    			
+    	    		
     	    			// 모달 바디 초기화
     	    			body.empty();
+    	    			// 임시저장 목록(<ul>태그) 반목문으로 출력
     	    			body.append("<ul>")
     	    			$.each(result, function(index, item){
     	    				console.log(item)
@@ -151,6 +166,7 @@
 		        $('.modal').modal("hide");
 		    }); 
     		
+		    // 임시저장 목록 db 불러오기
             $(document).on("click", ".tempBtn", function(e) {
             	e.preventDefault();
                 
@@ -171,16 +187,105 @@
     	    	
     	  
     }); 
-        	
-        	
-        	
+        
+        
+        
+        /* * * * * * * * * * * * * * * * * * *
+		 		결재선 추가 관련
+		* * * * * * * * * * * * * * * * * * */
+        
+       
+        <!-- 결재선 모달 구현 -->
+		<!-- Modal -->
+      	/* <div class="modal" id="myModal">
+        	<div class="modal-dialog">
+          		<div class="modal-content">
+            		<div class="modal-header">
+              			<h4 class="modal-title" id="myModalLabel">결재선 선택</h4>
+           		   	</div>
+            	<div class="modal-body">
+						
+            	</div>
+					<div class="modal-footer">
+						<button id='modalaprLineBtn' type="button" class="btn btn-primary">선택 완료</button>
+						<button type="button" class="close" data-dismiss="modal">닫기</button>
+      				</div>         
+       			</div>
+          		<!-- /.modal-content -->
+        	</div>
+        	<!-- /.modal-dialog -->
+      	</div>
+     	 <!-- /.modal --> */
+        
+        
+     	 
+     	 
+     	 
+     	 
+        
+        
+        
+        /* * * * * * * * * * * * * * * * * * *
+		 		 입력창 유효성 검사
+		* * * * * * * * * * * * * * * * * * */
+        
+		// 결재양식 ,결재명, 결재내용 미선택 시 멘트 출력
+		/* $(function(){
+			
+			$('.check','.form-control').on('change', function(){
+				
+				var checkText = "";
+				var thisVal = $(this).val();	
+				
+				switch ($(this).attr("name")) {
+					case "af_id":
+						if (thisVal == '선택') {
+							checkText = "결재양식을 선택해주세요.";
+						}
+						break;
 
+					case "apr_title":
+						if (thisVal.lengh == 0) {
+							checkText = "결재명을 작성하세요.";
+						} else if (Space_Check.test(thisVal) == true) {
+							checkText = "공백이 들어갈 수 없습니다.";
+						} else if (thisVal.length > 10) {
+							checkText = "10글자 내로 입력해주세요.";
+						}
+						break;
+					case "apr_content":	
+						if (thisVal.lengh == 0) {
+							checkText = "결재 내용을 작성하세요.";
+						} else if (Space_Check.test(thisVal) == true) {
+							checkText = "공백이 들어갈 수 없습니다.";
+						} 
+						break;						
+	     
+						        
+					if(checkText != ""){
+						$(this).siblings("p").html(checkText);
+						$(this).siblings("p").addClass("vali");
+						$(this).siblings("p").slideDown();
+					} else {
+						$(this).siblings("p").slideUp(function(){
+						$(this).removeClass("vali");
+							});
+					 	}
+						    });
+						    
+						    
+						});	
+					
+        			// 유효성 모두 만족
+					if($("check").length == 0) {}				
         
-        
-        
-	   
-        
-        
+				}
+				 */
+				
+			
+        	
+        	
+   
 </script>
         
 

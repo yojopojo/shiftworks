@@ -129,6 +129,9 @@ public class ApprovalController {
 		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}
 	
+	/*
+	 임시저장 목록 불러오기
+	*/
 	@GetMapping(value="/tempList", produces="application/json; charSet=UTF-8")
 	@ResponseBody
 	public ResponseEntity<List<TempApprovalVO>> tempList(@RequestParam String emp_id){
@@ -139,6 +142,9 @@ public class ApprovalController {
 	
 	}
 	
+	/*
+	 임시저장 선택?
+	*/
 	@GetMapping(value="/tempSelect/{temp_id}", produces="application/json; charSet=UTF-8")
 	@ResponseBody
 	public ResponseEntity<TempApprovalVO> tempSelect(@PathVariable int temp_id){

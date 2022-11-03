@@ -145,47 +145,52 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}				
 		return dtos;
 	}
+	
+	
+	 /* * * * * * * * * * * * * * * * * * *
+			임시저장 구현
+	 * * * * * * * * * * * * * * * * * * */	
 
-	/*
-	 임시저장
-	*/
-	@Override
-	public void temporalApr(TempApprovalVO vo) {
-		vo.setDept_id(mapper.getDept(vo.getEmp_id()));
-		mapper.temporalApr(vo);
-	}
-
-	@Override
-	public List<TempApprovalVO> tempList(String emp_id) {
+		/*
+		 임시저장
+		*/
+		@Override
+		public void temporalApr(TempApprovalVO vo) {
+			vo.setDept_id(mapper.getDept(vo.getEmp_id()));
+			mapper.temporalApr(vo);
+		}
+	
+		@Override
+		public List<TempApprovalVO> tempList(String emp_id) {
+			
+			return mapper.tempList(emp_id);
+		}
+	
+		@Override
+		@Transactional
+		public TempApprovalVO tempSelect(int temp_id) {
+			log.info("temp_id : " + temp_id);
+			
+			TempApprovalVO temp = mapper.tempSelect(temp_id);
+			
+			mapper.deleteTemp(temp_id);
+			
+			return temp;
+		}
+	
+		/*
+		임시저장
+		*/
+	//	@Override
+	//	public TempApprovalVO temporalSelect(String emp_id) { 
+	//		return mapper.temporalSelect(emp_id);
+	//	}
 		
-		return mapper.tempList(emp_id);
-	}
-
-	@Override
-	@Transactional
-	public TempApprovalVO tempSelect(int temp_id) {
-		log.info("temp_id : " + temp_id);
 		
-		TempApprovalVO temp = mapper.tempSelect(temp_id);
+	
 		
-		mapper.deleteTemp(temp_id);
+	
 		
-		return temp;
-	}
-
-	/*
-	임시저장
-	*/
-//	@Override
-//	public TempApprovalVO temporalSelect(String emp_id) { 
-//		return mapper.temporalSelect(emp_id);
-//	}
-	
-	
-
-	
-
-	
-	
+		
 
 }
