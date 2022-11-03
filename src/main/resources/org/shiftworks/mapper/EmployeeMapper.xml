@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.EmployeeMapper">
+
+	<resultMap type="org.shiftworks.domain.EmployeeVO" id="empMap">
+		<id property="emp_id" column="emp_id"/>
+		<result property="emp_id" column="emp_id"/>
+		<result property="dept_id" column="dept_id"/>
+		<result property="name" column="name"/>
+		<result property="password" column="password"/>
+		<collection property="authList" resultMap="deptMap"/>
+	</resultMap>
+	
+	<resultMap type="org.shiftworks.domain.DepartmentVO" id="deptMap">
+		<result property="dept_id" column="dept_id"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+
+
+	<select id="read" resultMap="empMap">
+		SELECT emp_id, e.dept_id as dept_id, password, name, authority
+			FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id
+			WHERE emp_id = #{emp_id}
+	</select>
+</mapper>

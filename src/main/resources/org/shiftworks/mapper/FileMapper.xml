@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.FileMapper">
+	
+	<!--게시글 파일 업로드-->
+	<insert id="insertBoardFile" parameterType="org.shiftworks.domain.FileVO">
+		insert into board_file (uuid , post_id , file_name, file_src)
+			values(#{uuid}, #{work_id}, #{file_name}, #{file_src})
+	</insert>
+	
+	<!--게시글 파일 목록-->
+	<select id="selectBoardFile" parameterType="int" resultType="org.shiftworks.domain.FileVO">
+		select uuid, f.post_id as work_id, file_name,file_src 
+			from board_file f JOIN post p 
+			ON p.post_id = f.post_id
+			where p.post_id =#{post_id}
+	</select>
+	
+	<!--게시글 파일 삭제-->
+	<delete id="deleteBoardFile" parameterType="String">
+		delete from board_file where uuid =#{uuid}
+	</delete>
+	
+	<!--업무 파일 업로드-->
+	 <insert id="insertTaskFile" parameterType="org.shiftworks.domain.FileVO">
+		insert into task_file (uuid, task_id, file_name, file_src)
+			values(#{uuid}, #{work_id}, #{file_name}, #{file_src})
+	</insert>
+	
+	<!--업무 파일 목록-->
+	<select id="selectTaskFile" parameterType="int" resultType="org.shiftworks.domain.FileVO">
+		select uuid, f.task_id as work_id, file_name,file_src 
+			from task_file f JOIN task t 
+			ON f.task_id = t.task_id
+			where f.task_id =#{task_id}
+	</select>
+	
+	<!--업무 파일 삭제-->
+	<delete id="deleteTaskFile" parameterType="String">
+		delete from task_file where uuid =#{uuid}
+	</delete>
+	
+	<!--결재 파일 업로드-->
+	<insert id="insertApprovalFile" parameterType="org.shiftworks.domain.FileVO">
+		insert into approval_file (uuid, apr_id, file_name, file_src)
+			values(#{uuid}, #{work_id}, #{file_name}, #{file_src})
+	</insert>
+	
+	<!--결재 파일 목록-->
+	<select id="selectApprovalFile" parameterType="int" resultType="org.shiftworks.domain.FileVO">
+		select uuid, a.apr_id as work_id, file_name,file_src 
+			from approval a JOIN approval_file f
+			ON a.apr_id =f.apr_id
+			where a.apr_id =#{apr_id}
+	</select>
+	
+	<!--결재 파일 삭제-->
+	<delete id="deleteApprovalFile" parameterType="String">
+		delete from approval_file where uuid =#{uuid}
+	</delete>
+	
+	<!--채팅 파일 업로드-->
+	<insert id="insertChatRoomFile" parameterType="org.shiftworks.domain.FileVO">
+		insert into chatroom_file (uuid, room_id , file_name, file_src)
+			values(#{uuid}, #{work_id}, #{file_name}, #{file_src})
+	</insert> 
+	
+	<!--채팅 파일 목록-->
+	<select id="selectChatRoomFile" parameterType="int" resultType="org.shiftworks.domain.FileVO">
+		select uuid, f.room_id as work_id, file_name,file_src 
+			from chatroom_file f JOIN chatroom c
+			ON f.room_id = c.room_id
+			where f.room_id =#{room_id}
+	</select>
+	
+	<!--채팅 파일 삭제-->
+	<delete id="deleteChatRoomFile" parameterType="String">
+		delete from chatroom_file where uuid =#{uuid}
+	</delete>
+
+</mapper>
