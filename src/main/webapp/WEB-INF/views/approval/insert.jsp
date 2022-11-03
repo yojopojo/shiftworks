@@ -30,10 +30,34 @@
 			          	<option value="2">품의서</option>
 			          	<option value="3">휴가신청서</option>
           			</select>
-          	<div>
-          		<label>파일 첨부</label>
-          			<button id="file" type="button" class="btn btn-default">첨부하기</button>	
-          	</div>	
+          			
+          	<!-- start /.row (파일 추가) -->		
+          	<div class="row">
+				<div class="col-lg-12">
+    				<div class="panel panel-default">
+    				
+      					<div class="panel-heading">파일 추가</div>
+      					<!-- /.panel-heding  -->
+      				<div class="panel-body">
+        				<div class="form-group uploadDiv">
+            				<input type="file" name="uploadFile" multiple />
+        				</div>
+        			<div class="uploadResult"> 
+          				<ul>
+          		
+          				</ul>
+        			</div>
+        	
+      				</div>
+      				<!-- end panel body -->	
+    			</div>
+   				 <!-- end panel body -->
+  			</div>
+  			<!-- end panel -->
+		</div>
+		<!-- /.row -->
+
+
          	 <div>
             	<label>작성자</label> 
             		<input class ="" name='emp_id' readonly value="user1">
@@ -187,6 +211,81 @@
     	    	
     	  
     }); 
+        
+        
+        /* * * * * * * * * * * * * * * * * * *
+ 			파일 업로드 관련
+		* * * * * * * * * * * * * * * * * * */
+        $(document).ready(function(e){
+        
+        	var formObj = $("form[role='form']");
+        	
+        	$("button[type='submit']").on("click", function(e){
+        		
+        		e.preventDefault();
+        		console.log("submit clicked");
+        		
+        	});
+        });
+        
+        var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+      	var maxSize = 5242880; //5MB
+      
+    	function checkExtension(fileName, fileSize){
+        
+        	if(fileSize >= maxSize){
+        		alert("파일 사이즈 초과");
+          		return false;
+        	}
+        
+        	if(regex.test(fileName)){
+          		alert("해당 종류의 파일은 업로드할 수 없습니다.");
+          		return false;
+        	}
+        
+        	return true;
+      	}
+      	
+    	var csrfHeaderName = "${_csrf.headerName}"; 
+    	var csrfTokenValue = "${_csrf.token}";
+      
+    	
+    	$("input[type='file']").change(function(e){
+
+        	var formData = new FormData();
+        
+        	var inputFile = $("input[name='uploadFile']");
+        
+        	var files = inputFile[0].files;
+        
+    		for(var i=0; i < files.length; i++){
+
+          		if(!checkExtension(files[i].name, files[i].size)){
+            		return false;
+          		}
+          		
+          		formData.append("uploadFile", files[i]);	      
+    		}
+        
+    		$.ajax({
+        		url: "/uploadAjaxAction",
+          		processData: false, 
+          		contentType: false,
+          		beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+                },
+          		data:formData,
+          		type: "POST",
+          		dataType:"json",
+            	success: function(result){
+            		console.log(result); 
+    		  		//showUploadResult(result);
+          		}
+        	});  // $.ajax  
+      	});  
+        
+        
+        
         
         
         
