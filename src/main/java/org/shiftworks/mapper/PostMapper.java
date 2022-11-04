@@ -2,7 +2,7 @@ package org.shiftworks.mapper;
 
 import java.util.List;
 
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
@@ -14,7 +14,7 @@ public interface PostMapper {
 	
 	//public List<PostVO> getListWithPaging(Criteria cri);
 	
-	public List<PostVO> getListWithPagingSearch(Criteria cri);
+	public List<PostVO> getListWithPagingSearch(BoardCriteria cri);
 	
 	public int updatePost(PostVO postvo);
 	

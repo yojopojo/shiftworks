@@ -14,10 +14,10 @@ public class PageDTO {
   private boolean prev, next;
 
   private int total;
-  private Criteria cri;
+  private BoardCriteria cri;
   private List<PostVO> list;
 
-  public PageDTO(Criteria cri, int total, List<PostVO> list) {
+  public PageDTO(BoardCriteria cri, int total, List<PostVO> list) {
 
     this.cri = cri;
     this.total = total;

@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
@@ -14,6 +14,7 @@ import org.shiftworks.domain.Temp_BoardVO;
 import org.shiftworks.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class PostController {
 	
 	//register form 이동
 	@GetMapping(value = "/new")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView register() throws Exception{
 		
 		ModelAndView mav = new ModelAndView();
@@ -89,7 +91,7 @@ public class PostController {
 	
 		//게시판 번호에 맞는 리스트 호출
 		@GetMapping(value = "/list")
-		public ModelAndView getList(Criteria cri) {
+		public ModelAndView getList(BoardCriteria cri) {
 			
 			log.info("getListNotice..........");
 			ModelAndView mav = new ModelAndView();
@@ -109,7 +111,7 @@ public class PostController {
 																			@PathVariable("type") String type,
 																			@PathVariable("keyword") String keyword){
 		
-		Criteria cri = new Criteria();
+		BoardCriteria cri = new BoardCriteria();
 		cri.setPageNum(pageNum);
 		if(!type.equals("1")) {
 			cri.setType(type);
@@ -128,7 +130,7 @@ public class PostController {
 	//글번호 클릭 시 BOA_get.jsp로 이동
 	@GetMapping(value = "/get")
 	public ModelAndView getPost(@RequestParam("post_id") int post_id, 
-												@ModelAttribute("cri") Criteria cri) throws Exception{
+												@ModelAttribute("cri") BoardCriteria cri) throws Exception{
 		log.info("get.........");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/board/BOA_get");
@@ -142,7 +144,7 @@ public class PostController {
 	//수정 클릭 시 BOA_modify.jsp로 이동
 	@GetMapping(value = "/modify")
 		public ModelAndView modify(@RequestParam("post_id") int post_id, 
-								  					@ModelAttribute("cri") Criteria cri) throws Exception{
+								  					@ModelAttribute("cri") BoardCriteria cri) throws Exception{
 			log.info("modify.........");
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/board/BOA_modify");

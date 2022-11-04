@@ -5,8 +5,19 @@
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
 <%@include file="/WEB-INF/views/board/index.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+<link rel="stylesheet" href="/resources/css/post.css">
 
+<meta charset="UTF-8">
 
+<title></title>
+</head>
+
+<div class ="container">
 <div class="row">
   <div class="col-lg-12">
     <h1 class="page-header">글수정</h1>
@@ -84,7 +95,7 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
-
+</div>
 
 <script type="text/javascript" src="/resources/js/post.js"></script>
 <script type="text/javascript">

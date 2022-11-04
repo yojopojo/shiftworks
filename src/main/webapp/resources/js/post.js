@@ -5,10 +5,14 @@ var postService = (function(){
 	//글 등록하기
 	function add(post, callback, error) {
 
+		
 		$.ajax({
 			type : 'post',
 			url : '/board/new',
 			data : JSON.stringify(post),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+            },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
@@ -32,6 +36,9 @@ var postService = (function(){
 			type : 'post',
 			url : '/board/scrap',
 			data : JSON.stringify(post),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+            },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
@@ -54,6 +61,9 @@ var postService = (function(){
 			type : 'post',
 			url : '/board/temporal',
 			data : JSON.stringify(post),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+            },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
@@ -100,6 +110,9 @@ var postService = (function(){
 			type : 'post',
 			url : '/board/history/' +post.post_id,
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
 			success : function(result, status, xhr) {
 	
 			},
@@ -166,6 +179,9 @@ var postService = (function(){
 			type : 'post',
 			url : '/board/modify',
 			data : JSON.stringify(post),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {

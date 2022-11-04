@@ -14,9 +14,10 @@
 <title></title>
 </head>
 
+<div class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">공지사항</h1>
+		<h1 class="page-header"></h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -63,7 +64,6 @@
 				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
 					<thead>
 						<tr>
-							<th>게시판번호</th>
 							<th>게시글번호</th>
 							<th>작성자</th>
 							<th>작성부서</th>
@@ -75,7 +75,6 @@
 					<tbody class="getPost">
 						<c:forEach items="${pageMaker.list}" var="list">
 							<tr>
-								<td><c:out value="${list.b_id}" /></td>
 								<td><a id ='<c:out value="${list.post_id}"/>' href ='<c:out value="${list.post_id}"/>'>
 									<c:out value="${list.post_id}" /></a>
 								</td>
@@ -156,6 +155,7 @@
 	<!-- end class -->
 </div>
 <!-- /.row -->
+</div>
 
 <script type="text/javascript" src="/resources/js/post.js"></script>
 <script type="text/javascript">

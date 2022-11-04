@@ -2,7 +2,7 @@ package org.shiftworks.service;
 
 import java.util.List;
 
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
@@ -38,7 +38,7 @@ public class PostServiceImpl implements PostService {
 	 */
 	
 	@Override
-	public PageDTO getListSearch(Criteria cri) {
+	public PageDTO getListSearch(BoardCriteria cri) {
 		List<PostVO> list =  mapper.getListWithPagingSearch(cri);
 		PageDTO dto = new PageDTO(cri, mapper.getTotal(), list);
 		return dto;

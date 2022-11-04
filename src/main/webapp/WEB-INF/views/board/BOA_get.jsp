@@ -6,8 +6,18 @@
 	prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
 <%@include file="index.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+<link rel="stylesheet" href="/resources/css/post.css">
 
+<meta charset="UTF-8">
 
+<title></title>
+</head>
+<div class="container">
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">상세페이지</h1>
@@ -30,11 +40,9 @@
 					<tbody>
 						<tr>
 							<th scope="row" class="pre_index">이전글</th>
-							
 						</tr>
 						<tr>
-							<th scope="row" class="post_index">다음글</th>
-							
+							<th scope="row" class="post_index">다음글</th>	
 						</tr>
 					</tbody>
 				</table>
@@ -64,18 +72,17 @@
 				</div>
 				<div class="form-group">
 					<label>내용</label>
-					<textarea class="form-control" rows="20" cols="150"
-						name='post_content' readonly="readonly">
-						<c:out value="${post.post_content}" /></textarea>
+					<textarea class="form-control" rows="20" cols="150" name='post_content' readonly="readonly">
+						<c:out value="${post.post_content}" />
+					</textarea>
 				</div>
 				<div class="form-group">
-					<label>작성일</label> <input class="form-control" name='post_regdate'
-						value='<c:out value="${post.post_regdate}"/>' readonly="readonly">
+					<label>작성일</label> 
+					<input class="form-control" name='post_regdate' value='<c:out value="${post.post_regdate}"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>수정일</label> <input class="form-control"
-						name='post_updatedate' value='<c:out value=""/>'
-						readonly="readonly">
+					<label>수정일</label> 
+					<input class="form-control" name='post_updatedate' value='<c:out value=""/>' readonly="readonly">
 				</div>
 				<div class="form-group" hidden="hidden">
 					<label>emp_id</label> <input class="form-control" name='emp_id'
@@ -87,13 +94,12 @@
 
 				<form id='operForm' action="/board/modify" method="get">
 					<input type='hidden' id='post_id' name='post_id'
-						value='<c:out value="${post.post_id}"/>'> <input
-						type='hidden' name='pageNum'
-						value='<c:out value="${cri.pageNum}"/>'> <input
-						type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+						value='<c:out value="${post.post_id}"/>'> 
+					<input type='hidden' name='pageNum'  value='<c:out value="${cri.pageNum}"/>'> 
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 					<input type='hidden' name='keyword'
-						value='<c:out value="${cri.keyword}"/>'> <input
-						type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+						value='<c:out value="${cri.keyword}"/>'> 
+					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 				</form>
 				<!-- 게시글 상세 폼-->
 
@@ -108,11 +114,10 @@
 							<div class="panel-heading">
 								<i class="fa fa-comments fa-fw">댓글</i>
 								<div class="form-group">
-									<label></label> <input class="form-control" name='r_content'
-										value='<c:out value=""/>'>
+									<label></label> 
+									<input class="form-control" name='r_content' value='<c:out value=""/>'>
 								</div>
-								<button id='addReplyBtn'
-									class='btn btn-primary btn-xs pull-right'>댓글등록</button>
+								<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>댓글등록</button>
 							</div>
 
 
@@ -140,7 +145,7 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
-
+</div>
 
 
 
@@ -164,6 +169,11 @@
 						var post_regdate = $(".panel-body").find("input[name='post_regdate']").val();
 
 						//추후 scrap 에 regdate넣기 console.log(typeof(post_regdate));
+						
+						//csrf_token 가져오기
+						var csrf_token = $("meta[name='_csrf']").attr("content");
+						var csrf_header = $("meta[name='_csrf_header']").attr("content");
+						
 
 						//글 수정 버튼 클릭 시 수정폼으로 가기 
 						$("#modifyBtn").on("click", function() {
@@ -218,7 +228,9 @@
 								dept_id : dept_id,
 								emp_id : emp_id,
 								post_name : post_name,
-								post_content : post_content
+								post_content : post_content,
+								csrf_token:csrf_token,
+					            csrf_header:csrf_header
 							}
 
 							postService.scrapPost(post, function(result) {
