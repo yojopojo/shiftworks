@@ -1,6 +1,3 @@
-/**
- * 
- */
 document.write("<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js'><"+"/script>");
 document.write("<script type='text/javascript' src='/resources/js/messenger/service.js'><"+"/script>");
  console.log("Messenger Module.......");
@@ -74,7 +71,7 @@ document.write("<script type='text/javascript' src='/resources/js/messenger/se
      	 console.log("room_id : " + $(this).attr("id"));
      	 
      	 // 지난 채팅 내역 가져옴
-     	 messengerService.getChat($(this).attr("id"), function(data){
+ /*    	 messengerService.getChat($(this).attr("id"), function(data){
      	 	if(data != null){
      		 	for(var i = 0; i < data.length; i++){
      		 		
@@ -83,189 +80,44 @@ document.write("<script type='text/javascript' src='/resources/js/messenger/se
      	 	
      	 		$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name);
      	 	}
-     	 });
+     	 });*/
      });
+     
  });
      
- 
-var messengerService = (function () {
-
-    function getChat(param, callback, error) {
-  
-        $.ajax({
-            type: 'GET',
-            url: '/messenger/chat/' + param,
-            dataType: 'json',
-            success: function (data) {
-                if (callback) {
-                    callback(data);
-                }
-            },
-            error : function (xhr, status, err) {
-                if (error) {
-                    error(err);
-                }
-            }
-
-        });
-
-    } // end getChat function
 
 
+
+/*
+$(document).ready(function() {
+ 	var socket = null;
+
+	console.log('js start');
+
+	// 전송 버튼 눌렀을 때
+	$('.send').on("click", function(e) {
+		console.log("btn_send");
+		sendMessage();
+		$('.write-message').val('');
+	});
+		
+	// 메시지를 입력하고 enter 키를 입력했을 때 
+	$('.write-message').on("keypress", function(e) {
+			
+		if(e.keyCode == '13'){
+			console.log("btn_send");
+			sendMessage();
+			$('.write-message').val('');
+		}
+	});	
+});
+	
+
+function sendMessage(){
+	console.log("Messenger Module......., sendMessage");
+    socket.send($('.write-message').val());
     
-
-   function sendMessage() {
-    var message = $('.write-message').val();
-    if (message != "") {
-        socket.send(message);
-    }
-    //  console.log("Messenger Module......., sendMessage");
-    //  var message = $('.write-message').val();
-    //  if(message != ""){
-    //      //socket.send(message);
-    //      $.ajax({
-    //          type : 'post',
-    //          url : '/message/send',
-    //          data : 
-
-    //      })
+    $('.chat').append("dd"); 
 }
 
-
-
-function add(reply, callback, error) {
-    console.log("add reply...............");
-
-    $.ajax({
-        type: 'post',
-        url: '/replies/new',
-        data: JSON.stringify(reply),
-        contentType: "application/json; charset=utf-8",
-        success: function (result, status, xhr) {
-            if (callback) {
-                callback(result);
-            }
-        },
-        error: function (xhr, status, er) {
-            if (error) {
-                error(er);
-            }
-        }
-    })
-}//end add function
-
-function getList(param, callback, error) {
-
-    var bno = param.bno;
-    var page = param.page || 1;
-
-    $.getJSON("/replies/pages/" + bno + "/" + page,
-        function (data) {
-            if (callback) {
-                //callback(data);
-                callback(data.replyCnt, data.list);
-            }
-        }).fail(function (xhr, status, err) {
-            if (error) {
-                error();
-            }
-        });
-}//end getList function
-
-function remove(rno, callback, error) {
-    $.ajax({
-        type: 'delete',
-        url: '/replies/' + rno,
-        success: function (deleteResult, status, xhr) {
-            if (callback) {
-                callback(deleteResult);
-            }
-        },
-        error: function (xhr, status, er) {
-            if (error) {
-                error(er);
-            }
-        }
-    });
-}//end remove function
-
-function update(reply, callback, error) {
-
-    console.log("RNO: " + reply.rno);
-
-    $.ajax({
-        type: 'put',
-        url: '/replies/' + reply.rno,
-        data: JSON.stringify(reply),
-        contentType: "application/json; charset=utf-8",
-        success: function (result, status, xhr) {
-            if (callback) {
-                callback(result);
-            }
-        },
-        error: function (xhr, status, er) {
-            if (error) {
-                error(er);
-            }
-        }
-    });
-}
-
-
-function get(rno, callback, error) {
-
-    $.get("/replies/" + rno, function (result) {
-
-        if (callback) {
-            callback(result);
-        }
-
-    }).fail(function (xhr, status, err) {
-        if (error) {
-            error();
-        }
-    });
-}//end get function
-
-
-
-function displayTime(timeValue) {
-
-    var today = new Date();
-
-    var gap = today.getTime() - timeValue;
-
-    var dateObj = new Date(timeValue);
-    var str = "";
-
-    if (gap < (1000 * 60 * 60 * 24)) {
-
-        var hh = dateObj.getHours();
-        var mi = dateObj.getMinutes();
-        var ss = dateObj.getSeconds();
-
-        return [(hh > 9 ? '' : '0') + hh, ':', (mi > 9 ? '' : '0') + mi,
-            ':', (ss > 9 ? '' : '0') + ss].join('');
-
-    } else {
-        var yy = dateObj.getFullYear();
-        var mm = dateObj.getMonth() + 1; // getMonth() is zero-based
-        var dd = dateObj.getDate();
-
-        return [yy, '/', (mm > 9 ? '' : '0') + mm, '/',
-            (dd > 9 ? '' : '0') + dd].join('');
-    }
-};
-
-
-return {
-    add: add,
-    getChat: getChat,
-    displayTime: displayTime,
-    remove: remove,
-    get: get,
-    update: update,
-    sendMessage: sendMessage
-};
-
-}) ();
+*/

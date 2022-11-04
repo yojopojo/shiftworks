@@ -10,14 +10,14 @@
  socket.onclose = onClose;
  socket.onopen = onOpen;
  
-     
+
  // 서버로부터 메시지를 받았을 때
  function onMessage(msg) {		
      var data = msg.data;
      console.log("onMessage " + data);
      $(".messages-chat").append(data + "<br/>");
  }
-     
+   
  // 서버와 연결되었을때
  function onOpen(evt) {
      console.log("onOpen");
@@ -29,6 +29,6 @@
  function onClose(evt) {
      console.log("onClose");
      
-     $(".messages-chat").append("연결 끊김");
+     $(".messages-chat").append("끊김");
  }
      

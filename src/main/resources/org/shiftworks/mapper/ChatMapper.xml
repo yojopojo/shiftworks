@@ -35,13 +35,13 @@
 	<!-- resultType이 map일 때, 
  		 map의 key는 컬럼명을 대문자로 할당되고,
  		 map의 value는 반환되는 row의 key에 해당하는 컬럼의 값이 할당된다. -->
-	<select id="getList" parameterType="int" resultMap="chatMap">
+	<select id="getList" parameterType="Integer" resultMap="chatMap">
 	
 		<![CDATA[
 			SELECT c.chat_id, c.content, c.sendtime, c.sender, cr.room_id, cr.room_name
-				FROM chat c, chatroom cr
-				WHERE c.room_id = cr.room_id
-					AND c.room_id = #{room_id}
+				FROM chatroom cr LEFT OUTER JOIN chat c
+				ON  c.room_id = cr.room_id
+				WHERE c.room_id = #{room_id}
 					AND rownum <= 5
 				ORDER BY sendtime
 			

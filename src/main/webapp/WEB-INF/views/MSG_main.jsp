@@ -13,6 +13,8 @@
 <meta charset="UTF-8">
 <title>Shiftworks_messenger</title>
 
+<link rel="stylesheet" href="../../resources/css/messenger/messenger.css">
+
 <!-- icon을 사용하기 위함 -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
@@ -20,77 +22,18 @@
 	href='https://fonts.googleapis.com/css?family=Montserrat'>
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
-<link rel="stylesheet"
-	href="../../resources/css/messenger/messenger.css">
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
+
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<link rel="stylesheet" href="../../resources/css/messenger/messenger.css">
 
-<script type="text/javascript" src="/resources/js/messenger/event.js" />
-<script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
 <script type="text/javascript" src="/resources/js/messenger/service.js" />
-<script type="text/javascript">
-
-$(document).ready(function() {
-	/* var socket = null;
-
-	console.log('js start');
-
-	// 전송 버튼 눌렀을 때
-	$('.send').on("click", function(e) {
-		console.log("btn_send");
-		messengerService.sendMessage();
-		$('.write-message').val('');
-	});
-		
-	// 메시지를 입력하고 enter 키를 입력했을 때 
-	$('.write-message').on("keypress", function(e) {
-			
-		if(e.keyCode == '13'){
-			console.log("btn_send");
-			messengerService.sendMessage();
-			$('.write-message').val('');
-		}
-	});	
-});
-	
-var socket = new SockJS('http://localhost:8081/messenger/echo');
-	
-socket.onmessage = onMessage;
-socket.onclose = onClose;
-socket.onopen = onOpen;
-
-	
-// 서버로부터 메시지를 받았을 때
-function onMessage(msg) {
-		
-	var data = msg.data;
-	console.log("onMessage " + data);
-	$("#text").append(data + "<br/>");
-}
-	
-// 서버와 연결을 끊었을 때
-function onOpen(evt) {
-	console.log("onClose");
-	
-	$("#text").append("연결 끊김");
-}
-	
-// 서버와 연결을 끊었을 때
-function onClose(evt) {
-	console.log("onClose");
-	
-	$("#text").append("연결 끊김");
-}
-	
-function sendMessage(){
-	console.log("Messenger Module......., sendMessage");
-    socket.send($('.write-message').val());
-    
-    $('.chat').append("dd");
-}	 */
-</script>
+<script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
+<!-- <script type="text/javascript" src="/resources/js/messenger/event.js" /> -->
+<script type="text/javascript"></script>
 </head>
 <body>
 	<!-- partial:index.partial.html -->
@@ -204,5 +147,94 @@ function sendMessage(){
 			</section>
 		</div>
 	</div>
+	
+	
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+    var socket = null;
+    
+    console.log('js start');
+    
+    // 즉시 실행 함수 : 채팅방이 선택되지 않았을 때 채팅 내용이 보이지 않도록 함
+    var init = function(){
+    	$('.chat').hide();
+    
+    }();
+
+    // 전송 버튼 눌렀을 때 메시지 전송
+    $('.send').on("click", function(e) {
+        console.log("btn_send");
+        messengerService.sendMessage();
+        $('.write-message').val('').focus();
+    });
+        
+    // 메시지를 입력하고 enter 키를 입력했을 때 메시지 전송
+    $('.write-message').on("keypress", function(e) {
+            
+        if(e.keyCode == '13'){
+            console.log("btn_send");
+            messengerService.sendMessage();
+            $('.write-message').val('').focus();
+        }
+    });
+    
+    // 메뉴를 눌렀을 때
+    $('.menu .items .item').on("click", function(e){
+    
+    	 $('.menu .items .item').each(function(index, element){
+    	 	$(element).attr("class", "item");
+    	 });
+    	 
+    	 $(this).attr("class", "item item-active");
+    
+    });
+    
+     
+    // 채팅방 눌렀을 때
+    $('.discussions .search').nextAll().on("click", function(e){
+    	
+    	// 각각의 채팅방 목록에 이벤트 추가
+    	 $('.discussion').each(function(index, item){
+    	 	
+    	 	// 검색창이 있는 div에 이벤트 방지를 위한 조건
+    	 	var classValue = $(item).attr("class");
+    	 	if(classValue == 'discussion search'){     	 	
+    	 		$(item).attr("class", "discussion search");
+    	 	}else{
+    	 		$(item).attr("class", "discussion");
+    	 	}
+    	 });
+    	 
+    	 // 검색창이 있는 div에 이벤트 방지를 위한 조건문
+    	 // 선택된 채팅방에 선택 표시
+    	 if($(this).attr("class") != 'discussion search'){ 
+    		$(this).attr("class", "discussion message-active");
+    		
+    	 }
+    	 
+    	 // 채팅방의 크기 줄이고, 채팅 내용을 보여줌
+    	 $('.discussions').css('width', '35%');
+    	 $('.chat').fadeOut().fadeIn().show();
+    	 $('.timer').css('font-size', '9px');
+    	 console.log("room_id : " + $(this).attr("id"));
+    	 
+    	 // 지난 채팅 내역 가져옴
+    	 /*  messengerService.getChat(parseInt($(this).attr("id")), function(data){
+    	 	if(data != null){
+    		 	for(var i = 0; i < data.length; i++){
+    		 		
+    		 			
+    	 		}
+    	 	
+    	 		$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name);
+    	 	}
+    	 }); */
+    });
+    
+});
+    
+</script>
 </body>
 </html>

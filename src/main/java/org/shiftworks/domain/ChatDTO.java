@@ -10,7 +10,6 @@ public class ChatDTO {
 	private String sendtime;
 	private String sender;	// 보낸 사람 사번
 	private int room_id;
-	private int room_name;
 	
 	private ChatRoomVO chatRoom;
 }

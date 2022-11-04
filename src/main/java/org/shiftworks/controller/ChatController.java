@@ -61,11 +61,11 @@ public class ChatController {
 		return "MSG_main";
 	}
 	
-	@GetMapping("/messenger/chat/{room_id}")
-	@ResponseBody
-	public ResponseEntity<List<ChatDTO>> getChat(@PathVariable("room_id") Integer room_id){
-		return new ResponseEntity<>(chatService.getChatList(room_id), HttpStatus.OK);
-	}
+//	@GetMapping("/messenger/chat/{room_id}")
+//	@ResponseBody
+//	public ResponseEntity<List<ChatDTO>> getChat(@PathVariable("room_id") Integer room_id){
+//		return new ResponseEntity<>(chatService.getChatList(room_id), HttpStatus.OK);
+//	}
 	
 //	@PostMapping("/messenger/send")
 //	@ResponseBody
