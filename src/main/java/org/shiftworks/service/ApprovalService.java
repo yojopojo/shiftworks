@@ -13,7 +13,7 @@ public interface ApprovalService {
 	// 결재 문서 생성, 조회
 //	public List<ApprovalDTO> getList();
 	public int insertForm(ApprovalVO approval);
-	public ApprovalVO get(int apr_id);
+	public ApprovalDTO get(int apr_id);
 	public List<ApprovalDTO> getList(ApprovalCriteria cri);
 	public int getTotal();
 	public List<ApprovalDTO> getReceivedList(ApprovalCriteria cri);
