@@ -10,6 +10,7 @@ import org.shiftworks.domain.TempApprovalVO;
 import org.shiftworks.service.ApprovalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class ApprovalController {
 	 * 결재 리스트
 	 */
 	@GetMapping("/list")
+	@PreAuthorize("isAuthenticated()")
 	public void list(ApprovalCriteria cri, Model model) {
 		log.info("list" + cri);
 		model.addAttribute("list", service.getList(cri));
@@ -50,6 +52,7 @@ public class ApprovalController {
 	 * 결재할 문서함 
 	 */	
 	@GetMapping("/receivedList")
+	@PreAuthorize("isAuthenticated()")
 	public void receivedList(ApprovalCriteria cri, Model model) {
 		log.info("list" + cri);
 		model.addAttribute("list", service.getReceivedList(cri));
@@ -60,6 +63,7 @@ public class ApprovalController {
 	 * 결재 문서 작성
 	 */
 	@PostMapping("/insert")
+	@PreAuthorize("isAuthenticated()")
 	public String insert(ApprovalVO approval, RedirectAttributes rttr) {
 		log.info("insert: "+ approval);
 		service.insertForm(approval);
@@ -72,6 +76,7 @@ public class ApprovalController {
 	 * 결재 문서 상세보기
 	 */ 
 	@GetMapping("/get")
+	@PreAuthorize("isAuthenticated()")
 	public void get(@RequestParam("apr_id") int apr_id, Model model) {
 		log.info("/get");
 		model.addAttribute("approval",service.get(apr_id));
@@ -81,6 +86,7 @@ public class ApprovalController {
 	 * 결재 수정(결재 상태 수정)
 	 */ 
 	@PostMapping("/update")
+	@PreAuthorize("isAuthenticated()")
 	public String update(ApprovalVO approval, RedirectAttributes rttr) {
 		log.info("update: "+approval);
 		
@@ -94,6 +100,7 @@ public class ApprovalController {
 	 * 결재 양식 호출
 	 */
 	@GetMapping("/insert")
+	@PreAuthorize("isAuthenticated()")
 	public void insert() {}
 	
 	/*
@@ -101,6 +108,7 @@ public class ApprovalController {
 	 */
 	@PutMapping("/sign/{apr_id}")
 	@ResponseBody
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> updateStatus(@PathVariable int apr_id, @RequestBody ApprovalVO approval){
 		log.info("approval sign controller.......");
 		
@@ -119,6 +127,7 @@ public class ApprovalController {
 	*/
 	@PostMapping("/temporal")
 	@ResponseBody
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> temporalPost(@RequestBody TempApprovalVO vo){
 		log.info("vo : " + vo);
 		log.info("temporal.....");
@@ -133,6 +142,7 @@ public class ApprovalController {
 	*/
 	@GetMapping(value="/tempList", produces="application/json; charSet=UTF-8")
 	@ResponseBody
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<List<TempApprovalVO>> tempList(@RequestParam String emp_id){
 		
 		log.info("emp_id : " + emp_id);
@@ -146,6 +156,7 @@ public class ApprovalController {
 	*/
 	@GetMapping(value="/tempSelect/{temp_id}", produces="application/json; charSet=UTF-8")
 	@ResponseBody
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<TempApprovalVO> tempSelect(@PathVariable int temp_id){
 		
 		log.info("tempSelect.....tempId : " + temp_id);
