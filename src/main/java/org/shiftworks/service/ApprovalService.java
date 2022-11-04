@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.ApprovalCriteria;
 import org.shiftworks.domain.TempApprovalVO;
 
 
@@ -14,9 +14,9 @@ public interface ApprovalService {
 //	public List<ApprovalDTO> getList();
 	public int insertForm(ApprovalVO approval);
 	public ApprovalVO get(int apr_id);
-	public List<ApprovalDTO> getList(Criteria cri);
+	public List<ApprovalDTO> getList(ApprovalCriteria cri);
 	public int getTotal();
-	public List<ApprovalDTO> getReceivedList(Criteria cri);
+	public List<ApprovalDTO> getReceivedList(ApprovalCriteria cri);
 	
 	// 결재 상태 변경
 	public boolean update(ApprovalVO approval);

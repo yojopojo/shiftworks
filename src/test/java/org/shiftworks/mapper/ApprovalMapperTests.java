@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.ApprovalVO;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.ApprovalCriteria;
 import org.shiftworks.domain.TempApprovalVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

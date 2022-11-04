@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.catalina.connector.Response;
 import org.shiftworks.domain.ApprovalVO;
-import org.shiftworks.domain.Criteria;
-import org.shiftworks.domain.PageDTO;
+import org.shiftworks.domain.ApprovalCriteria;
+import org.shiftworks.domain.ApprovalPageDTO;
 import org.shiftworks.domain.TempApprovalVO;
 import org.shiftworks.service.ApprovalService;
 import org.springframework.http.HttpStatus;
@@ -40,10 +40,10 @@ public class ApprovalController {
 	 * 결재 리스트
 	 */
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
+	public void list(ApprovalCriteria cri, Model model) {
 		log.info("list" + cri);
 		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
 	}
 	
 	
@@ -51,10 +51,10 @@ public class ApprovalController {
 	 * 결재할 문서함 
 	 */	
 	@GetMapping("/receivedList")
-	public void receivedList(Criteria cri, Model model) {
+	public void receivedList(ApprovalCriteria cri, Model model) {
 		log.info("list" + cri);
 		model.addAttribute("list", service.getReceivedList(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal()));
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
 	}
 	
 	/*

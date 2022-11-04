@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.ApprovalCriteria;
 import org.shiftworks.domain.TempApprovalVO;
 
 
@@ -13,8 +13,8 @@ public interface ApprovalMapper {
 
 	// 결재 문서 생성, 조회
 	//public List<ApprovalVO> getList();
-	public List<ApprovalVO> getListWithPaging(Criteria cri);
-	public List<ApprovalVO> getReceivedListWithPaging(Criteria cri);
+	public List<ApprovalVO> getListWithPaging(ApprovalCriteria cri);
+	public List<ApprovalVO> getReceivedListWithPaging(ApprovalCriteria cri);
 	public int getTotal();
 	public int insert(ApprovalVO approval);
 	public ApprovalVO read(int apr_id);

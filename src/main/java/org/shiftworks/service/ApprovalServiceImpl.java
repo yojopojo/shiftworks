@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.shiftworks.domain.ApprovalDTO;
 import org.shiftworks.domain.ApprovalVO;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.ApprovalCriteria;
 import org.shiftworks.domain.TempApprovalVO;
 import org.shiftworks.mapper.ApprovalMapper;
 import org.shiftworks.mapper.FileMapper;
@@ -37,7 +37,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public List<ApprovalDTO> getList(Criteria cri) {
+	public List<ApprovalDTO> getList(ApprovalCriteria cri) {
 		List<ApprovalVO> list = mapper.getListWithPaging(cri);
 		List<ApprovalDTO> dtos = new ArrayList<ApprovalDTO>();
 		
@@ -103,7 +103,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	 * 결재할 문서함
 	 */	
 	@Override
-	public List<ApprovalDTO> getReceivedList(Criteria cri) {
+	public List<ApprovalDTO> getReceivedList(ApprovalCriteria cri) {
 		List<ApprovalVO> list = mapper.getReceivedListWithPaging(cri);
 		List<ApprovalDTO> dtos = new ArrayList<ApprovalDTO>();
 		
