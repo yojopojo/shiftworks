@@ -22,18 +22,18 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		log.warn("Login Success");
 
-		// ë³´ìœ  ê¶Œí•œì„ ë‹´ì„ ë¦¬ìŠ¤íŠ¸ ìƒì„±
+		// º¸À¯ ±ÇÇÑÀ» ´ãÀ» ¸®½ºÆ® »ı¼º
 		List<String> roleNames = new ArrayList<String>();
 		
-		// ì•„ë§ˆ ì´ë¶€ë¶„...?
-		// ë³´ìœ í•œ ê¶Œí•œì„ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+		// ¾Æ¸¶ ÀÌºÎºĞ...?
+		// º¸À¯ÇÑ ±ÇÇÑÀ» ¸®½ºÆ®¿¡ Ãß°¡
 		auth.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
 		
 		log.warn("ROLE NAMES: " + roleNames);
 		
-		// ê¶Œí•œì— ë”°ë¼ í˜ì´ì§€ ì´ë™
+		// ±ÇÇÑ¿¡ µû¶ó ÆäÀÌÁö ÀÌµ¿
 		if(roleNames.contains("ROLE_ADMIN")) {
 			response.sendRedirect("/sample/admin");
 			return;
@@ -43,7 +43,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			return;
 		}
 		
-		// ìœ„ ì¡°ê±´ì— í•´ë‹¹í•˜ëŠ” ê¶Œí•œì´ ì—†ì„ ê²½ìš° homeìœ¼ë¡œ ì´ë™
+		// À§ Á¶°Ç¿¡ ÇØ´çÇÏ´Â ±ÇÇÑÀÌ ¾øÀ» °æ¿ì homeÀ¸·Î ÀÌµ¿
 		response.sendRedirect("/");
 		
 	}

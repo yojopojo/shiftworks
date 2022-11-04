@@ -9,6 +9,7 @@ import lombok.Data;
 public class EmployeeVO {
 	private String emp_id;
 	private String dept_id;
+	private String dept_name;
 	private String password;
 	private String name;
 	private String address;
@@ -26,6 +27,5 @@ public class EmployeeVO {
 	private String emp_id2;
 	private String dept_id2;
 
-	
 	private List<DepartmentVO> authList;
 }

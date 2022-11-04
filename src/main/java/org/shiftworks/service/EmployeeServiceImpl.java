@@ -2,7 +2,7 @@ package org.shiftworks.service;
 
 import java.util.List;
 
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.AccountCriteria;
 import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +45,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<EmployeeVO> getList() {
-		log.info("get list....................");
 		return mapper.getList();
 	}
 
-	@Override
-	public List<EmployeeVO> empSearch(Criteria cri) {
-		List<EmployeeVO> list = mapper.getEmployeeForSearching(cri);
-		return list;
-		
-	}
+
+
+//	@Override
+//	public List<EmployeeVO> getList(Criteria cri) {
+//		log.info("get list with criteria..." + cri);
+//		
+//		return mapper.getListWithPaging(cri);
+//	}
+
+//	@Override
+//	public List<EmployeeVO> empSearch(Criteria cri) {
+//		List<EmployeeVO> list = mapper.getEmployeeForSearching(cri);
+//		return list;
+//		
+//	}
+	
+//	@Override
+//	public int getTotal(Criteria cri) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+
+
 
 }
