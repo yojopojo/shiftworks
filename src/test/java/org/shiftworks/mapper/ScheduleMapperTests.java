@@ -1,5 +1,4 @@
 package org.shiftworks.mapper;
-
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
