@@ -7,18 +7,17 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class PageDTO {
+public class ScrapDTO {
 
   private int startPage;
   private int endPage;
   private boolean prev, next;
 
   private int total;
-  private BoardCriteria cri;
-  private List<PostVO> list;
+  private DocumentCriteria cri;
+  private List<ScrapVO> list;
 
-  public PageDTO(BoardCriteria cri, int total, List<PostVO> list) {
-
+  public ScrapDTO(DocumentCriteria cri, int total, List<ScrapVO> list) {
 
     this.cri = cri;
     this.total = total;

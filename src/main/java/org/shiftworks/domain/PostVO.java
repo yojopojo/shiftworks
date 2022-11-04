@@ -29,6 +29,5 @@ public class PostVO {
 	private String post_receivedept;
 	private String name;
 	
-	private List<FileVO> list;
 
 }
