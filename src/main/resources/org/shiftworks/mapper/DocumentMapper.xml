@@ -35,6 +35,7 @@
 				
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
+				and e.emp_id =#{emp_id}
 				)
 			where rn >(#{pageNum}-1)*#{amount}
 			order by post_id desc
@@ -78,6 +79,7 @@
 				
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
+				and e.emp_id =#{emp_id}
 				)
 			where rn >(#{pageNum}-1)*#{amount}
 			order by scrap_id desc
@@ -121,6 +123,8 @@
 				
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
+				and e.emp_id =#{emp_id}
+				
 				)
 			where rn >(#{pageNum}-1)*#{amount}
 			order by post_id desc

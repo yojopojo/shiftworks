@@ -14,10 +14,10 @@ public class ScrapDTO {
   private boolean prev, next;
 
   private int total;
-  private Criteria cri;
+  private DocumentCriteria cri;
   private List<ScrapVO> list;
 
-  public ScrapDTO(Criteria cri, int total, List<ScrapVO> list) {
+  public ScrapDTO(DocumentCriteria cri, int total, List<ScrapVO> list) {
 
     this.cri = cri;
     this.total = total;

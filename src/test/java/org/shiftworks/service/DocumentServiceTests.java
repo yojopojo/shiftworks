@@ -2,7 +2,7 @@ package org.shiftworks.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class DocumentServiceTests {
 	@Test
 	public void testScrapList() {
 		
-		Criteria cri = new Criteria();
+		DocumentCriteria cri = new DocumentCriteria();
 		String emp_id ="2";
 		service.getScrapListWithPaging(cri).getList().forEach(scrap -> log.info(scrap));
 	}

@@ -20,8 +20,8 @@
 		
 		<!-- 관리자만 접근 가능한 페이지를 아래 형식으로 추가 -->
 		<!-- 1. 여러 권한 정보를 허용하고 싶은 경우(hasAnyRole 사용) -->
-		<security:intercept-url pattern="/sample/member" access="hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')"/>
-		<!-- 2. 하나의 권한 정보만을 허용하고 싶은 경우(hasRole 사용) -->
+		<security:intercept-url pattern="/sample/member" access="hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')"/> 
+		<!-- 2. 하나의 권한 정보만을 허용하고 싶은 경우(hasRole 사용)-->
 		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
 		
 		

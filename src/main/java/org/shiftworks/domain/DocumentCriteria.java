@@ -1,5 +1,6 @@
 package org.shiftworks.domain;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,21 +9,23 @@ import lombok.ToString;
 @ToString
 @Setter
 @Getter
-public class Criteria {
+public class DocumentCriteria {
 
   private int pageNum;
   private int amount;
+  private String emp_id;
   
   private String type;
   private String keyword;
 
-  public Criteria() {
-    this(1, 10);
+  public DocumentCriteria() {
+    this(1, 10,"user1");
   }
 
-  public Criteria(int pageNum, int amount) {
+  public DocumentCriteria(int pageNum, int amount,String emp_id) {
     this.pageNum = pageNum;
     this.amount = amount;
+    this.emp_id = emp_id;
   }
   
   public String[] getTypeArr() {

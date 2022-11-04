@@ -100,6 +100,7 @@
 					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 					<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>' /> 	
+					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 				</form> 
 				
 			</div>

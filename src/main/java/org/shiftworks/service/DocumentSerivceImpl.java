@@ -2,7 +2,7 @@ package org.shiftworks.service;
 
 import java.util.List;
 
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.PageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapDTO;
@@ -23,10 +23,10 @@ public class DocumentSerivceImpl implements DocumentService {
 	
 	//내 게시물
 	@Override
-	public PageDTO getMyDocumentListWithPaging(Criteria cri){
+	public PageDTO getMyDocumentListWithPaging(DocumentCriteria cri){
 			List<PostVO>list = mapper.getListMyDocWithPagingSearch(cri);
 			
-			String emp_id ="U3948709"; //세션 변경
+			String emp_id =cri.getEmp_id();
 			PageDTO dto = new PageDTO(cri, mapper.getTotalMyDoc(emp_id), list);
 			return dto;
 	}
@@ -39,10 +39,10 @@ public class DocumentSerivceImpl implements DocumentService {
 	
 	//스크랩
 	@Override
-	public ScrapDTO getScrapListWithPaging(Criteria cri) {
+	public ScrapDTO getScrapListWithPaging(DocumentCriteria cri) {
 		List<ScrapVO>list = mapper.getScrapList(cri);
 		
-		String emp_id = "11";//세션 변경
+		String emp_id = cri.getEmp_id();
 		ScrapDTO dto = new ScrapDTO(cri, mapper.getTotalScrap(emp_id), list);
 		return dto;
 	}
@@ -55,10 +55,10 @@ public class DocumentSerivceImpl implements DocumentService {
 
 	//부서수신함
 	@Override
-	public PageDTO deptSelectList(Criteria cri) {
+	public PageDTO deptSelectList(DocumentCriteria cri) {
 		List<PostVO>list = mapper.deptSelectList(cri);
 		
-		String post_receivedept = "11";
+		String post_receivedept = "12";
 		PageDTO dto = new PageDTO(cri, mapper.getTotalDept(post_receivedept), list);
 		return dto;
 	}
@@ -66,6 +66,7 @@ public class DocumentSerivceImpl implements DocumentService {
 	//부서수신함 상세
 	@Override
 	public PostVO deptSelect(PostVO vo) {
+	
 		return mapper.deptSelect(vo);
 	}
 
