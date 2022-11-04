@@ -18,4 +18,10 @@
 		DELETE alarm
 			WHERE alarm_id = #{alarm_id}
 	</delete>
+	
+	<insert id="insertDday">
+		INSERT INTO alarm(alarm_id, content, emp_id, dept_id, date_created)
+			VALUES(alarm_seq.nextval, #{content}, #{emp_id}, #{dept_id}, #{date_created})
+	</insert>
+	
 </mapper>
