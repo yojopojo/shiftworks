@@ -1,0 +1,52 @@
+@charset "EUC-KR";
+
+.table {
+	margin: 0 auto;
+	width: 80%;
+}
+
+.no {
+	width: 15%;
+}
+
+.title {
+	width: 50%;
+}
+
+.writer {
+	width: 20%;
+}
+
+.hasFile {
+	width: 15%
+}
+
+#searchForm {
+	width: 200px;
+}
+
+#searchBtn {
+	width: 70px !important;
+}
+
+.dropdown {
+	float: left;
+}
+
+.d-flex {
+	float: right;
+}
+
+.confirm {
+	float: right;
+}
+
+.newContainer {
+	width: 750px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+
+.new {
+	float: right;
+}

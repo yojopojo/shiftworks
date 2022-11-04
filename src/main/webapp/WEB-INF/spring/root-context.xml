@@ -42,8 +42,15 @@
       base-package="org.shiftworks.service" />
 
    <tx:annotation-driven />
-
+   
    <mybatis-spring:scan
       base-package="org.shiftworks.mapper" />
 
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 </beans>
+
