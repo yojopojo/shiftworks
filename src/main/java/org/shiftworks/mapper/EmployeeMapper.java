@@ -7,7 +7,6 @@ import org.shiftworks.domain.EmployeeVO;
 
 public interface EmployeeMapper {
 	public EmployeeVO read(String emp_id);
-<<<<<<< HEAD
 	
 	public List<EmployeeVO> getList();
 	public void insert(EmployeeVO empVO);
@@ -17,10 +16,3 @@ public interface EmployeeMapper {
 	public List<EmployeeVO> getEmployeeForSearching(Criteria cri);
 	
 }
-=======
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 48babc45ad899a002b86d9ea5b08aff601049fa6
->>>>>>> refs/remotes/origin/feature-mgt
