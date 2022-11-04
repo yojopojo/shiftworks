@@ -18,7 +18,7 @@
 	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 </head>
-<body>
+<body class='container'>
 
 <h1>결재전 문서함</h1>
 	<a href="/approval/list">전체 문서함</a>

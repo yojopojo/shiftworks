@@ -5,6 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+	
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +19,11 @@
 	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
 	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>결재문서 상세보기</title>
 </head>
-<body>
+<body class='container'>
 
 <h1>결재 문서 상세보기</h1>
 	<a href="/approval/list">결재문서 내역</a>
@@ -92,13 +96,18 @@
 				
 				 
 				 $(document).ready(function () {
+					 
+					 var csrf_token = $("meta[name='_csrf']").attr("content");
+					 var csrf_header = $("meta[name='_csrf_header']").attr("content");
 					
 					// 승인, 반려 버튼 선택 시 결재 문서 상태 변경하고 전체 문서 리스트로 이동
 					$(".update-status").on("click",function(e){
 						e.preventDefault();
 						var status = $(this).data('oper');
 						var approval = {'apr_comment': $('#apr_comment').val(),
-										'apr_status' : status+""}
+										'apr_status' : status+"",
+										 csrf_token:csrf_token,
+							             csrf_header:csrf_header}
 						
 						
 						$.ajax({
@@ -106,6 +115,9 @@
 							type: 'put',
 							data: JSON.stringify(approval),
 							contentType:"application/json; charset=UTF-8",
+							beforeSend : function(xhr){
+				                xhr.setRequestHeader(approval.csrf_header, approval.csrf_token);
+				            },
 							success: function(data){
 								alert("처리가 완료되었습니다.");
 								self.location="/approval/list"

@@ -17,8 +17,10 @@
    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
    crossorigin="anonymous"></script>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 </head>
-<body>
+<body class='container'>
 <h1>결재문서 작성</h1>
    <form id="insertForm" role="form" action="/approval/insert" method="post">
           <div class="form-group">
@@ -119,7 +121,8 @@
            //임시저장 버튼 클릭 시 임시저장 db저장하기 
            var form = $('#insertForm')
            var temporalBtn = $("#temporalBtn");
-        
+           var csrf_token = $("meta[name='_csrf']").attr("content");
+           var csrf_header = $("meta[name='_csrf_header']").attr("content");
            
            temporalBtn.on("click",function(e){
               
@@ -130,12 +133,17 @@
                        'emp_id': form.find('input[name="emp_id"]').val(),
                        'temp_title': form.find('input[name="apr_title"]').val(),
                        'temp_content': form.find('textarea[name="apr_content"]').val(),
+                       csrf_token:csrf_token,
+                       csrf_header:csrf_header
                      };
                
                $.ajax({
                   url:"/approval/temporal",
                   type:'post',
                   data: JSON.stringify(post),
+                  beforeSend : function(xhr){
+                      xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+                  },
                   contentType: "application/json; charSet=UTF-8",
                   success: function(result){
                      alert("임시저장이 완료되었습니다.");
