@@ -19,10 +19,10 @@
 	<form method="post" action="/login">
 	
 		<div>
-			<input type="text" name="username" value="user0">
+			<input type="text" name="username" value="user1">
 		</div>
 		<div>
-			<input type="password" name="password" value="pw0">
+			<input type="password" name="password" value="pw1">
 		</div>
 		<div>
 			<input type="submit">
