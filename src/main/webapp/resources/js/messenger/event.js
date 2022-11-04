@@ -1,5 +1,5 @@
 document.write("<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js'><"+"/script>");
-document.write("<script type='text/javascript' src='/resources/js/messenger/service.js'><"+"/script>");
+ment.write("<script type='text/javascript' src='/resources/js/messenger/service.js'><"+"/script>");
  console.log("Messenger Module.......");
      
  $(document).ready(function() {
