@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="/resources/css/post.css">
 
 <meta charset="UTF-8">
-<title>일정 관리</title>
+<title></title>
 </head>
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">게시판</h1>
+		<h1 class="page-header">공지사항</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -49,6 +49,7 @@
 									제목 or 작성자
 								</option>
 							</select> 
+							<input type='hidden' name='b_id' value='1' />
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 							<button id='searchBtn' class='btn btn-primary'>검색 </button>
@@ -91,10 +92,8 @@
 				</table>
 				
 				
-				
-				
 
-				<!--페이지 처리 뷰-->
+		 		<!--페이지 처리 뷰-->
 				<div class='pull-right'>
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
@@ -116,11 +115,12 @@
 			<!-- end panelBody-->
 
 			<form id='actionForm' action='/board/list' method='get'>
+					<input type='hidden' name='b_id' value='1'>
 					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type}"/>'>
 					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword}"/>'>
-			</form> 
+			</form>  
 			
 		
 		
@@ -161,7 +161,8 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
-
+	
+	
 	var searchForm = $("#searchForm");
 	var formType = searchForm.find("select[name='type']");
 	var formKeyword = searchForm.find("input[name='keyword']");
@@ -201,8 +202,15 @@ $(document).ready(function () {
 	  $(".paginate_button a").on("click", function(e) {
 					e.preventDefault();
 					
+					 var list = [];
+						<c:forEach items="${pageMaker.list}" var="post">
+							list.push("${post.b_id}");
+						</c:forEach>
+					
+					console.log(list[1]);
 					console.log('click');
 					$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
+					$("#actionForm").find("input[name='b_id']").val(list[1]);
 					$("#actionForm").submit();
 	   });
 		
@@ -221,7 +229,15 @@ $(document).ready(function () {
 				alert("키워드를 입력하세요");
 				return false;
 			}
+			var list = [];
+			<c:forEach items="${pageMaker.list}" var="post">
+				list.push("${post.b_id}");
+			</c:forEach>
+		
+			console.log(list[1]);
+			
 			searchForm.find("input[name='pageNum']").val("1");
+			searchForm.find("input[name='b_id']").val(list[1]);
 			searchForm.submit();
 	  });
 		

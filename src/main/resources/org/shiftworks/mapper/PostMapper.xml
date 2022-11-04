@@ -17,7 +17,7 @@
 	</select> -->
 	
 	
-	 <!--검색을 더한 조회-->
+	 <!--검색을 더한 게시판 조회-->
 	 <select id="getListWithPagingSearch" resultType="org.shiftworks.domain.PostVO">
 		<![CDATA[
 			select post_id, b_id, dept_id, post_name, post_content, emp_id,
@@ -28,7 +28,7 @@
 				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, e.name as name
 				from post p JOIN employee e
 				ON e.emp_id =p.emp_id 
-				where
+				where 
 		]]>
 			
 		 <trim prefix="(" suffix=") AND" prefixOverrides="OR">
@@ -48,11 +48,16 @@
 				
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
+				AND b_id =#{b_id}
 				)
 			where rn >(#{pageNum}-1)*#{amount}
+			
 		]]>
 		
 	</select> 
+	
+	
+	
 	
 	<!-- 조회페이지 검색 시 pageNum만 넘어왔을 시 -->
 	<!-- <select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">

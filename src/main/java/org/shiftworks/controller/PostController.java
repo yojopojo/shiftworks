@@ -87,12 +87,13 @@ public class PostController {
 		}
 	}
 	
-		//BOA_list.jsp 호출
+		//게시판 번호에 맞는 리스트 호출
 		@GetMapping(value = "/list")
 		public ModelAndView getList(Criteria cri) {
 			
-			log.info("getList..........");
+			log.info("getListNotice..........");
 			ModelAndView mav = new ModelAndView();
+			
 			mav.setViewName("/board/BOA_list");
 			
 			mav.addObject("pageMaker", service.getListSearch(cri));
@@ -102,7 +103,7 @@ public class PostController {
 		}
 
 	
-	//js에 리스트 전달해주기 
+	//js에 공지사항 리스트 전달해주기 
 	@GetMapping(value = "/listEntity/{pageNum}/{type}/{keyword}")
 	public ResponseEntity<PageDTO> getListEntity(@PathVariable("pageNum")int pageNum,
 																			@PathVariable("type") String type,

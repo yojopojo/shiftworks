@@ -31,11 +31,11 @@ public class PostMapperTests {
 //		 PostVO postvo = new PostVO();
 //	 
 //	 	postvo.setB_id(1); 
-//	 	postvo.setEmp_id("23"); 
-//	 	postvo.setDept_id("13");
-//	 	postvo.setPost_name("둘 등록");
-//	 	postvo.setPost_content("둘등록입니다");
-//	 	postvo.setPost_receivedept("17");
+//	 	postvo.setEmp_id("U2946709"); 
+//	 	postvo.setDept_id("1");
+//	 	postvo.setPost_name("조희영");
+//	 	postvo.setPost_content("와");
+//	 	postvo.setPost_receivedept("3");
 //	  
 //	  mapper.insertPost(postvo);
 //	  log.info(postvo);
@@ -45,7 +45,9 @@ public class PostMapperTests {
 	
 //	@Test
 //	public void testGetList() {
-//		 mapper.getListPostVO().forEach(post -> log.info(post));
+//		Criteria cri = new Criteria();
+//		
+//		 mapper.getListNoticeWithPagingSearch(cri).forEach(post -> log.info(post));
 //		
 //	}
 	

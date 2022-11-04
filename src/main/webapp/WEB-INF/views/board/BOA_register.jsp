@@ -21,58 +21,76 @@
 			<div class="panel-heading"></div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<button id ="previewBtn" type="button" class="btn btn-primary">미리보기</button>
+				<button id="previewBtn" type="button" class="btn btn-primary">미리보기</button>
 				<button id="temporalBtn" type="button" class="btn btn-primary">임시저장</button>
-				
-					<!--파일 업로드-->
+
 				<div class="row">
 					<div class="col-lg-12">
-							<div class="panel-heading">파일 첨부</div>
-								<div class="form-group upload">
-								<input type="file" name="uploadFile" multiple> 
+						<div class="panel panel-default">
+
+							<div class="panel-heading">파일첨부</div>
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div class="form-group uploadDiv">
+									<input type="file" name='uploadFile' multiple>
+								</div>
+
+								<div class='uploadResult'>
+									<ul>
+
+									</ul>
+								</div>
+							</div>
+							<!--  end panel-body -->
 						</div>
+						<!--  end panel-body -->
 					</div>
+					<!-- end panel -->
 				</div>
-				<div class="uploadDiv">
-					<ul>
-					</ul>
-				</div>
-				<button id="uploadBtn" type="button" class="btn btn-primary" value="">업로드</button>
+				<!-- /.row -->
 
 				<form id="form">
 					<div class="form-group">
-						<label>게시판명</label> <input class="form-control" name='b_id' value='<c:out value="${post.b_id}" />' readonly="readonly">
+						<label>게시판명</label> <input class="form-control" name='b_id'
+							value='<c:out value="${post.b_id}" />' readonly="readonly">
 					</div>
-					
+
 					<div class="form-group">
-						<label>제목</label> <input class="form-control" name='post_name'  value="<c:out value="${post.post_name}" />"/>
+						<label>제목</label> <input class="form-control" name='post_name'
+							value="<c:out value="${post.post_name}" />" />
 					</div>
-					
+
 					<div class="form-group">
-						<label>게시자</label> <input class="form-control" name='emp_id' value="<c:out value="${post.emp_id}" />"/>
+						<label>게시자</label> <input class="form-control" name='emp_id'
+							value="<c:out value="${post.emp_id}" />" />
 					</div>
-					
+
 					<div class="form-group">
-						<label>게시부서</label> <input class="form-control" name='dept_id' value="<c:out value="${post.dept_id}" />">
+						<label>게시부서</label> <input class="form-control" name='dept_id'
+							value="<c:out value="${post.dept_id}" />">
 					</div>
-					
+
 					<div class="form-group">
-						<label>게시일</label> <input class="form-control" name='post_regdate' value="" readonly="readonly"/>
+						<label>게시일</label> <input class="form-control" name='post_regdate'
+							value="" readonly="readonly" />
 					</div>
 
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="20" cols="150" name='post_content' >
+						<textarea class="form-control" rows="20" cols="150"
+							name='post_content'>
 							<c:out value="${post.post_content}" />
 						</textarea>
 					</div>
-					
+
 					<div class="form-group">
-						<label>수신부서</label> <input class="form-control" name='post_receivedept'  value="<c:out value="" />"/>
+						<label>수신부서</label> <input class="form-control"
+							name='post_receivedept' value="<c:out value="" />" />
 					</div>
 				</form>
-				
-				<button id="registerBtn" type="button" class="btn btn-primary" value="">게시하기</button>
+
+				<button id="registerBtn" type="button" class="btn btn-primary"
+					value="">게시하기</button>
 
 			</div>
 			<!--  end panel-body -->
@@ -108,17 +126,6 @@ $(document).ready(function () {
 	//글 등록 버튼 클릭 시 post db에 저장하기 
 	  $("#registerBtn").on("click",function(e){
 		  
-		  //파일명 및 파일 경로, uuid form에 첨부해서 post로 보내기 
-		  var str ="";
-		  $(".uploadResult ul li").each(function(i, obj){
-			  
-			  var jobj =$(obj);
-			  
-			  str +="<input type='hidden' name='fileList["+i+"].file_name' value='"+jobj.data("file_name")+"'>";
-			  str +="<input type='hidden' name='fileList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
-			  str +="<input type='hidden' name='fileList["+i+"].file_src' value='"+jobj.data("file_src")+"'>";
-			  
-		  })
 	      
 	      var post = {
 	            b_id: formInputBoard.val(),
@@ -129,7 +136,6 @@ $(document).ready(function () {
 	            post_receivedept:formInputReceive.val()
 	          };
 	      
-	   
 	 
 	       postService.add(post, function(result){
 	        
@@ -142,7 +148,7 @@ $(document).ready(function () {
 	    });//end register
 	    
 	
-	    
+	 
 	    
 	  //임시저장 버튼 클릭 시 임시저장 db저장하기 
 	   var temporalBtn = $("#temporalBtn");
@@ -164,8 +170,12 @@ $(document).ready(function () {
 	    		 form.find("textarea").val(""); 
 	    		 location.href="/board/list";
 	    	 })
-	    })
+	    })//end temporalregister
 	    
+	    
+	    
+	    
+	    //파일 업로드
 	    var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	    var maxSize = 5242880; //5MB
 	    
@@ -199,51 +209,24 @@ $(document).ready(function () {
 	        formData.append("uploadFile", files[i]);
 	        
 	      }
-	      
-	      $.ajax({
-	        url: '/board/uploadAjaxAction',
-	        processData: false, 
-	        contentType: false,
-	  	  data: formData,
-	  	  type: 'POST',
-	        dataType:'json',
-	          success: function(result){
-	            console.log(result); 
-	  		  showUploadResult(result); //업로드 결과 처리 함수 
-
-	        }
-	      }); //$.ajax
-	      
-	    });  
+	   
 	    
-	    //파일 화면 출력 처리 
-	    function showUploadResult(uploadResultArr){
-	  	    
-	      if(!uploadResultArr || uploadResultArr.length == 0){ return; }
-	      
-	      var uploadUL = $(".uploadDiv ul");
-	      
-	      var str ="";
-	      
-	      $(uploadResultArr).each(function(i, obj){
-	      
-	  			var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
-	  		    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
-	  		      
-	  			str += "<li data-path='"+obj.file_src+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.file_name+"'><div>";
-	  			str += "<span> "+ obj.fileName+"</span>";
-	  			str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
-	  			str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-	  			str += "<img src='/resources/img/attach.png'></a>";
-	  			str += "</div>";
-	  			str +"</li>";
-	  	
+	$.ajax({
+				url : '/board/uploadAjaxAction',
+				processData : false,
+				contentType : false,
+				data : formData,
+				type : 'POST',
+				dataType : 'json',
+				success : function(result) {
+					console.log(result);
+					showUploadResult(result); //업로드 결과 처리 함수 
 
-	      });
-	      
-	      uploadUL.append(str);
-	    }
-	  
-});
+				}
+			}); //$.ajax
+
+		});
+
+	});
 </script>
 <%@include file="../includes/footer.jsp"%>
