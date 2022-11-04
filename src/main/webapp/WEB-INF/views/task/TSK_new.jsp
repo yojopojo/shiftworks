@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <script type="text/javascript" src="/resources/js/task.js"></script>
 <link rel="stylesheet" href="/resources/css/task.css">
 <script
@@ -28,7 +30,7 @@
 			<input type="text" class="form-control"
 			id="dept_name" placeholder="부서명">
 			<input type="hidden" class="form-control"
-			id="dept_id" value="">
+			id="dept_id" value="dept1">
 		</div>
 		<div class="mb-3">
 			<label for="task_title" class="form-label">제목</label>
@@ -40,7 +42,7 @@
 			<label for="name" class="form-label">작성자</label>
 			<input class="form-control" type="text" value="홍길동"
 				id="name" readonly>
-			<input class="form-control" type="hidden" value="U2946709"
+			<input class="form-control" type="hidden" value='<sec:authentication property="principal.username"/>'
 				id="emp_id">
 		</div>
 		<div class="mb-3 form-check">
@@ -117,7 +119,7 @@
 				// 객체 전달하여 DB에 저장 후 페이지 이동
 				taskService.insertTask(newTask, function(result){
 					// href 대신 replace 이용하여 히스토리 남지 않게 처리
-					location.replace()="/task/pages/" + newTask.dept_id + "/empty/empty/1";
+					location.replace("/task/pages/" + newTask.dept_id + "/empty/empty/1");
 				});
 
 			}); // end submit click event

@@ -1,4 +1,7 @@
 var taskService = (function(){
+
+    var csrf_token = $("meta[name='_csrf']").attr("content");
+	var csrf_header = $("meta[name='_csrf_header']").attr("content");
     
     // 업무 리스트 불러오기
     function getList(param, callback, error) {
@@ -46,6 +49,9 @@ var taskService = (function(){
             type: 'post',
             url: "/task/new",
             data: JSON.stringify(param),
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
             contentType : "application/json; charset=utf-8",
             success : function(result, status, xhr) {
                 if (callback) {
@@ -67,6 +73,9 @@ var taskService = (function(){
             url: "/task/pages/" + param.dept_id + "/" + param.type + "/" + param.keyword
             + "/" + param.pageNum + "/" + param.task_id,
             data: JSON.stringify(param),
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
             contentType : "application/json; charset=utf-8",
             success: function(result) {
                 if (callback) {
@@ -86,6 +95,9 @@ var taskService = (function(){
         $.ajax({
             type: 'delete',
             url: "/task/" + param,
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
             success: function(result) {
                 if (callback) {
 					callback(result);
