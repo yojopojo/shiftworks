@@ -1,5 +1,7 @@
 package org.shiftworks.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.shiftworks.domain.AlarmVO;
@@ -61,11 +63,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 			AlarmVO vo = new AlarmVO();
 			String str = "[" + scheduleVO.getSch_title() + "] 일정이 등록되었습니다.";
 			
+			// 알림을 생성하기 위한 정보 입력
 			vo.setEmp_id(scheduleVO.getEmp_id());
 			vo.setDept_id(scheduleVO.getDept_id());
 			vo.setContent(str);
 			
-			log.info(alarmMapper.insertAlarm(vo));
+			// D-day에 알림이 가도록 start_date를 알림 날짜로 설정
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {
+				vo.setDate_created(df.parse(scheduleVO.getStart_date()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			alarmMapper.insertDday(vo);
 			
 			count++;
 		}
