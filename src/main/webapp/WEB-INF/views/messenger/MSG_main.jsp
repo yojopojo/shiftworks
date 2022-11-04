@@ -6,7 +6,6 @@
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,14 +27,14 @@
 
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<link rel="stylesheet" href="/resources/css/messenger/messenger.css">
+<link rel="stylesheet" href="/resources/css/messenger.css">
 
 <script type="text/javascript" src="/resources/js/messenger/service.js" />
 <script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
 <!-- <script type="text/javascript" src="../../resources/js/messenger/event.js" /> -->
 <script type="text/javascript"></script>
 </head>
-<body>
+<body class = "container">
 	<!-- partial:index.partial.html -->
 
 	<div class="container">

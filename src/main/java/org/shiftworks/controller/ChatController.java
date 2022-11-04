@@ -65,7 +65,7 @@ public class ChatController {
 //		
 //		model.addAttribute("userid", user.getUsername());
 		
-		return "MSG_main";
+		return "messenger/MSG_main";
 	}
 	
 	@GetMapping("/messenger/chat/room/{room_id}")
