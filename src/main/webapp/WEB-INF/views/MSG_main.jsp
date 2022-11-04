@@ -30,9 +30,9 @@
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <link rel="stylesheet" href="../../resources/css/messenger/messenger.css">
 
-<script type="text/javascript" src="/resources/js/messenger/service.js" />
-<script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
-<!-- <script type="text/javascript" src="/resources/js/messenger/event.js" /> -->
+<script type="text/javascript" src="../../resources/js/messenger/service.js" />
+<script type="text/javascript" src="../../resources/js/messenger/sockjs.js" />
+<!-- <script type="text/javascript" src="../../resources/js/messenger/event.js" /> -->
 <script type="text/javascript"></script>
 </head>
 <body>
@@ -83,13 +83,17 @@
 						<script type="text/javascript">
 							
 							var time = '${chatRoom.lastchat_time }';
-							var lastchat = new Date(time).toISOString();
+						
+							if(time != ""){
+								console.log("시간 : " + time);
+								var lastchat = new Date(time);
+								
+								var timeago = moment(lastchat).fromNow();
+								console.log(timeago);
 							
-							var timeago = moment(lastchat).fromNow();
-							console.log(timeago);
+								document.getElementById("timer_${chatRoom.room_id }").innerText = timeago;
+							}
 							
-							document.getElementById("timer_${chatRoom.room_id }").innerText = timeago;
-					
 						</script>
 						
 					</div>
@@ -106,7 +110,7 @@
 
 
 				<div class="messages-chat">
-					<div class="message">
+					<!-- <div class="message">
 						<div class="photo"
 							style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
 							<div class="online"></div>
@@ -136,7 +140,7 @@
 						</div>
 						<p class="text">9 pm at the bar if possible 😳</p>
 					</div>
-					<p class="time">15h09</p>
+					<p class="time">15h09</p> -->
 				</div>
 				<div class="footer-chat">
 					<i class="icon fa fa-paperclip clickable" style="font-size: 25pt;"
@@ -153,6 +157,7 @@
 
 $(document).ready(function() {
 	
+	
     var socket = null;
     
     console.log('js start');
@@ -160,7 +165,14 @@ $(document).ready(function() {
     // 즉시 실행 함수 : 채팅방이 선택되지 않았을 때 채팅 내용이 보이지 않도록 함
     var init = function(){
     	$('.chat').hide();
-    
+    	 $('.timer').each(function(index, item){
+      		if($('.timer').text != ""){
+      			console.log($(item).text());
+      		}else{
+      			console.log("e");
+      		}
+      	
+      	});
     }();
 
     // 전송 버튼 눌렀을 때 메시지 전송
@@ -169,7 +181,7 @@ $(document).ready(function() {
         messengerService.sendMessage();
         $('.write-message').val('').focus();
     });
-        
+ 
     // 메시지를 입력하고 enter 키를 입력했을 때 메시지 전송
     $('.write-message').on("keypress", function(e) {
             
@@ -179,6 +191,7 @@ $(document).ready(function() {
             $('.write-message').val('').focus();
         }
     });
+    
     
     // 메뉴를 눌렀을 때
     $('.menu .items .item').on("click", function(e){
@@ -191,28 +204,30 @@ $(document).ready(function() {
     
     });
     
-     
+
     // 채팅방 눌렀을 때
     $('.discussions .search').nextAll().on("click", function(e){
-    	
+
     	// 각각의 채팅방 목록에 이벤트 추가
     	 $('.discussion').each(function(index, item){
-    	 	
+
     	 	// 검색창이 있는 div에 이벤트 방지를 위한 조건
     	 	var classValue = $(item).attr("class");
+ 
     	 	if(classValue == 'discussion search'){     	 	
     	 		$(item).attr("class", "discussion search");
     	 	}else{
     	 		$(item).attr("class", "discussion");
     	 	}
     	 });
-    	 
+
+    	
     	 // 검색창이 있는 div에 이벤트 방지를 위한 조건문
     	 // 선택된 채팅방에 선택 표시
     	 if($(this).attr("class") != 'discussion search'){ 
     		$(this).attr("class", "discussion message-active");
-    		
-    	 }
+       	 }
+
     	 
     	 // 채팅방의 크기 줄이고, 채팅 내용을 보여줌
     	 $('.discussions').css('width', '35%');
@@ -220,17 +235,28 @@ $(document).ready(function() {
     	 $('.timer').css('font-size', '9px');
     	 console.log("room_id : " + $(this).attr("id"));
     	 
-    	 // 지난 채팅 내역 가져옴
-    	 /*  messengerService.getChat(parseInt($(this).attr("id")), function(data){
+    	  // 지난 채팅 내역 가져옴
+    	 messengerService.getChat(parseInt($(this).attr("id")), function(data){
     	 	if(data != null){
+    	 		console.log(data);
     		 	for(var i = 0; i < data.length; i++){
     		 		
+    		 		//if(data[i].emp_id != )
+    		 		var content = '<div class="message" id="msg_'+ data[i].chat_id + '">' +
+    		 		'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
+    		 		'<div class="online"></div></div>' + 
+    		 		'<p class="text">'+ data[i].content + '</p>	</div>';
+    		 		
+    		
+    		 		$(".messages-chat").append(content);
+    		 		
+    		 		//data[i].sendtime;
     		 			
     	 		}
     	 	
     	 		$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name);
     	 	}
-    	 }); */
+    	 });  
     });
     
 });

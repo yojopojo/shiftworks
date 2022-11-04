@@ -43,14 +43,14 @@ public class ChatHandler extends TextWebSocketHandler {
 		String payload = chat.getPayload();
 		log.info(webSocketSession.getId() + ": " + payload);
 
-//		for(WebSocketSession webSocketSession : sessionVector) {
-//			webSocketSession.sendMessage(new TextMessage(session.getPrincipal().getName() + ":" + message.getPayload()));
-//		}
-
-		for (WebSocketSession session : sessionVector) {
-			//session.sendMessage(session.getId() + " : " + chat);
-			session.sendMessage(new TextMessage(session.getId() + ":" + chat.getPayload()));
+		for(WebSocketSession session : sessionVector) {
+			session.sendMessage(new TextMessage(session.getPrincipal().getName() + ":" + chat.getPayload()));
 		}
+
+//		for (WebSocketSession session : sessionVector) {
+//			//session.sendMessage(session.getId() + " : " + chat);
+//			session.sendMessage(new TextMessage(session.getId() + ":" + chat.getPayload()));
+//		}
 	}
 	
 
@@ -70,8 +70,8 @@ public class ChatHandler extends TextWebSocketHandler {
 
 		sessionVector.add(webSocketSession);
 
-		log.info(webSocketSession.getId() + "님이 입장하셨습니다.");
-		// log.info(session.getPrincipal().getName() + "님이 입장하셨습니다.");
+		//log.info(webSocketSession.getId() + "님이 입장하셨습니다.");
+		log.info(webSocketSession.getPrincipal().getName() + "님이 입장하셨습니다.");
 		super.afterConnectionEstablished(webSocketSession);
 	}
 	
@@ -93,7 +93,7 @@ public class ChatHandler extends TextWebSocketHandler {
 		log.info("closeStatus : " + closeStatus);
 		sessionVector.remove(webSocketSession);
 
-		log.info(webSocketSession.getId() + "님이 퇴장하셨습니다.");
-		// log.info(session.getPrincipal().getName() + "님이 퇴장하셨습니다.");
+		//log.info(webSocketSession.getId() + "님이 퇴장하셨습니다.");
+		log.info(webSocketSession.getPrincipal().getName() + "님이 퇴장하셨습니다.");
 	}
 }

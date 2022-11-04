@@ -27,18 +27,18 @@ public class ChatTests {
 		mapper.getList(2).forEach(chat->log.info(chat));
 	}
 	
-//	// 채팅 저장하기
-//	@Test
-//	public void testInsert() {
-//		
-//		ChatDTO chat = new ChatDTO();
-//		chat.setContent("채팅 좀 해보자");
-//		chat.setSender("U2946709");
-//		chat.setSendtime("2020-10-25 11:58:33");
-//		chat.setRoom_id(2);
-//		
-//		int re = mapper.insertChat(chat);
-//		log.info(chat);
-//		log.info("re = " + re);
-//	}
+	// 채팅 저장하기
+	@Test
+	public void testInsert() {
+		
+		ChatDTO chat = new ChatDTO();
+		chat.setContent("채팅 좀 해보자");
+		chat.setSender("user1");
+		chat.setSendtime("2020-10-25 11:58:33");
+		chat.setRoom_id(2);
+		
+		int re = mapper.insertChat(chat);
+		log.info(chat);
+		log.info("re = " + re);
+	}
 }

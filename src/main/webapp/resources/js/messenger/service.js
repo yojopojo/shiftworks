@@ -8,7 +8,7 @@ var messengerService = (function () {
   
         $.ajax({
             type: 'GET',
-            url: '/messenger/chat/' + param,
+            url: '/messenger/chat/room/' + param,
             dataType: 'json',
             success: function (data) {
                 if (callback) {

@@ -28,16 +28,15 @@ public class ChatRoomTests {
 		log.info(mapper.updateLastchat(chatRoom));
 	}
 	
-//	@Test
-//	public void testInsert() {
-//		ChatRoomVO chatRoom = new ChatRoomVO();
-//		chatRoom.setRoom_id(2);
-//		chatRoom.setRoom_name("test");
-//		chatRoom.setEmp_id("U2946709");
-//		chatRoom.setDept_id("tdteam23");
-//		
-//		log.info(mapper.insertChatRoom(chatRoom));
-//	}
+	@Test
+	public void testInsert() {
+		ChatRoomVO chatRoom = new ChatRoomVO();
+		chatRoom.setRoom_name("채팅방3");
+		chatRoom.setEmp_id("user1");
+		chatRoom.setDept_id("dept1");
+		
+		log.info(mapper.insertChatRoom(chatRoom));
+	}
 	
 //	@Test
 //	public void testGetList() {

@@ -15,20 +15,20 @@
  function onMessage(msg) {		
      var data = msg.data;
      console.log("onMessage " + data);
-     $(".messages-chat").append(data + "<br/>");
+    // $(".messages-chat").append(data + "<br/>");
  }
    
  // 서버와 연결되었을때
  function onOpen(evt) {
      console.log("onOpen");
      
-     $(".messages-chat").append("연결");
+     //$(".messages-chat").append("연결" + "<br/>");
  }
      
  // 서버와 연결을 끊었을 때
  function onClose(evt) {
      console.log("onClose");
      
-     $(".messages-chat").append("끊김");
+     //$(".messages-chat").append("끊김" + "<br/>");
  }
      

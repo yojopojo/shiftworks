@@ -10,8 +10,16 @@ ment.write("<script type='text/javascript' src='/resources/js/messenger/servic
      // 즉시 실행 함수 : 채팅방이 선택되지 않았을 때 채팅 내용이 보이지 않도록 함
      var init = function(){
      	$('.chat').hide();
-     
      }();
+     
+     $('.timer').each(function(index, item){
+     		if($('.timer').text == ""){
+     			console.log("d");
+     		}else{
+     			console.log("e");
+     		}
+     	
+     	});
  
      // 전송 버튼 눌렀을 때 메시지 전송
      $('.send').on("click", function(e) {
@@ -71,17 +79,21 @@ ment.write("<script type='text/javascript' src='/resources/js/messenger/servic
      	 console.log("room_id : " + $(this).attr("id"));
      	 
      	 // 지난 채팅 내역 가져옴
- /*    	 messengerService.getChat($(this).attr("id"), function(data){
-     	 	if(data != null){
+     	 messengerService.getChat($(this).attr("id"), function(data){
+     	 	if(data){
      		 	for(var i = 0; i < data.length; i++){
-     		 		
+     		 		console.log('데이터 찍기');
+     		 		console.log(data[i].sendtime);
      		 			
      	 		}
+     	 		
+     	 	}else{
+     	 			console.log("d");
+     	 		}  	 	
+     	 	$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name);
      	 	
-     	 		$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name);
-     	 	}
-     	 });*/
-     });
+     	 });
+     
      
  });
      

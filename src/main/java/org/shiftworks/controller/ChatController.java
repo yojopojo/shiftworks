@@ -20,7 +20,10 @@ import org.shiftworks.service.ChatServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,18 +42,22 @@ public class ChatController {
 	
 	@Autowired
 	ChatService chatService;
-
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/messenger/chat")
-	public String chat(HttpServletRequest request, Model model) {
+	public String chat(HttpServletRequest request, Model model, Authentication auth) {
+		
+		UserDetails userDetails = (UserDetails) auth.getPrincipal();
+		log.info("@ChatController, GET Chat / Username : " + userDetails.getUsername());
+		
 		
 		HttpSession session = request.getSession();
-		
-		List<ChatRoomVO> chatRoomList = chatService.getChatRoomList("U3948709");
+
+		List<ChatRoomVO> chatRoomList = chatService.getChatRoomList(userDetails.getUsername());
 		List<ChatDTO> chatList = chatService.getChatList(1);
 		
 		model.addAttribute("chatRoomList", chatRoomList);
 		model.addAttribute("chatList", chatList);
-		
+
 //		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		
 //		log.info("==================================");
@@ -61,11 +68,12 @@ public class ChatController {
 		return "MSG_main";
 	}
 	
-//	@GetMapping("/messenger/chat/{room_id}")
-//	@ResponseBody
-//	public ResponseEntity<List<ChatDTO>> getChat(@PathVariable("room_id") Integer room_id){
-//		return new ResponseEntity<>(chatService.getChatList(room_id), HttpStatus.OK);
-//	}
+	@GetMapping("/messenger/chat/room/{room_id}")
+	@ResponseBody
+	public ResponseEntity<List<ChatDTO>> getChat(@PathVariable("room_id") Integer room_id){
+		
+		return new ResponseEntity<>(chatService.getChatList(room_id), HttpStatus.OK);
+	}
 	
 //	@PostMapping("/messenger/send")
 //	@ResponseBody

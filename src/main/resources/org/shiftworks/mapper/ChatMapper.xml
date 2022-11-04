@@ -41,7 +41,7 @@
 			SELECT c.chat_id, c.content, c.sendtime, c.sender, cr.room_id, cr.room_name
 				FROM chatroom cr LEFT OUTER JOIN chat c
 				ON  c.room_id = cr.room_id
-				WHERE c.room_id = #{room_id}
+				WHERE cr.room_id = #{room_id}
 					AND rownum <= 5
 				ORDER BY sendtime
 			
