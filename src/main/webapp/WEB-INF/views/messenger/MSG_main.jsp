@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <title>Shiftworks_messenger</title>
 
-<link rel="stylesheet" href="../../resources/css/messenger/messenger.css">
+<link rel="stylesheet" href="/resources/css/messenger/messenger.css">
 
 <!-- icon을 사용하기 위함 -->
 <link rel='stylesheet'
@@ -28,10 +28,10 @@
 
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<link rel="stylesheet" href="../../resources/css/messenger/messenger.css">
+<link rel="stylesheet" href="/resources/css/messenger/messenger.css">
 
-<script type="text/javascript" src="../../resources/js/messenger/service.js" />
-<script type="text/javascript" src="../../resources/js/messenger/sockjs.js" />
+<script type="text/javascript" src="/resources/js/messenger/service.js" />
+<script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
 <!-- <script type="text/javascript" src="../../resources/js/messenger/event.js" /> -->
 <script type="text/javascript"></script>
 </head>

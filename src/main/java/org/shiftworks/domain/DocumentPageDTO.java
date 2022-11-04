@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class PageDTO {
+public class DocumentPageDTO {
 
   private int startPage;
   private int endPage;
@@ -17,7 +17,7 @@ public class PageDTO {
   private DocumentCriteria cri;
   private List<PostVO> list;
 
-  public PageDTO(DocumentCriteria cri, int total, List<PostVO> list) {
+  public DocumentPageDTO(DocumentCriteria cri, int total, List<PostVO> list) {
 
 
     this.cri = cri;
@@ -40,4 +40,3 @@ public class PageDTO {
   }
   
 }
-

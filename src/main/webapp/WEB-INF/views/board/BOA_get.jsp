@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-<%@include file="../includes/header.jsp"%>
+<%@include file="/WEB-INF/views/includes/header.jsp"%>
 <%@include file="index.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -256,4 +256,4 @@
 
 
 
-<%@include file="../includes/footer.jsp"%>
+<%@include file="/WEB-INF/views/includes/footer.jsp"%>

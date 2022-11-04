@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.BookingMapper">
+	
+	
+	<!-- 선택한 자원의 해당일자 예약 목록 불러오기 -->
+	<resultMap type="org.shiftworks.domain.BookingVO" id="bookingListMap">
+		<result column="rsc_id" property="rsc_id" jdbcType="NVARCHAR" javaType="String" />
+		<result column="book_date" property="book_date" jdbcType="DATE" javaType="String"/>
+	</resultMap>
+
+	<select id="getBookingList" parameterType="org.shiftworks.domain.BookingVO" resultMap="bookingListMap">
+		select * from rsc_booking 
+		where rsc_id=#{rsc_id} AND book_date = TO_DATE(#{book_date}, 'yyyy-MM-dd')
+	</select>
+	
+	<!-- 예약하기 -->
+	<insert id="insertBooking" parameterType="org.shiftworks.domain.BookingVO"> 
+		insert into rsc_booking (book_id, rsc_id, emp_id, dept_id, book_date, book_begin, book_end, book_title, book_content)
+		values 
+		(book_seq.nextVal, #{rsc_id}, #{emp_id}, #{dept_id}, TO_DATE(#{book_date}, 'yyyy-MM-dd hh24:mi'), #{book_begin}, #{book_begin}+2, #{book_title}, #{book_content})
+	</insert>
+	
+ 	<!-- 예약 1개 상세보기 -->
+	<select id="getBooking" parameterType="int" resultType="org.shiftworks.domain.BookingVO">
+		select * from rsc_booking where book_id = #{book_id}
+	</select>
+	
+	
+		<!-- 선택한 자원의 해당일자 예약 목록 불러오기 -->
+	<resultMap type="org.shiftworks.domain.BookingVO" id="bookingPagingMap">
+		<result column="emp_id" property="emp_id" jdbcType="NVARCHAR" javaType="String" />
+		<result column="book_date" property="book_date" jdbcType="DATE" javaType="String"/>
+		<result column="book_title" property="book_title" jdbcType="NVARCHAR" javaType="String"/>
+		<result column="book_id" property="book_id" jdbcType="NUMERIC" javaType="Integer"/>
+		<result column="book_begin" property="book_begin" jdbcType="NVARCHAR" javaType="String"/>
+	</resultMap>
+	
+	
+	<!-- 전체 예약목록 with paging -->
+ 	<select id="getListwithPaging" resultMap="bookingPagingMap">
+		<![CDATA[
+			SELECT  emp_id, book_title, book_date, book_id, book_begin
+			FROM 
+			(
+				select /*+INDEX_DESC(rsc_booking pk_booking) */
+				rownum rn,  emp_id, book_title, book_date, book_id, book_begin
+				from
+				rsc_booking
+				where rownum <= #{pageNum}*#{amount}
+			)
+			where rn> (#{pageNum}-1)*#{amount}
+		]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from rsc_booking where book_id > 0
+	</select>
+	
+	
+	
+	
+	<!-- 전체 예약목록 -->
+	<select id="getList" resultType="org.shiftworks.domain.BookingVO">
+		select * from rsc_booking
+	</select>
+	
+	<!-- 나의 예약 목록 -->
+	<select id="getMyList" parameterType="String" resultType="org.shiftworks.domain.BookingVO">
+		select * from rsc_booking where emp_id = #{emp_id}
+	</select>
+	
+	<!-- 예약 취소 -->
+ 	<delete id="deleteBooking" parameterType="int">
+		delete from rsc_booking where book_id = #{book_id}
+	</delete>
+	
+</mapper>
