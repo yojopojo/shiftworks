@@ -3,7 +3,8 @@ package org.shiftworks.controller;
 import java.util.List;
 
 import org.shiftworks.domain.DocumentCriteria;
-import org.shiftworks.domain.PageDTO;
+import org.shiftworks.domain.DocumentPageDTO;
+import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.service.DocumentService;
@@ -60,7 +61,7 @@ public class DocumentController {
 		//게시물 list ajax
 		@ResponseBody
 		@GetMapping(value = "/myDoc/{pageNum}/{type}/{keyword}")
-		public ResponseEntity<PageDTO> MyDocumentListWithPaging(@PathVariable("pageNum")int pageNum,
+		public ResponseEntity<DocumentPageDTO> MyDocumentListWithPaging(@PathVariable("pageNum")int pageNum,
 																				@PathVariable("type") String type,
 																				@PathVariable("keyword")String keyword,
 																				Authentication auth){
@@ -84,7 +85,7 @@ public class DocumentController {
 			cri.setKeyword(keyword);
 			cri.setEmp_id(emp_id);
 			
-			return new ResponseEntity <PageDTO>(service.getMyDocumentListWithPaging(cri),HttpStatus.OK);
+			return new ResponseEntity <DocumentPageDTO>(service.getMyDocumentListWithPaging(cri),HttpStatus.OK);
 		}
 	
 	//전체 게시물에서 내가 쓴 게시물 보기 ????
