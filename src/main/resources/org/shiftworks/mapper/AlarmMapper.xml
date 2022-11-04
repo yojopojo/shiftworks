@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.AlarmMapper">
+
+	<insert id="insertAlarm">
+		INSERT INTO alarm(alarm_id, content, emp_id, dept_id, date_created)
+			VALUES(alarm_seq.nextval, #{content}, #{emp_id}, #{dept_id}, sysdate)
+	</insert>
+	 
+	<select id="getAlarm" resultType="org.shiftworks.domain.AlarmVO">
+		SELECT alarm_id, content FROM alarm
+			WHERE emp_id = #{emp_id}
+	</select>
+	
+	<delete id="deleteAlarm">
+		DELETE alarm
+			WHERE alarm_id = #{alarm_id}
+	</delete>
+	
+	<insert id="insertDday">
+		INSERT INTO alarm(alarm_id, content, emp_id, dept_id, date_created)
+			VALUES(alarm_seq.nextval, #{content}, #{emp_id}, #{dept_id}, #{date_created})
+	</insert>
+	
+</mapper>

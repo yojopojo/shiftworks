@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.PostMapper">
+
+	<!--데이터 입력-->
+	<insert id="insertPost" parameterType="org.shiftworks.domain.PostVO">
+		insert into post (post_id, b_id, emp_id, dept_id, post_name, post_content,
+		post_regno, post_regdate, post_updatedate, post_fix, post_receivedept)
+		values (post_seq.nextval, #{b_id}, #{emp_id}, #{dept_id},#{post_name},
+		#{post_content},0, sysdate, sysdate, 'N', #{post_receivedept})
+	</insert> 
+	
+	<!-- <select id="getListPostVO" resultType="org.shiftworks.domain.PostVO">
+		select * from post order by post_id desc
+	</select> -->
+	
+	
+	 <!--검색을 더한 게시판 조회-->
+	 <select id="getListWithPagingSearch" resultType="org.shiftworks.domain.PostVO">
+		<![CDATA[
+			select post_id, b_id, dept_id, post_name, post_content, emp_id,
+				post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, name
+			from
+				( select /*+INDEX_DESC(post post_pk) */
+				  rownum rn, p.post_id as post_id, b_id, p.dept_id as dept_id, post_name, post_content, p.emp_id as emp_id,
+				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, e.name as name
+				from post p JOIN employee e
+				ON e.emp_id =p.emp_id 
+				where 
+		]]>
+			
+		 <trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item='type' collection="typeArr" >
+				<trim prefix="OR">
+					<choose>
+						<when test="type =='T'.toString()">
+							post_name like '%'||#{keyword}||'%'
+						</when>
+						<when test="type =='W'.toString()">
+							 name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+	</trim> 
+				
+		<![CDATA[		
+				rownum <=#{pageNum}*#{amount}
+				AND b_id =#{b_id}
+				)
+			where rn >(#{pageNum}-1)*#{amount}
+			
+		]]>
+		
+	</select> 
+	
+	
+	
+	
+	<!-- 조회페이지 검색 시 pageNum만 넘어왔을 시 -->
+	<!-- <select id="getListWithPaging" resultType="org.shiftworks.domain.PostVO">
+		<![CDATA[
+			select post_id, b_id, post_name, post_content,emp_id,dept_id,
+				post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
+			from
+				( select /*+INDEX_DESC(post post_pk) */
+				  rownum rn, post_id, b_id,  post_name, post_content, emp_id,dept_id,
+				  post_regno, post_regdate, post_updatedate, post_fix, post_receivedept
+				from post 
+				where
+				rownum <=#{pageNum}*#{amount}
+				)
+			where rn >(#{pageNum}-1)*#{amount}
+		]]>
+		
+	</select> -->
+	
+	<!--데이터 수정-->
+	<update id="updatePost" parameterType="org.shiftworks.domain.PostVO">
+		update post set 	post_name =#{post_name}, post_content = #{post_content},
+		post_updatedate = sysdate, post_receivedept = #{post_receivedept}
+		where post_id = #{post_id}
+	</update>
+	
+	<!-- 데이터 삭제-->
+	<delete id="deletePost" parameterType="int" >
+		delete from post where post_id = #{post_id}
+	</delete>
+	
+	<!--하나의 post 만 가져오기-->
+	<select id="getPost"  parameterType="int" resultType="org.shiftworks.domain.PostVO">
+		select * from post where post_id = #{post_id}
+	</select>
+	
+	<!-- 총 게시글 수 조회-->
+	<select id="getTotal" resultType="int">
+		select count(*) from post
+	</select>
+	
+	<!--스크랩하기-->
+	<insert id="scrapPost" parameterType="org.shiftworks.domain.ScrapVO">
+		merge into scrap 
+			using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id=#{dept_id})
+			when not matched then
+				insert (scrap_id, dept_id, emp_id,post_id, scrap_date, post_name,post_content)
+				values(scrap_seq.nextval, #{dept_id}, #{emp_id},#{post_id},sysdate,#{post_name},#{post_content})
+	</insert>
+	
+	
+	<!--emp_id, b_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트하기 -->
+	<update id="temporalPost" parameterType="org.shiftworks.domain.Temp_BoardVO">
+		merge into temp_board
+		using dual on(b_id = #{b_id} and emp_id = #{emp_id})
+		when matched then update set post_name=#{post_name}, post_content= #{post_content}
+		when not matched then
+			insert (temp_id, b_id, dept_id, emp_id, post_name, post_content) 
+			values (temp_board_seq.nextval,#{b_id},#{dept_id},#{emp_id}, #{post_name},#{post_content})
+	</update>
+	
+	<!--임시저장 불러오기-->
+	<select id="temporalSelect" parameterType="String" resultType="org.shiftworks.domain.Temp_BoardVO">
+		select * from temp_board where emp_id = #{emp_id}
+	</select>
+	
+	<!-- emp_id, b_id가 일치하는 것이 없으면 읽음 테이블에 게시글 추가-->
+	<insert id="insertHistory" parameterType="org.shiftworks.domain.HistoryVO">
+		merge into history
+		using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id =#{dept_id})
+		when not matched then
+			insert (emp_id, dept_id, post_id, read_date)
+			values(#{emp_id},#{dept_id},#{post_id}, sysdate)
+	</insert>
+	
+	<!--해당 emp_id 와 일치하는 history 불러오기-->
+	<select id="selectHistory" resultType="org.shiftworks.domain.HistoryVO">
+		select * from history where emp_id =#{emp_id}
+	</select>
+	
+</mapper>
