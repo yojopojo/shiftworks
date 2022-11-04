@@ -115,9 +115,9 @@ public class ScheduleMapperTests {
 //	}
 	
 	// 스케쥴 리스트 불러오기
-	@Test
-	public void testGetWorkerList() {
-		mapper.getWorkerList("dept");
-	}
+//	@Test
+//	public void testGetWorkerList() {
+//		mapper.getWorkerList("dept");
+//	}
 	
 }

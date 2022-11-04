@@ -3,14 +3,18 @@
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
-
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <script type="text/javascript" src="/resources/js/schedule.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/css/schedule.css">
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
@@ -92,7 +96,10 @@
 
 					</table>
 				</td>
-				<td id="memoTable">메모
+				<td id="memoTable">
+						<label for="memoArea" class="form-label">메모</label>
+						<textarea class="form-control" id="memoArea"
+							rows="25"></textarea>
 				<td>
 			</tr>
 
@@ -113,7 +120,8 @@
 				</div>
 				<div class="modal-body">
 					<label>일정 그룹 &nbsp;</label>
-					<button class="btn btn-outline-secondary dropdown-toggle selectedGroup"
+					<button
+						class="btn btn-outline-secondary dropdown-toggle selectedGroup"
 						type="button" data-bs-toggle="dropdown" aria-expanded="false"
 						value="my">내 일정</button>
 					<ul class="dropdown-menu">
@@ -122,12 +130,12 @@
 						<li><a class="dropdown-item addGroup" href="comp">회사 일정</a></li>
 					</ul>
 					<div class="form-group">
-						<label>시작일</label> <input type="text" class="form-control" name="start_date"
-							id="start_date">
+						<label>시작일</label> <input type="text" class="form-control"
+							name="start_date" id="start_date">
 					</div>
 					<div class="form-group">
-						<label>종료일</label> <input type="text" class="form-control" name="end_date"
-							id="end_date">
+						<label>종료일</label> <input type="text" class="form-control"
+							name="end_date" id="end_date">
 					</div>
 					<div class="form-group">
 						<label>제목</label> <input class="form-control" name="sch_title">
@@ -139,7 +147,6 @@
 					<div class="form-group">
 						<label>내용</label> <input class="form-control" name="sch_content">
 					</div>
-					<div class="invalid-feedback">내용을 입력하세요.</div>
 					<div class="form-group">
 						<label>예약 회의실</label> <input class="form-control" name="book_id"
 							placeholder="회의실 예약 코드 입력 시 검색">
@@ -175,7 +182,6 @@
 	    var sch_content = $('.modal').find("input[name='sch_content']");
 	    var participant = $('.modal').find("input[name='participant']");
 	    var book_id = $('.modal').find("input[name='book_id']");
-	    
 	    
 	    // 시작일, 종료일을 캘린더를 통해 선택 가능하도록 함
 	    $(function(){
@@ -220,10 +226,10 @@
 	            start_date: (start_date.val().split(' '))[0],
 	            end_date: (end_date.val().split(' '))[0],
 	            sch_title: sch_title.val(),
-	            participant: participant.val().split(","),
+	            participant: participant.val().split(", "),
 	            sch_content: sch_content.val(),
-	            dept_id: 'dept',
-	            emp_id: 'S8945709',
+	            dept_id: '<sec:authentication property="principal.employee.dept_id"/>',
+	            emp_id: '<sec:authentication property="principal.username"/>',
 	            book_id: book_id.val()
 	        }
 	        
@@ -401,28 +407,27 @@
 	    
 	});// 일정 CRUD 모달
 	
-	
-		// 세션 적용 후 test
-		/* // 메모 작성 및 저장
+
+		// 메모 작성 및 저장
 		$(document).ready(function(){
 			
 			// 페이지 로드 시 DB에서 메모 불러오기
-			$('#memoTable').text(scheduleService.getMemo(function(result){
-				return result();
-			}));
+			scheduleService.getMemo(function(result){
+				$('#memoArea').val(result);
+			});
 			
 			// 메모장에 메모 입력 시 저장 버튼 없이도 데이터 저장(업데이트)
-			$('#memoTable').on("keyup", function(){
-				var memo = $(this).text();
+			$('#memoArea').on("keyup", function(){
+				var memo = $(this).val();
 				
-				scheduleService.insertMemo(memo, function (result){
+				scheduleService.updateMemo(memo, function (result){
 					
 				});
 				
 			});
 			
 			
-		}); // 메모 작성 및 저장 */
+		}); // 메모 작성 및 저장
 		
 
 	

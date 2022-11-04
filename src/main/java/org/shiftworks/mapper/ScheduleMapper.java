@@ -26,6 +26,4 @@ public interface ScheduleMapper {
 	int updateMemo(@Param("emp_id") String emp_id, @Param("memo") String memo);
 	
 	List<WorkScheduleVO> getWorkerList(String dept_id);
-	
-	//boolean insertAlarm(AlarmVO alarmVO);
 }

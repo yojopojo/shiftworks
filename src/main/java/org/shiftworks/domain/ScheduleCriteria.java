@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ScheduleCriteria {
 	
+	private String emp_id;
 	private String sch_group;
 	private String selectedDate;
 	private String periodStart, periodEnd;
@@ -14,8 +15,9 @@ public class ScheduleCriteria {
 		
 	}
 
-	public ScheduleCriteria(String sch_group, String selectedDate) {
+	public ScheduleCriteria(String emp_id, String sch_group, String selectedDate) {
 		super();
+		this.emp_id = emp_id;
 		this.sch_group = sch_group;
 		this.selectedDate = selectedDate;
 		

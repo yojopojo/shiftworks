@@ -3,6 +3,8 @@
 // 일정 CRUD, 일정 검색
 var scheduleService = (function(){
 
+    var csrf_token = $("meta[name='_csrf']").attr("content");
+	var csrf_header = $("meta[name='_csrf_header']").attr("content");
   
     // 리스트 불러오기
     function getList(param, callback, error) {
@@ -62,10 +64,14 @@ var scheduleService = (function(){
 
     // 일정 등록
     function insertSchedule(param, callback, error) {
+
         $.ajax({
             type: 'post',
             url: '/schedule/new',
             data: JSON.stringify(param),
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
             contentType : "application/json; charset=utf-8",
             success : function(result, status, xhr) {
                 if (callback) {
@@ -86,6 +92,9 @@ var scheduleService = (function(){
             type: 'put',
             url: '/schedule/' + param.sch_id,
             data: JSON.stringify(param),
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
             contentType : "application/json; charset=utf-8",
             success: function(result) {
                 if (callback) {
@@ -105,6 +114,9 @@ var scheduleService = (function(){
         $.ajax({
             type: 'delete',
             url: '/schedule/' + param,
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
             success: function(result) {
                 if (callback) {
 					callback(result);
@@ -142,6 +154,9 @@ var scheduleService = (function(){
             type: 'put',
             url: '/schedule/memo',
             data: JSON.stringify(param),
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrf_header, csrf_token);
+            },
             contentType : "application/json; charset=utf-8",
             success: function(result) {
                 if (callback) {
@@ -194,6 +209,9 @@ var scheduleService = (function(){
 
 //list 페이지 로딩 시 실행
 $(document).ready(function(){
+
+    // 선택된 탭에 대한 정보를 저장
+    var selectedTap;
 		
 	
     // 선택 일자, 선택 그룹을 저장하는 객체
@@ -370,6 +388,9 @@ $(document).ready(function(){
     // '월별' 클릭 시 캘린더 출력
     $('#month').on("click", function(e) {
         
+        // 선택 탭에 대한 정보 저장
+        selectedTap = $(this);
+
         // 기본 이벤트 차단
         e.preventDefault();
 
@@ -396,6 +417,10 @@ $(document).ready(function(){
     
     // '주별' 클릭 시 캘린더 생성
     $('#week').on("click", function(e) {
+
+        // 선택 탭에 대한 정보 저장
+        selectedTap = $(this);
+
         // 기본 이벤트 차단
         e.preventDefault();
 
@@ -428,6 +453,9 @@ $(document).ready(function(){
     
      // '일별' 클릭 시 캘린더 생성
     $('#day').on("click", function(e) {
+
+        // 선택 탭에 대한 정보 저장
+        selectedTap = $(this);
        
         // 기본 이벤트 차단
         e.preventDefault();
@@ -617,8 +645,7 @@ $(document).ready(function(){
         listparam.sch_group = $('.sch_group').val();
         $('.sch_group').text($(this).text());
 
-        // 월 캘린더 출력
-        $('#month').trigger("click");
+        // 선택된 탭 
 
     }); // 그룹 선택 시 값 변경
 
@@ -660,7 +687,7 @@ $(document).ready(function(){
         // 일정 시작일을 선택일 변수에 저장
 	    selectedDate = ($(this).attr("class").split(' '))[0];
         // 해당 일자로 이동
-        $('#day').trigger("click");
+        selectedTap.trigger("click");
 	    	
     });
 

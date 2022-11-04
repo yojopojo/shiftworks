@@ -58,9 +58,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 			mapper.insertParticipant(scheduleVO);
 			
 			// 일정에 대한 알림 생성(세션 받아온 뒤 수정)
-//			AlarmVO vo = new AlarmVO();
-//			
-//			log.info(alarmMapper.insertAlarm(null));
+			AlarmVO vo = new AlarmVO();
+			String str = "[" + scheduleVO.getSch_title() + "] 일정이 등록되었습니다.";
+			
+			vo.setEmp_id(scheduleVO.getEmp_id());
+			vo.setDept_id(scheduleVO.getDept_id());
+			vo.setContent(str);
+			
+			log.info(alarmMapper.insertAlarm(vo));
 			
 			count++;
 		}
@@ -97,8 +102,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	// 메모 가져오기
 	@Override
-	public String getMemo(String memo) {
-		return mapper.getMemo(memo);
+	public String getMemo(String emp_id) {
+		return mapper.getMemo(emp_id);
 	}
 
 	// 메모 수정(등록)
