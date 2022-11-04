@@ -3,7 +3,7 @@ package org.shiftworks.service;
 import java.util.List;
 
 import org.shiftworks.domain.BookingVO;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.BookingCriteria;
 import org.shiftworks.mapper.BookingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -142,7 +142,7 @@ public class BookingServiceImpl implements BookingService {
 
 	//예약목록(페이징)
 	@Override
-	public List<BookingVO> getListwithPaging(Criteria cri) {
+	public List<BookingVO> getListwithPaging(BookingCriteria cri) {
 		log.info("get List with criteria from Service: "+cri);
 		
 		return mapper.getListwithPaging(cri);
@@ -150,7 +150,7 @@ public class BookingServiceImpl implements BookingService {
 
 	//전체 예약 숫자 구하기
 	@Override
-	public int getTotalCount(Criteria cri) {
+	public int getTotalCount(BookingCriteria cri) {
 		log.info("get total count from Service");
 		return mapper.getTotalCount(cri);
 	}

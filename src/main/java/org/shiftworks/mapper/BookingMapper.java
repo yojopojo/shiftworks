@@ -3,7 +3,7 @@ package org.shiftworks.mapper;
 import java.util.List;
 
 import org.shiftworks.domain.BookingVO;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.BookingCriteria;
 
 public interface BookingMapper {
 	
@@ -22,9 +22,9 @@ public interface BookingMapper {
 	//예약 목록 리스트
 	public List<BookingVO> getList();
 	//예약 목록 리스트(페이징)
-	public List<BookingVO> getListwithPaging(Criteria cri);
+	public List<BookingVO> getListwithPaging(BookingCriteria cri);
 	//전체 예약 숫자 구하기
-	public int getTotalCount(Criteria cri);
+	public int getTotalCount(BookingCriteria cri);
 	
 	
 	//내 예약목록 보기

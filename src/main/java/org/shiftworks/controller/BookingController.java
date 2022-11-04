@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.shiftworks.domain.BookingPageDTO;
 import org.shiftworks.domain.BookingVO;
-import org.shiftworks.domain.Criteria;
+import org.shiftworks.domain.BookingCriteria;
 import org.shiftworks.service.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -202,7 +202,7 @@ public class BookingController {
 	
 	//전체 예약 현황보기(+페이징)(게시판 이동)
 	@GetMapping("/list")
-	public ModelAndView getList(Criteria cri, ModelAndView mav) {
+	public ModelAndView getList(BookingCriteria cri, ModelAndView mav) {
 		//List<BookingVO> list = service.getList();
 		//ModelAndView mav = new ModelAndView();
 		log.info("list: "+cri);

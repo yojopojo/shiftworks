@@ -12,9 +12,9 @@ public class BookingPageDTO {
 	private boolean prev, next;
 	
 	private int total;
-	private Criteria cri;
+	private BookingCriteria cri;
 	
-	public BookingPageDTO(Criteria cri, int total) {
+	public BookingPageDTO(BookingCriteria cri, int total) {
 		this.cri = cri;
 		this.total = total;
 		
