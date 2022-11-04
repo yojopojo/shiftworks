@@ -19,6 +19,4 @@
 
 </body>
 </html>
-<script type="text/javascript">
-location.href="/pages/T/test/1";
-</script>
+
