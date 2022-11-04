@@ -11,6 +11,5 @@ public class FileVO {
 	private String file_name;
 	private String file_src;
 	
-	private List<FileVO> selectApprovalFile; 
 	
 }

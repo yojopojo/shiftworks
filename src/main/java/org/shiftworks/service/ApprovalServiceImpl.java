@@ -9,6 +9,7 @@ import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.Criteria;
 import org.shiftworks.domain.TempApprovalVO;
 import org.shiftworks.mapper.ApprovalMapper;
+import org.shiftworks.mapper.FileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	
 	@Autowired
 	private ApprovalMapper mapper;
+	private FileMapper filemapper;
 
 	@Override
 	public int insertForm(ApprovalVO approval) {

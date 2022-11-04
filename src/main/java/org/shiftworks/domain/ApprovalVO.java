@@ -1,6 +1,7 @@
 package org.shiftworks.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,5 +17,7 @@ public class ApprovalVO {
 	private char apr_status;
 	private String apr_comment;
 	private Date apr_signdate;
+	
+	private List<FileVO> fileList;
 	
 }

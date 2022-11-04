@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<h1>결재할 문서함</h1>
+<h1>결재전 문서함</h1>
 	<a href="/approval/list">전체 문서함</a>
 	
 	<table border="1" width="900">
