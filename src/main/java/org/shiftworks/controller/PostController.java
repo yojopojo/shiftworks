@@ -50,7 +50,7 @@ public class PostController {
 		return mav;
 	}
 	
-	//register form에서 받아온 값 db에 넣기
+	///register form에서 받아온 값 db에 넣기
 	@PostMapping(value = "/new")
 	public ResponseEntity<String> register(@RequestBody PostVO vo){
 		log.info("register......");
