@@ -3,7 +3,6 @@ package org.shiftworks.controller;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.ApprovalCriteria;
 import org.shiftworks.domain.ApprovalPageDTO;
