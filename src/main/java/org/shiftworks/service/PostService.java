@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
-import org.shiftworks.domain.PageDTO;
+import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -15,7 +15,7 @@ public interface PostService {
 	
 	//public List<PostVO> getList(Criteria cri);
 	
-	public PageDTO getListSearch(BoardCriteria cri);
+	public BoardPageDTO getListSearch(BoardCriteria cri);
 	
 	public int updatePost(PostVO postvo);
 	
