@@ -1,7 +1,11 @@
 package org.shiftworks.domain;
 
+<<<<<<< HEAD:src/main/java/org/shiftworks/domain/TaskVO.java
 import java.util.Date;
 import java.util.List;
+=======
+public class ChatUserStatusVO {
+>>>>>>> feature-msg:src/main/java/org/shiftworks/domain/ChatUserStatusVO.java
 
 import lombok.Data;
 
