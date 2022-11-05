@@ -3,16 +3,13 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Shiftworks_messenger</title>
-
-<link rel="stylesheet" href="/resources/css/messenger/messenger.css">
 
 <!-- icon을 사용하기 위함 -->
 <link rel='stylesheet'
@@ -22,16 +19,24 @@
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
 
+<!-- JQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+<!-- timeago 라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
 
-<script
-	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<!-- socket 라이브러리 -->
+<script	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+<!-- custom style -->
 <link rel="stylesheet" href="/resources/css/messenger.css">
 
 <script type="text/javascript" src="/resources/js/messenger/service.js" />
 <script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
 <!-- <script type="text/javascript" src="../../resources/js/messenger/event.js" /> -->
+
+
 <script type="text/javascript"></script>
 </head>
 <body class = "container">
@@ -151,6 +156,10 @@
 		</div>
 	</div>
 	
+
+	<sec:authentication property="principal.username"  var="login_id"/>
+
+
 	
 <script type="text/javascript">
 
@@ -164,6 +173,7 @@ $(document).ready(function() {
     // 즉시 실행 함수 : 채팅방이 선택되지 않았을 때 채팅 내용이 보이지 않도록 함
     var init = function(){
     	$('.chat').hide();
+    	
     	 $('.timer').each(function(index, item){
       		if($('.timer').text != ""){
       			console.log($(item).text());
@@ -234,25 +244,41 @@ $(document).ready(function() {
     	 $('.timer').css('font-size', '9px');
     	 console.log("room_id : " + $(this).attr("id"));
     	 
-    	  // 지난 채팅 내역 가져옴
+    	 
+    	 // 로그인된 사번 
+    	 var login_id = "<c:out value='${login_id}'/>";
+    	 
+    	 // 선택된 채팅방의 지난 채팅 내역 가져옴
     	 messengerService.getChat(parseInt($(this).attr("id")), function(data){
+ 
+    		$('.messages-chat').empty(); 
+    		
     	 	if(data != null){
     	 		console.log(data);
     		 	for(var i = 0; i < data.length; i++){
     		 		
-    		 		//if(data[i].emp_id != )
-    		 		var content = '<div class="message" id="msg_'+ data[i].chat_id + '">' +
-    		 		'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
-    		 		'<div class="online"></div></div>' + 
-    		 		'<p class="text">'+ data[i].content + '</p>	</div>';
-    		 		
-    		
-    		 		$(".messages-chat").append(content);
-    		 		
-    		 		//data[i].sendtime;
-    		 			
-    	 		}
-    	 	
+    		 		// 채팅 내용이 있을 때만 출력
+    		 		if(data[i].content != null){
+						
+    		 			// 상대방의 채팅 내용
+	    		 		if(data[i].sender != login_id){
+		    		 		var content = '<div class="message" id="msg_'+ data[i].chat_id + '">' +
+		    		 		'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
+		    		 		'<div class="online"></div></div>' + 
+		    		 		'<p class="text">'+ data[i].content + '</p>	</div>' +
+		    		 		'<p class="time">' + data[i].sendtime.substr(0,16) + '</p>';
+		    		 		$(".messages-chat").append(content);
+		    		 		
+	    		 		}else{	// 나의 채팅 내용
+	    		 			var content = '	<div class="message text-only">' +
+	    		 				'<div class="response">' +
+	    		 				'<p class="text">'+ data[i].content +'</p>' +
+	    		 				'</div></div>' +
+	    		 				'<p class="response-time time">' + data[i].sendtime.substr(0,16) + '</p>';
+	    		 			$(".messages-chat").append(content);
+	    		 		}	    		 			
+	    	 		}
+    		 	}
     	 		$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name);
     	 	}
     	 });  

@@ -203,13 +203,12 @@ return {
  function onOpen(evt) {
      console.log("onOpen");
      
-     $(".messages-chat").append("연결");
+//     $(".messages-chat").append("연결");
  }
      
  // 서버와 연결을 끊었을 때
  function onClose(evt) {
      console.log("onClose");
      
-     $(".messages-chat").append("끊김");
+ //    $(".messages-chat").append("끊김");
  }
-     
