@@ -80,10 +80,8 @@
 								<td><c:out value="${post.emp_id}" /></td>
 								<td><c:out value="${post.dept_id}" /></td>
 								<td><c:out value="${post.post_name}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_regdate}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_updatedate}" /></td>
+								<td><c:out value="${post.post_regdate}" /></td>
+								<td><c:out value="${post.post_updatedate}" /></td>
 							</tr>	
 						</c:forEach>
 					</tbody>
