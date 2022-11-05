@@ -17,13 +17,14 @@
 <div class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">내가 쓴 게시물 상세페이지</h1>
+		<h1 class="page-header">결재문서함 상세페이지</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
     
 
+<!--게시글 상세 폼-->
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
@@ -33,9 +34,9 @@
 			<div class="panel-body">
 			
 				<div class="form-group">
-					<label>게시판번호</label> 
-					<input class="form-control" name='b_id'
-						value='<c:out value="${post.b_id }"/>' readonly="readonly">
+					<label>스크랩번호</label> 
+					<input class="form-control" name='scrap_id'
+						value='<c:out value="${post.scrap_id }"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
 					<label>게시글번호</label> 
@@ -66,9 +67,9 @@
 						value='<c:out value="${post.post_regdate}"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>수정일</label> 
-					<input class="form-control" name='post_updatedate'
-						value='<c:out value=""/>' readonly="readonly">
+					<label>스크랩일자</label> 
+					<input class="form-control" name='scrap_date'
+						value='<c:out value="${post.scrap_date}"/>' readonly="readonly">
 				</div>
 				<button id='listBtn' class='btn btn-primary btn-xs pull-right'>목록</button>
 <!-- 게시글 상세 폼-->
@@ -87,12 +88,7 @@
 
 
 <script>
-$(document).ready(function () {
-	
-		$("#listBtn").on("click", function(){
-			location.href = "myDoc/1";
-		})
-	
-});
+
+
 
 </script>

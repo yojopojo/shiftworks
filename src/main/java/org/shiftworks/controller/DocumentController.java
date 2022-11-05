@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.DocumentPageDTO;
+import org.shiftworks.domain.ApprovalCriteria;
+import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
@@ -88,19 +90,7 @@ public class DocumentController {
 			return new ResponseEntity <DocumentPageDTO>(service.getMyDocumentListWithPaging(cri),HttpStatus.OK);
 		}
 	
-	//전체 게시물에서 내가 쓴 게시물 보기 ????
-	@ResponseBody
-	@GetMapping(value = "/totalDoc/{emp_id}")
-	public ModelAndView getTotalDocumentList(@PathVariable("emp_id") String emp_id){
 
-		
-		log.info("totalDoc.........");
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("/document/DOC_totaldoc");
-		return mav;
-		
-	}
 	
 	
 	//내가 쓴 게시물 상세보기 
@@ -193,6 +183,8 @@ public class DocumentController {
 		DocumentCriteria cri = new DocumentCriteria();
 		cri.setPageNum(pageNum);
 		cri.setEmp_id(emp_id);
+		cri.setDept_id(service.getDept(emp_id));
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_deptdoclist");
@@ -217,7 +209,7 @@ public class DocumentController {
 		PostVO vo = new PostVO();
 		vo.setPost_id(post_id);
 		vo.setEmp_id(emp_id); 
-		//vo.setPost_receivedept("12"); 	//세션 구현 후 지워야 할 부분 
+		vo.setDept_id(service.getDept(emp_id));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_deptdoc");
@@ -226,5 +218,56 @@ public class DocumentController {
 		return mav;
 		
 	}
+	
+	//결재문서함 list
+		@ResponseBody
+		@GetMapping(value = "/myApproval/{pageNum}")
+		@PreAuthorize("isAuthenticated()")
+		public ModelAndView getMyApprovalListWithPaging(@PathVariable("pageNum")int pageNum, Authentication auth){
+			
+			//로그인한 사람만 접근 가능
+			UserDetails ud = (UserDetails)auth.getPrincipal();
+			log.info(ud.getUsername());
+			String emp_id = ud.getUsername();
+			
+			log.info("approvallist.........");
+			ApprovalCriteria cri = new ApprovalCriteria();
+			cri.setPageNum(pageNum);
+			cri.setEmp_id(emp_id);
+			
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/document/DOC_myapprovallist");
+			mav.addObject("pageMaker", service.approvalSelectList(cri));
+			
+			return mav;
+		}
+		
+		
+		
+		//결재문서함 상세보기
+		@ResponseBody
+		@GetMapping(value = "/approvalDetail")
+		public ModelAndView getMyApproval(@RequestParam("apr_id")int apr_id, Authentication auth){
+			
+			log.info("approvaldoc........");
+			
+			//로그인한 사람만 접근 가능
+			UserDetails ud = (UserDetails)auth.getPrincipal();
+			log.info(ud.getUsername());
+			String emp_id = ud.getUsername();
+			
+			ApprovalVO vo = new ApprovalVO();
+			vo.setApr_id(apr_id);
+			vo.setEmp_id(emp_id); 
+			
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/document/DOC_myapproval");
+			mav.addObject("post", service.approvalSelect(vo));
+			
+			return mav;
+			
+		}
 
 }
