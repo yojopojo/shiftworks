@@ -183,6 +183,8 @@ public class DocumentController {
 		DocumentCriteria cri = new DocumentCriteria();
 		cri.setPageNum(pageNum);
 		cri.setEmp_id(emp_id);
+		cri.setDept_id(service.getDept(emp_id));
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_deptdoclist");
@@ -207,7 +209,7 @@ public class DocumentController {
 		PostVO vo = new PostVO();
 		vo.setPost_id(post_id);
 		vo.setEmp_id(emp_id); 
-		//vo.setPost_receivedept("12"); 	//세션 구현 후 지워야 할 부분 
+		vo.setDept_id(service.getDept(emp_id));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/document/DOC_deptdoc");

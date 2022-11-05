@@ -34,6 +34,8 @@ public interface DocumentMapper {
 	
 	public int getTotalApproval();
 	
+	public String getDept(String emp_id);
+	
 	
 
 }

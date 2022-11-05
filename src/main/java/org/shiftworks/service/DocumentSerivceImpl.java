@@ -64,7 +64,7 @@ public class DocumentSerivceImpl implements DocumentService {
 	public DocumentPageDTO deptSelectList(DocumentCriteria cri) {
 		List<PostVO>list = mapper.deptSelectList(cri);
 		
-		String post_receivedept = "12";
+		String post_receivedept =  mapper.getDept(cri.getEmp_id()); //해당 사원의 부서 찾기
 		DocumentPageDTO dto = new DocumentPageDTO(cri, mapper.getTotalDept(post_receivedept), list);
 		return dto;
 	}
@@ -88,6 +88,11 @@ public class DocumentSerivceImpl implements DocumentService {
 	@Override
 	public ApprovalVO approvalSelect(ApprovalVO vo) {
 		return mapper.approvalSelect(vo);
+	}
+
+	@Override
+	public String getDept(String emp_id) {
+		 return mapper.getDept(emp_id);
 	}
 
 	

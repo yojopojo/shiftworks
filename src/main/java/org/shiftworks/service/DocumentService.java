@@ -32,5 +32,7 @@ public interface DocumentService {
 	
 	public  ApprovalVO approvalSelect(ApprovalVO vo);
 	
+	public String getDept(String emp_id);
+	
 	
 }
