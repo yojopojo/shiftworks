@@ -74,10 +74,15 @@ public class BookingController {
 
 		for(int i=0;i<bookingList.size();i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("title", bookingList.get(i).getBook_title());
 			//map.put("start", bookingList.get(i).getBook_date());
-			map.put("start", bookingList.get(i).getBook_date().substring(0, 10));
+
+			String begin = bookingList.get(i).getBook_begin();
+			int getEndTime = Integer.parseInt(bookingList.get(i).getBook_begin())+2;
+			String end = Integer.toString(getEndTime);
 			
+			map.put("title", bookingList.get(i).getBook_title());
+			map.put("start", bookingList.get(i).getBook_date().substring(0, 10)+"T"+begin+":00");
+			map.put("end", bookingList.get(i).getBook_date().substring(0, 10)+"T"+end+":00");
 			calList.add(i, map);
 			//calList.add(map);
 		}
