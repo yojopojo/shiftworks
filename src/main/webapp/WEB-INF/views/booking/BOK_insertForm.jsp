@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
@@ -30,66 +33,81 @@
 </head>
 <body>
 	<div class="container">
-	<div class="col-12">회의실 예약</div>
+	<div class="col-12"><h2>회의실 예약</h2></div>
+	<%-- <div>직원정보<br>
+		<p>principal: <sec:authentication property="principal"/></p>
+		<p>사용자아이디: <sec:authentication property="principal.username"/></p>
+		<p>사용자권한: <sec:authentication property="principal.Authorities"/></p>
+	</div> --%>
+	
 	
 	<div class="insertForm" id="insertForm">
 			<table>
 			<div class="form-body">
 				<tr>
 				<div class="form-group">
-					<td>emp_id</td>
-					<td><input name="emp_id" type="text" readonly="readonly" value="사원번호 자동생성"></td>
+					<td><label>직원번호</label></td>
+					<td><input class="form-control" name="emp_id" type="text" readonly="readonly" 
+					value="<sec:authentication property="principal.username"/>"></td>
+					<!-- <input name="emp_id" type="text" readonly="readonly" value="사원번호 자동생성"></td> -->
 				</div>
 				</tr>
 				<tr>
-				<div class="form-group">
-					<td>dept_id</td> 
-					<td><input name="dept_id" type="text" readonly="readonly" value="부서이름 생성"></td>
-				</div>
+					<td>
+					<sec:authentication property="principal" var="pinfo"/>
+						<label>부서</label></td>
+						<td><input class="form-control" name="dept_id" value="${pinfo.employee.dept_id }" readonly="readonly"/></td>
 				</tr>
 				<tr>
 					<td><label>자원 선택</label></td>
 					<td>
-					<select name="rsc_id" id="rsc_id">
-					<option>----- 자원 -----</option>
-					<option value="MTR101">회의실101</option>
-					<option value="MTR202">회의실202</option>
-					<option value="CFR305">컨퍼런스룸305</option>
-					</select>
+					<div class="form-floating" style="width: 200px;">
+							<select name="rsc_id" class="form-select" id="rsc_id"
+								aria-label="Floating label select example">
+								<option value="MTR101" selected="selected">회의실101</option>
+								<option value="MTR202">회의실202</option>
+								<option value="CFR305">컨퍼런스룸305</option>
+							</select>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<td>예약일자 선택</td>
-					<td><input type="text" name="book_date" id="Date" placeholder="날짜를 선택하세요"><br></td>
+					<td><label>예약일자&ensp;</label></td>
+					<td><input class="form-control" style="width: 200px;" type="text" name="book_date" id="Date" placeholder="날짜를 선택하세요"></td>
 				</tr>
 				<tr>
-					<td><label>시작 시간 선택&ensp;</label></td>
+					<td><label>예약 시간&ensp;</label></td>
 					<td>
-					<select name="book_begin" id="book_begin">
-						<option>----- 09:00-19:00 -----</option>
-						<option value="09">09:00-11:00</option>
-						<option value="11">11:00-13:00</option>
-						<option value="13">13:00-15:00</option>
-						<option value="15">15:00-17:00</option>
-						<option value="17">17:00-19:00</option>
-					</select>
+					<div class="form-floating" style="width: 200px;">
+							<select name="book_begin" class="form-select" id="book_begin"
+								aria-label="Floating label select example">
+								<option value="09" selected>09:00-11:00</option>
+								<option value="11">11:00-13:00</option>
+								<option value="13">13:00-15:00</option>
+								<option value="15">15:00-17:00</option>
+								<option value="17">17:00-19:00</option>
+							</select> <label for="floatingSelect">예약시간 선택</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<div class="form-group">
-					<td>예약명</td>
-					<td><input name="book_title" type="text" placeholder="제목을 입력하세요"><br></td>
+					<td><label>예약명</label></td>
+					<td><input class="form-control" name="book_title" type="text" placeholder="제목을 입력하세요"><br></td>
 					</div> 
 				</tr>
 				<tr>
 					<div class="form-group">
-					<td>예약내용</td>
-					<td><textarea rows="6" cols="70" name="book_content" placeholder="내용을 입력하세요" ></textarea><br></td>
+					<td><label>예약내용</label></td>
+					<td><textarea class="form-control" rows="6" cols="70" name="book_content" placeholder="내용을 입력하세요" ></textarea><br></td>
 					</div>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> </td>
 				</tr>
 				</table>
 			
-			<button id="submitBtn" type="button" class="btn btn-warning">예약</button>
+			<button id="submitBtn" type="button" class="btn btn-primary">예약</button>
 			</div> <!-- end form-body class -->
 			
 	</div> <!-- end insertForm class -->
@@ -132,18 +150,23 @@
 		var book_begin = form.find("select[name='book_begin']");
 		var book_title = form.find("input[name='book_title']");
 		var book_content = form.find("textarea[name='book_content']");
-		
+
+		var csrf_token = $("meta[name='_csrf']").attr("content");
+		var csrf_header = $("meta[name='_csrf_header']").attr("content");
+
 		//제출 버튼 클릭 시 bookingData에 데이터 JSON형식으로 저장, 예약 프로세스 진행 후 결과값 출력
 		$('#submitBtn').on("click", function(e){
 			var bookingData = {
-					book_id: book_id.val(),
-					rsc_id: rsc_id.val(),
-					emp_id: emp_id.val(),
-					dept_id: dept_id.val(),
+					book_id: book_id.val(), //자동생성이라 삭제 예정
+					rsc_id: rsc_id.val(), 
+					emp_id: emp_id.val(), //로그인 세션으로 구현
+					dept_id: dept_id.val(), //로그인 세션으로 구현
 					book_begin: book_begin.val(),
 					book_date: book_date.val(),
 					book_title: book_title.val(),
 					book_content: book_content.val(),
+					csrf_token:csrf_token,
+		            csrf_header:csrf_header
 			};
 			
 			bookingService.insertBooking(bookingData, function(result){

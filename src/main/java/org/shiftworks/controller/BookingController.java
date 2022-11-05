@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -232,6 +234,7 @@ public class BookingController {
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getMyList(@PathVariable("emp_id") String emp_id){
 		log.info("getMyList controller....................");
+		
 		List<BookingVO> myList = service.getMyList(emp_id);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("booking/BOK_list");
