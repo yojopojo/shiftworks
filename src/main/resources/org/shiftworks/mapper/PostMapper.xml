@@ -104,7 +104,7 @@
 	<!--스크랩하기-->
 	<insert id="scrapPost" parameterType="org.shiftworks.domain.ScrapVO">
 		merge into scrap 
-			using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id=#{dept_id})
+			using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id =#{dept_id})
 			when not matched then
 				insert (scrap_id, dept_id, emp_id,post_id, scrap_date, post_name,post_content)
 				values(scrap_seq.nextval, #{dept_id}, #{emp_id},#{post_id},sysdate,#{post_name},#{post_content})

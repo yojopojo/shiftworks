@@ -84,8 +84,8 @@
 					<input class="form-control" name='post_updatedate' value='<c:out value=""/>' readonly="readonly">
 				</div>
 				<div class="form-group" hidden="hidden">
-					<label>emp_id</label> <input class="form-control" name='emp_id'
-						value='<c:out value="${post.emp_id }"/>' readonly="readonly">
+					<label>emp_id</label> 
+					<input class="form-control" name='emp_id' value='<c:out value="${pinfo.username}"/>' readonly="readonly">
 				</div>
 				<sec:authentication property="principal" var="pinfo"/>
 					<sec:authorize access="isAuthenticated()">
@@ -94,6 +94,7 @@
 						</c:if>
 					</sec:authorize>	
 				<button id="listBtn" class="btn btn-primary">목록보기</button>
+				
 
 
 				<form id='operForm' action="/board/modify" method="get">
@@ -166,12 +167,11 @@
 						//form value 가져오기 
 						var post_id = $(".panel-body").find("input[name='post_id']").val();
 						var dept_id = $(".panel-body").find("input[name='dept_id']").val();
-						var emp_id = $(".panel-body").find("input[name='emp_id']").val();
 						var post_name = $(".panel-body").find("input[name='post_name']").val();
 						var post_content = $(".panel-body").find("textarea[name='post_content']").val();
 						var post_regdate = $(".panel-body").find("input[name='post_regdate']").val();
 
-						//추후 scrap 에 regdate넣기 console.log(typeof(post_regdate));
+					
 						
 						//csrf_token 가져오기
 						var csrf_token = $("meta[name='_csrf']").attr("content");
@@ -209,13 +209,14 @@
 
 							var post = {
 								post_id : post_id,
-								r_writer : "조현수", //나중에 sesssion 으로 변경해야함 
-								r_content : formInsertContent.val()
+								r_content : formInsertContent.val(),
+								csrf_token:csrf_token,
+					            csrf_header:csrf_header
 							}
 
 							replyService.addReply(post, function(result) {
 
-								alert(result);
+								alert("등록되었습니다.");
 								formInsertContent.val("");
 							});
 
@@ -229,9 +230,9 @@
 							var post = {
 								post_id : post_id,
 								dept_id : dept_id,
-								emp_id : emp_id,
 								post_name : post_name,
 								post_content : post_content,
+								post_regdate:post_regdate,
 								csrf_token:csrf_token,
 					            csrf_header:csrf_header
 							}

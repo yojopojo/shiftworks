@@ -185,9 +185,14 @@ public class PostController {
 	//스크랩하기
 	@PostMapping(value="/scrap")
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity<String> scrapPost(@RequestBody ScrapVO vo){
+	public ResponseEntity<String> scrapPost(@RequestBody ScrapVO vo, Authentication auth){
 		log.info("scrap..........");
-	
+		
+		//로그인한 사람의 emp_id 구하기
+		UserDetails ud = (UserDetails)auth.getPrincipal();
+		log.info(ud.getUsername());
+		String emp_id = ud.getUsername();
+		vo.setEmp_id(emp_id);
 		
 		return service.scrapPost(vo)==1
 		? new ResponseEntity<String>("success", HttpStatus.OK)
