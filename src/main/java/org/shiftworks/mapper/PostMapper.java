@@ -36,6 +36,8 @@ public interface PostMapper {
 	
 	public String getDeptId(String emp_id);
 	
+	public String selectPrev(int post_id);
+	
 	
 
 }

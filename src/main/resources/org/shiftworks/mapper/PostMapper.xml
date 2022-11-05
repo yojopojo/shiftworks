@@ -145,5 +145,36 @@
 		select dept_id from employee where emp_id =#{emp_id}
 	</select>
 	
+	<!--이전글, 다음글 불러오기-->
+	<select id="selectPrev" resultType="String"> 
+	<![CDATA[
+		select post_name from post
+		where 1=1
+		and post_id in(
+			select max(post_id)
+			from post
+			where 1=1
+			and post_id <#{post_id}
+		)
+	]]>
+	</select>
+	
+	<!--다음글-->
+	<select id="selectNext">
+		<![CDATA[
+		select post_id from post
+		where 1=1
+		and post_id in(
+			select min(post_id)
+			from post
+			where 1=1
+			and post_id >#{post_id}
+		)
+	]]>
+	</select>
+	
+	
+	
+	
 	
 </mapper>

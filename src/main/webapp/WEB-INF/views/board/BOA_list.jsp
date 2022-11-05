@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,8 +71,18 @@
 						</form>
 					</div>
 				</div>
-			
-			
+				
+				<!--필터-->
+				<div class='row'>
+					<div class="col-lg-12">
+							<select name='history' class="form-select" aria-label="Default select example">
+								<option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+								<option value="N"
+									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>안읽은 게시물</option>
+							</select> 
+					</div>
+				</div>
 			
 				<!--메인 게시글-->
 				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
@@ -83,6 +94,7 @@
 							<th>제목</th>
 							<th>작성일</th>
 							<th>수정일</th>
+							<th>비고</th>
 						</tr>
 					</thead>
 					<tbody class="getPost">
@@ -96,6 +108,12 @@
 								<td><c:out value="${list.post_name}" /></td>
 								<td><c:out value="${list.post_regdate}" /></td>
 								<td><c:out value="${list.post_updatedate}" /></td>
+								<sec:authentication property="principal" var="pinfo" />
+									<sec:authorize access="isAuthenticated()">
+										<c:if test="${pinfo.username eq list.emp_id}">
+											<td><button id="deleteBtn" class='btn btn-primary'>삭제하기</button></td>
+										</c:if>
+									</sec:authorize>
 							</tr>
 						</c:forEach> 
 					</tbody>
@@ -134,7 +152,7 @@
 			
 		
 		
-		<!-- Modal -->
+		<!-- 임시저장Modal -->
       	<div class="modal" id="myModal">
         	<div class="modal-dialog">
           		<div class="modal-content">
@@ -152,6 +170,28 @@
       				</div>         
       				
       			
+       		</div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      
+      <!-- 삭제Modal -->
+      	<div class="modal" id="deleteModal">
+        	<div class="modal-dialog">
+          		<div class="modal-content">
+            		<div class="modal-header">
+              			<button type="button" class="close" data-dismiss="modal"></button>
+              			<h4 class="modal-title" id="myModalLabel">삭제</h4>
+           		   </div>
+            		<div class="modal-body">
+                			<div>정말로 삭제할까요?</div>
+            		</div>
+					<div class="modal-footer">
+        				<button id='modalDeleteBtn' type="button" class="btn btn-primary">예</button>
+        				<button id='modalResetBtn' type="button" class="btn btn-primary">아니오</button>
+      				</div>         
        		</div>
           <!-- /.modal-content -->
         </div>
@@ -192,7 +232,7 @@ $(document).ready(function () {
 		//onload 됐을 때 emp_id값과 b_id에 맞는 temp_board데이터가 있으면 불러오기
 		postService.temporalSelect(function(result){
 			if(result){
-				 $(".modal").show();
+				 $("#myModal").show();
 				 $("#modalRemoveBtn").on("click",function(){
 					 $(".modal").hide();
 					 location.href = "/board/new";
@@ -259,10 +299,10 @@ $(document).ready(function () {
 	  
 	  
 	  //글번호 클릭 시 get.jsp 이동하기
-	  $(".getPost").on("click",function(e){
+	  $(".getPost").on("click","a", function(e){
 		  	
 			e.preventDefault();
-			var post_id = $(this).find("td a").attr("href");
+			var post_id = $(this).attr("href");
 			
 			
 			var post={
@@ -309,7 +349,51 @@ $(document).ready(function () {
 			x.forEach(u => {
 				$('#' + u).parent().parent().addClass("getBold");
 			})
-	  })
+			
+			
+		//안읽은 게시물로 옵션 변경 시 안읽은 게시물만 나오도록 함
+	 	$(".history").change(function(){
+		 
+		 var selectVal = $(".history").val();
+		 
+		 if(selectVal =="--"){
+			 location.href = "/board/list";
+		 }
+		 if(selectVal =="N"){
+			//???
+		 }
+	   })
+	})
+	  
+	  //삭제 버튼 클릭 시 글 삭제
+	$(".getPost").on("click", "td button",function(e){
+		 e.preventDefault();
+		 console.log("click"); 
+		 
+		 $("#deleteModal").show();
+		 
+		 $("#modalDeleteBtn").on("click",function(){
+			 $(".modal").hide();
+
+			 var post_id =$(".getPost").find("a").attr("href");
+			 var post={
+					post_id:post_id,
+					csrf_token:csrf_token,
+			    	csrf_header:csrf_header
+			 }
+			 
+			    postService.deletePost(post,function(result){
+				 alert("삭제되었습니다");
+			 });   
+		 })
+		 $("#modalResetBtn").on("click",function(){
+			 $(".modal").hide();
+			
+		 });
+		
+	 });
+	
+	 
 	
 	    	
 	  

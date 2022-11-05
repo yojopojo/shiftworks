@@ -81,6 +81,7 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
+</div>
 
 
 
@@ -96,3 +97,4 @@ $(document).ready(function () {
 });
 
 </script>
+</html>

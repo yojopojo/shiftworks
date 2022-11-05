@@ -86,23 +86,22 @@ public class PostMapperTests {
 //		list.forEach(post -> log.info(post));
 //	}
 	
-	@Test
-	public void testInsertScrap() throws ParseException {
-		ScrapVO vo = new ScrapVO();
-		vo.setEmp_id("11");
-		vo.setPost_id(8);
-		vo.setDept_id("12");
-		vo.setPost_name("홍길동입니다");
-		vo.setPost_content("scrap test중입니다");
-
-
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date tempdate = df.parse("2022-10-28");
-		vo.setPost_regdate(tempdate);
-		
-		mapper.scrapPost(vo);
-		
-	}
+//	@Test
+//	public void testInsertScrap() throws ParseException {
+//		ScrapVO vo = new ScrapVO();
+//		vo.setEmp_id("11");
+//		vo.setPost_id(8);
+//		vo.setDept_id("12");
+//		vo.setPost_name("홍길동입니다");
+//		vo.setPost_content("scrap test중입니다");
+//
+//
+//		
+//		vo.setPost_regdate("2022-10-20");
+//		
+//		mapper.scrapPost(vo);
+//		
+//	}
 	
 //	@Test
 //	public void testInsertTemporal() {
@@ -134,6 +133,12 @@ public class PostMapperTests {
 //		log.info(mapper.getDeptId(emp_id));;
 //		
 //	}
+	
+	@Test
+	public void testselectPrev() {
+		int post_id = 25;
+		log.info(mapper.selectPrev(post_id));
+	}
 
 	
 	

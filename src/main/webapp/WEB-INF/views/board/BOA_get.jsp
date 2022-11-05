@@ -252,6 +252,13 @@
 						});
 						
 						
+						//이전글
+						postService.selectPrev({post_id:post_id},function(result){
+							alert(result.post_name);
+						})
+						
+						
+						
 						
 	});//end script
 </script>

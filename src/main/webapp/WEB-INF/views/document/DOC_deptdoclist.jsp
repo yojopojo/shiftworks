@@ -119,7 +119,7 @@
 	</div>
 </div>
 <!--end row-->
-
+</div>
 
 <script src="/resources/js/document.js" type="text/javascript"></script>
 <script>
@@ -249,6 +249,6 @@ $(document).ready(function () {
 
 })//end script
 </script>		
-
+</html>
 
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>

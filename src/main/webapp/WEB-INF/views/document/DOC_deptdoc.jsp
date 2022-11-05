@@ -71,7 +71,7 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
-
+</div>
 
 
 
@@ -81,3 +81,4 @@
 
 
 </script>
+</html>

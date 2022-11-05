@@ -257,6 +257,6 @@ $(document).ready(function () {
 })//end script
 </script>		
 
-
+</html>
 
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>

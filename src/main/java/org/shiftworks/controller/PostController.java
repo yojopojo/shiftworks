@@ -281,10 +281,17 @@ public class PostController {
 			log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 			
-	
 			return new ResponseEntity<List<HistoryVO>>(service.selectHistory(emp_id),HttpStatus.OK);
 		}
 	
+	//이전글 불러오기
+	@GetMapping(value = "/selectPrev/{post_id}", produces = "application/text; charset=UTF-8")
+	public ResponseEntity<String> selectPrev(@PathVariable("post_id") int post_id){
+		
+		log.info("selectPrev........");
+		log.info(service.selectPrev(post_id));
+		return new ResponseEntity<String>(service.selectPrev(post_id),HttpStatus.OK);
+	}
 	
 
 }
