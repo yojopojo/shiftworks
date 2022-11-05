@@ -40,7 +40,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public BoardPageDTO getListSearch(BoardCriteria cri) {
 		List<PostVO> list =  mapper.getListWithPagingSearch(cri);
-		BoardPageDTO dto = new BoardPageDTO(cri, mapper.getTotal(), list);
+		BoardPageDTO dto = new BoardPageDTO(cri, mapper.getTotal(cri.getB_id()), list);
 		return dto;
 	}
 
@@ -60,8 +60,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public int getTotal() {
-		return mapper.getTotal();
+	public int getTotal(int b_id) {
+		return mapper.getTotal(b_id);
 	}
 
 
@@ -92,6 +92,12 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<HistoryVO> selectHistory(String emp_id) {
 		return mapper.selectHistory(emp_id);
+	}
+
+
+	@Override
+	public String getDeptId(String emp_id) {
+		return mapper.getDeptId(emp_id);
 	}
 
 

@@ -111,7 +111,7 @@ var postService = (function(){
 			url : '/board/history/' +post.post_id,
 			contentType : "application/json; charset=utf-8",
 			beforeSend : function(xhr){
-                xhr.setRequestHeader(csrf_header, csrf_token);
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
             },
 			success : function(result, status, xhr) {
 	
@@ -131,7 +131,7 @@ var postService = (function(){
 		$.ajax({
 			type : 'get',
 			url : '/board/history'+".json",
-			contentType : "application/json; charset=utf-8",
+			contentType : "application/json;charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
 					callback(result);
@@ -173,14 +173,13 @@ var postService = (function(){
 	//글 수정하기 
 	function updatePost(post,callback, error) {
 		
-		console.log(post.post_content);
-		console.log(post.post_receivedept);
+		
 		$.ajax({
 			type : 'post',
 			url : '/board/modify',
 			data : JSON.stringify(post),
 			beforeSend : function(xhr){
-                xhr.setRequestHeader(csrf_header, csrf_token);
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
             },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {

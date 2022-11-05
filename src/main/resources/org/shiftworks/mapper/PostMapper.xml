@@ -7,9 +7,9 @@
 	<!--데이터 입력-->
 	<insert id="insertPost" parameterType="org.shiftworks.domain.PostVO">
 		insert into post (post_id, b_id, emp_id, dept_id, post_name, post_content,
-		post_regno, post_regdate, post_updatedate, post_fix, post_receivedept)
+		post_regno, post_regdate, post_fix, post_receivedept)
 		values (post_seq.nextval, #{b_id}, #{emp_id}, #{dept_id},#{post_name},
-		#{post_content},0, sysdate, sysdate, 'N', #{post_receivedept})
+		#{post_content},0, sysdate, 'N', #{post_receivedept})
 	</insert> 
 	
 	<!-- <select id="getListPostVO" resultType="org.shiftworks.domain.PostVO">
@@ -91,12 +91,14 @@
 	
 	<!--하나의 post 만 가져오기-->
 	<select id="getPost"  parameterType="int" resultType="org.shiftworks.domain.PostVO">
-		select * from post where post_id = #{post_id}
+		select post_id, b_id, e.dept_id as dept_id, post_name, post_content, e.emp_id as emp_id, post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, e.name as name
+			from post p JOIN employee e ON e.emp_id =p.emp_id 
+			where post_id = #{post_id}
 	</select>
 	
 	<!-- 총 게시글 수 조회-->
 	<select id="getTotal" resultType="int">
-		select count(*) from post
+		select count(*) from post where b_id=#{b_id}
 	</select>
 	
 	<!--스크랩하기-->
@@ -109,11 +111,11 @@
 	</insert>
 	
 	
-	<!--emp_id, b_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트하기 -->
+	<!--emp_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트하기 -->
 	<update id="temporalPost" parameterType="org.shiftworks.domain.Temp_BoardVO">
 		merge into temp_board
-		using dual on(b_id = #{b_id} and emp_id = #{emp_id})
-		when matched then update set post_name=#{post_name}, post_content= #{post_content}
+		using dual on(emp_id = #{emp_id})
+		when matched then update set b_id=#{b_id}, post_name=#{post_name}, post_content= #{post_content}
 		when not matched then
 			insert (temp_id, b_id, dept_id, emp_id, post_name, post_content) 
 			values (temp_board_seq.nextval,#{b_id},#{dept_id},#{emp_id}, #{post_name},#{post_content})
@@ -137,5 +139,11 @@
 	<select id="selectHistory" resultType="org.shiftworks.domain.HistoryVO">
 		select * from history where emp_id =#{emp_id}
 	</select>
+	
+	<!--해당 emp_id와 일치하는 부서번호 불러오기-->
+	<select id="getDeptId" parameterType="String" resultType="String">
+		select dept_id from employee where emp_id =#{emp_id}
+	</select>
+	
 	
 </mapper>

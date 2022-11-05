@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.BoardCriteria;
+import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -127,6 +128,12 @@ public class PostMapperTests {
 //		
 //	}
 	
+//	@Test
+//	public void testGetDeptId() {
+//		String emp_id ="user1";
+//		log.info(mapper.getDeptId(emp_id));;
+//		
+//	}
 
 	
 	

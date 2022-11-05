@@ -23,7 +23,7 @@ public interface PostService {
 	
 	public PostVO getPost(int post_id);
 	
-	public int getTotal();
+	public int getTotal(int b_id);
 	
 	public int scrapPost(ScrapVO vo);
 	
@@ -34,5 +34,7 @@ public interface PostService {
 	public int insertHistory(HistoryVO vo);
 	
 	public List<HistoryVO> selectHistory(String emp_id);
+	
+	public String getDeptId(String emp_id);
 
 }

@@ -33,28 +33,23 @@
  		<button id ="previewBtn" type="button" class="btn btn-primary">미리보기</button>
 		<div class="form-group">
 			<label>게시판번호</label> 
-			<input class="form-control" name='b_id'
-				value='<c:out value="${post.b_id }"/>' readonly="readonly">
+			<input class="form-control" name='b_id' value='<c:out value="${post.b_id }"/>' readonly="readonly">
 		</div>
 		<div class="form-group">
 			<label>게시글번호</label> 
-			<input class="form-control" name='post_id'
-				value='<c:out value="${post.post_id }"/>' readonly="readonly">
+			<input class="form-control" name='post_id' value='<c:out value="${post.post_id }"/>' readonly="readonly">
 		</div>
 		<div class="form-group">
 			<label>작성자</label> 
-			<input class="form-control" name='name'
-				value='<c:out value="${post.name }"/>' readonly="readonly">
+			<input class="form-control" name='name' value='<c:out value="${post.name }"/>' readonly="readonly">
 		</div>
 		<div class="form-group">
 			<label>작성부서</label> 
-			<input class="form-control" name='dept_id'
-				value='<c:out value="${post.dept_id }"/>' readonly="readonly">
+			<input class="form-control" name='dept_id' value='<c:out value="${post.dept_id }"/>' readonly="readonly">
 		</div>
 		<div class="form-group">
 			<label>제목</label> 
-			<input class="form-control" name='post_name'
-				value='<c:out value="${post.post_name}"/>'>
+			<input class="form-control" name='post_name' value='<c:out value="${post.post_name}"/>'>
 		</div>
 		<div class="form-group">
 			<label>내용</label>
@@ -63,19 +58,24 @@
 		</div>
 		<div class="form-group">
 			<label>작성일</label> 
-			<input class="form-control" name='post_regdate'
-				value= <fmt:formatDate pattern = "yyyy/MM/dd" value = "${post.post_regdate}" /> readonly="readonly">
+			<input class="form-control" name='post_regdate' 
+				value='<c:out value="${post.post_regdate}"/>' readonly="readonly">
 		</div>
 		<div class="form-group">
 			<label>수정일</label> 
 			<input class="form-control" name='post_updatedate' readonly="readonly"
-			value= <fmt:formatDate pattern = "yyyy/MM/dd" value = "${post.post_updatedate}" />>
+				value='<c:out value="${post.post_updatedate}"/>'>
 		</div>
 		<div class="form-group">
 			<label>수신부서</label> 
 			<input class="form-control" name='post_receivedept' value = "${post.post_receivedept}"/>
 		</div>
-		<button id="modifyBtn" class="btn btn-primary">글 수정하기</button>
+		<sec:authentication property="principal" var="pinfo"/>
+			<sec:authorize access="isAuthenticated()">
+				<c:if test="${pinfo.username eq post.emp_id}">
+					<button id="modifyBtn" class="btn btn-primary">글 수정하기</button>
+				</c:if>
+			</sec:authorize>
   		<button id="listBtn" class="btn btn-primary">목록보기</button>
       </div>
    	
@@ -103,6 +103,9 @@ $(document).ready(function() {
 	var formObj = $(".form-group");
 	var actionform = $('#actionform');
 	
+	var csrf_token = $("meta[name='_csrf']").attr("content");
+	var csrf_header = $("meta[name='_csrf_header']").attr("content");
+	
 	
 	//글 수정하기 버튼 클릭 했을 때 값을 postVO 객체로 받아서 db에 update하기 
 	  $('#modifyBtn').on("click", function(e){
@@ -116,13 +119,15 @@ $(document).ready(function() {
 		    		post_id:post_id,
 		    		post_name:post_name,
 		    		post_content:post_content,
-		    		post_receivedept:post_receivedept
+		    		post_receivedept:post_receivedept,
+		    		csrf_token:csrf_token,
+		    		csrf_header:csrf_header
 		    }
 		  
 		    e.preventDefault(); 
 		    
 		    postService.updatePost(post, function(result){
-		    	alert(result);
+		    	alert("수정되었습니다");
 		    	 formObj.empty();
 		    	actionform.submit();
 		    });

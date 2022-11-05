@@ -87,18 +87,22 @@
 					<label>emp_id</label> <input class="form-control" name='emp_id'
 						value='<c:out value="${post.emp_id }"/>' readonly="readonly">
 				</div>
-				<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
-				<button id="listBtn" class="btn btn-info">목록보기</button>
+				<sec:authentication property="principal" var="pinfo"/>
+					<sec:authorize access="isAuthenticated()">
+						<c:if test="${pinfo.username eq post.emp_id}">
+							<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
+						</c:if>
+					</sec:authorize>	
+				<button id="listBtn" class="btn btn-primary">목록보기</button>
 
 
 				<form id='operForm' action="/board/modify" method="get">
-					<input type='hidden' id='post_id' name='post_id'
-						value='<c:out value="${post.post_id}"/>'> 
+					<input type='hidden' id='post_id' name='post_id' value='<c:out value="${post.post_id}"/>'> 
 					<input type='hidden' name='pageNum'  value='<c:out value="${cri.pageNum}"/>'> 
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-					<input type='hidden' name='keyword'
-						value='<c:out value="${cri.keyword}"/>'> 
+					<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> 
 					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 				</form>
 				<!-- 게시글 상세 폼-->
 

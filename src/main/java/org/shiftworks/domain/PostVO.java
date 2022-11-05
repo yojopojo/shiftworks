@@ -21,10 +21,8 @@ public class PostVO {
 	private String post_name;
 	private String post_content;
 	private int post_regno;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date post_regdate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date post_updatedate;
+	private String post_regdate;
+	private String post_updatedate;
 	private char post_fix;
 	private String post_receivedept;
 	private String name;

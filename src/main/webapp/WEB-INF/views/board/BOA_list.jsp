@@ -10,13 +10,27 @@
 <link rel="stylesheet" href="/resources/css/post.css">
 
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title></title>
 </head>
-
+<body>
 <div class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header"></h1>
+		<h1 class="page-header">
+		   <c:choose>
+		   	<c:when test="${pageMaker.cri.b_id eq '1'}">
+		   		공지사항
+		   	</c:when>
+		   	<c:when test="${pageMaker.cri.b_id eq '2'}">
+		   		행사
+		   	</c:when>
+		   	<c:when test="${pageMaker.cri.b_id eq '3'}">
+		   		자유게시판
+		   	</c:when>
+		   </c:choose> 
+		</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -77,13 +91,11 @@
 								<td><a id ='<c:out value="${list.post_id}"/>' href ='<c:out value="${list.post_id}"/>'>
 									<c:out value="${list.post_id}" /></a>
 								</td>
-								<td><c:out value="${list.name}" /></td>
+								<td><c:out value="${list.name}"/></td>
 								<td><c:out value="${list.dept_id}" /></td>
 								<td><c:out value="${list.post_name}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${list.post_regdate}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${list.post_updatedate}" /></td>
+								<td><c:out value="${list.post_regdate}" /></td>
+								<td><c:out value="${list.post_updatedate}" /></td>
 							</tr>
 						</c:forEach> 
 					</tbody>
@@ -155,6 +167,7 @@
 </div>
 <!-- /.row -->
 </div>
+</body>
 
 <script type="text/javascript" src="/resources/js/post.js"></script>
 <script type="text/javascript">
@@ -167,6 +180,9 @@ $(document).ready(function () {
 	var formKeyword = searchForm.find("input[name='keyword']");
 	var formPageNum = searchForm.find("input[name='pageNum']");
 	
+	
+	var csrf_token = $("meta[name='_csrf']").attr("content");
+	var csrf_header = $("meta[name='_csrf_header']").attr("content");
 
 
 	 //새 게시물 등록 선택 시 register.jsp 이동
@@ -246,18 +262,24 @@ $(document).ready(function () {
 	  $(".getPost").on("click",function(e){
 		  	
 			e.preventDefault();
-			var post_id = $(this).attr("href");
-			console.log(post_id);
+			var post_id = $(this).find("td a").attr("href");
+			
+			
+			var post={
+					post_id:post_id,
+					csrf_token:csrf_token,
+		    		csrf_header:csrf_header
+			}
 
 			//history 테이블에 넣어서 읽음 표시하기
-			postService.insertHistory({post_id:post_id});
+			postService.insertHistory(post);
 			
-			//get.jsp이동
+		 //get.jsp이동
 			  $("#actionForm") .
-				append("<input type='hidden' name='post_id' value='"+ $(this).attr("href")+ "'>");
+				append("<input type='hidden' name='post_id' value='"+post_id+ "'>");
 			
 			$("#actionForm").attr("action","/board/get");
-			$("#actionForm").submit();  
+			$("#actionForm").submit(); 
 		
 	  });
 	  

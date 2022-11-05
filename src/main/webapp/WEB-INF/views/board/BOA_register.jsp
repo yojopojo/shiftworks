@@ -73,31 +73,30 @@
 						</div>
 
 					<div class="form-group">
-						<label>제목</label> <input class="form-control" name='post_name'
-							value="<c:out value="${post.post_name}" />" />
+						<label>제목</label> 
+						<input class="form-control" name='post_name' value="<c:out value="${post.post_name}" />" />
 					</div>
 					
 					<sec:authentication property="principal" var="pinfo"/>
 					<div class="form-group">
-						<label>게시자</label> <input class="form-control" name='emp_id'
-							value="<c:out value="${pinfo.employee.name}" />" readonly="readonly" />
+						<label>게시자</label> 
+						<input class="form-control" name='name' value="<c:out value="${pinfo.employee.name}" />" readonly="readonly" />
 					</div>
 					
 					<sec:authentication property="principal" var="pinfo"/>
 					<div class="form-group">
-						<label>게시부서</label> <input class="form-control" name='dept_id'
-							value="<c:out value="${pinfo.employee.dept_id}" />" readonly="readonly">
+						<label>게시부서</label> 
+						<input class="form-control" name='dept_id' value="<c:out value="${pinfo.employee.dept_id}" />" readonly="readonly">
 					</div>
 
 					<div class="form-group">
-						<label>게시일</label> <input class="form-control" name='post_regdate'
-							value="" readonly="readonly" />
+						<label>게시일</label> 
+						<input class="form-control" name='post_regdate' value="" readonly="readonly" />
 					</div>
 
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="20" cols="150"
-							name='post_content'>
+						<textarea class="form-control" rows="20" cols="150" name='post_content'>
 							<c:out value="${post.post_content}" />
 						</textarea>
 					</div>
@@ -106,10 +105,14 @@
 						<label>수신부서</label> <input class="form-control"
 							name='post_receivedept' value="<c:out value="" />" />
 					</div>
+					<div class="form-group">
+						<input class="form-control" hidden="hidden" name='emp_id' value="<c:out value="${pinfo.username}" />" />
+					</div>
 				
 				</form>
 
 				<button id="registerBtn" type="button" class="btn btn-primary" value="">게시하기</button>
+				<button id="listBtn" class="btn btn-primary">목록보기</button>
 
 			</div>
 			<!--  end panel-body -->
@@ -149,7 +152,7 @@ $(document).ready(function () {
 	      var post = {
 	            b_id: formInputBoard.val(),
 	            post_name:formInputTitle.val(),
-	            emp_id:formInputEmp.val(), //추후 로그인 세션으로 변경예정 
+	            emp_id:formInputEmp.val(), 
 	            dept_id:formInputDept.val(),
 	            post_content:formInputContent.val(),
 	            post_receivedept:formInputReceive.val(),
@@ -177,6 +180,12 @@ $(document).ready(function () {
 	 
 	    temporalBtn.on("click",function(){
 	    	
+	    	//게시판 번호가 입력되지 않을 시 임시저장할 수 없음
+	    	if(formInputBoard.val()==="------"){
+	    		alert("게시판 번호를 입력하세요");
+	    		return;
+	    	}
+	    	console.log(typeof(formInputBoard.val()));
 	    	
 	    	 var post = {
 	 	            b_id: formInputBoard.val(),
@@ -188,12 +197,13 @@ $(document).ready(function () {
 		            csrf_header:csrf_header
 	 	          };
 	    	 
+	    	 
 	    	 postService.temporalPost(post, function(result){
 	    		 alert("임시저장되었습니다");
 	    		 form.find("input").val(""); 
 	    		 form.find("textarea").val(""); 
 	    		 location.href="/board/list";
-	    	 })
+	    	 }) 
 	    })//end temporalregister
 	    
 	    
@@ -249,6 +259,14 @@ $(document).ready(function () {
 				}
 			}); //$.ajax
 
+		});
+	    
+	    
+	  //list버튼 클릭 시 목록이동
+		$('#listBtn').on("click", function(e) {
+	
+			location.href ="/board/list";
+			
 		});
 
 	});
