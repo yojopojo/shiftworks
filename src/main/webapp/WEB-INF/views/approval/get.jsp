@@ -37,6 +37,10 @@
                   value='<c:out value="${approval.apr_title }"/>' readonly="readonly">
             </div>
             <div class="form-group">
+               <label>결재 상태</label> <input class="form-control" name='apr_status'
+                  value='<c:out value="${approval.apr_status }" />' readonly="readonly">
+            </div>            
+            <div class="form-group">
                <label>작성 일자</label> <input class="form-control" name='apr_receivedate'
                   value='<fmt:formatDate pattern="yyyy-MM-dd" 
                    value="${approval.apr_receivedate }"/>' readonly="readonly">

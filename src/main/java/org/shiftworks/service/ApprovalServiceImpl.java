@@ -150,6 +150,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 			
 			return temp;
 		}
+
+		@Override
+		public int getReceivedTotal() {
+			// TODO Auto-generated method stub
+			return mapper.getReceivedTotal();
+		}
 	
 		/*
 		임시저장

@@ -23,8 +23,9 @@
 <body>
 <div class = "container">
 <h1>결재문서 작성</h1>
+
    <form id="insertForm" role="form" action="/approval/insert" method="post"> 
-          <div class="form-group">
+          <div class=""></div>
              <div>
                 <label>결재 양식</label> 
                    <select name="af_id">
@@ -34,6 +35,8 @@
                       <option value="3">휴가신청서</option>
                    </select>
               </div>     
+            
+                      
              <!-- start /.row (파일 추가) -->      
              <div class="row">
             <div class="col-lg-12">
@@ -56,8 +59,8 @@
                 <!-- end panel body -->
            </div>
            <!-- end panel -->
-      </div>
-      <!-- /.row -->
+      	</div>
+     	 <!-- /.row -->
 
 
              <div >
@@ -81,6 +84,10 @@
              <button type="submit" class="btn btn-default">제출하기</button>
              <button id="temporalBtn" type="button" class="btn btn-default">임시저장</button>
              <button id="load" type="button" class="btn btn-default">불러오기</button>
+             <a class = "btn btn-default" href="/approval/list" role="button">취소</a>
+             
+             
+             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         </form>
         
         

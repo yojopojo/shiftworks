@@ -56,7 +56,7 @@ public class ApprovalController {
 	public void receivedList(ApprovalCriteria cri, Model model) {
 		log.info("list" + cri);
 		model.addAttribute("list", service.getReceivedList(cri));
-		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getReceivedTotal()));
 	}
 	
 	/*

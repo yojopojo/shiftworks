@@ -56,7 +56,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<br><br>
+
 	
 			<!-- 페이징 처리 뷰-->
 	<nav aria-label="Page navigation">
