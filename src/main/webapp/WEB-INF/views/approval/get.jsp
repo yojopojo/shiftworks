@@ -10,21 +10,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
+<!-- <script
    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
    crossorigin="anonymous"></script>
 <script
    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-   crossorigin="anonymous"></script>
+   crossorigin="anonymous"></script> -->
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>결재문서 상세보기</title>
 </head>
-<body class='container'>
-
+<body>
+<div class = "container">
 <h1>결재 문서 상세보기</h1>
    <a href="/approval/list">결재문서 내역</a>
             <div class="form-group">
@@ -152,6 +152,6 @@
             
             
             </script>
-            
+</div>            
 </body>
 </html>

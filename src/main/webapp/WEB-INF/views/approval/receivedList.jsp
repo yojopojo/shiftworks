@@ -18,12 +18,13 @@
 	crossorigin="anonymous"></script> -->
 <meta charset="UTF-8">
 </head>
-<body class='container'>
-
-<h1>결재전 문서함</h1>
-	<a href="/approval/list">전체 문서함</a>
-	
-	<table border="1" width="900">
+<body>
+<div class = "container">
+<h2>결재전 문서함</h2>
+	<div>
+		<a class = "btn btn-default" href="/approval/list" role="button">전체 문서함</a>
+	</div>
+	<table class="table table-hover">
 		<tr>
 			<th>결재 번호</th>
 			<th>결재 유형</th>
@@ -57,25 +58,31 @@
 	</table>
 	<br><br>
 	
-				<!-- 페이징 처리 뷰-->
-				<div class='pull-right'>
-					<ul class="pagination">
-						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous">
-							<a href="${pageMaker.startPage -1}">이전</a></li>
-						</c:if>
-						 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
-								<a href="${num}">${num}</a>
+			<!-- 페이징 처리 뷰-->
+	<nav aria-label="Page navigation">
+		<ul class="pagination justify-content-center">
+			<c:if test="${pageMaker.prev}">
+		 		<li class="page-item">
+		 			<a class="page-link" href="${pageMaker.startPage -1}" aria-label="Previous">
+		 					<span aria-hidden="true">&laquo;</span> 
+						</a>						
 							</li>
-						</c:forEach>
-						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next">
-							<a href="${pageMaker.endPage +1 }">이후</a></li>
-						</c:if>
-					</ul>
-				</div>
-				<!--  end Pagination -->
+								</c:if>
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+				<li class="page-item"  ${pageMaker.cri.pageNum == num ? "active":""} ">
+					<a class = "page-link" href="${num}">${num}</a>
+							</li>
+								</c:forEach>
+			<c:if test="${pageMaker.next}">
+				<li class="page-item">
+					<a class = "page-link" href="${pageMaker.endPage +1 }" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+     				 		</a>
+								</li>
+									</c:if>
+		</ul>
+	</nav>
+	<!--  end Pagination -->
 
 			<form id='actionForm' action='/approval/receivedList' method='get'>
 					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
@@ -90,7 +97,7 @@
 			//pagination(페이지 이동)
 			var actionForm = $("#actionForm");
 			
-			  $(".paginate_button a").on("click", function(e) {
+			  $(".page-item a").on("click", function(e) {
 							e.preventDefault();
 							console.log('click');
 							$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
@@ -108,6 +115,6 @@
 						});
 
 </script>		
-	
+</div>	
 </body>
 </html>

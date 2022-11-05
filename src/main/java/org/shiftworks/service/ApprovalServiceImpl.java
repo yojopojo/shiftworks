@@ -53,7 +53,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		return mapper.getListWithPaging(cri).stream()
 				// 위 향상된 for문과 동일
-				.map(a -> toDto(a)).collect(Collectors.toList()); // a(변수명) = ApprovalVO
+					.map(a -> toDto(a)).collect(Collectors.toList()); // a(변수명) = ApprovalVO
 		}				
 
 	@Override

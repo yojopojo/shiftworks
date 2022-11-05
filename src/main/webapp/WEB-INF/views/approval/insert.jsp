@@ -8,21 +8,22 @@
 <!DOCTYPE html>
 <html>
 <head>
- <script
+ <!-- <script
    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
    crossorigin="anonymous"></script>
 <script
    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-   crossorigin="anonymous"></script>
+   crossorigin="anonymous"></script> -->
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 </head>
-<body class='container'>
+<body>
+<div class = "container">
 <h1>결재문서 작성</h1>
-   <form id="insertForm" role="form" action="/approval/insert" method="post">
+   <form id="insertForm" role="form" action="/approval/insert" method="post"> 
           <div class="form-group">
              <div>
                 <label>결재 양식</label> 
@@ -32,18 +33,17 @@
                       <option value="2">품의서</option>
                       <option value="3">휴가신청서</option>
                    </select>
-                   
+              </div>     
              <!-- start /.row (파일 추가) -->      
              <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                
-                     <div class="panel-heading">파일 추가</div>
-                     <!-- /.panel-heding  -->
-                  <div class="panel-body">
-                    <div class="form-group uploadDiv">
-                        <input type="file" name="uploadFile" multiple />
-                    </div>
+                	<div class="panel-heading"></div>
+                    	 <!-- /.panel-heding  -->
+                  			<div class="panel-body">
+                    			<div class="form-group uploadDiv">
+                        			<input type="file" name="uploadFile" multiple />
+                    				</div>
                  <div class="uploadResult"> 
                       <ul>
                 
@@ -60,9 +60,9 @@
       <!-- /.row -->
 
 
-             <div>
+             <div >
                <label>작성자</label> 
-                  <input class ="" name='emp_id' readonly value="user1">
+                  <input class ="form-control" name='emp_id' readonly value="user1">
              </div>
           <div>
             <label>결재명</label> 
@@ -189,7 +189,7 @@
 
            })
            
-            // 모달창 닫기 이벤트
+            // 임시저장 모달창 닫기 이벤트
           $("#modalCloseBtn").on("click", function(e){
               $('.modal').modal("hide");
           });
@@ -198,7 +198,7 @@
               $('.modal').modal("hide");
           }); 
           
-          // 임시저장 목록 db 불러오기
+          //  불러오기 버튼 누르면 임시저장 DB 목록 가져오기
             $(document).on("click", ".tempBtn", function(e) {
                e.preventDefault();
                 
@@ -395,6 +395,6 @@
    
 </script>
         
-
+</div>
 </body>
 </html>
