@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.DocumentPageDTO;
+import org.shiftworks.domain.ApprovalCriteria;
+import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
@@ -226,15 +228,15 @@ public class DocumentController {
 			log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 			
-			log.info("mydoclist.........");
-			DocumentCriteria cri = new DocumentCriteria();
+			log.info("approvallist.........");
+			ApprovalCriteria cri = new ApprovalCriteria();
 			cri.setPageNum(pageNum);
 			cri.setEmp_id(emp_id);
 			
 			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/document/DOC_myapprovallist");
-			mav.addObject("pageMaker", service.getMyDocumentListWithPaging(cri));
+			mav.addObject("pageMaker", service.approvalSelectList(cri));
 			
 			return mav;
 		}
@@ -244,23 +246,23 @@ public class DocumentController {
 		//결재문서함 상세보기
 		@ResponseBody
 		@GetMapping(value = "/approvalDetail")
-		public ModelAndView getMyApproval(@RequestParam("post_id")int post_id, Authentication auth){
+		public ModelAndView getMyApproval(@RequestParam("apr_id")int apr_id, Authentication auth){
 			
-			log.info("deptdoc........");
+			log.info("approvaldoc........");
 			
 			//로그인한 사람만 접근 가능
 			UserDetails ud = (UserDetails)auth.getPrincipal();
 			log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 			
-			PostVO vo = new PostVO();
-			vo.setPost_id(post_id);
+			ApprovalVO vo = new ApprovalVO();
+			vo.setApr_id(apr_id);
 			vo.setEmp_id(emp_id); 
-			//vo.setPost_receivedept("12"); 	//세션 구현 후 지워야 할 부분 
+			
 			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/document/DOC_myapproval");
-			mav.addObject("post", service.deptSelect(vo));
+			mav.addObject("post", service.approvalSelect(vo));
 			
 			return mav;
 			

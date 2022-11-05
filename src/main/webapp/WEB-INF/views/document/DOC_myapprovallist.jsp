@@ -61,29 +61,27 @@
 				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
 					<thead>
 						<tr>
-							<th>게시판번호</th>
-							<th>게시글번호</th>
+							<th>결재문서번호</th>
+							<th>문서양식번호</th>
 							<th>작성자</th>
-							<th>작성부서</th>
-							<th>제목</th>
-							<th>작성일</th>
-							<th>수정일</th>
+							<th>결재제목</th>
+							<th>결재내용</th>
+							<th>결재상태</th>
+							<th>결재일자</th>
 						</tr>
 					</thead>
 					<tbody id="main">
-						<c:forEach items="${pageMaker.list}" var="post">
+						<c:forEach items="${pageMaker.list}" var="approval">
 							<tr>
-								<td><c:out value="${post.b_id}" /></td>
-								<td><a class="getMyDoc" href='<c:out value="${post.post_id}"/>'>
-									<c:out value="${post.post_id}" /></a>
+								<td><a class="getMyDoc" href='<c:out value="${approval.apr_id}"/>'>
+									<c:out value="${approval.apr_id}" /></a>
 								</td>
-								<td><c:out value="${post.emp_id}" /></td>
-								<td><c:out value="${post.dept_id}" /></td>
-								<td><c:out value="${post.post_name}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_regdate}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_updatedate}" /></td>
+								<td><c:out value="${approval.af_id}" /></td>
+								<td><c:out value="${approval.emp_id}" /></td>
+								<td><c:out value="${approval.apr_title}" /></td>
+								<td><c:out value="${approval.apr_content}" /></td>
+								<td><c:out value="${approval.apr_status}" /></td>
+								<td><c:out value="${approval.apr_signdate}" /></td>
 							</tr>	
 						</c:forEach>
 					</tbody>

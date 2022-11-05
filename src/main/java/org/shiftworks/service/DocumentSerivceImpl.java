@@ -4,6 +4,11 @@ import java.util.List;
 
 import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.DocumentPageDTO;
+import org.shiftworks.domain.ApprovalCriteria;
+import org.shiftworks.domain.ApprovalDTO;
+import org.shiftworks.domain.ApprovalListDTO;
+import org.shiftworks.domain.ApprovalPageDTO;
+import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapDTO;
@@ -69,6 +74,20 @@ public class DocumentSerivceImpl implements DocumentService {
 	public PostVO deptSelect(PostVO vo) {
 	
 		return mapper.deptSelect(vo);
+	}
+
+	@Override
+	public ApprovalListDTO approvalSelectList(ApprovalCriteria cri) {
+		List<ApprovalVO>list = mapper.approvalSelectList(cri);
+		
+		String emp_id = cri.getEmp_id();
+		ApprovalListDTO dto = new ApprovalListDTO(cri, mapper.getTotalApproval(), list);
+		return dto;
+	}
+
+	@Override
+	public ApprovalVO approvalSelect(ApprovalVO vo) {
+		return mapper.approvalSelect(vo);
 	}
 
 	
