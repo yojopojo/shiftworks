@@ -259,6 +259,7 @@ body {
 
 .response {
 	float: right;
+	margin-top: 20px;
 	margin-right: 0px !important;
 	margin-left: auto; /* flexbox alignment rule */
 }
@@ -290,6 +291,7 @@ body {
 	position: absolute;
 	right: 25px;
 	padding: 12px 12px 12px 12px;
+	border: none !important;
 	border-radius: 50px;
 	font-size: 14pt;
 }

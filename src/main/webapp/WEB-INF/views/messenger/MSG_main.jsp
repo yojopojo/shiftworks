@@ -3,12 +3,18 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+
+
 <title>Shiftworks_messenger</title>
 
 <!-- icon을 사용하기 위함 -->
@@ -20,14 +26,17 @@
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
 
 <!-- JQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
 <!-- timeago 라이브러리 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
 
 <!-- socket 라이브러리 -->
-<script	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <!-- custom style -->
 <link rel="stylesheet" href="/resources/css/messenger.css">
@@ -36,10 +45,9 @@
 <script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
 <!-- <script type="text/javascript" src="../../resources/js/messenger/event.js" /> -->
 
-
 <script type="text/javascript"></script>
 </head>
-<body class = "container">
+<body class="container">
 	<!-- partial:index.partial.html -->
 
 	<div class="container">
@@ -70,11 +78,11 @@
 							placeholder="Search..."></input>
 					</div>
 				</div>
-				
+
 				<!-- ChatRoom DB에서 채팅방 리스트 출력 -->
 				<c:forEach items="${chatRoomList}" var="chatRoom">
-		
-					<div class="discussion" id="${chatRoom.room_id }" >
+
+					<div class="discussion" id="${chatRoom.room_id }">
 						<div class="photo"
 							style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
 							<div class="online"></div>
@@ -99,7 +107,7 @@
 							}
 							
 						</script>
-						
+
 					</div>
 				</c:forEach>
 			</section>
@@ -108,12 +116,13 @@
 			<section class="chat">
 				<div class="header-chat">
 					<i class="icon fa fa-user-o" aria-hidden="true"></i>
-					<p class="name"></p>
+					<p class="name" id="name"></p>
 					<i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
 				</div>
 
 
 				<div class="messages-chat">
+					
 					<!-- <div class="message">
 						<div class="photo"
 							style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
@@ -147,24 +156,26 @@
 					<p class="time">15h09</p> -->
 				</div>
 				<div class="footer-chat">
-					<i class="icon fa fa-paperclip clickable" style="font-size: 25pt;"
-						aria-hidden="true"></i> <input type="text" class="write-message"
-						placeholder="Type your message here"></input> <i
-						class="icon send fa fa-paper-plane-o clickable" aria-hidden="true"></i>
+					<i class="icon fa fa-paperclip clickable" style="font-size: 25pt;" aria-hidden="true"></i> 
+					<input type="text" class="write-message" placeholder="Type your message here"></input> 
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					<i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true"></i>
 				</div>
 			</section>
 		</div>
 	</div>
-	
-
-	<sec:authentication property="principal.username"  var="login_id"/>
 
 
-	
-<script type="text/javascript">
+	<sec:authentication property="principal.username" var="login_id" />
+
+
+
+	<script type="text/javascript">
 
 $(document).ready(function() {
-	
+
+	// 로그인된 사번 
+	var login_id = "<c:out value='${login_id}'/>";
 	
     var socket = null;
     
@@ -187,10 +198,42 @@ $(document).ready(function() {
     // 전송 버튼 눌렀을 때 메시지 전송
     $('.send').on("click", function(e) {
         console.log("btn_send");
-        messengerService.sendMessage();
+        
+        // 채팅 내용 가져오기
+        var content =  $('.write-message').val();
+        console.log("전송 버튼 클릭 이벤트 : content : " + content);
+       
+        if(content != ""){
+        // room_id 가져오기
+        var room_id = $('.chat .header-chat .name').attr('id').substr(5);
+        console.log("전송 버튼 클릭 이벤트 : room_id : " + room_id);
+        
+        // 현재 시간 구하기
+        const d = new Date();
+		const timestamp = new Date(+d + 3240 * 10000).toISOString().replace('T', ' ').replace(/\..*/, '');
+        console.log("전송 버튼 클릭 이벤트 : sendtime : " + timestamp);	
+        
+        
+        var chat = {
+	            content: $('.write-message').val(),
+	            sendtime: timestamp,
+	            sender: login_id,
+	            room_id: room_id
+	          };
+     
+        messengerService.sendChat(chat, function(result){
+        	console.log("메시지 전송 결과 : " + result);
+        	
+        	if(result == 'success'){       		
+        		pintChat(chat);
+        	}
+        	
+        });
         $('.write-message').val('').focus();
+        }
     });
  
+    
     // 메시지를 입력하고 enter 키를 입력했을 때 메시지 전송
     $('.write-message').on("keypress", function(e) {
             
@@ -216,8 +259,8 @@ $(document).ready(function() {
 
     // 채팅방 눌렀을 때
     $('.discussions .search').nextAll().on("click", function(e){
-
-    	// 각각의 채팅방 목록에 이벤트 추가
+    	
+    	// 각각의 채팅방 목록에 클릭 이벤트 추가
     	 $('.discussion').each(function(index, item){
 
     	 	// 검색창이 있는 div에 이벤트 방지를 위한 조건
@@ -229,24 +272,18 @@ $(document).ready(function() {
     	 		$(item).attr("class", "discussion");
     	 	}
     	 });
-
-    	
+ 
     	 // 검색창이 있는 div에 이벤트 방지를 위한 조건문
     	 // 선택된 채팅방에 선택 표시
     	 if($(this).attr("class") != 'discussion search'){ 
     		$(this).attr("class", "discussion message-active");
        	 }
 
-    	 
     	 // 채팅방의 크기 줄이고, 채팅 내용을 보여줌
     	 $('.discussions').css('width', '35%');
-    	 $('.chat').fadeOut().fadeIn().show();
+    	 $('.chat').hide().fadeIn(500).show();
     	 $('.timer').css('font-size', '9px');
     	 console.log("room_id : " + $(this).attr("id"));
-    	 
-    	 
-    	 // 로그인된 사번 
-    	 var login_id = "<c:out value='${login_id}'/>";
     	 
     	 // 선택된 채팅방의 지난 채팅 내역 가져옴
     	 messengerService.getChat(parseInt($(this).attr("id")), function(data){
@@ -256,33 +293,39 @@ $(document).ready(function() {
     	 	if(data != null){
     	 		console.log(data);
     		 	for(var i = 0; i < data.length; i++){
-    		 		
-    		 		// 채팅 내용이 있을 때만 출력
-    		 		if(data[i].content != null){
-						
-    		 			// 상대방의 채팅 내용
-	    		 		if(data[i].sender != login_id){
-		    		 		var content = '<div class="message" id="msg_'+ data[i].chat_id + '">' +
-		    		 		'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
-		    		 		'<div class="online"></div></div>' + 
-		    		 		'<p class="text">'+ data[i].content + '</p>	</div>' +
-		    		 		'<p class="time">' + data[i].sendtime.substr(0,16) + '</p>';
-		    		 		$(".messages-chat").append(content);
-		    		 		
-	    		 		}else{	// 나의 채팅 내용
-	    		 			var content = '	<div class="message text-only">' +
-	    		 				'<div class="response">' +
-	    		 				'<p class="text">'+ data[i].content +'</p>' +
-	    		 				'</div></div>' +
-	    		 				'<p class="response-time time">' + data[i].sendtime.substr(0,16) + '</p>';
-	    		 			$(".messages-chat").append(content);
-	    		 		}	    		 			
-	    	 		}
+    		 		printChat(data[i]);
     		 	}
-    	 		$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name);
+    	 		$('.chat .header-chat .name').empty().append(data[0].chatRoom.room_name); 
     	 	}
     	 });  
     });
+    
+ function printChat(chat){
+	 
+	 $('.chat .header-chat .name').attr('id', "chat_" + chat.room_id);
+	 
+	 // 채팅 내용이 있을 때만 출력
+	 if(chat.content != null){
+
+	// 상대방의 채팅 내용
+	 		if(chat.sender != login_id){
+		 		var content = '<div class="message" id="msg_'+ chat.chat_id + '">' +
+		 		'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
+		 		'<div class="online"></div></div>' + 
+		 		'<p class="text">'+ chat.content + '</p>	</div>' +
+		 		'<p class="time">' + chat.sendtime.substr(0,16) + '</p>';
+		 		$(".messages-chat").append(content);
+		 		
+	 		}else{	// 나의 채팅 내용
+	 			var content = '	<div class="message text-only">' +
+	 				'<div class="response">' +
+	 				'<p class="text">'+ chat.content +'</p>' +
+	 				'</div></div>' +
+	 				'<p class="response-time time">' + chat.sendtime.substr(0,16) + '</p>';
+	 			$(".messages-chat").append(content);
+	 		}	    		 			
+ 		}
+ 	}
     
 });
     
