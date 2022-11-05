@@ -91,7 +91,7 @@
 		select count(*) from approval
 	</select>
 
-	<!-- 전체 결재 문서수 조회 -->
+	<!-- 결재할 문서함 전체 결재 문서수 조회 -->
 	<select id="getReceivedTotal" resultType="int">
 		select count(*) from approval where apr_status = 0
 	</select>

@@ -24,6 +24,7 @@
 <body>
 <div class = "container">
 	<h2>전체 결재 문서 LIST 페이지</h2>
+	<a class = "btn btn-default" href="/approval/main" role="button">메인</a>
 	<a class = "btn btn-default" href="/approval/insert" role="button">결재문서작성</a>
 	<a class ="btn btn-default" href="/approval/receivedList" role ="button">결재할 문서함</a>
 

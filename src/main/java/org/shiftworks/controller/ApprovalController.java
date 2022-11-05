@@ -36,6 +36,16 @@ public class ApprovalController {
 
 	private ApprovalService service;
 	
+	
+	/*
+	 * 전자결재 메인 페이지
+	*/
+	@GetMapping("/main")
+	@PreAuthorize("isAuthenticated()")
+	public void approvalMain() {
+		
+	}
+	
 	/*
 	 * 결재 리스트
 	 */

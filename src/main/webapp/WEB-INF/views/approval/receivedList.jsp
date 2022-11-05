@@ -22,6 +22,7 @@
 <div class = "container">
 <h2>결재전 문서함</h2>
 	<div>
+		<a class = "btn btn-default" href="/approval/main" role="button">메인</a>
 		<a class = "btn btn-default" href="/approval/list" role="button">전체 문서함</a>
 	</div>
 	<table class="table table-hover">
