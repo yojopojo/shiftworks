@@ -16,13 +16,11 @@
 			<div class="container">
 			  <div class="row">
 			    <div class="col">결재문서작성
-			    	<div class="list-group">
-			    		 <ul class="list-group list-group-flush">
-			    		  	<a href="/approval/insert" class="list-group-item ">기안서 작성</a>
+			    	<div class="list-group list-group-flush">
+			    		  	<a href="/approval/insert" class="list-group-item ">기안서 작성	</a>		    		  	
 			    		  	<a href="/approval/insert" class="list-group-item ">품의서 작성</a>
 			    		  	<a href="/approval/insert" class="list-group-item ">휴가신청서 작성</a>
-			    		  	<a href="/approval/temporal" class="list-group-item ">임시저장 목록 불러오기</a>
-						</ul>
+			    		  	<a id="load" href="/approval/temporal" class="list-group-item ">임시저장 목록 불러오기</a>
 			    	</div>
 			    </div>
 			    <!-- end of 결재문서작성  -->
@@ -54,7 +52,7 @@
 			  <div class="row" id ="row2">
 			    <div class="col">결재할 문서
 			    	<div class="list-group">
-	  					<a href="approval/get/${apr_id}" class="list-group-item" aria-current="true">
+	  					<a href="approval/get" class="list-group-item" aria-current="true">
 	   						 <div class="d-flex w-100 justify-content-between">
 	     						 <h5 class="mb-1">List group item heading</h5>
 	     							 <small>3 days ago</small>
@@ -72,5 +70,73 @@
 			    </div>
 			  </div>
 			</div>
+			
+        <!-- 임시저장 모달 구현 -->
+      <!-- Modal -->
+         <div class="modal" id="myModal">
+           <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                       <h4 class="modal-title" id="myModalLabel">임시저장 목록</h4>
+                       </div>
+               <div class="modal-body">
+                  
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="close" data-dismiss="modal">닫기</button>
+                    <!-- <button id='modalRemoveBtn' type="button" class="btn btn-primary">닫기</button> -->
+                  </div>         
+                </div>
+                <!-- /.modal-content -->
+           </div>
+           <!-- /.modal-dialog -->
+         </div>
+         <!-- /.modal -->		
+
+
+<script>
+	$(document).ready(function(){
+		var modal = $(".modal");
+        
+        $('#load').on('click',function(e){
+
+           e.preventDefault();
+           
+           $.ajax({
+              url:"/approval/tempList?emp_id=user1", //emp_id 추후 수정
+              type: 'get',
+              success:function(result){
+                 console.log(result)
+                 
+                 var body = $('.modal-body');
+              
+                 // 모달 바디 초기화
+                 body.empty();
+                 // 임시저장 목록(<ul>태그) 반목문으로 출력
+                 body.append("<ul>")
+                 $.each(result, function(index, item){
+                    console.log(item)
+                    var str = '<li><a href="/approval/tempSelect/' +item.temp_id +'" class="tempBtn">' +                    
+                     item.temp_title + '</a></li>';
+                    body.append(str);
+                 })
+                 body.append("</ul>")
+              }
+           })
+
+          $(".modal").modal("show")
+
+        })
+        
+         // 임시저장 모달창 닫기 이벤트
+       $("#modalCloseBtn").on("click", function(e){
+           $('.modal').modal("hide");
+       });
+        
+       $(".close").on("click", function(e){
+           $('.modal').modal("hide");
+       });
+	})
+</script>	
 </body>
 </html>

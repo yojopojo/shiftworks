@@ -111,7 +111,9 @@ public class ApprovalController {
 	 */
 	@GetMapping("/insert")
 	@PreAuthorize("isAuthenticated()")
-	public void insert() {}
+	public void insert() {
+	
+	}
 	
 	/*
 	 * 결재 처리(결재 상태 변경)
