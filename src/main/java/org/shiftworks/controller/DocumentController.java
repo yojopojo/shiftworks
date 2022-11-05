@@ -96,6 +96,7 @@ public class DocumentController {
 	//내가 쓴 게시물 상세보기 
 	@ResponseBody
 	@GetMapping(value = "/detail")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getMyDocument(@RequestParam("post_id")int post_id, Authentication auth){
 		
 		log.info("mydoc........");
@@ -121,6 +122,7 @@ public class DocumentController {
 	//스크랩한 게시물 리스트 보기
 	@ResponseBody
 	@GetMapping(value = "/scrap/{pageNum}")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getScrapList(@PathVariable("pageNum")int pageNum, Authentication auth){
 		
 		log.info("scraplist.........");
@@ -146,6 +148,7 @@ public class DocumentController {
 	//스크랩 상세보기
 	@ResponseBody
 	@GetMapping(value = "/scrapDetail")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getScrap(@RequestParam("post_id")int post_id, Authentication auth){
 		
 		log.info("scrap........");
@@ -170,6 +173,7 @@ public class DocumentController {
 	//부서수신함 조회
 	@ResponseBody
 	@GetMapping(value = "/deptDoc/{pageNum}")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getDeptDocList(
 					@PathVariable("pageNum") int pageNum, Authentication auth){
 		
@@ -197,6 +201,7 @@ public class DocumentController {
 	//부서수신함 상세보기
 	@ResponseBody
 	@GetMapping(value = "/deptDocDetail")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getDeptDoc(@RequestParam("post_id")int post_id, Authentication auth){
 		
 		log.info("deptdoc........");
@@ -248,6 +253,7 @@ public class DocumentController {
 		//결재문서함 상세보기
 		@ResponseBody
 		@GetMapping(value = "/approvalDetail")
+		@PreAuthorize("isAuthenticated()")
 		public ModelAndView getMyApproval(@RequestParam("apr_id")int apr_id, Authentication auth){
 			
 			log.info("approvaldoc........");
