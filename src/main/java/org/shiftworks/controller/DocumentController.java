@@ -88,19 +88,7 @@ public class DocumentController {
 			return new ResponseEntity <DocumentPageDTO>(service.getMyDocumentListWithPaging(cri),HttpStatus.OK);
 		}
 	
-	//전체 게시물에서 내가 쓴 게시물 보기 ????
-	@ResponseBody
-	@GetMapping(value = "/totalDoc/{emp_id}")
-	public ModelAndView getTotalDocumentList(@PathVariable("emp_id") String emp_id){
 
-		
-		log.info("totalDoc.........");
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("/document/DOC_totaldoc");
-		return mav;
-		
-	}
 	
 	
 	//내가 쓴 게시물 상세보기 
@@ -226,5 +214,56 @@ public class DocumentController {
 		return mav;
 		
 	}
+	
+	//결재문서함 list
+		@ResponseBody
+		@GetMapping(value = "/myApproval/{pageNum}")
+		@PreAuthorize("isAuthenticated()")
+		public ModelAndView getMyApprovalListWithPaging(@PathVariable("pageNum")int pageNum, Authentication auth){
+			
+			//로그인한 사람만 접근 가능
+			UserDetails ud = (UserDetails)auth.getPrincipal();
+			log.info(ud.getUsername());
+			String emp_id = ud.getUsername();
+			
+			log.info("mydoclist.........");
+			DocumentCriteria cri = new DocumentCriteria();
+			cri.setPageNum(pageNum);
+			cri.setEmp_id(emp_id);
+			
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/document/DOC_myapprovallist");
+			mav.addObject("pageMaker", service.getMyDocumentListWithPaging(cri));
+			
+			return mav;
+		}
+		
+		
+		
+		//결재문서함 상세보기
+		@ResponseBody
+		@GetMapping(value = "/approvalDetail")
+		public ModelAndView getMyApproval(@RequestParam("post_id")int post_id, Authentication auth){
+			
+			log.info("deptdoc........");
+			
+			//로그인한 사람만 접근 가능
+			UserDetails ud = (UserDetails)auth.getPrincipal();
+			log.info(ud.getUsername());
+			String emp_id = ud.getUsername();
+			
+			PostVO vo = new PostVO();
+			vo.setPost_id(post_id);
+			vo.setEmp_id(emp_id); 
+			//vo.setPost_receivedept("12"); 	//세션 구현 후 지워야 할 부분 
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/document/DOC_myapproval");
+			mav.addObject("post", service.deptSelect(vo));
+			
+			return mav;
+			
+		}
 
 }

@@ -3,8 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
 
-<div class ="container">
+<link rel="stylesheet" href="/resources/css/post.css">
+
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<div class="container">
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">내가 쓴 게시물</h1>
@@ -12,6 +21,7 @@
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+
 
 <div class="row">
 	<div class="col-lg-12">

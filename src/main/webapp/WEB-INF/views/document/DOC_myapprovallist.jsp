@@ -16,7 +16,7 @@
 <div class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">부서수신함</h1>
+		<h1 class="page-header">결재문서함</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -32,7 +32,6 @@
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-			
 			
 			<!--검색버튼 -->
 				 <div class='row'>
@@ -56,37 +55,44 @@
 						</form>
 					</div>
 				</div>
+			
 				
-				<!--메인게시판-->
+				<!--메인 게시판-->
 				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
 					<thead>
 						<tr>
+							<th>게시판번호</th>
 							<th>게시글번호</th>
 							<th>작성자</th>
-							<th>발신부서</th>
+							<th>작성부서</th>
 							<th>제목</th>
 							<th>작성일</th>
+							<th>수정일</th>
 						</tr>
 					</thead>
 					<tbody id="main">
 						<c:forEach items="${pageMaker.list}" var="post">
 							<tr>
-								<td><a class="getDeptDoc" href='<c:out value="${post.post_id}"/>'>
+								<td><c:out value="${post.b_id}" /></td>
+								<td><a class="getMyDoc" href='<c:out value="${post.post_id}"/>'>
 									<c:out value="${post.post_id}" /></a>
 								</td>
-								<td><c:out value="${post.name}" /></td>
+								<td><c:out value="${post.emp_id}" /></td>
 								<td><c:out value="${post.dept_id}" /></td>
 								<td><c:out value="${post.post_name}" /></td>
-								<%-- <td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_regdate}" /></td> --%>
-							</tr>
+								<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${post.post_regdate}" /></td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${post.post_updatedate}" /></td>
+							</tr>	
 						</c:forEach>
 					</tbody>
 				</table>
 				
-			
-			
-			<!--페이지 처리 뷰-->
+				
+				
+				
+				<!--페이지 처리 뷰-->
 				<div class='pull-right'>
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
@@ -105,21 +111,22 @@
 				</div>
 				<!--  end Pagination -->
 				
-				<form id='actionForm' action='/document/scrapDetail' method='get'>
+				<form id='actionForm' action='/document/detail' method='get'>
 					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 					<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>' /> 	
-					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 				</form> 
 				
+				
+				
 			</div>
-			<!--end panel-body-->
+			<!-- end panelBody-->
 		</div>
 		<!--end panel  -->
 	</div>
 </div>
 <!--end row-->
-
+</div>
 
 <script src="/resources/js/document.js" type="text/javascript"></script>
 <script>
@@ -179,6 +186,7 @@ $(document).ready(function () {
 						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
+						str +="<td>"+list[i].b_id+"</td>";
 						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
@@ -227,6 +235,7 @@ $(document).ready(function () {
 						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
+						str +="<td>"+list[i].b_id+"</td>";
 						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
@@ -249,6 +258,7 @@ $(document).ready(function () {
 
 })//end script
 </script>		
+
 
 
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>
