@@ -8,6 +8,9 @@ var replyService = (function(){
 			type : 'post',
 			url : '/reply/new',
 			data : JSON.stringify(post),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+            },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
