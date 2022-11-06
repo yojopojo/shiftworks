@@ -20,17 +20,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">
-		   <c:choose>
-		   	<c:when test="${pageMaker.cri.b_id eq '1'}">
-		   		공지사항
-		   	</c:when>
-		   	<c:when test="${pageMaker.cri.b_id eq '2'}">
-		   		행사
-		   	</c:when>
-		   	<c:when test="${pageMaker.cri.b_id eq '3'}">
-		   		자유게시판
-		   	</c:when>
-		   </c:choose> 
+		   
 		</h1>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -392,6 +382,18 @@ $(document).ready(function () {
 		 });
 		
 	 });
+	 
+	 //게시판 제목 동적으로 바뀌게 만들기
+	 postService.boardList(function(result){
+		 
+		 console.log('${pageMaker.cri.b_id}')
+		 for(var i=0;i<result.length;i++){
+	            if('${pageMaker.cri.b_id}' ==result[i].b_id){
+	            	$(".page-header").append(result[i].b_name);
+	            }
+	      }
+		 
+	 })
 	
 	 
 	

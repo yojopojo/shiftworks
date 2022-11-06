@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.BoardPageDTO;
+import org.shiftworks.domain.BoardVO;
 import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
@@ -33,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import oracle.net.aso.l;
 
 @RequestMapping("/board/*")
 @RestController
@@ -58,6 +60,8 @@ public class PostController {
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> register(@RequestBody PostVO vo){
 		log.info("register......");
+		
+	
 		int insertCount = service.insertPost(vo);
 		
 		return insertCount ==1
@@ -303,5 +307,35 @@ public class PostController {
 		return new ResponseEntity<PostVO>(service.selectNext(post_id),HttpStatus.OK);
 	}
 	
+	//새 게시판 만드는 페이지 이동
+	@GetMapping(value = "/newboard")
+	public ModelAndView newBoard() {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/BOA_newboard");
+		return mav;
+	}
+	
+	//새 게시판 생성 시 db에 삽입
+	@PostMapping(value = "/newBoard")
+	public ResponseEntity<String> insertNewBoard(@RequestBody BoardVO vo){
+		
+		log.info("new Board.........");
+		
+		return service.insertNewBoard(vo)==1
+		? new ResponseEntity<String>("success",HttpStatus.OK)
+		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
+	
+	//게시판 목록 불러오기
+	@GetMapping(value = "/boardList")
+	public ResponseEntity<List<BoardVO>> selectBoardList(){
+		
+		log.info("boardList.......");
+		
+		return new ResponseEntity<List<BoardVO>>(service.selectBoardList(),HttpStatus.OK);
+	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.BoardPageDTO;
+import org.shiftworks.domain.BoardVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -110,6 +111,18 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public PostVO selectNext(int post_id) {
 		return mapper.selectNext(post_id);
+	}
+
+
+	@Override
+	public int insertNewBoard(BoardVO vo) {
+		return mapper.insertNewBoard(vo);
+	}
+
+
+	@Override
+	public List<BoardVO> selectBoardList() {
+		return mapper.selectBoardList();
 	}
 
 

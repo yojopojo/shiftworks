@@ -5,6 +5,7 @@ import java.util.List;
 import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.BoardPageDTO;
+import org.shiftworks.domain.BoardVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -40,4 +41,8 @@ public interface PostService {
 	public PostVO selectPrev(int post_id);
 	
 	public PostVO selectNext(int post_id);
+	
+	public int insertNewBoard(BoardVO vo);
+	
+	public List<BoardVO> selectBoardList();
 }

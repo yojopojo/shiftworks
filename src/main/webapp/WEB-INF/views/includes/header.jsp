@@ -230,7 +230,7 @@
 		    <div class="card card-body" style="height: 130px; border-width: 0;">
 		      <ul>
 		      	<a href="/document/myApproval/1"><li>결재문서함</li></a><br>
-		      	<a href="/document/myDoc/1"><li>내가 쓴 게시물</li></a><br>
+		      	<a href="/document/myDoc"><li>내가 쓴 게시물</li></a><br>
 		      	<a href="/document/scrap/1"><li>스크랩 문서함</li></a><br>
 		      	<a href="/document/deptDoc/1"><li>부서수신함</li></a><br>
 		      </ul>

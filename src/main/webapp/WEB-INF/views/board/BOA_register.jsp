@@ -66,9 +66,7 @@
 							<label>게시판명</label>
 							<select class="form-select" aria-label="Default select example" name="b_id">
 								<option selected>------</option>
-								<option value="1">공지사항</option>
-								<option value="2">행사</option>
-								<option value="3">자유게시판</option>
+								
 							</select>
 						</div>
 
@@ -259,7 +257,22 @@ $(document).ready(function () {
 				}
 			}); //$.ajax
 
+		});//end file upload
+		
+		
+		//동적으로 게시판 메뉴 추가해주기
+		postService.boardList(function(result){
+			console.log(result[1].b_name);
+			
+			for(var i=0;i<result.length;i++){
+				
+				$(".form-select").append(
+					"<option value='"+result[i].b_id+"'>"+result[i].b_name+"</option>"
+				)
+			}
+			
 		});
+		
 	    
 	    
 	  //list버튼 클릭 시 목록이동

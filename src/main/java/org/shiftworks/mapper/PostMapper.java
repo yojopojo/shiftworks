@@ -3,6 +3,7 @@ package org.shiftworks.mapper;
 import java.util.List;
 
 import org.shiftworks.domain.BoardCriteria;
+import org.shiftworks.domain.BoardVO;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
@@ -40,6 +41,9 @@ public interface PostMapper {
 	
 	public PostVO selectNext(int post_id);
 	
+	public int insertNewBoard(BoardVO vo);
+	
+	public List<BoardVO> selectBoardList();
 	
 
 }

@@ -263,6 +263,54 @@ var postService = (function(){
 			}
 		})
 	}
+	
+	
+	
+	//게시판 생성하기
+	function insertNewBoard(post, callback, error) {
+
+		
+		$.ajax({
+			type : 'post',
+			url : '/board/newBoard',
+			data : JSON.stringify(post),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+            },
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
+	
+	
+	//게시판 불러오기
+	function boardList(callback, error) {
+		
+		$.ajax({
+			type : 'get',
+			url : '/board/boardList'+".json",
+			contentType : "application/json; charset:UTF-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
 
 	
 	
@@ -277,7 +325,9 @@ var postService = (function(){
 		listEntity:listEntity,
 		deletePost:deletePost,
 		selectPrev:selectPrev,
-		selectNext:selectNext
+		selectNext:selectNext,
+		insertNewBoard:insertNewBoard,
+		boardList:boardList
 	}
 	
 	
