@@ -24,7 +24,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 	
-	//ÀüÃ¼ ¸®½ºÆ®
+
 //	@GetMapping("/list")
 //	public void list(Criteria cri, Model model) {
 //		log.info("list11.............."+cri);
@@ -47,12 +47,12 @@ public class EmployeeController {
 		
 	}
 	
-	//µî·Ï get
+	//ï¿½ï¿½ï¿½ get
 	@GetMapping("/register")
 	public void register() {
 		
 	}
-	//µî·Ï post
+	//ï¿½ï¿½ï¿½ post
 	@PostMapping("/register")
 	public String register(EmployeeVO empVO, RedirectAttributes rttr){
 		log.info("register..............1" + empVO);
@@ -64,14 +64,14 @@ public class EmployeeController {
 		
 	}
 	
-	//°èÁ¤»ó¼¼Á¤º¸ º¸±â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("emp_id") String emp_id, Model model) {
 		log.info("get..............");
 		model.addAttribute("empID", service.get(emp_id));		
 	}
 	
-	//°èÁ¤»ó¼¼Á¤º¸ ¼öÁ¤
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@PostMapping("/modify")
 	public String modify(EmployeeVO empVO, RedirectAttributes rttr) {
 	log.info("modify.............................");

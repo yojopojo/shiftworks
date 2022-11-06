@@ -31,9 +31,9 @@ public class EmployeeTests {
 	// 사용자 추가
 	@Test
 	public void testInsertMember() {
-		String sql = "INSERT INTO employee(emp_id, password, name, dept_id) values(?, ?, ?, ?)";
+		String sql = "INSERT INTO employee(emp_id, password, dept_id) values(?, ?, ?)";
 		
-		for(int i=0; i<30; i++) {
+		for(int i=1; i<=30; i++) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -42,24 +42,10 @@ public class EmployeeTests {
 				pstmt = con.prepareStatement(sql);
 				
 				// pw1, pw2, pw3... 형식으로 비밀번호 설정
+				pstmt.setString(1, "user" + i);
 				pstmt.setString(2, pwEncoder.encode("pw" + i));
-				
-				if(i<10) {
-					// user1, user2, user3... 형식으로 아이디 설정
-					pstmt.setString(1, "user" + i);
-					pstmt.setString(3, "u" + i);
-					// dept1 이라는 부서 값 부여
-					pstmt.setString(4, "dept" + 1);
-				} else if(i<20) {
-					pstmt.setString(1, "user" + i);
-					pstmt.setString(3, "u" + i);
-					pstmt.setString(4, "dept" + 2);
-				} else {
-					pstmt.setString(1, "user" + i);
-					pstmt.setString(3, "u" + i);
-					pstmt.setString(4, "dept" + 3);
-				}
-				
+				pstmt.setString(3, "회계팀");
+			
 				pstmt.executeUpdate();
 				
 			} catch (Exception e) {

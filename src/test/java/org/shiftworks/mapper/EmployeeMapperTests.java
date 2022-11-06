@@ -1,9 +1,12 @@
 package org.shiftworks.mapper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import javax.sql.DataSource;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.shiftworks.domain.EmployeeVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -14,8 +17,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class EmployeeMapperTests {
 
-	@Autowired
-	private EmployeeMapper mapper;
+	
+	
+
 	
 //	@Test
 //	public void testRead() {
@@ -23,10 +27,10 @@ public class EmployeeMapperTests {
 //		log.info(vo);
 //	}
 	
-	@Test
-	public void testGetList() {
-		mapper.getList().forEach(employee->log.info(employee));
-	}
+//	@Test
+//	public void testGetList() {
+//		mapper.getList().forEach(employee->log.info(employee));
+//	}
 	
 //	@Test
 //	public void testInsert() {

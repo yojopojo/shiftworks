@@ -25,7 +25,7 @@
 	</sql> -->
 
 
-	<resultMap type="org.shiftworks.domain.EmployeeVO" id="empMap">
+ 	<resultMap type="org.shiftworks.domain.EmployeeVO" id="empMap">
 		<id property="emp_id" column="emp_id"/>
 		<result property="emp_id" column="emp_id"/>
 		<result property="dept_id" column="dept_id"/>
@@ -46,8 +46,7 @@
 			ON e.dept_id = d.dept_id
 			WHERE emp_id = #{emp_id}
 	</select>
-	
-<<<<<<< HEAD
+
 	
 	<!--계정관리-->
 	
@@ -82,10 +81,10 @@
 		
 		<!-- 계정추가 -->
 	<insert id="insert">
-		insert into employee(emp_id, dept_id, position, birthday, name, mobile, internal, 
-		email, address, entry_date, password) 
-			values (#{emp_id}, #{dept_id}, #{position}, #{birthday}, #{name}, #{mobile}, #{internal}, 
-			#{email}, #{address}, #{entry_date} ,#{password})
+		insert into employee(emp_id, dept_id, password, name, address, birthday, position, 
+			mobile, internal, email, entry_date) 
+			values (#{emp_id}, #{dept_id}, #{password}, #{name}, #{address}, #{birthday}, #{position}, 
+			#{mobile}, #{internal}, #{email} ,#{entry_date})
 	</insert>
 		<!-- 계정상세보기 -->
 	<select id="detail" resultType="org.shiftworks.domain.EmployeeVO">
@@ -119,7 +118,7 @@
 		<include refid="criteria"/>
 		bno > 0
 	</select> -->
-=======
+
 	<!--계정관리-->
 	<!--전체 list-->
 	<select id="getList" resultType="org.shiftworks.domain.EmployeeVO">
@@ -147,7 +146,7 @@
 		update employee set dept_id=#{dept_id}, position=#{position}, mobile=#{mobile}, internal=#{internal}
 		, address=#{address}, resignation_date=#{resignation_date} where emp_id=#{emp_id}
 	</update>
->>>>>>> refs/heads/develop
+
 	
 	
 </mapper>
