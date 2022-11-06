@@ -44,5 +44,12 @@ public class ChatServiceImpl implements ChatService {
 		
 		return chatMapper.insertChat(chat);
 	}
+	
+	@Override
+	public Integer updateLastChat(ChatVO chat) {
+		log.info("#ChatServiceImpl, updateLastChat....................");
+		
+		return chatRoomMapper.updateLastchat(chat);
+	}
 
 }

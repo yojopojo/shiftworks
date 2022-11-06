@@ -14,6 +14,7 @@
  // 서버로부터 메시지를 받았을 때
  function onMessage(msg) {		
      var data = msg.data;
+     printChat(msg);
      console.log("onMessage " + data);
     // $(".messages-chat").append(data + "<br/>");
  }

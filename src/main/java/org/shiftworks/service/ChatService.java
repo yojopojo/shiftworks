@@ -10,4 +10,5 @@ public interface ChatService {
 	List<ChatRoomVO> getChatRoomList(String emp_id);
 	List<ChatDTO> getChatList(Integer room_id);
 	Integer sendChat(ChatVO chat);
+	Integer updateLastChat(ChatVO chat);
 }

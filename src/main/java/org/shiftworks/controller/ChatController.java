@@ -90,7 +90,10 @@ public class ChatController {
 		log.info("@ChatController, POST sendMessage...............");
 		
 		
-		Integer result = chatService.sendChat(chat);
+		Integer sendResult = chatService.sendChat(chat);
+		Integer updateResult = chatService.updateLastChat(chat);
+		
+		Integer result = (sendResult == 1 && updateResult == 1) ? 1 : -1;
 		
 		// insert 유무에 따라 헤더값을 다르게 전달
 		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) // 200

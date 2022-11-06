@@ -73,6 +73,8 @@ body {
 	cursor: pointer;
 }
 
+
+
 .discussions .search {
 	display: flex;
 	align-items: center;
@@ -212,8 +214,32 @@ body {
 	right: 40px;
 }
 
-.chat .messages-chat {
+.chat .messages-chat{
+	margin-top: 0.5%;
+	height: 525px;
 	padding: 25px 35px;
+	overflow: hidden;
+}
+
+.chat .messages-chat:hover {
+	overflow-y: scroll;
+}
+
+.chat .messages-chat::-webkit-scrollbar{
+	width: 6px;
+	height: 10%;
+}
+
+/* 스크롤바 막대 설정*/
+.chat .messages-chat::-webkit-scrollbar-thumb{
+	height: 17%;
+    background-color: rgba(79,110,189,0.45);
+    border-radius: 10px;  
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.chat .messages-chat::-webkit-scrollbar-track{
+    background-color: rgba(79,110,189,0.2);
 }
 
 .chat .messages-chat .message {
@@ -246,20 +272,21 @@ body {
 }
 
 .time {
-	font-size: 10px;
+	font-size: 9px;
 	color: lightgrey;
 	margin-bottom: 10px;
 	margin-left: 85px;
 }
 
 .response-time {
+	width: 100%;
+	text-align: right;
 	float: right;
 	margin-right: 40px !important;
 }
 
 .response {
 	float: right;
-	margin-top: 20px;
 	margin-right: 0px !important;
 	margin-left: auto; /* flexbox alignment rule */
 }
@@ -311,7 +338,7 @@ body {
 
 .write-message {
 	border: none !important;
-	width: 65%;
+	width: 75%;
 	height: 50px;
 	margin-left: 20px;
 	padding: 10px;

@@ -3,8 +3,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <!DOCTYPE html>
 <html>
@@ -29,6 +28,11 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<!-- autocomplete  -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <!-- timeago 라이브러리 -->
 <script
@@ -38,6 +42,10 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
+<!-- 실시간 검색을 위한 라이브러리 -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+  
 <!-- custom style -->
 <link rel="stylesheet" href="/resources/css/messenger.css">
 
@@ -104,6 +112,8 @@
 								console.log(timeago);
 							
 								document.getElementById("timer_${chatRoom.room_id }").innerText = timeago;
+							}else{
+								$('.discussion .timer').hide();
 							}
 							
 						</script>
@@ -198,39 +208,7 @@ $(document).ready(function() {
     // 전송 버튼 눌렀을 때 메시지 전송
     $('.send').on("click", function(e) {
         console.log("btn_send");
-        
-        // 채팅 내용 가져오기
-        var content =  $('.write-message').val();
-        console.log("전송 버튼 클릭 이벤트 : content : " + content);
-       
-        if(content != ""){
-        // room_id 가져오기
-        var room_id = $('.chat .header-chat .name').attr('id').substr(5);
-        console.log("전송 버튼 클릭 이벤트 : room_id : " + room_id);
-        
-        // 현재 시간 구하기
-        const d = new Date();
-		const timestamp = new Date(+d + 3240 * 10000).toISOString().replace('T', ' ').replace(/\..*/, '');
-        console.log("전송 버튼 클릭 이벤트 : sendtime : " + timestamp);	
-        
-        
-        var chat = {
-	            content: $('.write-message').val(),
-	            sendtime: timestamp,
-	            sender: login_id,
-	            room_id: room_id
-	          };
-     
-        messengerService.sendChat(chat, function(result){
-        	console.log("메시지 전송 결과 : " + result);
-        	
-        	if(result == 'success'){       		
-        		pintChat(chat);
-        	}
-        	
-        });
-        $('.write-message').val('').focus();
-        }
+		sendEvent();
     });
  
     
@@ -239,8 +217,7 @@ $(document).ready(function() {
             
         if(e.keyCode == '13'){
             console.log("btn_send");
-            messengerService.sendMessage();
-            $('.write-message').val('').focus();
+            sendEvent();
         }
     });
     
@@ -300,6 +277,64 @@ $(document).ready(function() {
     	 });  
     });
     
+    
+    $('.search').autocomplete({
+    	source:function(request, response){
+    		
+    		$.ajax({
+    			type: 'get',
+    			url: '/messenger/chat',
+    			dataType: 'json'
+    			
+    			
+    			
+    		})
+    		
+    	}
+    })	//end search
+    
+    function sendEvent(){
+    	// 채팅 내용 가져오기
+        var content =  $('.write-message').val();
+        console.log("전송 버튼 클릭 이벤트 : content : " + content);
+       
+        if(content != ""){
+        // room_id 가져오기
+        var room_id = $('.chat .header-chat .name').attr('id').substr(5);
+        console.log("전송 버튼 클릭 이벤트 : room_id : " + room_id);
+        
+        // 현재 시간 구하기
+        const d = new Date();
+		const timestamp = new Date(+d + 3240 * 10000).toISOString().replace('T', ' ').replace(/\..*/, '');
+        console.log("전송 버튼 클릭 이벤트 : sendtime : " + timestamp);	
+        
+        
+        
+        var chat = {
+	            content: $('.write-message').val(),
+	            sendtime: timestamp,
+	            sender: login_id,
+	            room_id: room_id
+	          };
+     
+        messengerService.sendChat(chat, function(result){
+        	console.log("메시지 전송 결과 : " + result);
+        	
+        	if(result == 'success'){       		
+        		printChat(chat);
+        	}
+        	
+        });
+        
+        // 채팅 입력창 비우고 포커스
+        $('.write-message').val('').focus();
+
+        }
+        
+        var vScrollDown = $('.messages-chat').prop('scrollHeight');
+    	$('messages-chat').scrollTop(vScrollDown);
+    }
+    
  function printChat(chat){
 	 
 	 $('.chat .header-chat .name').attr('id', "chat_" + chat.room_id);
@@ -307,28 +342,31 @@ $(document).ready(function() {
 	 // 채팅 내용이 있을 때만 출력
 	 if(chat.content != null){
 
-	// 상대방의 채팅 내용
-	 		if(chat.sender != login_id){
-		 		var content = '<div class="message" id="msg_'+ chat.chat_id + '">' +
-		 		'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
-		 		'<div class="online"></div></div>' + 
-		 		'<p class="text">'+ chat.content + '</p>	</div>' +
-		 		'<p class="time">' + chat.sendtime.substr(0,16) + '</p>';
-		 		$(".messages-chat").append(content);
+			// 상대방의 채팅 내용
+		if(chat.sender != login_id){
+			var content = '<div class="message" id="msg_'+ chat.chat_id + '">' +
+			'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
+			'<div class="online"></div></div>' + 
+			'<p class="text">'+ chat.content + '</p>	</div>' +
+			'<p class="time">' + chat.sendtime.substr(0,16) + '</p>';
+			$(".messages-chat").append(content);
 		 		
-	 		}else{	// 나의 채팅 내용
-	 			var content = '	<div class="message text-only">' +
-	 				'<div class="response">' +
-	 				'<p class="text">'+ chat.content +'</p>' +
-	 				'</div></div>' +
-	 				'<p class="response-time time">' + chat.sendtime.substr(0,16) + '</p>';
-	 			$(".messages-chat").append(content);
-	 		}	    		 			
- 		}
- 	}
-    
+	 	}else{	// 나의 채팅 내용
+	 		var content = '	<div class="message text-only">' +
+	 			'<div class="response">' +
+	 			'<p class="text">'+ chat.content +'</p>' +
+	 			'</div></div>' +
+	 			'<p class="response-time time">' + chat.sendtime.substr(0,16) + '</p>';
+	 		$(".messages-chat").append(content);
+	 	}
+			
+		$(".messages-chat").animate({ scrollTop: $(".messages-chat")[0].scrollHeight });
+	}
+}
+ 
 });
-    
+
+
 </script>
 </body>
 </html>

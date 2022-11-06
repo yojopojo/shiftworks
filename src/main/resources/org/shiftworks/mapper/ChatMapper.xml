@@ -38,11 +38,14 @@
 	<select id="getList" parameterType="Integer" resultMap="chatMap">
 	
 		<![CDATA[
-			SELECT c.chat_id, c.content, c.sendtime, c.sender, cr.room_id, cr.room_name
-				FROM chatroom cr LEFT OUTER JOIN chat c
-				ON  c.room_id = cr.room_id
-				WHERE cr.room_id = #{room_id}
-					AND rownum <= 5
+			SELECT *
+				FROM (select c.chat_id, c.content, c.sendtime, c.sender, cr.room_id, cr.room_name
+						FROM chatroom cr LEFT OUTER JOIN chat c
+                        	ON  c.room_id = cr.room_id
+                        	WHERE cr.room_id = #{room_id}
+                        	ORDER BY sendtime desc
+                        )
+				WHERE rownum <= 5
 				ORDER BY sendtime
 			
 		]]>
