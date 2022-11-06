@@ -29,18 +29,38 @@
 				</div>
 
 				<div class="form-group">
-					<label>부서 번호</label> <input class="form-control" name='dept_id'
-						value='<c:out value="${employee.dept_id }"/>' readonly="readonly">
-				</div>
-						<div class="form-group">
-					<label>이름</label> <input class="form-control" name='name'
-						value='<c:out value="${employee.name }"/>' readonly="readonly">
+					<label>부서명</label> <input class="form-control" name='dept_name'
+						value='<c:out value="${employee.dept_name }"/>' readonly="readonly">
 				</div>
 						<div class="form-group">
 					<label>직급</label> <input class="form-control" name='position'
 						value='<c:out value="${employee.position }"/>' readonly="readonly">
 				</div>
+						<div class="form-group">
+					<label>이름</label> <input class="form-control" name='name'
+						value='<c:out value="${employee.name }"/>' readonly="readonly">
+				</div>
 				<div class="form-group">
+					<label>생년월일</label> <input class="form-control" name='birthday'
+						value='<c:out value="${employee.birthday }"/>' readonly="readonly">
+				</div>
+					<div class="form-group">
+					<label>모바일</label> <input class="form-control" name='mobile'
+						value='<c:out value="${employee.mobile }"/>' readonly="readonly">
+				</div>
+					<div class="form-group">
+					<label>사내망</label> <input class="form-control" name='internal'
+						value='<c:out value="${employee.internal }"/>' readonly="readonly">
+				</div>
+					<div class="form-group">
+					<label>이메일</label> <input class="form-control" name='email'
+						value='<c:out value="${employee.email }"/>' readonly="readonly">
+				</div>
+					<div class="form-group">
+					<label>주소</label> <input class="form-control" name='address'
+						value='<c:out value="${employee.address }"/>' readonly="readonly">
+				</div>
+					<div class="form-group">
 					<label>입사일</label> <input class="form-control" name='entry_date'
 						value='<c:out value="${employee.entry_date }"/>' readonly="readonly">
 				</div>

@@ -48,13 +48,13 @@ public class EmployeeMapperTests {
 //		log.info(empVO);
 //	}
 	
-//	@Test
-//	public void testDetail() {
-//		
-//		EmployeeVO empVO = mapper.detail("admin7");
-//		
-//		log.info(empVO);
-//	}
+	@Test
+	public void testDetail() {
+		
+		EmployeeVO empVO = mapper.detail("user11");
+		
+		log.info(empVO);
+	}
 	
 //	@Test
 //	public void testDelete() {

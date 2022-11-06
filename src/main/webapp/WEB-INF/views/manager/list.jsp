@@ -37,17 +37,18 @@
 
 					<c:forEach items="${list}" var="employee">
 						<tr>
-							<td><c:out value="${employee.emp_id}" /></td>
-						<td><a href='/employee/get?emp_id=<c:out value="${employee.emp_id}"/>'>
-						<c:out value="${employee.name}"/></a></td>
+							<td><a href='/employee/get?emp_id=<c:out value="${employee.emp_id}"/>'>
+							<c:out value="${employee.emp_id}" /></a></td>
+						<td><c:out value="${employee.dept_name}"/></td>
 
-							<td><a class='move' href='<c:out value="${employee.emp_id}"/>'>
+							<%-- <td><a class='move' href='<c:out value="${employee.emp_id}"/>'>
 									<c:out value="${employee.dept_id}" />
-									<%-- <b>[ <c:out value = "${employee.replyCnt}" />]</b> --%>
-							</a></td>
+									<b>[ <c:out value = "${employee.replyCnt}" />]</b>
+							</a></td> --%>
 
 							<td><c:out value="${employee.name}" /></td>
 							<td><c:out value="${employee.position}" /></td>
+							<td><c:out value="${employee.entry_date}" /></td>
 				
 						</tr>
 					</c:forEach>
@@ -195,9 +196,9 @@
 								return;
 							}
 
-							if (parseInt(result) > 0) {
+							if (result == "${employee.emp_id}") {
 								$(".modal-body").html(
-										"계정 " + parseInt(result)
+										"계정 " + result
 												+ " 이 등록되었습니다.");
 							}
 

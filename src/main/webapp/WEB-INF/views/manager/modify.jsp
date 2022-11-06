@@ -21,7 +21,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
 
-      <div class="panel-heading">employee Modify</div>
+      <div class="panel-heading">계정 정보 수정</div>
       <!-- /.panel-heading -->
       <div class="panel-body">
 
@@ -35,9 +35,15 @@
       
  
 <div class="form-group">
-  <label>소속 부서 번호</label> 
+  <label>소속 부서 아이디</label> 
   <input class="form-control" name='dept_id' 
-     value='<c:out value="${employee.dept_id }"/>' readonly="readonly">
+     value='<c:out value="${employee.dept_id }"/>'>
+</div>
+
+<div class="form-group">
+  <label>직급</label> 
+  <input class="form-control" name='position'
+    value='<c:out value="${employee.position}"/>'>            
 </div>
 
 <div class="form-group">
@@ -45,17 +51,34 @@
   <input class="form-control" name='name' 
     value='<c:out value="${employee.'name' }"/>' >
 </div>
+<div class="form-group">
+  <label>이름</label> 
+  <input class="form-control" name='name' 
+    value='<c:out value="${employee.'name' }"/>' >
+</div>
+<div class="form-group">
+  <label>이름</label> 
+  <input class="form-control" name='name' 
+    value='<c:out value="${employee.'name' }"/>' >
+</div>
+<div class="form-group">
+  <label>이름</label> 
+  <input class="form-control" name='name' 
+    value='<c:out value="${employee.'name' }"/>' >
+</div>
+<div class="form-group">
+  <label>이름</label> 
+  <input class="form-control" name='name' 
+    value='<c:out value="${employee.'name' }"/>' >
+</div>
+
 
 <%-- <div class="form-group">
   <label>Text area</label>
   <textarea class="form-control" rows="3" name='content' ><c:out value="${employee.content}"/></textarea>
 </div> --%>
 
-<div class="form-group">
-  <label>직급</label> 
-  <input class="form-control" name='position'
-    value='<c:out value="${employee.position}"/>' readonly="readonly">            
-</div>
+
 
 <%-- <div class="form-group">
   <label>RegDate</label> 

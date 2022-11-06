@@ -63,9 +63,9 @@ public class EmployeeController {
 		String pwd=pwdEncoder.encode(inputPass);
 		empVO.setPassword(pwd);
 		
-		log.info("register..............1" + empVO);
+		log.info("ready register......................")
 		service.register(empVO);
-		
+		log.info("register..............1" + empVO);
 		rttr.addFlashAttribute("result", empVO.getEmp_id());
 		
 		return "redirect:/manager/list";
@@ -82,6 +82,9 @@ public class EmployeeController {
 	//계정 정보 수정
 	@PostMapping("/modify")
 	public String modify(EmployeeVO empVO, RedirectAttributes rttr) {
+		String inputPass=empVO.getPassword();
+		String pwd=pwdEncoder.encode(inputPass);
+		empVO.setPassword(pwd);
 	log.info("modify.............................");
 	if(service.modify(empVO)) {
 		rttr.addFlashAttribute("result", "success");
