@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
-import org.shiftworks.domain.PageDTO;
+import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -38,9 +38,9 @@ public class PostServiceImpl implements PostService {
 	 */
 	
 	@Override
-	public PageDTO getListSearch(BoardCriteria cri) {
+	public BoardPageDTO getListSearch(BoardCriteria cri) {
 		List<PostVO> list =  mapper.getListWithPagingSearch(cri);
-		PageDTO dto = new PageDTO(cri, mapper.getTotal(), list);
+		BoardPageDTO dto = new BoardPageDTO(cri, mapper.getTotal(), list);
 		return dto;
 	}
 

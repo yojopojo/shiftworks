@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
-import org.shiftworks.domain.PageDTO;
+import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -107,7 +107,7 @@ public class PostController {
 	
 	//js에 공지사항 리스트 전달해주기 
 	@GetMapping(value = "/listEntity/{pageNum}/{type}/{keyword}")
-	public ResponseEntity<PageDTO> getListEntity(@PathVariable("pageNum")int pageNum,
+	public ResponseEntity<BoardPageDTO> getListEntity(@PathVariable("pageNum")int pageNum,
 																			@PathVariable("type") String type,
 																			@PathVariable("keyword") String keyword){
 		
@@ -122,7 +122,7 @@ public class PostController {
 		
 		log.info("getListEntity......");
 		
-		return new ResponseEntity<PageDTO>(service.getListSearch(cri),HttpStatus.OK);
+		return new ResponseEntity<BoardPageDTO>(service.getListSearch(cri),HttpStatus.OK);
 		
 	}
 	
