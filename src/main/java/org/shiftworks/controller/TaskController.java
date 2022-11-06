@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.TaskCriteria;
 import org.shiftworks.domain.TaskVO;
+import org.shiftworks.mapper.FileMapper;
 import org.shiftworks.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -42,6 +43,9 @@ public class TaskController {
 
 	@Autowired
 	private TaskService service;
+	
+	@Autowired
+	private FileMapper mapper;
 	
 	@GetMapping(value="/main")
 	public ModelAndView main() {
@@ -230,15 +234,17 @@ public class TaskController {
 	
 	
 	@DeleteMapping("/deleteFile")
-	public ResponseEntity<String> deleteFile(@RequestBody String fileName) {
+	public ResponseEntity<String> deleteFile(@RequestBody FileVO vo) {
 		File file;
 		
-		log.info(fileName);
+		log.info(vo.getFile_name());
 		try {
 			// 삭제 대상을 파일 객체로 만듦
-			file = new File("C:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File("C:\\upload\\" + URLDecoder.decode(vo.getFile_name(), "UTF-8"));
 			
-			// 파일 삭제
+			// DB에서 파일 삭제
+			mapper.deleteTaskFile(vo.getUuid());
+			// 실제 파일 삭제
 			file.delete();
 			
 		} catch (Exception e) {

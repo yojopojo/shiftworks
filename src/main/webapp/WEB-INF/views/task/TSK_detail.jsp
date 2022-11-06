@@ -64,6 +64,14 @@
 		<div class="mb-3">
 			<label for="formFileSm" class="form-label file">첨부파일</label>
 			<input class="form-control form-control-sm" id="formFileSm" type="file" readonly>
+			<ul class="taskFiles">
+				<c:forEach items="${ task.fileList }" var="f">
+					<li data-uuid="${ f.uuid }" data-file_name="${ f.file_name }"
+						data-file_src="${ f.file_src }">
+						<a><c:out value="${ f.file_name }"/></a>
+					</li>
+				</c:forEach>
+			</ul>
 		</div>
 		<div class="confirm">
 			<button id="updateBtn" type="submit" class="btn btn-warning mb-3">수정</button>
@@ -78,11 +86,25 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
+			// 첨부파일 클릭 시 다운로드/삭제할 수 있도록 하는 url
+			$('.taskFiles li').each(function(i, obj){
+				var file = {
+						uuid: $(obj).data('uuid'),
+						file_name: $(obj).data('file_name'),
+						file_src: $(obj).data('file_src'),
+					};
+				var filePath = encodeURIComponent(file.file_src + "/" + file.uuid + "_" + file.file_name);
+				$(obj).attr("class", "file");
+				$(obj).children('a').attr("href", "/task/download?fileName=" + filePath);
+				$(obj).append("<span class='fileDelete' data-file=\'" + filePath + "\'> [x] </span>");
+				$('.fileDelete').hide();
+			}); // end li each
+			
 			// 게시글 상세 페이지 접속 시 공개여부 라디오버튼 숨김
 			$('.form-check *').hide();
 			// 수정 완료 게시글 버튼 숨김
 			$('#updateSubmitBtn').hide();
-			
+		
 			// 게시글 수정 버튼 클릭 이벤트
 			$('#updateBtn').on("click", function(){
 				
@@ -91,6 +113,10 @@
 				$('#dept_id').attr("readonly", false);
 				$('#task_title').attr("readonly", false);
 				$('#task_content').attr("readonly", false);
+				
+				// 첨부파일의 다운로드는 불가, 삭제는 가능 상태로 만듦
+				$('.taskFiles li a').attr("href", "");
+				$('.fileDelete').show();
 				
 				// '수정' 버튼을 '수정 완료' 버튼으로 변경
 				$('#updateBtn').hide();
@@ -134,12 +160,42 @@
 			
 			// 삭제 버튼 클릭 시 이벤트
 			$('#deleteBtn').on("click", function(){
-				
 				taskService.deleteTask($('#task_id').val(), function(result) {
 					location.replace("/task/pages/" + $('#dept_id').val() + "/empty/empty/1");
 				}); 
 				
 			}); // end delete click
+			
+			// 업로드 파일을 x 버튼으로 삭제
+			$('.taskFiles').on("click", "span", function(e) {
+				// 토큰 정보 받아오기
+				var csrf_token = $("meta[name='_csrf']").attr("content");
+				var csrf_header = $("meta[name='_csrf_header']").attr("content");
+				
+				var fileName = $(this).data("file");
+				var selectedLi = $(this).parent("li");
+				var uuid = selectedLi.data("uuid");
+				
+				console.log(fileName);
+				$.ajax({
+					url: '/task/deleteFile',
+					beforeSend : function(xhr){ // csrf 토큰 전달
+		                xhr.setRequestHeader(csrf_header, csrf_token);
+		            },
+		            type: 'delete',
+		            data: {file_name: fileName,
+		            		uuid: uuid},
+		            dataType: 'text',
+					success: function(result) {
+						console.log(this);
+						// 업로드 파일 삭제 성공 시 li 삭제
+						selectedLi.remove();
+					},
+					error : function(xhr, status, er) {
+						console.log(er);
+					}
+				})
+			}); // 삭제 버튼 함수
 			
 			
 			

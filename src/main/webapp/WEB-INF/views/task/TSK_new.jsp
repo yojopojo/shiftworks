@@ -114,10 +114,10 @@
 				// 업로드 파일 존재 시
 				var fileList = [];
 				$('.uploadResult ul li').each(function(i, obj) {
-					fileList.add({
+					fileList.push({
 						uuid: $(obj).data('uuid'),
 						file_name: $(obj).data('file_name'),
-						file_src: $(obj).data('file_name'),
+						file_src: $(obj).data('file_src'),
 					});
 				}); // end li each
 				
