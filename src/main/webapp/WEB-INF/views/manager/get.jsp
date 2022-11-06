@@ -3,9 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<html>
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="/resources/css/detail.css">
-
+<body class="container">
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Account Register</h1>
@@ -18,7 +19,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 
-			<div class="panel-heading">Account Read Page</div>
+			<div class="panel-heading">계정 정보</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 
@@ -28,9 +29,23 @@
 				</div>
 
 				<div class="form-group">
-					<label>name</label> <input class="form-control" name='name'
+					<label>부서 번호</label> <input class="form-control" name='dept_id'
+						value='<c:out value="${employee.dept_id }"/>' readonly="readonly">
+				</div>
+						<div class="form-group">
+					<label>이름</label> <input class="form-control" name='name'
 						value='<c:out value="${employee.name }"/>' readonly="readonly">
 				</div>
+						<div class="form-group">
+					<label>직급</label> <input class="form-control" name='position'
+						value='<c:out value="${employee.position }"/>' readonly="readonly">
+				</div>
+				<div class="form-group">
+					<label>입사일</label> <input class="form-control" name='entry_date'
+						value='<c:out value="${employee.entry_date }"/>' readonly="readonly">
+				</div>
+				
+				
 
 				<%-- <div class="form-group">
 					<label>Text area</label>
@@ -38,10 +53,10 @@
 						readonly="readonly"><c:out value="${Account.content}" /></textarea>
 				</div> --%>
 
-				<div class="form-group">
+	<%-- 			<div class="form-group">
 					<label>부서번호</label> <input class="form-control" name='dept_id'
 						value='<c:out value="${employee.detp_id }"/>' readonly="readonly">
-				</div>
+				</div> --%>
 				
 <%-- 				<sec:authentication property="principal" var="pinfo"/>
 				<sec:authorize access="isAuthenticated()">
@@ -51,7 +66,7 @@
 				</sec:authorize> --%>
 				
 
-				<button data-oper='list' class="btn btn-default">List</button>
+				<button data-oper='list' class="btn btn-default">목록</button>
 		
 				<form id='operForm' action="/manager/modify" method="get">
 					<input type='hidden' id='emp_id' name='emp_id'
@@ -151,7 +166,7 @@
 <script>
 	$(document).ready(function() {
 		
-		var emp_idValue = '<c:out value="${Account.emp_id}"/>';
+		var emp_idValue = '<c:out value="${employee.emp_id}"/>';
 		var replyUL = $(".chat");
 		
 		showList(1);
@@ -293,6 +308,8 @@
 </script> -->
 
 
+</body>
+</html>
 
 
 

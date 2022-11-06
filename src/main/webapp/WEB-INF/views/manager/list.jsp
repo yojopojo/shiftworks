@@ -18,9 +18,8 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Emp Account Page
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">Register
-					New employee</button>
+				계정 관리
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">계정 생성</button>
 			</div>
 
 			<!-- /.panel-heading -->
@@ -29,16 +28,18 @@
 					<thead>
 						<tr>
 							<th>사번</th>
-							<th>부서번호</th>
+							<th>부서명</th>
 							<th>이름</th>
 							<th>직급</th>
+							<th>입사일</th>
 						</tr>
 					</thead>
 
 					<c:forEach items="${list}" var="employee">
 						<tr>
 							<td><c:out value="${employee.emp_id}" /></td>
-							<%-- <td><a href='/employee/get?emp_id=<c:out value="${employee.emp_id}"/>'><c:out value="${employee.name}"/></a></td> --%>
+						<td><a href='/employee/get?emp_id=<c:out value="${employee.emp_id}"/>'>
+						<c:out value="${employee.name}"/></a></td>
 
 							<td><a class='move' href='<c:out value="${employee.emp_id}"/>'>
 									<c:out value="${employee.dept_id}" />

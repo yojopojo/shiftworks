@@ -34,13 +34,13 @@
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
 	
 	<!-- Web socket을 위한 핸들러 등록 -->
-	<websocket:handlers allowed-origins="*">
+	<websocket:handlers>
 		<websocket:mapping handler="chatHandler" path="/messenger/chat"/>
-		<!-- Httpsession에 있는 값을 가로채서 WebSocketSession에 똑같이 넣어주는 역할 -->	
-		<websocket:handshake-interceptors>
+		<!-- Httpsession에 있는 값을 가로채서 WebSocketSession에 똑같이 넣어주는 역할 -->
+		 <websocket:handshake-interceptors>
         	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
         </websocket:handshake-interceptors>
-		<websocket:sockjs websocket-enabled="true"/>
+		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
 	
 	<!-- 핸들러 객체 생성 -->

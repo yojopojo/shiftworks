@@ -3,7 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@include file="../includes/header.jsp"%>
+<html>
+
+<head><%@include file="../includes/header.jsp"%></head>
+<body class="container">
 
 
 <div class="row">
@@ -52,4 +55,8 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
+
+</body>
+</html>
+
 <%@include file="../includes/footer.jsp"%>
