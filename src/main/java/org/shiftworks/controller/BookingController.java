@@ -83,6 +83,8 @@ public class BookingController {
 			map.put("title", bookingList.get(i).getBook_title());
 			map.put("start", bookingList.get(i).getBook_date().substring(0, 10)+"T"+begin+":00");
 			map.put("end", bookingList.get(i).getBook_date().substring(0, 10)+"T"+end+":00");
+			/* map.put("color", "red"); */
+			/* map.put("backgroundColor", "#1C3359"); */
 			calList.add(i, map);
 			//calList.add(map);
 		}
