@@ -10,20 +10,12 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <script type="text/javascript" src="/resources/js/task.js"></script>
 <link rel="stylesheet" href="/resources/css/task.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>업무 관리</title>
 </head>
 <body>
 
-
+<div class="container">
 
 	<table class="table">
 		<thead>
@@ -100,6 +92,8 @@
 			</tr>
 		</tfoot>
 	</table>
+	
+	</div>
 
 <script type="text/javascript">
 
@@ -107,14 +101,14 @@
 		
 		/* 부서 목록부분 변경 시 함께 변경하기 */
 		// 선택된 부서 존재 시 해당 항목으로 출력
+		if($('.selectedDept').val() == 'dept1') {
+			$('.selectedDept').text('dept1');
+		}
 		if($('.selectedDept').val() == 'dept2') {
 			$('.selectedDept').text('dept2');
 		}
-		if($('.selectedDept').val() == 'neuro289') {
-			$('.selectedDept').text('neuro289');
-		}
-		if($('.selectedDept').val() == 'neuro333') {
-			$('.selectedDept').text('neuro333');
+		if($('.selectedDept').val() == 'dept3') {
+			$('.selectedDept').text('dept3');
 		}
 		
 		// model attribute 값을 이용하기 위해 변수에 저장
@@ -165,7 +159,7 @@
 		
 	}); //end document ready
 
-</script>>
+</script>
 
 </body>
 </html>

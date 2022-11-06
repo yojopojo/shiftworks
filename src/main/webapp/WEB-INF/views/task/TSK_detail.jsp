@@ -10,18 +10,12 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <script type="text/javascript" src="/resources/js/task.js"></script>
 <link rel="stylesheet" href="/resources/css/task.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>업무 관리</title>
 </head>
 <body>
+
+<div class="container">
 
 	<div class="newContainer">
 		<div class="mb-3">
@@ -76,10 +70,11 @@
 			<button id="updateSubmitBtn" type="submit" class="btn btn-warning mb-3">수정완료</button>
 			<button id="deleteBtn" type="submit" class="btn btn-danger mb-3">삭제</button>
 			<button id="resetBtn" type="reset"
-				class="btn btn-outline-primary mb-3">취소</button>
+				class="btn btn-outline-primary mb-3">목록</button>
 		</div>
 	</div>
 
+</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			

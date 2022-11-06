@@ -1,26 +1,34 @@
 package org.shiftworks.controller;
 
+import java.io.File;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.TaskCriteria;
-import org.shiftworks.domain.TaskPageDTO;
 import org.shiftworks.domain.TaskVO;
 import org.shiftworks.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -118,7 +126,7 @@ public class TaskController {
 
 		return service.updateTask(vo) ?
 				new ResponseEntity<String>("success", HttpStatus.OK) :
-				new ResponseEntity<String>("a", HttpStatus.INTERNAL_SERVER_ERROR);
+				new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	// 업무 삭제
@@ -127,8 +135,134 @@ public class TaskController {
 		
 		return service.deleteTask(task_id) ?
 				new ResponseEntity<String>("success", HttpStatus.OK) :
-				new ResponseEntity<String>("a", HttpStatus.INTERNAL_SERVER_ERROR);
+				new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	// 파일 등록
+	@PostMapping(value="/uploadFile",
+				produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<FileVO>> uploadFile(MultipartFile[] uploadFile) {
+		
+		// 파일에 대하 정보를 리스트에 담아 리턴하기 위해 list 선언
+		List<FileVO> list = new ArrayList<FileVO>();
+		
+		// 파일 업로드 폴더 경로
+		String uploadFolder = "C:\\upload";
+		
+		// 날짜에 맞는 업로드 폴더 존재 확인(없을 경우 생성)
+		File uploadPath = new File(uploadFolder, getFolder());
+		if(uploadPath.exists() == false) {
+			uploadPath.mkdirs();
+		} // 년/월/일 경로 생성
+		
+		// 업로드 파일을 하나씩 처리
+		for(MultipartFile m : uploadFile) {
+			
+			FileVO vo = new FileVO();
+			
+			// 파일 저장 경로
+			vo.setFile_src(getFolder());
+			
+			// uuid 생성
+			UUID uuid = UUID.randomUUID();
+			// uuid 파일객체에 저장
+			vo.setUuid(uuid.toString());
+			
+			// 업로드 파일 실제 이름
+			String uploadFileName = m.getOriginalFilename();
+			// 파일명 vo객체에 저장
+			vo.setFile_name(uploadFileName);
+			
+			// uuid + 실제 파일명
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			
+			try {
+				// 파일 객체 생성
+				File saveFile = new File(uploadPath, uploadFileName);
+				// 실제 파일 업로드를 진행하는 메소드
+				m.transferTo(saveFile);
+				
+				list.add(vo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		return new ResponseEntity<List<FileVO>>(list, HttpStatus.OK);
+		
+	} // end uploadFile
+	
+	
+	// 파일 다운로드
+	@GetMapping(value="/download",
+				// 다운로드가 가능하도록 MIME 타입 지정
+				produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Resource> downloadFile(String fileName) {
+		
+		FileSystemResource resource = new FileSystemResource("C:\\upload\\" + fileName);
+
+		// 다운로드 요청한 파일이 없는 경우
+		if(resource.exists() == false) {
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		
+		String resourceName = resource.getFilename();
+		// C:\\upload에 저장된 파일명에서 uuid 제거
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
+		
+		HttpHeaders headers = new HttpHeaders();
+		
+		try {
+			// 파일 다운로드 시 사용할 이름
+			String downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+			
+			
+			headers.add("Content-Disposition", "attachment; filename=" + downloadName);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 	
 	
+	@DeleteMapping("/deleteFile")
+	public ResponseEntity<String> deleteFile(@RequestBody String fileName) {
+		File file;
+		
+		log.info(fileName);
+		try {
+			// 삭제 대상을 파일 객체로 만듦
+			file = new File("C:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			
+			// 파일 삭제
+			file.delete();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<String>("삭제 완료", HttpStatus.OK);
+		
+	}
+	
+	
+	
+	
+	// 메소드
+	
+	// 파일 저장 폴더를 위한 메소드
+	private String getFolder() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		
+		String str = df.format(date);
+		
+		return str.replace("-", File.separator);
+	}
+
 }

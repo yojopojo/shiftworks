@@ -19,7 +19,7 @@ public class TaskVO {
 	private Character notification;
 	private Date date_created;
 	
-	private List<TaskFileVO> fileList;
+	private List<FileVO> fileList;
 	private List<TaskChargeVO> chargeList;
 	
 }

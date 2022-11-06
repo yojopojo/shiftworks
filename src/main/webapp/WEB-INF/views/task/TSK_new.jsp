@@ -10,18 +10,14 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <script type="text/javascript" src="/resources/js/task.js"></script>
 <link rel="stylesheet" href="/resources/css/task.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-	crossorigin="anonymous"></script>
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 <meta charset="UTF-8">
 <title>업무 등록</title>
 </head>
 <body>
+
+<div class="container">
 
 <!-- 업무 등록을 위한 입력 폼 -->
 	<div class="newContainer">
@@ -75,14 +71,24 @@
 		</div>
 		<div class="mb-3">
 			<label for="formFileSm" class="form-label file">첨부파일</label>
-			<input class="form-control form-control-sm" id="formFileSm" type="file">
+			<input class="form-control form-control-sm" id="formFileSm"
+				type="file" name="uploadFile" multiple>
 		</div>
+		<!-- 첨부파일 업로드 결과 -->
+		<div class="uploadResult">
+			<ul>
+				
+			</ul>
+		</div>
+
 		<div class="confirm">
 			<button id="submitBtn" type="submit" class="btn btn-primary mb-3">작성</button>
 			<button id="resetBtn" type="reset"
 				class="btn btn-outline-primary mb-3">취소</button>
 		</div>
 	</div>
+</div>
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -105,6 +111,16 @@
 					isNotification = 'N';
 				}
 				
+				// 업로드 파일 존재 시
+				var fileList = [];
+				$('.uploadResult ul li').each(function(i, obj) {
+					fileList.add({
+						uuid: $(obj).data('uuid'),
+						file_name: $(obj).data('file_name'),
+						file_src: $(obj).data('file_name'),
+					});
+				}); // end li each
+				
 				// 폼 입력값 객체에 대입
 				var newTask = {
 					dept_id: $('#dept_id').val(),
@@ -113,7 +129,8 @@
 					// 세션 추가 후 아이디 부분 변경 필요
 					emp_id: 'U3948709',
 					t_private: isPrivate,
-					notification: isNotification
+					notification: isNotification,
+					fileList: fileList
 				}
 
 				// 객체 전달하여 DB에 저장 후 페이지 이동
@@ -131,6 +148,139 @@
 				history.back();
 				
 			}); // end reset click event
+			
+			
+			/* * * * * * * * * * * * * * * * * * *
+						첨부파일 업로드
+			* * * * * * * * * * * * * * * * * * */
+			
+			// 첨부파일 확장자, 크기 검증에 쓰이는 변수
+			var regex = new RegExp("(.*?)\.(exe|zip)$"); // exe, zip 타입인지 확인
+			var maxSize = 5242880; // 5MB 이상인지 확인
+			
+			// 첨부파일 확장자, 크기를 검증하는 함수
+			function checkExtension(fileName, fileSize) {
+				
+				// 파일 사이즈 검증
+				if(fileSize >= maxSize) { //5MB 초과 시 실행
+					alert("업로드 가능 최대 크기를 초과하였습니다.");
+					return false;
+				}
+				
+				// 파일 확장자 검증
+				if (regex.test(fileName)) { // exe, zip 파일의 경우 실행
+					alert("업로드 불가능한 파일입니다.");
+					return false;
+				}
+				
+				// 위의 검사에 걸리지 않으면 true 리턴
+				return true;
+			} //end checkExtension()
+			
+			// 첨부파일 업로드 결과를 출력하는 함수
+			function showUploadResult(uploadResultArr) {
+				
+				// 업로드를 하지 않았거나, 업로드 실패 시 함수 종료
+				if(!uploadResultArr || uploadResultArr.length == 0) {
+					return;
+				}
+				
+				// 결과물을 출력해야 하는 경우 아래 코드 실행
+				var str = "";
+				$(uploadResultArr).each(function(i, obj) {
+					// 파일 경로와 이름을 저장하는 변수
+					var filePath = encodeURIComponent(obj.file_src + "/" + obj.uuid + "_" + obj.file_name);
+					
+					str += "<li data-uuid='"+ obj.uuid +"' data-file_name='" + obj.file_name + "' ";
+					str += "data-file_src='" + obj.file_src + "'>";
+					str += obj.file_name;
+					str += "<span data-file=\'" + filePath + "\'> [x] </span>";
+					str += "</li>";
+
+				});
+				
+				$('.uploadResult ul').append(str);
+				
+			} // end showUploadResult()
+			
+			// 파일 업로드 후 file 태그 내용 초기화를 위해 빈 상태에서 clone
+			var cloneObj = $('.uploadDiv').clone();
+			
+			// 첨부파일 input 태그에 생기는 변화 감지
+			$('input[type="file"]').change(function(e){
+				// 토큰 정보 받아오기
+				var csrf_token = $("meta[name='_csrf']").attr("content");
+				var csrf_header = $("meta[name='_csrf_header']").attr("content");
+				
+				// 파일 전송을 위한 객체 생성
+				var formData = new FormData();
+				var inputFile = $('input[name="uploadFile"]');
+				var files = inputFile[0].files;
+				
+				// 업로드 파일 개수만큼 객체 생성
+				for(let i=0; i<files.length; i++) {
+					
+					// 파일 확장자가 exe, zip이거나 파일크기가 5MB를 넘으면 false 리턴
+					if(!checkExtension(files[i].name, files[i].size)) {
+						return false;
+					}
+					
+					// 조건에 맞는 파일인 경우 파일 객체 생성
+					formData.append("uploadFile", files[i]);
+					
+				}// end for
+				
+				
+				// 파일 업로드 Ajax
+				$.ajax({
+					url: '/task/uploadFile',
+					processData: false,	// 객체를 String으로 변환하지 않도록 설정
+					contentType: false,	// Multipart data로 전송되도록 설정
+					data: formData,
+					beforeSend : function(xhr){ // csrf 토큰 전달
+		                xhr.setRequestHeader(csrf_header, csrf_token);
+		            },
+					type: 'post',
+					dataType: 'JSON',
+					success: function(result) {
+						console.log('file');
+						showUploadResult(result);
+						$('.uploadDiv').html(cloneObj.html());
+					}
+				}); // end ajax
+				
+			}); // end input file - change()
+			
+			
+			// 업로드 파일을 x 버튼으로 삭제
+			$('.uploadResult').on("click", "span", function(e) {
+				// 토큰 정보 받아오기
+				var csrf_token = $("meta[name='_csrf']").attr("content");
+				var csrf_header = $("meta[name='_csrf_header']").attr("content");
+				
+				var fileName = $(this).data("file");
+				var selectedLi = $(this).parent("li");
+				
+				console.log(fileName);
+				$.ajax({
+					url: '/task/deleteFile',
+					beforeSend : function(xhr){ // csrf 토큰 전달
+		                xhr.setRequestHeader(csrf_header, csrf_token);
+		            },
+		            type: 'delete',
+		            data: fileName,
+		            dataType: 'text',
+					success: function(result) {
+						console.log(this);
+						// 업로드 파일 삭제 성공 시 li 삭제
+						selectedLi.remove();
+					},
+					error : function(xhr, status, er) {
+						console.log(er);
+					}
+				})
+			}); // 삭제 버튼 함수
+			
 
 		}); // end document ready function
 	</script>
