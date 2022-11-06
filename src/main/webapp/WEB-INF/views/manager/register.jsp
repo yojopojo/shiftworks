@@ -29,8 +29,49 @@
          	<input type="hidden" name="${_csrf.parameterName}"
     value="${_csrf.token}" />
           <div class="form-group">
-            <label>이름</label> <input class="form-control" name='name'>
+            <label>사번</label> <input class="form-control" name='emp_id'>
           </div>
+          <div class="form-group">
+            <label>부서번호</label> <input class="form-control" name='dept_id'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+          <div class="form-group">
+            <label>비밀번호</label> <input class="form-control" name='password'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+             <div class="form-group">
+            <label>직급</label> <input class="form-control" name='position'
+            	<%-- value='<sec:authentication property="principal.username"/>' --%>>
+          </div>
+          
 
          <!--  <div class="form-group">
             <label>Text area</label>
