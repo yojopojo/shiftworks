@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%-- <%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%> --%>
 <html>
 
 <head><%@include file="../includes/header.jsp"%></head>
@@ -27,8 +27,8 @@
 				<div class="panel-body">
 
 				<form role="form" action="/manager/register" method="post">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
+					<%-- <input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" /> --%>
 					<div class="form-group">
 						<label>이름</label> <input class="form-control" name='name'<%-- value='<sec:authentication property="principal.username"/>' --%>>
 					</div>

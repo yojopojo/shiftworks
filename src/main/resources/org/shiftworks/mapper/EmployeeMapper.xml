@@ -59,6 +59,7 @@
 			SELECT emp_id, dept_name, position, name, entry_date
 			FROM employee e JOIN department d
 			ON e.dept_id = d.dept_id
+			WHERE  resignation_date is null
 			
 	</select>
 	
@@ -95,7 +96,7 @@
 	</insert>
 		<!-- 계정상세보기 -->
 	<select id="detail" resultType="org.shiftworks.domain.EmployeeVO">
-		select emp_id, dept_id, password, position, name, birthday, mobile, internal, 
+		select emp_id, e.dept_id as dept_id, password, position, name, birthday, mobile, internal, 
 		email, address, entry_date
 		FROM employee e JOIN department d
 			ON e.dept_id = d.dept_id where emp_id = #{emp_id}

@@ -63,7 +63,7 @@ public class EmployeeController {
 		String pwd=pwdEncoder.encode(inputPass);
 		empVO.setPassword(pwd);
 		
-		log.info("ready register......................")
+		log.info("ready register......................");
 		service.register(empVO);
 		log.info("register..............1" + empVO);
 		rttr.addFlashAttribute("result", empVO.getEmp_id());

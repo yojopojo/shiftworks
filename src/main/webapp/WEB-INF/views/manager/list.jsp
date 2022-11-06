@@ -8,7 +8,7 @@
 <body class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tables</h1>
+		<h1 class="page-header">계정 관리 페이지</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -18,7 +18,6 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				계정 관리
 				<button id='regBtn' type="button" class="btn btn-xs pull-right">계정 생성</button>
 			</div>
 
@@ -37,7 +36,7 @@
 
 					<c:forEach items="${list}" var="employee">
 						<tr>
-							<td><a href='/employee/get?emp_id=<c:out value="${employee.emp_id}"/>'>
+							<td><a href='/manager/get?emp_id=<c:out value="${employee.emp_id}"/>'>
 							<c:out value="${employee.emp_id}" /></a></td>
 						<td><c:out value="${employee.dept_name}"/></td>
 
