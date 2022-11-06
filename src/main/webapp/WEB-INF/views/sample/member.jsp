@@ -21,6 +21,7 @@
 	<!-- 해당 property 참고하여 데이터 CRUD 전 사용자 인증에 이용 -->
 	<p>principal: <sec:authentication property="principal"/></p>
 	<p>사용자: <sec:authentication property="principal.employee"/></p>
+	<p>사용자 부서: <sec:authentication property="principal.employee.dept_id"/></p>
 	<p>사용자 아이디:<sec:authentication property="principal.username"/></p>
 	<p>사용자 권한: <sec:authentication property="principal.employee.authList"/></p>
 </body>

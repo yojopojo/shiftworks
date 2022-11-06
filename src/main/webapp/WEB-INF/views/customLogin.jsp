@@ -54,6 +54,25 @@
 </div>
 
 
+<<<<<<< HEAD
+=======
+	<!-- 로그인 폼 -->
+	<form method="post" action="/login">
+	
+		<div>
+			<input type="text" name="username" value="user1">
+		</div>
+		<div>
+			<input type="password" name="password" value="pw1">
+		</div>
+		<div>
+			<input type="submit">
+		</div>
+		<!-- 보안토큰 -->
+		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
+	
+	</form>
+>>>>>>> refs/heads/develop
 
 	<script>
 	/* 로그인 버튼 클릭 메서드 */
