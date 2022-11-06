@@ -102,8 +102,14 @@ public class PostServiceImpl implements PostService {
 
 
 	@Override
-	public String selectPrev(int post_id) {
+	public PostVO selectPrev(int post_id) {
 		return mapper.selectPrev(post_id);
+	}
+
+
+	@Override
+	public PostVO selectNext(int post_id) {
+		return mapper.selectNext(post_id);
 	}
 
 

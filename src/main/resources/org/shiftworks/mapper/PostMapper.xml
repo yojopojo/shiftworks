@@ -146,9 +146,9 @@
 	</select>
 	
 	<!--이전글, 다음글 불러오기-->
-	<select id="selectPrev" resultType="String"> 
+	<select id="selectPrev" resultType="org.shiftworks.domain.PostVO"> 
 	<![CDATA[
-		select post_name from post
+		select post_id, post_name from post
 		where 1=1
 		and post_id in(
 			select max(post_id)
@@ -160,9 +160,9 @@
 	</select>
 	
 	<!--다음글-->
-	<select id="selectNext">
+	<select id="selectNext" resultType="org.shiftworks.domain.PostVO">
 		<![CDATA[
-		select post_id from post
+		select post_id, post_name from post
 		where 1=1
 		and post_id in(
 			select min(post_id)

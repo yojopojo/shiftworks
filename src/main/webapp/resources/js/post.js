@@ -223,7 +223,7 @@ var postService = (function(){
 	}
 	
 	
-	//이전글 불러오기ㅠㅠ
+	//이전글 불러오기
 	function selectPrev(post,callback, error) {
 		
 		$.ajax({
@@ -232,7 +232,27 @@ var postService = (function(){
 			contentType : "application/json; charset:UTF-8",
 			success : function(result, status, xhr) {
 				if (callback) {
-					console.log("a"+result);
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
+	
+	
+	//다음글 불러오기
+	function selectNext(post,callback, error) {
+		
+		$.ajax({
+			type : 'get',
+			url : '/board/selectNext/'+post.post_id,
+			contentType : "application/json; charset:UTF-8",
+			success : function(result, status, xhr) {
+				if (callback) {
 					callback(result);
 				}
 			},
@@ -256,7 +276,8 @@ var postService = (function(){
 		getHistory:getHistory,
 		listEntity:listEntity,
 		deletePost:deletePost,
-		selectPrev:selectPrev
+		selectPrev:selectPrev,
+		selectNext:selectNext
 	}
 	
 	

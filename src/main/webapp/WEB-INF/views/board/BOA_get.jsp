@@ -103,7 +103,6 @@
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 					<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> 
 					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
-					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 				</form>
 				<!-- 게시글 상세 폼-->
 
@@ -139,6 +138,9 @@
 					<!-- ./ end row -->
 				</div>
 				<!-- /댓글 -->
+				
+				
+				
 
 			</div>
 			<!--  end panel-body -->
@@ -254,11 +256,43 @@
 						
 						//이전글
 						postService.selectPrev({post_id:post_id},function(result){
-							alert(result.post_name);
-						})
+							$(".pre_index").append(
+									"<tb><a href='"+ result.post_id+ "'>"+result.post_name+"</a></tb>")
+							
+						});
+						
+						
+						//다음글
+						postService.selectNext({post_id:post_id},function(result){
+							$(".post_index").append(
+									"<tb><a href='"+ result.post_id+ "'>"+result.post_name+"</a></tb>")
+							
+						});
 						
 						
 						
+						 //이전글 다음글 클릭 시 해당 get.jsp 이동하기
+						  $(".table").on("click","a", function(e){
+							  	
+								e.preventDefault();
+								var post_id = $(this).attr("href");
+								console.log(post_id);
+								
+								 var post={
+										post_id:post_id,
+										csrf_token:csrf_token,
+							    		csrf_header:csrf_header
+								}
+
+								//history 테이블에 넣어서 읽음 표시하기
+								postService.insertHistory(post);
+								
+							 //get.jsp이동
+								 $("#operForm").find("input[name='post_id']").val(post_id);
+							 	$("#operForm").attr("action","/board/get");
+								$("#operForm").submit(); 
+							
+						  });
 						
 	});//end script
 </script>

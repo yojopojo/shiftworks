@@ -37,5 +37,7 @@ public interface PostService {
 	
 	public String getDeptId(String emp_id);
 
-	public String selectPrev(int post_id);
+	public PostVO selectPrev(int post_id);
+	
+	public PostVO selectNext(int post_id);
 }

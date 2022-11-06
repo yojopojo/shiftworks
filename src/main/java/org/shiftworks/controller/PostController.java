@@ -285,12 +285,22 @@ public class PostController {
 		}
 	
 	//이전글 불러오기
-	@GetMapping(value = "/selectPrev/{post_id}", produces = "application/text; charset=UTF-8")
-	public ResponseEntity<String> selectPrev(@PathVariable("post_id") int post_id){
+	@GetMapping(value = "/selectPrev/{post_id}", produces = "application/json; charset=UTF-8")
+	public ResponseEntity<PostVO> selectPrev(@PathVariable("post_id") int post_id){
 		
 		log.info("selectPrev........");
-		log.info(service.selectPrev(post_id));
-		return new ResponseEntity<String>(service.selectPrev(post_id),HttpStatus.OK);
+		
+		return new ResponseEntity<PostVO>(service.selectPrev(post_id),HttpStatus.OK);
+	}
+	
+	//다음글 불러오기
+	@GetMapping(value = "/selectNext/{post_id}", produces = "application/json; charset=UTF-8")
+	public ResponseEntity<PostVO> selectNext(@PathVariable("post_id") int post_id){
+			
+		log.info("selectNext........");
+		
+		
+		return new ResponseEntity<PostVO>(service.selectNext(post_id),HttpStatus.OK);
 	}
 	
 
