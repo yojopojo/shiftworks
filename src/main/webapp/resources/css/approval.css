@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
+div.col {
+	border: 200px, solid, black;
+	
+}
 
 #row2{
 	padding-top: 150px;
 }
 
-div.col {
-	border: 300px, solid;
-	
-}

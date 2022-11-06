@@ -26,12 +26,8 @@
 			    <!-- end of 결재문서작성  -->
 			    
 			    <div class="col">
-				    <ul class="list-group">
-	  					<a href="#" class="list-group-item d-flex justify-content-between align-items-center"/>
-	   					 	테스트
-	    					<span class="badge bg-primary rounded-pill">14</span>
-	  					</a>
-	  					<li class="list-group-item d-flex justify-content-between align-items-center">
+				    <ul class="list-group">				    	
+	  					<li class="list-group-item d-flex justify-content-between align-items-center">   					 
 	   					 	결재가 필요한 문서
 	    					<span class="badge bg-primary rounded-pill">14</span>
 	  					</li>
@@ -46,6 +42,24 @@
 					</ul>			    
 			    </div>
 			    <!-- end of 결재 상태 세부 목록 뷰 --> 
+<!-- 			    <div class="col">
+				    <ul class="list-group">
+				    	
+	  					<li class="list-group-item d-flex justify-content-between align-items-center">	   					 
+	   					 	결재가 필요한 문서
+	    					<span class="badge bg-primary rounded-pill">14</span>
+	  					</li>
+	  					<li class="list-group-item d-flex justify-content-between align-items-center">
+	    					결재 중인 문서
+	    					<span class="badge bg-primary rounded-pill">2</span>
+	 					</li>
+	  					<li class="list-group-item d-flex justify-content-between align-items-center">
+	  						 반려된 문서
+	    					<span class="badge bg-primary rounded-pill">1</span>
+	 					</li>
+					</ul>			    
+			    </div>
+			    end of 결재 상태 세부 목록 뷰  -->
 			  </div>
 			  <!-- end of  main 가로 전체 -->
 			  
@@ -95,6 +109,13 @@
 
 
 <script>
+
+	
+	/* * * * * * * * * * * * * * * * * * *
+		임시저장 불러오기 관련
+	* * * * * * * * * * * * * * * * * * */
+
+	// 로그인한 id에 일치하는 임시저장 목록 모달창으로 열기
 	$(document).ready(function(){
 		var modal = $(".modal");
         
