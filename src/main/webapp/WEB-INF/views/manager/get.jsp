@@ -111,7 +111,25 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
+<script type="text/javascript">
 
+	$(document).ready(function () {
+		
+		var operForm = $("#operForm");
+		$("button[data-oper='modify']").on("click", function (e) {
+			operForm.attr("action","/manager/modify").submit();
+			
+		});
+		
+		$("button[data-oper='list']").on("click", function (e) {
+			operForm.find('#emp_id').remove();
+			operForm.attr("action","/manager/list");
+			operForm.submit();
+		
+		});
+	});
+
+</script>
 
 <%-- <div class='row'>
 	<div class="col-lg-12">

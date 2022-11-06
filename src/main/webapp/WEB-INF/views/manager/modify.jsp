@@ -39,6 +39,11 @@
   <input class="form-control" name='dept_id' 
      value='<c:out value="${employee.dept_id }"/>'>
 </div>
+<div class="form-group">
+  <label>비밀번호</label> 
+  <input class="form-control" name='password' 
+    value='<c:out value="${employee.'password' }"/>' >
+</div>
 
 <div class="form-group">
   <label>직급</label> 
@@ -46,30 +51,46 @@
     value='<c:out value="${employee.position}"/>'>            
 </div>
 
+
 <div class="form-group">
   <label>이름</label> 
   <input class="form-control" name='name' 
-    value='<c:out value="${employee.'name' }"/>' >
+    value='<c:out value="${employee.name }"/>' >
 </div>
 <div class="form-group">
-  <label>이름</label> 
-  <input class="form-control" name='name' 
-    value='<c:out value="${employee.'name' }"/>' >
+  <label>생년월일</label> 
+  <input class="form-control" name='birthday' 
+    value='<c:out value="${employee.birthday }"/>' >
 </div>
 <div class="form-group">
-  <label>이름</label> 
-  <input class="form-control" name='name' 
-    value='<c:out value="${employee.'name' }"/>' >
+  <label>모바일</label> 
+  <input class="form-control" name='mobile' 
+    value='<c:out value="${employee.mobile }"/>' >
 </div>
 <div class="form-group">
-  <label>이름</label> 
-  <input class="form-control" name='name' 
-    value='<c:out value="${employee.'name' }"/>' >
+  <label>사내망</label> 
+  <input class="form-control" name='internal' 
+    value='<c:out value="${employee.internal }"/>' >
 </div>
 <div class="form-group">
-  <label>이름</label> 
-  <input class="form-control" name='name' 
-    value='<c:out value="${employee.'name' }"/>' >
+  <label>이메일</label> 
+  <input class="form-control" name='email' 
+    value='<c:out value="${employee.email }"/>' >
+</div>
+<div class="form-group">
+  <label>주소</label> 
+  <input class="form-control" name='address' 
+    value='<c:out value="${employee.address }"/>' >
+</div>
+<div class="form-group">
+  <label>입사일</label> 
+  <input class="form-control" name='entry_date' 
+    value='<c:out value="${employee.entry_date }"/>' >
+</div>
+<div class="form-group">
+  <label>퇴사일</label> 
+  <input class="form-control" name='resignation_date' 
+  	value='<c:out value="${employee.resignation_date }"/>' >
 </div>
 
 
@@ -101,8 +122,9 @@
 		</c:if>
 	
 	</sec:authorize> --%>
-
-  <button type="submit" data-oper='list' class="btn btn-info">List</button>
+	<button type="submit" data-oper='modify' class="btn btn-info">수정</button>
+	<button type="submit" data-oper='remove' class="btn btn-info">삭제</button>
+  <button type="submit" data-oper='list' class="btn btn-info">목록</button>
 </form>
 
 
@@ -136,7 +158,7 @@ $(document).ready(function() {
 	    }else if(operation === 'list'){
 	      //move to list
 	      formObj.attr("action", "/manager/list").attr("method","get");
-	      
+	      formObj.empty();
 	   /*    var pageNumTag = $("input[name='pageNum']").clone();
 	      var amountTag = $("input[name='amount']").clone();
 	      var keywordTag = $("input[name='keyword']").clone();
