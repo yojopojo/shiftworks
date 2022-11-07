@@ -54,6 +54,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+$(document).ready(function(){
+	
+	console.log("Ready for home page");
+	
+	
+	$(function(){
+		var request = $.ajax({
+			url: "/booking/list",
+			method: "GET"
+		});
+		
+		request.done(function(data){
+			console.log("가져온 결과값:"+data);
+			
+		});
+		
+	});
+	
+	
+
+	
+	
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 
@@ -66,8 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			Hello world!  
 		</h1> -->
 		
-		<P>  현재시각 ${serverTime} 입니다. </P>
-	
+		
+		<h2> <sec:authentication property="principal.username"></sec:authentication>님 환영합니다</h2>
 	
 	<div class="row">
 
@@ -75,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		</div> -->
 
 
-		<div class="col-5 card" style="background: white; height: 550px;"><!-- 1row 1번째 -->
+		<div class="col-5 card" style="background: white; height: 450px;"><!-- 1row 1번째 -->
 			<!-- <table>
 				<tr>
 					<td>1row 1번째</td>
@@ -86,11 +129,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			</table> -->
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">주간 회의일정</a></li>
+						aria-current="page" href="#calendar">주간 회의일정</a></li>
 					<li class="nav-item"><a class="nav-link" href="/booking/cal">월간 회의일정</a></li>
 					<li class="nav-item"><a class="nav-link" href="/booking/new">예약 바로가기</a></li>
-					<li class="nav-item"><a class="nav-link disabled" href="#"
-						tabindex="-1" aria-disabled="true">Disabled</a></li>
+					<!-- <li class="nav-item"><a class="nav-link disabled" href="#"
+						tabindex="-1" aria-disabled="true">Disabled</a></li> -->
 				</ul>
 						<div id='calendar' style="height: 200px; font-size: 12px;"></div>
 		</div> <!-- end 1row 1st -->
@@ -118,20 +161,20 @@ document.addEventListener('DOMContentLoaded', function () {
 					</ul>			    
 			    </div>
 				
-				
+				<br><br>
 				
 				
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">Active</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+						aria-current="page" href="#tabOne">Tab1</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Tab2</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Tab3</a></li>
 					<li class="nav-item"><a class="nav-link disabled" href="#"
 						tabindex="-1" aria-disabled="true">Disabled</a></li>
 				</ul>
 				
 				<!-- 게시판 적용 -->
-			<table class="table table-sm">
+			<table class="table table-sm" id="tabOne">
  				<thead>
 					<tr>
 						<th>예약번호</th>
@@ -142,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					</tr>
 				</thead>
 				
-				<c:forEach items="${boards }" var="reserv">
+				<c:forEach items="${ event }" var="reserv">
 					<tr>
 						<td><c:out value="${reserv.book_id }"></c:out></td>
 						<td><a href="/booking/${reserv.book_id}"><c:out value="${reserv.book_title }"></c:out></a></td>
@@ -154,6 +197,12 @@ document.addEventListener('DOMContentLoaded', function () {
 				</c:forEach>
 					
 			</table>
+			
+			
+			<br><br><br>
+			<button type="button" class="btn btn-primary">Primary</button>
+			<button type="button" class="btn btn-secondary">Secondary</button>
+			<button type="button" class="btn btn-success">Success</button>
 				
 				
 			</div>
