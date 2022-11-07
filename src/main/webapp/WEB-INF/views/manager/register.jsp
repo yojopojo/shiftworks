@@ -113,33 +113,7 @@ $(document).ready(function(e){
   		beforeSend: function(xhr) {
             xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
         }
-  
-	$("input[type='file']").change(function(e){
 
-    	var formData = new FormData();
-    
-    	var inputFile = $("input[name='uploadFile']");
-    
-    	var files = inputFile[0].files;
-    
-		for(var i=0; i < files.length; i++){
-
-      		if(!checkExtension(files[i].name, files[i].size)){
-        		return false;
-      		}
-      		
-      		formData.append("uploadFile", files[i]);	      
-		}
-    
-		,
-      		data:formData,
-      		type: "POST",
-      		dataType:"json",
-        	success: function(result){
-        		console.log(result); 
-		  		showUploadResult(result);
-      		}
-    	});    
   	});  
   
 
@@ -151,4 +125,4 @@ $(document).ready(function(e){
 </body>
 </html>
 
-<%@include file="../includes/footer.jsp"%>
+<%@include file="/WEB-INF/views/includes/footer.jsp"%>

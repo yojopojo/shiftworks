@@ -9,10 +9,10 @@ public interface EmployeeMapper {
 	public EmployeeVO read(String emp_id);
 	
 	
-	public List<EmployeeVO> getList();
+	public List<EmployeeVO> getList(AccountCriteria cri);
 	public List<EmployeeVO> getRetireeList();
 	public List<EmployeeVO> getListWithPaging	(AccountCriteria cri);
-	public int insert(EmployeeVO empVO);
+	public void insert(EmployeeVO empVO);
 	public EmployeeVO detail(String emp_id);
 	public int delete(String emp_id);
 	public int update(EmployeeVO empVO)	;

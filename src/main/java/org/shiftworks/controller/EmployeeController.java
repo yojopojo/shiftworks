@@ -29,16 +29,6 @@ public class EmployeeController {
 	@Autowired
 	private BCryptPasswordEncoder pwdEncoder;
 	
-
-//	@GetMapping("/list")
-//	public void list(Criteria cri, Model model) {
-//		log.info("list11.............."+cri);
-//		int total = service.getTotal(cri);
-//		log.info("total: " + total);
-//		model.addAttribute("list", service.getList(cri));
-//		model.addAttribute("pageMaker", new PageDTO(cri, total));
-//		
-//	}
 	
 	@GetMapping("/list")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -52,17 +42,18 @@ public class EmployeeController {
 		log.info("list11.............."+model);
 		
 	}
-	
-	//계정등록 get
+
 	@GetMapping("/register")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void register() {
 		
 	}
-	//계정등록 post
+	
 	@PostMapping("/register")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String register(EmployeeVO empVO, RedirectAttributes rttr){
+		log.info("==========================");
+		
 		String inputPass=empVO.getPassword();
 		String pwd=pwdEncoder.encode(inputPass);
 		empVO.setPassword(pwd);
@@ -79,28 +70,19 @@ public class EmployeeController {
 	
 	@GetMapping({"/get", "/modify"})
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public void get(@RequestParam("emp_id") String emp_id, Model model) {
+	public void get(@RequestParam("emp_id") String emp_id, @ModelAttribute("cri") AccountCriteria cri, Model model) {
 		log.info("get..............");
-		model.addAttribute("empID", service.get(emp_id));		
+		model.addAttribute("employee", service.get(emp_id));		
 	}
 	
-	//계정 정보 수정
+	
 	@PostMapping("/modify")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String modify(EmployeeVO empVO, RedirectAttributes rttr) {
+	public String modify(EmployeeVO empVO, @ModelAttribute("cri") AccountCriteria cri,
+				RedirectAttributes rttr) {
 		String inputPass=empVO.getPassword();
 		String pwd=pwdEncoder.encode(inputPass);
 		empVO.setPassword(pwd);
-	log.info("modify.............................");
-	if(service.modify(empVO)) {
-		rttr.addFlashAttribute("result", "success");
-	}
-	
-	return "redirect:/manager/list";
-}
-
-	public String modify(EmployeeVO empVO, @ModelAttribute("cri") AccountCriteria cri,
-				RedirectAttributes rttr) {
 		log.info("modify.............................");
 		if(service.modify(empVO)) {
 			rttr.addFlashAttribute("result", "success");
@@ -119,10 +101,7 @@ public class EmployeeController {
 		log.info("remove............."+emp_id);
 		if(service.remove(emp_id)) {
 			rttr.addAttribute("result", "success");
-		}
-		rttr.addFlashAttribute("pageNum", cri.getPageNum());
-		rttr.addFlashAttribute("amount", cri.getAmount());
-		
+		}		
 		return "redirect:/manager/list";
 	}
 	

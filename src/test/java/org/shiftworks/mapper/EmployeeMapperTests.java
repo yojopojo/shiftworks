@@ -30,10 +30,10 @@ public class EmployeeMapperTests {
 //		mapper.getList().forEach(employee->log.info(employee));
 //	}
 //	
-	@Test
-	public void testGetList() {
-		mapper.getList().forEach(employee ->log.info(employee));
-	}
+//	@Test
+//	public void testGetList() {
+//		mapper.getList().forEach(employee ->log.info(employee));
+//	}
 	
 //	@Test
 //	public void testInsert() {

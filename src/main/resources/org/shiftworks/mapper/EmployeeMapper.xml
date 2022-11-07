@@ -84,9 +84,7 @@
 	
 		<!-- 총 계정 개수 -->
 	 <select id="getTotalCount" resultType="int">
-		select count(*) from employee where 1 =1 
-		<include refid="criteria"/>
-		and emp_id <![CDATA[>]]> 0
+		select count(*) from employee 
 	</select>
 		
 		<!-- 계정추가 -->
@@ -99,8 +97,8 @@
 	
 		<!-- 계정상세보기 -->
 	<select id="detail" resultType="org.shiftworks.domain.EmployeeVO">
-		select emp_id, e.dept_id as dept_id, password, position, name, birthday, mobile, internal, 
-		email, address, entry_date
+		select emp_id, password, e.dept_id as dept_id, password, position, name, birthday, mobile, internal, 
+		email, address, entry_date, resignation_date
 		FROM employee e JOIN department d
 			ON e.dept_id = d.dept_id where emp_id = #{emp_id}
 	</select>

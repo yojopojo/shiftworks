@@ -6,14 +6,14 @@ import org.shiftworks.domain.AccountCriteria;
 import org.shiftworks.domain.EmployeeVO;
 
 public interface EmployeeService {
-	public List<EmployeeVO> getList();//ì „ì²´ê³„ì •ë¦¬ìŠ¤íŠ¸ì¶œë ¥
-	public int register(EmployeeVO empVO);//ê³„ì •ë“±ë¡
-	public EmployeeVO get(String emp_id);//ê³„ì •ìƒì„¸ì •ë³´
-	public boolean modify(EmployeeVO empVO);//ê³„ì •ì •ë³´ìˆ˜ì •
-	public boolean remove(String emp_id);//ê³„ì •ì‚­ì œ
-	public List<EmployeeVO> getList(AccountCriteria cri);
-	public List<EmployeeVO> empSearch(AccountCriteria cri);
-	public int getTotal(AccountCriteria cri);
+	
+	public void register(EmployeeVO empVO);//°èÁ¤µî·Ï
+	public EmployeeVO get(String emp_id);//°ÔÁ¤»ó¼¼º¸±â
+	public boolean modify(EmployeeVO empVO);//°èÁ¤¼öÁ¤
+	public boolean remove(String emp_id);//°èÁ¤»èÁ¦
+	public List<EmployeeVO> getList(AccountCriteria cri);//ÀüÃ¼¸®½ºÆ®
+	public int getTotal(AccountCriteria cri);//ÃÑ °èÁ¤ °³¼ö
+	public List<EmployeeVO> empSearch(AccountCriteria cri);//°èÁ¤°Ë»ö
 	
 
 }

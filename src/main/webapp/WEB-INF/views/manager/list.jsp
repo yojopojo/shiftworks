@@ -62,20 +62,20 @@
 							<select name='type'>
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-								<option value="U"
-									<c:out value="${pageMaker.cri.type eq 'U'?'selected':''}"/>>사번</option>
+								<option value="E"
+									<c:out value="${pageMaker.cri.type eq 'E'?'selected':''}"/>>사번</option>
 								<option value="D"
 									<c:out value="${pageMaker.cri.type eq 'D'?'selected':''}"/>>부서번호</option>
 								<option value="N"
 									<c:out value="${pageMaker.cri.type eq 'N'?'selected':''}"/>>이름</option>
-								<option value="UD"
-									<c:out value="${pageMaker.cri.type eq 'UD'?'selected':''}"/>>사번
+								<option value="ED"
+									<c:out value="${pageMaker.cri.type eq 'ED'?'selected':''}"/>>사번
 									or 부서번호</option>
-								<option value="UN"
-									<c:out value="${pageMaker.cri.type eq 'UN'?'selected':''}"/>>사번
+								<option value="EN"
+									<c:out value="${pageMaker.cri.type eq 'EN'?'selected':''}"/>>사번
 									or 이름</option>
-								<option value="UDN"
-									<c:out value="${pageMaker.cri.type eq 'UDN'?'selected':''}"/>>사번
+								<option value="EDN"
+									<c:out value="${pageMaker.cri.type eq 'EDN'?'selected':''}"/>>사번
 									or 부서번호 or 이름</option>
 							</select> <input type='text' name='keyword'
 								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
@@ -83,49 +83,29 @@
 								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
 								type='hidden' name='amount'
 								value='<c:out value="${pageMaker.cri.amount}"/>' />
-							<button class='btn btn-default'>검색</button>
+							<button id="srchBtn" class='btn btn-default'>검색</button>
 						</form>
 					</div>
 				</div>
 
 
-	 			<div class='pull-right'>
+	 			<div class="pull-right">
 					<ul class="pagination">
-
-						            <c:if test="${pageMaker.prev}">
-              <li class="paginate_button previous"><a href="#">이전</a>
-              </li>
-            </c:if>
-
-            <c:forEach var="num" begin="${pageMaker.startPage}"
-              end="${pageMaker.endPage}">
-              <li class="paginate_button"><a href="#">${num}</a></li>
-            </c:forEach>
-
-            <c:if test="${pageMaker.next}">
-              <li class="paginate_button next"><a href="#">다음</a></li>
-            </c:if>
-
 						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous">
-							<a href="${pageMaker.startPage -1}">이전</a></li>
+							<li class="paginate_button previous"><a href="${pageMaker.startPage -1}">Previous</a></li>
 						</c:if>
 
-						<c:forEach var="num" begin="${pageMaker.startPage}"
-							end="${pageMaker.endPage}">
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
-								<a href="${num}">${num}</a>
+								<a href="${num}">&ensp;${num}&ensp;</a>
 							</li>
 						</c:forEach>
 
 						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next">
-							<a href="${pageMaker.endPage +1 }">다음</a></li>
+							<li class="paginate_button next"><a href="${pageMaker.endPage +1 }">Next</a></li>
 						</c:if>
-
-
 					</ul>
-				</div> 
+				</div>
 				<!--  end Pagination -->
 			</div>
 
@@ -150,13 +130,13 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-							<h4 class="modal-name" id="myModalLabel">Modal name</h4>
+							<h4 class="modal-name" id="myModalLabel"></h4>
 						</div>
 						<div class="modal-body">처리가 완료되었습니다.</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
+							<button type="button" id="closeBtn" class="btn btn-default"
 								data-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary">수정사항 저장</button>
+							<button type="button" id="scngBtn" class="btn btn-primary">수정사항 저장</button>
 						</div>
 					</div>
 					<!-- /.modal-content -->
@@ -201,6 +181,10 @@
 							}
 
 							$("#myModal").modal("show");
+							
+							  $('#closeBtn').on('click', function(){
+								    $('#myModal').modal('hide');
+								  });
 						}
 
 						$("#regBtn").on("click", function() {
@@ -208,6 +192,7 @@
 							self.location = "/manager/register";
 
 						});
+						
 
 						var actionForm = $("#actionForm");
 
