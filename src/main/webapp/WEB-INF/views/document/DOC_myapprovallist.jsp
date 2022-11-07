@@ -16,7 +16,7 @@
 <div class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">스크랩문서함</h1>
+		<h1 class="page-header">결재문서함</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -55,37 +55,40 @@
 						</form>
 					</div>
 				</div>
+			
 				
-				
-				<!--메인게시판-->
+				<!--메인 게시판-->
 				<table id="boardTest" class="table table-striped table-bordered table-hover" border="1">
 					<thead>
 						<tr>
-							<th>스크랩번호</th>
-							<th>게시물번호</th>
+							<th>결재문서번호</th>
+							<th>문서양식번호</th>
 							<th>작성자</th>
-							<th>작성부서</th>
-							<th>제목</th>
-							<th>등록일</th>
-							<th>스크랩일자</th>
+							<th>결재제목</th>
+							<th>결재내용</th>
+							<th>결재상태</th>
+							<th>결재일자</th>
 						</tr>
 					</thead>
 					<tbody id="main">
-					<c:forEach items="${pageMaker.list}" var="post">
+						<c:forEach items="${pageMaker.list}" var="approval">
 							<tr>
-								<td><c:out value="${post.scrap_id}" /></td>
-								<td><a class="getMyDoc" href='<c:out value="${post.post_id}"/>'>
-									<c:out value="${post.post_id}" /></a>
+								<td><a class="getMyDoc" href='<c:out value="${approval.apr_id}"/>'>
+									<c:out value="${approval.apr_id}" /></a>
 								</td>
-								<td><c:out value="${post.emp_id}" /></td>
-								<td><c:out value="${post.dept_id}" /></td>
-								<td><c:out value="${post.post_name}" /></td>
-								<td><c:out value="${post.post_regdate}" /></td>
-								<td><c:out value="${post.scrap_date}" /></td>
-							</tr>
+								<td><c:out value="${approval.af_id}" /></td>
+								<td><c:out value="${approval.emp_id}" /></td>
+								<td><c:out value="${approval.apr_title}" /></td>
+								<td><c:out value="${approval.apr_content}" /></td>
+								<td><c:out value="${approval.apr_status}" /></td>
+								<td><c:out value="${approval.apr_signdate}" /></td>
+							</tr>	
 						</c:forEach>
-						</tbody>
+					</tbody>
 				</table>
+				
+				
+				
 				
 				<!--페이지 처리 뷰-->
 				<div class='pull-right'>
@@ -106,14 +109,16 @@
 				</div>
 				<!--  end Pagination -->
 				
-				<form id='actionForm' action='/document/scrapDetail' method='get'>
+				<form id='actionForm' action='/document/detail' method='get'>
 					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 					<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>' /> 	
 				</form> 
 				
+				
+				
 			</div>
-			<!--end panel-body-->
+			<!-- end panelBody-->
 		</div>
 		<!--end panel  -->
 	</div>
@@ -180,7 +185,7 @@ $(document).ready(function () {
 						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
-						str +="<td>"+list[i].scrap_id+"</td>";
+						str +="<td>"+list[i].b_id+"</td>";
 						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
@@ -229,7 +234,7 @@ $(document).ready(function () {
 						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
-						str +="<td>"+list[i].scrap_id+"</td>";
+						str +="<td>"+list[i].b_id+"</td>";
 						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
@@ -252,6 +257,7 @@ $(document).ready(function () {
 
 })//end script
 </script>		
+
 </html>
 
-
+<%@include file="/WEB-INF/views/includes/footer.jsp"%>

@@ -17,11 +17,12 @@
 <div class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">부서수신함 상세페이지</h1>
+		<h1 class="page-header">결재문서함 상세페이지</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->    
+<!-- /.row -->
+    
 
 <!--게시글 상세 폼-->
 <div class="row">
@@ -33,6 +34,11 @@
 			<div class="panel-body">
 			
 				<div class="form-group">
+					<label>스크랩번호</label> 
+					<input class="form-control" name='scrap_id'
+						value='<c:out value="${post.scrap_id }"/>' readonly="readonly">
+				</div>
+				<div class="form-group">
 					<label>게시글번호</label> 
 					<input class="form-control" name='post_id'
 						value='<c:out value="${post.post_id }"/>' readonly="readonly">
@@ -40,10 +46,10 @@
 				<div class="form-group">
 					<label>작성자</label> 
 					<input class="form-control" name='name'
-						value='<c:out value="${post.emp_id }"/>' readonly="readonly">
+						value='<c:out value="${post.post_id }"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>발신부서</label> <input class="form-control" name='dept_id'
+					<label>작성부서</label> <input class="form-control" name='dept_id'
 						value='<c:out value="${post.dept_id }"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
@@ -59,6 +65,11 @@
 					<label>작성일</label> 
 					<input class="form-control" name='post_regdate'
 						value='<c:out value="${post.post_regdate}"/>' readonly="readonly">
+				</div>
+				<div class="form-group">
+					<label>스크랩일자</label> 
+					<input class="form-control" name='scrap_date'
+						value='<c:out value="${post.scrap_date}"/>' readonly="readonly">
 				</div>
 				<button id='listBtn' class='btn btn-primary btn-xs pull-right'>목록</button>
 <!-- 게시글 상세 폼-->

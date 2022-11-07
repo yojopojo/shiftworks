@@ -5,12 +5,14 @@ import java.util.List;
 import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.BoardPageDTO;
+import org.shiftworks.domain.BoardVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
 import org.shiftworks.mapper.FileMapper;
 import org.shiftworks.mapper.PostMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -24,10 +26,19 @@ public class PostServiceImpl implements PostService {
 	
 	private FileMapper filemapper;
 	
+	@Transactional
 	@Override
 	public int insertPost(PostVO postvo) {
 		
+		//post 테이블에 글 삽입 시 filelist 도 함께 삽입
+		postvo.getFileList().forEach(file ->{
+			
+			file.setWork_id(postvo.getPost_id());
+			filemapper.insertBoardFile(file);
+		});
+		
 		return mapper.insertPost(postvo);
+		
 		
 	}
 
@@ -40,7 +51,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public BoardPageDTO getListSearch(BoardCriteria cri) {
 		List<PostVO> list =  mapper.getListWithPagingSearch(cri);
-		BoardPageDTO dto = new BoardPageDTO(cri, mapper.getTotal(), list);
+		BoardPageDTO dto = new BoardPageDTO(cri, mapper.getTotal(cri.getB_id()), list);
 		return dto;
 	}
 
@@ -60,8 +71,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public int getTotal() {
-		return mapper.getTotal();
+	public int getTotal(int b_id) {
+		return mapper.getTotal(b_id);
 	}
 
 
@@ -92,6 +103,36 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<HistoryVO> selectHistory(String emp_id) {
 		return mapper.selectHistory(emp_id);
+	}
+
+
+	@Override
+	public String getDeptId(String emp_id) {
+		return mapper.getDeptId(emp_id);
+	}
+
+
+	@Override
+	public PostVO selectPrev(int post_id) {
+		return mapper.selectPrev(post_id);
+	}
+
+
+	@Override
+	public PostVO selectNext(int post_id) {
+		return mapper.selectNext(post_id);
+	}
+
+
+	@Override
+	public int insertNewBoard(BoardVO vo) {
+		return mapper.insertNewBoard(vo);
+	}
+
+
+	@Override
+	public List<BoardVO> selectBoardList() {
+		return mapper.selectBoardList();
 	}
 
 
