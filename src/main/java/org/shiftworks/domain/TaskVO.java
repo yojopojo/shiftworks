@@ -20,6 +20,5 @@ public class TaskVO {
 	private Date date_created;
 	
 	private List<FileVO> fileList;
-	private List<TaskChargeVO> chargeList;
 	
 }

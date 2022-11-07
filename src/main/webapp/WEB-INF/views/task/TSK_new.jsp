@@ -36,7 +36,7 @@
 		<div class="mb-3">
 		<!-- 세션 추가 후 수정 -->
 			<label for="name" class="form-label">작성자</label>
-			<input class="form-control" type="text" value="홍길동"
+			<input class="form-control" type="text" value='<sec:authentication property="principal.employee.name"/>'
 				id="name" readonly>
 			<input class="form-control" type="hidden" value='<sec:authentication property="principal.username"/>'
 				id="emp_id">
