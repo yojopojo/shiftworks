@@ -18,14 +18,6 @@
 <link rel="stylesheet" href="/resources/css/schedule.css">
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>일정 관리</title>
 </head>
@@ -115,8 +107,6 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
 					<label>일정 그룹 &nbsp;</label>
@@ -149,7 +139,10 @@
 					</div>
 					<div class="form-group">
 						<label>예약 회의실</label> <input class="form-control" name="book_id"
-							placeholder="회의실 예약 코드 입력 시 검색">
+							placeholder="회의실 예약 코드 입력 시 검색, 클릭 시 예약번호 입력">
+							<ul class="bookingList">
+								
+							</ul>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -400,8 +393,32 @@ $(document).ready(function() {
     }); // end input keyup event
     
     
-    // 유효성 검사
+    // 예약 번호 검색
+    $(book_id).on("keyup", function(){
+    	$('.bookingList').html('');
+    	// 입력값 변수에 저장
+    	var keyword = $(this).val();
+    	scheduleService.searchBooking(keyword, function(result){
+    		
+    		var bookingList = '';
+    		result.forEach(booking => {
+    			bookingList += "<li class='book' data-book_id='" + booking.book_id + "'>"
+    						+ booking.book_title + "(" + (booking.book_date.split(" "))[0] + ")" + "</li>";
+    		}); // end forEach
+    		
+    		// 예약 리스트 출력
+    		$('.bookingList').html(bookingList);
+    	}); // end searchBooking
+    	
+    }); // book_id keyup
     
+    // 회의실 예약 목록에서 클릭 시 해당 정보가 입력됨
+    $('.bookingList').on("click", "li", function(){
+    	console.log($(this).data("book_id"));
+    	$(book_id).val($(this).data("book_id"));
+    	$(this).siblings().removeClass("selectedClass");
+    	$(this).addClass("selectedClass");
+    })
     
     
 });// 일정 CRUD 모달

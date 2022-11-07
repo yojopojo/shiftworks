@@ -82,3 +82,7 @@ tr[class^=week] {
 	z-index: 1;
 	background-color: white;
 }
+
+.selectedBooking {
+	font-weight: bold;
+}
