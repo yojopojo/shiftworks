@@ -5,6 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>

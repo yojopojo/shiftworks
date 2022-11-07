@@ -17,8 +17,8 @@ public class BoardPageDTO {
   private BoardCriteria cri;
   private List<PostVO> list;
 
-  public BoardPageDTO(BoardCriteria cri, int total, List<PostVO> list) {
 
+  public BoardPageDTO(BoardCriteria cri, int total, List<PostVO> list) {
 
     this.cri = cri;
     this.total = total;
