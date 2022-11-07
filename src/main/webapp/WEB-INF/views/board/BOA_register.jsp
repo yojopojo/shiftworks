@@ -232,10 +232,9 @@ $(document).ready(function () {
 			var str = "";
 			$(uploadResultArr).each(function(i, obj) {
 				// 파일 경로와 이름을 저장하는 변수
-				var filePath = encodeURIComponent(obj.file_src + "/" + obj.uuid + "_" + obj.file_name);
+				var filePath = encodeURIComponent(obj.uuid + "_" + obj.file_name);
 				
-				str += "<li data-uuid='"+ obj.uuid +"' data-file_name='" + obj.file_name + "' ";
-				str += "data-file_src='" + obj.file_src + "'>";
+				str += "<li data-uuid='"+ obj.uuid +"' data-file_name='" + obj.file_name + "'>";
 				str += obj.file_name;
 				str += "<span data-file=\'" + filePath + "\'> [x] </span>";
 				str += "</li>";
@@ -310,8 +309,7 @@ $(document).ready(function () {
 		// 업로드 파일을 x 버튼으로 삭제
 		$('.uploadResult').on("click", "span", function(e) {
 			// 토큰 정보 받아오기
-			var csrf_token = $("meta[name='_csrf']").attr("content");
-			var csrf_header = $("meta[name='_csrf_header']").attr("content");
+			console.log(csrf_token);
 			
 			var fileName = $(this).data("file");
 			var selectedLi = $(this).parent("li");

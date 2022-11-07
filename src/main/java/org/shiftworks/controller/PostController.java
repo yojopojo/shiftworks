@@ -103,7 +103,6 @@ public class PostController {
 			log.info("Upload File Size: " + multipartFile.getSize());
 			
 			FileVO vo = new FileVO();
-			vo.setFile_src(uploadFolder);
 			
 			UUID uuid = UUID.randomUUID();
 			vo.setUuid(uuid.toString());
@@ -242,7 +241,6 @@ public class PostController {
 			// 파일 다운로드 시 사용할 이름
 			String downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
 					
-					
 			headers.add("Content-Disposition", "attachment; filename=" + downloadName);
 					
 		} catch (Exception e) {
@@ -255,7 +253,7 @@ public class PostController {
 		
 	//파일 삭제
 	@DeleteMapping("/deleteFile")
-	public ResponseEntity<String> deleteFile(@RequestBody FileVO vo) {
+	public ResponseEntity<String> deleteFile(@RequestParam FileVO vo) {
 		File file;
 			
 		log.info(vo.getFile_name());
@@ -274,7 +272,7 @@ public class PostController {
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
 			
-	return new ResponseEntity<String>("삭제 완료", HttpStatus.OK);
+	return new ResponseEntity<String>("success", HttpStatus.OK);
 			
 	}
 	

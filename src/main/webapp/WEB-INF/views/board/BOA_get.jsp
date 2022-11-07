@@ -305,22 +305,21 @@
 						  });
 						 
 						 
-						// 첨부파일 클릭 시 다운로드
-						$(".boardFiles").on("click","li", function(e){
-							e.preventDefault();
-						
-							$(this).each(function(i, obj){
+						// 첨부파일 클릭 시 다운로드/삭제할 수 있도록 하는 url
+							$('.boardFiles li').each(function(i, obj){
 								var file = {
-										uuid: $(obj).parent().data('uuid'),
-										file_name: $(obj).parent().data('file_name'),
-										file_src: $(obj).parent().data('file_src'),
+										uuid: $(obj).data('uuid'),
+										file_name: $(obj).data('file_name'),
+										file_src: $(obj).data('file_src'),
 									};
-								var filePath = encodeURIComponent(file.file_src + "/" + file.uuid + "_" + file.file_name);
+								var filePath = encodeURIComponent(file.uuid + "_" + file.file_name);
 								
+								$(obj).children('a').attr("href", "/board/download?fileName=" + filePath);
+								
+							}); // end li each
 								
 							
-								})
-						})
+								
 						
 	});//end script
 </script>
