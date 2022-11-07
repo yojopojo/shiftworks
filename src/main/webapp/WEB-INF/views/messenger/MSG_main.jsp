@@ -276,6 +276,34 @@ $(document).ready(function() {
     	 });  
     });
     
+    // 클라이언트에서 STOMP 연결하는 코드
+    // 서버에서 설정해준 end-point로 STOMP 생성
+    function connect(){
+    	
+    	var socket = new SockJS('/stomp');	// servlet-context에서 설정한 sockJS 연결 주소
+    	stompClient = Stomp.over(socket);
+    	stompClient.connect({}, function(frame){
+    		
+    		setConnected(true);
+    		console.log('connected : ' + frame);
+    		loadChat(chatList)	// 저장된 채팅 불러오기
+    		
+    		// /room/{roomId}를 구독
+    		stompClient.subscribe('/room' + roomId, function(chatMessage){
+    			
+    			// 메시지를 보내면 서버를 거쳐 구독하고 있는 클라이언트들에게 showChat로 메세지 보여진다.
+    			showChat(JSON.parse(chatMessage.body));
+    			
+    		});    		
+    	});
+    }
+    
+    function sendChat(){
+    	
+    	stompClient.send("/send/")
+    	
+    }
+    
     
   /*   $('.search').autocomplete({
     	source:function(request, response){

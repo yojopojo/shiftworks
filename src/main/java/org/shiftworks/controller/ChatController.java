@@ -11,22 +11,16 @@ package org.shiftworks.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.shiftworks.domain.ChatRoomVO;
 import org.shiftworks.domain.ChatVO;
-import org.shiftworks.mapper.ChatMapper;
 import org.shiftworks.domain.ChatDTO;
 import org.shiftworks.service.ChatService;
-import org.shiftworks.service.ChatServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,13 +30,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+
 
 import lombok.extern.log4j.Log4j;
 
 
 
-@Controller
+
 @Log4j
 @RequestMapping("/messenger")
 public class ChatController {
@@ -50,7 +44,7 @@ public class ChatController {
 	@Autowired
 	ChatService chatService;
 	
-	
+	// 메신저 실행 : 채팅방 목록 보여줌
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/chat")
 	public String chat(Model model, Authentication auth) {
@@ -74,7 +68,7 @@ public class ChatController {
 		return "messenger/MSG_main";
 	}
 	
-	
+	// 선택된 채팅방의 정보 요청
 	@GetMapping("/chat/room/{room_id}")
 	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
@@ -83,7 +77,7 @@ public class ChatController {
 		return new ResponseEntity<>(chatService.getChatList(room_id), HttpStatus.OK);
 	}
 	
-	
+	// 메시지 전송 요청
 	@PostMapping(value="/send", produces=MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> sendChat(@RequestBody ChatVO chat){

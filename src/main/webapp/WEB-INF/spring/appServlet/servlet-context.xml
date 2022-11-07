@@ -34,24 +34,29 @@
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
 	
 	<!-- Web socket을 위한 핸들러 등록 -->
-	<websocket:handlers allowed-origins="*">
+	<!-- <websocket:handlers allowed-origins="*">
 		<websocket:mapping handler="chatHandler" path="/messenger/chat"/>
-		<!-- Httpsession에 있는 값을 가로채서 WebSocketSession에 똑같이 넣어주는 역할 -->	
+		Httpsession에 있는 값을 가로채서 WebSocketSession에 똑같이 넣어주는 역할	
 		<websocket:handshake-interceptors>
         	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
         </websocket:handshake-interceptors>
 		<websocket:sockjs websocket-enabled="true"/>
-	</websocket:handlers>
+	</websocket:handlers> -->
 	
 	<!-- 핸들러 객체 생성 -->
-	<beans:bean id="chatHandler" class="org.shiftworks.handler.ChatHandler" />
+	<!-- <beans:bean id="chatHandler" class="org.shiftworks.handler.ChatHandler" /> -->
 	
 	<!-- stomp -->
+	<!-- 클라이언트에서 보낸 메세지를 받을 prefix -->
 	<websocket:message-broker application-destination-prefix="/app">
-		<websocket:stomp-endpoint path="/stomp" allowed-origins="*">
+		<!-- SockJS 연결 주소 : 주소(ws://localhost:8081/messenger/chat)-->
+		<websocket:stomp-endpoint path="/messenger/chat" allowed-origins="*">
+			<!-- 버전 낮은 브라우저에서도 적용 가능 -->
 			<websocket:sockjs/>
 		</websocket:stomp-endpoint>
-		<websocket:simple-broker prefix="/topic"/>
+		<!-- 해당 주소를 구독하고 있는 클라이언트들에게 메세지 전달 -->
+		<websocket:simple-broker prefix="/pub, /sub" />
+		
 	</websocket:message-broker>
 	
 </beans:beans>

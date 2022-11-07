@@ -103,9 +103,6 @@ return {
  socket.onopen = onOpen;
  
 
-
- 
-   
  // 서버와 연결되었을때
  function onOpen(evt) {
      console.log("onOpen");
