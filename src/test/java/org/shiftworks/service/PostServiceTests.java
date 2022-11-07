@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.BoardCriteria;
+import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -100,6 +101,10 @@ public class PostServiceTests {
 //		vo.setPost_name("임시저장");
 //		vo.setPost_content("임시저장 서비스 테스트중");
 //	}
+	
+
+		
+	
 	
 	
 	

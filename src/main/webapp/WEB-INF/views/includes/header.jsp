@@ -241,7 +241,7 @@
 		  <div class="col">
 		    <div class="collapse multi-collapse" id="multiCollapseAPR">
 		    <div class="card card-body" style="height: 120px; border-width: 0;">
-		      <ul class="board">
+		      <ul>
 		      	<a href="/approval/insert"><li>결재 문서 작성</li></a><br>
 		      	<a href="/approval/list"><li>전체 결재문서함</li></a><br>
 		      	<a href="/approval/receivedList"><li>결재 전 문서</li></a><br>
@@ -274,7 +274,7 @@
 		  <div class="col">
 		    <div class="collapse multi-collapse" id="multiCollapseBOA">
 		    <div class="card card-body" style="height: 190px; border-width: 0;">
-		      <ul>
+		      <ul class="board">
 		      	<a href="/board/new"><li>게시글 등록</li></a><br>
 		      	<a href="/board/newboard"><li>새 게시판 생성</li></a><br>
 		      </ul>

@@ -6,6 +6,7 @@ import org.shiftworks.domain.BoardCriteria;
 import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.BoardVO;
+import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -30,14 +31,17 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public int insertPost(PostVO postvo) {
 		
+		int result = mapper.insertPost(postvo);
 		//post 테이블에 글 삽입 시 filelist 도 함께 삽입
+		if(postvo.getFileList()==null) {
+			return result;
+		}
 		postvo.getFileList().forEach(file ->{
 			
-			file.setWork_id(postvo.getPost_id());
 			filemapper.insertBoardFile(file);
 		});
 		
-		return mapper.insertPost(postvo);
+		return result;
 		
 		
 	}
@@ -52,6 +56,7 @@ public class PostServiceImpl implements PostService {
 	public BoardPageDTO getListSearch(BoardCriteria cri) {
 		List<PostVO> list =  mapper.getListWithPagingSearch(cri);
 		BoardPageDTO dto = new BoardPageDTO(cri, mapper.getTotal(cri.getB_id()), list);
+	
 		return dto;
 	}
 
@@ -67,7 +72,10 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostVO getPost(int post_id) {
-		return mapper.getPost(post_id);
+		
+		PostVO vo = mapper.getPost(post_id);
+		vo.setFileList(filemapper.selectBoardFile(post_id));
+		return vo;
 	}
 
 	@Override

@@ -7,7 +7,7 @@
 	<!--게시글 파일 업로드-->
 	<insert id="insertBoardFile" parameterType="org.shiftworks.domain.FileVO">
 		insert into board_file (uuid , post_id , file_name, file_src)
-			values(#{uuid}, #{work_id}, #{file_name}, #{file_src})
+			values(#{uuid},post_seq.currval, #{file_name}, #{file_src})
 	</insert>
 	
 	<!--게시글 파일 목록-->

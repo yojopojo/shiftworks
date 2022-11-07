@@ -38,8 +38,7 @@
 				<button id="temporalBtn" type="button" class="btn btn-primary">임시저장</button>
 
 				<div class="row">
-					<div class="col-lg-12">
-							<div>파일첨부</div>
+						<div>파일첨부</div>
 							<div class="panel-body">
 								<div class="form-group uploadDiv">
 									<input type="file" name='uploadFile' multiple>
@@ -50,10 +49,8 @@
 
 									</ul>
 								</div>
-							</div>
-							<!--  end panel-body -->
-					</div>
-					<!-- end panel -->
+						</div>
+						<!--  end panel-body -->
 				</div>
 				<!-- /.row -->
 
@@ -138,21 +135,30 @@ $(document).ready(function () {
 	var csrf_token = $("meta[name='_csrf']").attr("content");
 	var csrf_header = $("meta[name='_csrf_header']").attr("content");
 	
-	//각각의 파일을 list로 만들어서 post에도 이름을 저장하기 위함 
-	var fileList=[];
-	$('.uploadResult ul li').each(function(i, obj) {
-		fileList.push({
-			uuid: $(obj).data('uuid'),
-			file_name: $(obj).data('file_name'),
-			file_src: $(obj).data('file_src'),
-		});
-	}); // end li each
+	
+	
 	
 	
 	//글 등록 버튼 클릭 시 post db에 저장하기 
 	  $("#registerBtn").on("click",function(e){
 		  
-	      
+		//게시판 번호가 입력되지 않을 시 임시저장할 수 없음
+	    	if(formInputBoard.val()==="------"){
+	    		alert("게시판 번호를 입력하세요");
+	    		return;
+	    	}
+		  
+		//각각의 파일을 list로 만들어서 post에도 이름을 저장하기 위함 
+			var fileList=[];
+			$('.uploadResult ul li').each(function(i, obj) {
+				fileList.push({
+					uuid: $(obj).data('uuid'),
+					file_name: $(obj).data('file_name'),
+					file_src: $(obj).data('file_src'),
+				});
+			}); // end li each
+		  
+		  
 	      var post = {
 	            b_id: formInputBoard.val(),
 	            post_name:formInputTitle.val(),
@@ -167,13 +173,14 @@ $(document).ready(function () {
 	      
 	     	
 			
-	       postService.add(post, function(result){
+	        postService.add(post, function(result){
 	        
 	        alert("게시글이 작성되었습니다.");
 	        
 	        form.find("input").val(""); 
 	        form.find("textarea").val(""); 
-	      }); 
+	        $(".uploadResult ul").html('');
+	      });  
 	      
 	    });//end register
 	    
@@ -294,8 +301,42 @@ $(document).ready(function () {
 
 				}
 			}); //$.ajax
+			
+			
 
 		});//end file upload
+		
+		
+		// 업로드 파일을 x 버튼으로 삭제
+		$('.uploadResult').on("click", "span", function(e) {
+			// 토큰 정보 받아오기
+			var csrf_token = $("meta[name='_csrf']").attr("content");
+			var csrf_header = $("meta[name='_csrf_header']").attr("content");
+			
+			var fileName = $(this).data("file");
+			var selectedLi = $(this).parent("li");
+			
+			console.log(fileName);
+			$.ajax({
+				url: '/board/deleteFile',
+				beforeSend : function(xhr){ // csrf 토큰 전달
+	                xhr.setRequestHeader(csrf_header, csrf_token);
+	            },
+	            type: 'delete',
+	            data: fileName,
+	            dataType: 'text',
+				success: function(result) {
+					console.log(this);
+					// 업로드 파일 삭제 성공 시 li 삭제
+					selectedLi.remove();
+				},
+				error : function(xhr, status, er) {
+					console.log(er);
+				}
+			})
+		}); // 삭제 버튼 함수
+		
+		
 		
 		
 		//동적으로 게시판 메뉴 추가해주기
