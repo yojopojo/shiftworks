@@ -3,6 +3,7 @@ package org.shiftworks.messenger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.ChatDTO;
+import org.shiftworks.domain.ChatVO;
 import org.shiftworks.mapper.ChatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,10 +32,10 @@ public class ChatTests {
 	@Test
 	public void testInsert() {
 		
-		ChatDTO chat = new ChatDTO();
-		chat.setContent("채팅 좀 해보자");
-		chat.setSender("user1");
-		chat.setSendtime("2020-10-25 11:58:33");
+		ChatVO chat = new ChatVO();
+		chat.setContent("안녕하세요");
+		chat.setSender("user2");
+		chat.setSendtime("2022-11-04 11:58:33");
 		chat.setRoom_id(2);
 		
 		int re = mapper.insertChat(chat);
