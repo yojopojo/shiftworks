@@ -199,4 +199,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </body>
+<%@include file="/WEB-INF/views/includes/footer.jsp" %>
 </html>
