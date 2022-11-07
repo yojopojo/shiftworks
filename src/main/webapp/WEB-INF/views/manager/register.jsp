@@ -31,37 +31,37 @@
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
 					<div class="form-group">
-						<label>이름</label> <input class="form-control" name='name'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+						<label>이름</label> <input class="form-control" name='name'>
 					</div>
 					<div class="form-group">
-						<label>입사일</label> <input class="form-control" name='entry_date'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+						<label>입사일</label> <input class="form-control" name='entry_date'>
 					</div>
 					<div class="form-group">
 					<label>사번</label> <input class="form-control" name='emp_id'>
 				</div>
 				<div class="form-group">
-					<label>부서번호</label> <input class="form-control" name='dept_id'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>부서번호</label> <input class="form-control" name='dept_id'>
 				</div>
 				<div class="form-group">
-					<label>비밀번호</label> <input class="form-control" name='password'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>비밀번호</label> <input class="form-control" name='password'>
 				</div>
 				<div class="form-group">
-					<label>직급</label> <input class="form-control" name='position'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>직급</label> <input class="form-control" name='position'>
 				</div>
 				<div class="form-group">
-					<label>생년월일</label> <input class="form-control" name='birthday'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>생년월일</label> <input class="form-control" name='birthday'>
 				</div>
 				<div class="form-group">
-					<label>주소</label> <input class="form-control" name='address'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>주소</label> <input class="form-control" name='address'>
 				</div>
 				<div class="form-group">
-					<label>모바일</label> <input class="form-control" name='mobile'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>모바일</label> <input class="form-control" name='mobile'>
 				</div>
 				<div class="form-group">
-					<label>사내망 번호</label> <input class="form-control" name='internal'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>사내망 번호</label> <input class="form-control" name='internal'>
 				</div>
 				<div class="form-group">
-					<label>이메일</label> <input class="form-control" name='email'<%-- value='<sec:authentication property="principal.username"/>' --%>>
+					<label>이메일</label> <input class="form-control" name='email'>
 			 </div>
 
 
@@ -83,6 +83,70 @@
 		<!-- end panel -->
 	</div>
 	<!-- /.row -->
+	
+	<script>
+
+$(document).ready(function(e){
+
+	var formObj = $("form[role='form']");
+  
+  	$("button[type='submit']").on("click", function(e){
+    
+    	e.preventDefault();
+    
+    	console.log("submit clicked");
+    
+    	var str = "";
+    
+    	console.log(str);
+    
+    	formObj.append(str).submit();    
+  });
+  	
+	var csrfHeaderName = "${_csrf.headerName}"; 
+	var csrfTokenValue = "${_csrf.token}";
+	
+	$.ajax({
+		url: "/uploadAjaxAction",
+  		processData: false, 
+  		contentType: false,
+  		beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+        }
+  
+	$("input[type='file']").change(function(e){
+
+    	var formData = new FormData();
+    
+    	var inputFile = $("input[name='uploadFile']");
+    
+    	var files = inputFile[0].files;
+    
+		for(var i=0; i < files.length; i++){
+
+      		if(!checkExtension(files[i].name, files[i].size)){
+        		return false;
+      		}
+      		
+      		formData.append("uploadFile", files[i]);	      
+		}
+    
+		,
+      		data:formData,
+      		type: "POST",
+      		dataType:"json",
+        	success: function(result){
+        		console.log(result); 
+		  		showUploadResult(result);
+      		}
+    	});    
+  	});  
+  
+
+
+});
+
+</script>
 </div>
 </body>
 </html>

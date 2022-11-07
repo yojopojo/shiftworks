@@ -69,12 +69,11 @@
 		    <div class="collapse multi-collapse" id="multiCollapseUser">
 		    <div class="card card-body" style="height: 100px; border-width: 0;">
 		      <ul>
-<<<<<<< HEAD
+
 		      	<a href="/messenger/chat" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;"><li>메신저</li></a><br>
 		      	<!-- <a href="/messenger"><li>메신저</li></a><br> -->
-=======
+
 		      	<a href="/messenger"><li>메신저</li></a><br>
->>>>>>> 608d2a2393932a63bbb6f9553363f3c227eed2dd
 		      	<a href="/approval/insert"><li>나의 계정 관리</li></a><br>
 		      	<a href="/approval/list"><li>조직도 보기</li></a><br>
 		      </ul>
@@ -290,13 +289,11 @@
 		    <div class="card card-body" style="height: 100px; border-width: 0;">
 		      <ul>
 		      	<a href="/board/new"><li>게시글 등록</li></a><br>
-<<<<<<< HEAD
 		      	<a href="/board/newboard"><li>새 게시판 생성</li></a><br>
-=======
 		      	<a href="/board/list?b_id=1"><li>공지사항</li></a><br>
 		      	<a href="/board/list?b_id=2"><li>행사</li></a><br>
 		      	<a href="/board/list?b_id=3"><li>자유게시판</li></a><br>
->>>>>>> 608d2a2393932a63bbb6f9553363f3c227eed2dd
+
 		      </ul>
 		    </div>
 		    </div>
@@ -325,11 +322,8 @@
 		    <div class="card card-body" style="height: 130px; border-width: 0;">
 		      <ul>
 		      	<a href="/document/myApproval/1"><li>결재문서함</li></a><br>
-<<<<<<< HEAD
 		      	<a href="/document/myDoc/1"><li>내가 쓴 게시물</li></a><br>
-=======
 		      	<a href="/document/myDoc"><li>내가 쓴 게시물</li></a><br>
->>>>>>> 608d2a2393932a63bbb6f9553363f3c227eed2dd
 		      	<a href="/document/scrap/1"><li>스크랩 문서함</li></a><br>
 		      	<a href="/document/deptDoc/1"><li>부서수신함</li></a><br>
 		      </ul>

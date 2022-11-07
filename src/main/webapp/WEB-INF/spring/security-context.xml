@@ -16,11 +16,11 @@
 		<!-- url별 접근 권한 설정 -->
 		
 		<!-- 모든 url은 인증된 사용자만 접근 가능 -->
-<<<<<<< HEAD
+
 		<!-- <security:intercept-url pattern="/" access="isAuthenticated()"/> -->
-=======
+
 		<security:intercept-url pattern="/" access="isAuthenticated()"/>
->>>>>>> 608d2a2393932a63bbb6f9553363f3c227eed2dd
+
 		
 		<!-- 관리자만 접근 가능한 페이지를 아래 형식으로 추가 -->
 		<!-- 1. 여러 권한 정보를 허용하고 싶은 경우(hasAnyRole 사용) -->

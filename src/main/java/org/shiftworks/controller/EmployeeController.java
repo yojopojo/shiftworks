@@ -5,6 +5,7 @@ import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.domain.AccountPageDTO;
 import org.shiftworks.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,24 +41,27 @@ public class EmployeeController {
 //	}
 	
 	@GetMapping("/list")
-	public void list(Model model) {
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void list(AccountCriteria cri, Model model) {
+		model.addAttribute("list", service.getList(cri));
 		
-//		int total = service.getTotal(cri);
-//		log.info("total: " + total);
-		log.info("list00.......");
-		model.addAttribute("list", service.getList());
+		int total = service.getTotal(cri);
+		log.info("total: " + total);
+		model.addAttribute("pageMaker", new AccountPageDTO(cri, total));
+		
 		log.info("list11.............."+model);
-		//model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
 	}
 	
 	//계정등록 get
 	@GetMapping("/register")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void register() {
 		
 	}
 	//계정등록 post
 	@PostMapping("/register")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String register(EmployeeVO empVO, RedirectAttributes rttr){
 		String inputPass=empVO.getPassword();
 		String pwd=pwdEncoder.encode(inputPass);
@@ -72,8 +76,9 @@ public class EmployeeController {
 		
 	}
 	
-
+	
 	@GetMapping({"/get", "/modify"})
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void get(@RequestParam("emp_id") String emp_id, Model model) {
 		log.info("get..............");
 		model.addAttribute("empID", service.get(emp_id));		
@@ -81,6 +86,7 @@ public class EmployeeController {
 	
 	//계정 정보 수정
 	@PostMapping("/modify")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String modify(EmployeeVO empVO, RedirectAttributes rttr) {
 		String inputPass=empVO.getPassword();
 		String pwd=pwdEncoder.encode(inputPass);
@@ -92,20 +98,22 @@ public class EmployeeController {
 	
 	return "redirect:/manager/list";
 }
-//	public String modify(EmployeeVO empVO, @ModelAttribute("cri") Criteria cri,
-//				RedirectAttributes rttr) {
-//		log.info("modify.............................");
-//		if(service.modify(empVO)) {
-//			rttr.addFlashAttribute("result", "success");
-//		}
-//		
-//		rttr.addAttribute("pageNum",cri.getPageNum());
-//		rttr.addAttribute("amount",cri.getAmount());
-//		
-//		return "redirect:/manager/list";
-//	}
+
+	public String modify(EmployeeVO empVO, @ModelAttribute("cri") AccountCriteria cri,
+				RedirectAttributes rttr) {
+		log.info("modify.............................");
+		if(service.modify(empVO)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		
+		rttr.addAttribute("pageNum",cri.getPageNum());
+		rttr.addAttribute("amount",cri.getAmount());
+		
+		return "redirect:/manager/list";
+	}
 	
 	@PostMapping("/remove")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String remove(@RequestParam("emp_id") String emp_id, 
 			@ModelAttribute AccountCriteria cri, RedirectAttributes rttr) {
 		log.info("remove............."+emp_id);

@@ -79,25 +79,25 @@
 						value='<c:out value="${employee.detp_id }"/>' readonly="readonly">
 				</div> --%>
 				
-<%-- 				<sec:authentication property="principal" var="pinfo"/>
-				<sec:authorize access="isAuthenticated()">
-					<c:if test="${pinfo.username eq Account.writer }">
-						<button data-oper='modify' class="btn btn-default">Modify</button>
+				<sec:authentication property="principal" var="pinfo"/>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<c:if test="${pinfo.username eq employee.emp_id }">
+						<button data-oper='modify' class="btn btn-default">수정</button>
 					</c:if>
-				</sec:authorize> --%>
+				</sec:authorize>
 				
 
 				<button data-oper='list' class="btn btn-default">목록</button>
 		
 				<form id='operForm' action="/manager/modify" method="get">
 					<input type='hidden' id='emp_id' name='emp_id'
-						value='<c:out value="${employee.emp_id}"/>'> <%-- <input
+						value='<c:out value="${employee.emp_id}"/>'> <input
 						type='hidden' name='pageNum'
 						value='<c:out value="${cri.pageNum}"/>'> <input
 						type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 					<input type='hidden' name='keyword'
 						value='<c:out value="${cri.keyword}"/>'> <input
-						type='hidden' name='type' value='<c:out value="${cri.type}"/>'> --%>
+						type='hidden' name='type' value='<c:out value="${cri.type}"/>'>`
 
 				</form>
 

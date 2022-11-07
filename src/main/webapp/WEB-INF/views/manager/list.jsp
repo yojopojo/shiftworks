@@ -62,28 +62,28 @@
 							<select name='type'>
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-								<option value="T"
-									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-								<option value="C"
-									<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
-								<option value="W"
-									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-								<option value="TC"
-									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목
-									or 내용</option>
-								<option value="TW"
-									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목
-									or 작성자</option>
-								<option value="TWC"
-									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목
-									or 내용 or 작성자</option>
+								<option value="U"
+									<c:out value="${pageMaker.cri.type eq 'U'?'selected':''}"/>>사번</option>
+								<option value="D"
+									<c:out value="${pageMaker.cri.type eq 'D'?'selected':''}"/>>부서번호</option>
+								<option value="N"
+									<c:out value="${pageMaker.cri.type eq 'N'?'selected':''}"/>>이름</option>
+								<option value="UD"
+									<c:out value="${pageMaker.cri.type eq 'UD'?'selected':''}"/>>사번
+									or 부서번호</option>
+								<option value="UN"
+									<c:out value="${pageMaker.cri.type eq 'UN'?'selected':''}"/>>사번
+									or 이름</option>
+								<option value="UDN"
+									<c:out value="${pageMaker.cri.type eq 'UDN'?'selected':''}"/>>사번
+									or 부서번호 or 이름</option>
 							</select> <input type='text' name='keyword'
 								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
 								type='hidden' name='pageNum'
 								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
 								type='hidden' name='amount'
 								value='<c:out value="${pageMaker.cri.amount}"/>' />
-							<button class='btn btn-default'>Search</button>
+							<button class='btn btn-default'>검색</button>
 						</form>
 					</div>
 				</div>
@@ -93,7 +93,7 @@
 					<ul class="pagination">
 
 						            <c:if test="${pageMaker.prev}">
-              <li class="paginate_button previous"><a href="#">Previous</a>
+              <li class="paginate_button previous"><a href="#">이전</a>
               </li>
             </c:if>
 
@@ -103,12 +103,12 @@
             </c:forEach>
 
             <c:if test="${pageMaker.next}">
-              <li class="paginate_button next"><a href="#">Next</a></li>
+              <li class="paginate_button next"><a href="#">다음</a></li>
             </c:if>
 
 						<c:if test="${pageMaker.prev}">
 							<li class="paginate_button previous">
-							<a href="${pageMaker.startPage -1}">Previous</a></li>
+							<a href="${pageMaker.startPage -1}">이전</a></li>
 						</c:if>
 
 						<c:forEach var="num" begin="${pageMaker.startPage}"
@@ -120,7 +120,7 @@
 
 						<c:if test="${pageMaker.next}">
 							<li class="paginate_button next">
-							<a href="${pageMaker.endPage +1 }">Next</a></li>
+							<a href="${pageMaker.endPage +1 }">다음</a></li>
 						</c:if>
 
 
@@ -155,9 +155,8 @@
 						<div class="modal-body">처리가 완료되었습니다.</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button>
+								data-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary">수정사항 저장</button>
 						</div>
 					</div>
 					<!-- /.modal-content -->
@@ -225,12 +224,10 @@
 									actionForm.submit();
 								});
 
-						$(".move")
-								.on(
-										"click",
-										function(e) {
+						$(".move").on("click", function(e) {
 
 											e.preventDefault();
+											
 											actionForm
 													.append("<input type='hidden' name='emp_id' value='"
 															+ $(this).attr(
@@ -242,7 +239,7 @@
 
 										});
 
-					/* 	var searchForm = $("#searchForm");
+					var searchForm = $("#searchForm");
 
 						$("#searchForm button").on(
 								"click",
@@ -266,7 +263,7 @@
 
 									searchForm.submit();
 
-								}); */
+								}); 
 
 					});
 </script>

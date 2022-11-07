@@ -29,10 +29,10 @@
       <form role="form" action="/manager/modify" method="post">
       <input type="hidden" name="${_csrf.parameterName}"
     value="${_csrf.token}" />
-<%--         <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+      <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
         <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 	    <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'> --%>
+		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
       
  
 <div class="form-group">
@@ -115,14 +115,14 @@
 </div>
  --%>
           
-<%-- <sec:authentication property="principal" var="pinfo"/>
-	<sec:authorize access="isAuthenticated">
-		<c:if test="${pinfo.username eq employee.writer }">
-			  <button type="submit" data-oper='modify' class="btn btn-default">Modify</button>
-  			<button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
+<sec:authentication property="principal" var="pinfo"/>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<c:if test="${pinfo.username eq employee.emp_id }">
+			  <button type="submit" data-oper='modify' class="btn btn-default">수정</button>
+  			<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
 		</c:if>
 	
-	</sec:authorize> --%>
+	</sec:authorize> 
 	<button type="submit" data-oper='modify' class="btn btn-info">수정</button>
 	<button type="submit" data-oper='remove' class="btn btn-info">삭제</button>
   <button type="submit" data-oper='list' class="btn btn-info">목록</button>
