@@ -72,7 +72,7 @@ tr[class^=week] {
 }
 
 .search {
-	float: right;
+	/* float: right; */
 	width: 300px;
 }
 

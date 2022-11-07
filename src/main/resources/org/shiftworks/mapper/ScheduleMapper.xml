@@ -15,7 +15,7 @@
 	<insert id="insertParticipant">
 		
 			INSERT INTO sch_participant
-				VALUES(#{emp_id}, #{dept_id}, schedule_seq.currval, 'N')
+				VALUES(#{emp_id}, #{dept_id}, schedule_seq.currval)
 
 	</insert>
 	
