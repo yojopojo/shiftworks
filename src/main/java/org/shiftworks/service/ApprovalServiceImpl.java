@@ -169,6 +169,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 			// TODO Auto-generated method stub
 			return mapper.getReceivedTotal();
 		}
+
+		
 	
 		/*
 		임시저장

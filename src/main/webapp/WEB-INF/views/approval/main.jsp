@@ -28,45 +28,27 @@
 			    <div class="col">
 				    <ul class="list-group">				    	
 	  					<li class="list-group-item d-flex justify-content-between align-items-center">   					 
-	   					 	결재가 필요한 문서
+	   					 		<a id = "mainAprList" href="/approval/receivedList">결재가 필요한 문서</a>
 	    					<span class="badge bg-primary rounded-pill">14</span>
 	  					</li>
 	  					<li class="list-group-item d-flex justify-content-between align-items-center">
-	    					결재 중인 문서
+	    						결재 중인 문서
 	    					<span class="badge bg-primary rounded-pill">2</span>
 	 					</li>
 	  					<li class="list-group-item d-flex justify-content-between align-items-center">
-	  						 반려된 문서
+	  						 	반려된 문서
 	    					<span class="badge bg-primary rounded-pill">1</span>
 	 					</li>
 					</ul>			    
 			    </div>
-			    <!-- end of 결재 상태 세부 목록 뷰 --> 
-<!-- 			    <div class="col">
-				    <ul class="list-group">
-				    	
-	  					<li class="list-group-item d-flex justify-content-between align-items-center">	   					 
-	   					 	결재가 필요한 문서
-	    					<span class="badge bg-primary rounded-pill">14</span>
-	  					</li>
-	  					<li class="list-group-item d-flex justify-content-between align-items-center">
-	    					결재 중인 문서
-	    					<span class="badge bg-primary rounded-pill">2</span>
-	 					</li>
-	  					<li class="list-group-item d-flex justify-content-between align-items-center">
-	  						 반려된 문서
-	    					<span class="badge bg-primary rounded-pill">1</span>
-	 					</li>
-					</ul>			    
-			    </div>
-			    end of 결재 상태 세부 목록 뷰  -->
+			    <!-- end of 결재 상태 세부 목록 뷰 -->  			
 			  </div>
 			  <!-- end of  main 가로 전체 -->
 			  
 			  <div class="row" id ="row2">
 			    <div class="col">결재할 문서
 			    	<div class="list-group">
-	  					<a href="approval/get" class="list-group-item" aria-current="true">
+	  					<a href="/approval/get" class="list-group-item" aria-current="true">
 	   						 <div class="d-flex w-100 justify-content-between">
 	     						 <h5 class="mb-1">List group item heading</h5>
 	     							 <small>3 days ago</small>
@@ -74,23 +56,39 @@
 	    						<p class="mb-1">Some placeholder content in a paragraph.</p>
 	    							<small>And some small print.</small>
 	 					</a>
- 					</div>			    			    
+ 					</div>	
+ 					 <!-- end of list-group -->		    			    
 			    </div>
-			    <!-- end of 결재할 문서 디테일 뷰 -->
+			    <!-- end of row / 결재할 문서 디테일 뷰 -->
 			    
-			<!-- <div class="row" id ="row2">
-			    <table class="table">
-			    	<lable>내가 작성한 문서 목록</lable>
-				 	 <thead>
+			<!--  <div class = "row"> -->
+			 <div class="col-sm" id ="row2">
+				<lable>내가 작성한 결재 목록</lable>
+			    <table class="table"> 
+				 	 
 				    	<tr>
 					      <th scope="col">결재 번호</th>
 					      <th scope="col">결재 유형</th>
-					      <th scope="col">결재 내용</th>
+					      <th scope="col">결재 제목</th>
 					      <th scope="col">결재 상태</th>
 				   		</tr>
-				  	</thead>
-				  	<tbody>
-				    	<tr>
+				  
+				  
+				  		<c:forEach var="approval" items="${list }">
+
+						<tr>
+							<td><c:out value="${approval.apr_id }" /></td>
+							<td><c:out value="${approval.af_id }" /></td>
+							<td><a class='move' href='<c:out value ="${approval.apr_id}"/>'>
+									<c:out value="${approval.apr_title}" />
+							</a></td>
+							<td><c:out value="${approval.apr_status }" /></td>
+						</tr>
+					</c:forEach>
+				  	
+				  	
+				  	
+				    	<!-- <tr>
 				      		<th scope="row">1</th>
 				     		<td>Mark</td>
 				      		<td>Otto</td>
@@ -106,19 +104,21 @@
 				      		<th scope="row">3</th>
 				      		<td colspan="2">Larry the Bird</td>
 				      		<td>@twitter</td>
-				   		 </tr>
-				  	</tbody>
+				   		 </tr> -->
+				  	
 					</table>
-			   	 </div> -->
+					</div>
+					<!-- end of col-sm -->
+			   	 </div> 
 			    <!-- end of table -->
 			    
 			    <!-- 결재진행상태 구현 뷰 -->
-			    <div class="col">
+			    <!-- <div class="col">
 			    	<label for="customRange3" class="form-label">결재 진행 상태</label>
 						<input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3">
 			    </div>
 			  </div>
-			</div> 
+			</div>  -->
 			
         <!-- 임시저장 모달 구현 -->
       <!-- Modal -->

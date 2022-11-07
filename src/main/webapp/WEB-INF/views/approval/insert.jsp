@@ -261,8 +261,8 @@
 		* * * * * * * * * * * * * * * * * * */
 		
 		// 첨부파일 확장자, 크기 검증에 쓰이는 변수
-		var regex = new RegExp("(.*?)\.(exe|zip)$"); // exe, zip 타입인지 확인
-		/* var maxSize = 5242880; // 5MB 이상인지 확인
+		/*var regex = new RegExp("(.*?)\.(exe|zip)$"); // exe, zip 타입인지 확인
+		 var maxSize = 5242880; // 5MB 이상인지 확인
 		
 		// 첨부파일 확장자, 크기를 검증하는 함수
 		function checkExtension(fileName, fileSize) {

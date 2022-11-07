@@ -20,3 +20,13 @@ div.form-group.uploadDiv{
 #aprHandleBtn{
 	margin-top: 10px;	
 }
+
+/* 내가 작성한 결재 목록 리스트*/
+div#row2.col-sm{
+	padding-top: 0;
+}
+
+/* 결재가 필요한 문서 링크 */
+#mainAprList {
+	text-decoration: none;
+}
