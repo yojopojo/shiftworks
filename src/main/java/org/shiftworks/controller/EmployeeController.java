@@ -61,7 +61,7 @@ public class EmployeeController {
 		log.info("ready register......................");
 		service.register(empVO);
 		log.info("register..............1" + empVO);
-		rttr.addFlashAttribute("result", empVO.getEmp_id());
+		rttr.addFlashAttribute("modifyResult", empVO.getEmp_id());
 		
 		return "redirect:/manager/list";
 		

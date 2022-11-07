@@ -85,7 +85,7 @@
 	<!-- /.row -->
 	
 	<script>
-
+/* 
 $(document).ready(function(e){
 
 	var formObj = $("form[role='form']");
@@ -96,30 +96,11 @@ $(document).ready(function(e){
     
     	console.log("submit clicked");
     
-    	var str = "";
-    
-    	console.log(str);
-    
-    	formObj.append(str).submit();    
+    	formObj.append.submit();    
   });
-  	
-	var csrfHeaderName = "${_csrf.headerName}"; 
-	var csrfTokenValue = "${_csrf.token}";
-	
-	$.ajax({
-		url: "/uploadAjaxAction",
-  		processData: false, 
-  		contentType: false,
-  		beforeSend: function(xhr) {
-            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-        }
-
-  	});  
-  
-
 
 });
-
+ */
 </script>
 </div>
 </body>

@@ -56,12 +56,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return mapper.getTotalCount(cri);
 	}
 	
-	@Override
-	public List<EmployeeVO> empSearch(AccountCriteria cri) {
-		List<EmployeeVO> list = mapper.getEmployeeForSearching(cri);
-		return list;
-		
-	}
 
 
 

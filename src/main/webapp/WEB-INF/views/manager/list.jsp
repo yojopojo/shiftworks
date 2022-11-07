@@ -38,15 +38,9 @@
 
 					<c:forEach items="${list}" var="employee">
 						<tr>
-							<td><a href='/manager/get?emp_id=<c:out value="${employee.emp_id}"/>'>
+							<td><a class='move' href='<c:out value="${employee.emp_id}"/>'>
 							<c:out value="${employee.emp_id}" /></a></td>
 						<td><c:out value="${employee.dept_name}"/></td>
-
-							<%-- <td><a class='move' href='<c:out value="${employee.emp_id}"/>'>
-									<c:out value="${employee.dept_id}" />
-									<b>[ <c:out value = "${employee.replyCnt}" />]</b>
-							</a></td> --%>
-
 							<td><c:out value="${employee.name}" /></td>
 							<td><c:out value="${employee.position}" /></td>
 							<td><c:out value="${employee.entry_date}" /></td>
@@ -65,25 +59,25 @@
 								<option value="E"
 									<c:out value="${pageMaker.cri.type eq 'E'?'selected':''}"/>>사번</option>
 								<option value="D"
-									<c:out value="${pageMaker.cri.type eq 'D'?'selected':''}"/>>부서번호</option>
+									<c:out value="${pageMaker.cri.type eq 'D'?'selected':''}"/>>부서명</option>
 								<option value="N"
 									<c:out value="${pageMaker.cri.type eq 'N'?'selected':''}"/>>이름</option>
 								<option value="ED"
 									<c:out value="${pageMaker.cri.type eq 'ED'?'selected':''}"/>>사번
-									or 부서번호</option>
+									or 부서명</option>
 								<option value="EN"
 									<c:out value="${pageMaker.cri.type eq 'EN'?'selected':''}"/>>사번
 									or 이름</option>
 								<option value="EDN"
 									<c:out value="${pageMaker.cri.type eq 'EDN'?'selected':''}"/>>사번
-									or 부서번호 or 이름</option>
+									or 부서명 or 이름</option>
 							</select> <input type='text' name='keyword'
 								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
 								type='hidden' name='pageNum'
 								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
 								type='hidden' name='amount'
 								value='<c:out value="${pageMaker.cri.amount}"/>' />
-							<button id="srchBtn" class='btn btn-default'>검색</button>
+							<button class='btn btn-default'>검색</button>
 						</form>
 					</div>
 				</div>
@@ -112,7 +106,6 @@
 			<form id='actionForm' action="/manager/list" method='get'>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-
 				<input type='hidden' name='type'
 					value='<c:out value="${ pageMaker.cri.type }"/>'> 
 					<input type='hidden' name='keyword'
@@ -130,13 +123,13 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-							<h4 class="modal-name" id="myModalLabel"></h4>
+							<h4 class="modal-name" id="myModalLabel">success!</h4>
 						</div>
 						<div class="modal-body">처리가 완료되었습니다.</div>
 						<div class="modal-footer">
-							<button type="button" id="closeBtn" class="btn btn-default"
-								data-dismiss="modal">닫기</button>
-							<button type="button" id="scngBtn" class="btn btn-primary">수정사항 저장</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal" id="rgmdBtn">Close</button>
+							<button type="button" class="btn btn-primary"  id="rgmdBtn">Save Changes</button>
 						</div>
 					</div>
 					<!-- /.modal-content -->
@@ -160,13 +153,14 @@
 
 
 <script type="text/javascript">
-	$(document)
-			.ready(
+	$(document).ready(
 					function() {
 
 						var result = '<c:out value="${result}"/>';
+						var modifyResult = '<c:out value="${modifyResult}"/>'
 
 						checkModal(result);
+						checkModal(modifyResult);
 
 						history.replaceState({}, null, null);
 
@@ -176,15 +170,32 @@
 								return;
 							}
 
-							if (parseInt(result) > 0) {
-								$(".modal-body").html("계정" + parseInt(result) + " 개가 생성되었습니다.");
+							if (result !=='null') {
+								$(".modal-body").html("계정생성이 완료되었습니다.");
 							}
 
 							$("#myModal").modal("show");
-							
-							  $('#closeBtn').on('click', function(){
-								    $('#myModal').modal('hide');
-								  });
+							$("#rgmdBtn").click(function() {
+				                $("#myModal").modal("hide");
+				            });
+							  
+						}
+						
+						function checkModal(modifyResult) {
+
+							if (modifyResult === '' || history.state) {
+								return;
+							}
+
+							if (modifyResult !=='null') {
+								$(".modal-body").html("계정정보가 수정되었습니다.");
+							}
+
+							$("#myModal").modal("show");
+							$("#rgmdBtn").click(function() {
+				                $("#myModal").modal("hide");
+				            });
+							  
 						}
 
 						$("#regBtn").on("click", function() {
@@ -230,8 +241,7 @@
 								"click",
 								function(e) {
 
-									if (!searchForm.find("option:selected")
-											.val()) {
+									if (!searchForm.find("option:selected").val()) {
 										alert("검색종류를 선택하세요");
 										return false;
 									}
@@ -242,8 +252,7 @@
 										return false;
 									}
 
-									searchForm.find("input[name='pageNum']")
-											.val("1");
+									searchForm.find("input[name='pageNum']").val("1");
 									e.preventDefault();
 
 									searchForm.submit();
@@ -258,5 +267,5 @@
 </html>
 
 
-<%@include file="../includes/footer.jsp"%>
+<%@include file="/WEB-INF/views/includes/footer.jsp"%>
 

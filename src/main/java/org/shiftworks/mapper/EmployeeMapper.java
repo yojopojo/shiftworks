@@ -17,8 +17,6 @@ public interface EmployeeMapper {
 	public int delete(String emp_id);
 	public int update(EmployeeVO empVO)	;
 	public int getTotalCount(AccountCriteria cri);
-	
-	
-	public List<EmployeeVO> getEmployeeForSearching(AccountCriteria cri);
+
 	
 }

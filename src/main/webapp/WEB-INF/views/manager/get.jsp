@@ -24,6 +24,7 @@
 					<div class="panel-heading">계정 상세 정보</div>
 					<!-- /.panel-heading -->
 					<div class="panel-body">
+					
 
 						<div class="form-group">
 							<label>사번</label> <input class="form-control" name='emp_id'
@@ -102,7 +103,7 @@
 								value='<c:out value="${cri.amount}"/>'> <input
 								type='hidden' name='keyword'
 								value='<c:out value="${cri.keyword}"/>'> <input
-								type='hidden' name='type' value='<c:out value="${cri.type}"/>'>`
+								type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 
 						</form>
 

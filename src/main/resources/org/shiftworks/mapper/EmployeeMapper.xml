@@ -14,7 +14,7 @@
 							emp_id like '%'||#{emp_id}||'%'
 						</when>
 						<when test="type == 'D'.toString()">
-							dept_id like '%'||#{dept_id}||'%'
+							dept_name like '%'||#{dept_name}||'%'
 						</when>
 						<when test="type == 'N'.toString()">
 							name like '%'||#{name}||'%'
@@ -110,7 +110,7 @@
 	
 		<!-- 계정정보수정 -->
 	<update id="update">
-		update employee set dept_id=#{dept_id}, password=#{password}, position=#{position}, name=#{name}, mobile=#{mobile}, internal=#{internal}
+		update employee set password=#{password}, dept_id=#{dept_id}, position=#{position}, name=#{name}, birthday=#{birthday}, mobile=#{mobile}, internal=#{internal}
 		, email=#{email}, address=#{address}, resignation_date=#{resignation_date} where emp_id=#{emp_id}
 	</update>
 	
@@ -121,19 +121,6 @@
 			ON e.dept_id = d.dept_id
 			WHERE  resignation_date is not null			
 	</select>
-	
-	 <!--사원 검색 //미완성-->
-	<!--  <select id="getEmployeeForSearching" resultType="org.shiftworks.domain.EmployeeVO">
-		<![CDATA[
-			select emp_id, dept_id, position, birthday, name, mobile, internal, 
-					email, address, entry_date, resignation_date 
-			from
-				
-		]]>
 
-	</select>  -->
-	
-
-	
 	
 </mapper>

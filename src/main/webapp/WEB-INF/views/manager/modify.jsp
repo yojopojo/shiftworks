@@ -29,10 +29,10 @@
 
 						<form role="form" action="/manager/modify" method="post">
 							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" /> <input type='hidden' name='pageNum'
-								value='<c:out value="${cri.pageNum }"/>'> <input
-								type='hidden' name='amount'
-								value='<c:out value="${cri.amount }"/>'> <input
+								value="${_csrf.token}" /> 
+								<input type='hidden' name='pageNum'
+								value='<c:out value="${cri.pageNum }"/>'> 
+								<input type='hidden' name='amount'value='<c:out value="${cri.amount }"/>'> <input
 								type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
 							<input type='hidden' name='keyword'
 								value='<c:out value="${cri.keyword }"/>'>
@@ -123,6 +123,8 @@ $(document).ready(function() {
 		e.preventDefault(); 
 	    
 	    var operation = $(this).data("oper");
+	    
+	    console.log(operation);
 	    
 	    if(operation === 'remove'){
 	    	
