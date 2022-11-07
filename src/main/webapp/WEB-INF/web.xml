@@ -44,6 +44,9 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		
+		<!-- 1:n 채팅을 제어하기 위한 비동기 처리 세팅 -->
+		<async-supported>true</async-supported>
+		
 		<multipart-config>
 			<!-- 파일업로드경로 C:\\upload로 통일 -->
 			<location>C:\\upload</location>
@@ -51,7 +54,6 @@
 			<max-request-size>41943040</max-request-size><!-- 40MB -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->
 		</multipart-config>
-		
 	</servlet>
 		
 	<servlet-mapping>
@@ -59,7 +61,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<!-- <filter>
+	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
@@ -67,6 +69,6 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
 
 </web-app>

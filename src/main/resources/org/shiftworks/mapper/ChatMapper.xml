@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.ChatMapper">
+
+	<resultMap type="org.shiftworks.domain.ChatDTO" id="chatMap">
+		<result column="chat_id" property="chat_id"/>
+		<result column="content" property="content"/>
+		<result column="sendtime" property="sendtime"/>
+		<result column="sender" property="sender"/>
+		<result column="room_id" property="room_id"/>
+		<association property="chatRoom" resultMap="chatRoomMap"></association>
+	</resultMap>
+	
+	<resultMap type="org.shiftworks.domain.ChatRoomVO" id="chatRoomMap">
+		<result column="room_id" property="room_id"/>
+		<result column="room_name" property="room_name"/>
+		<result column="lastchat" property="lastchat"/>
+		<result column="lastchat_time" property="lastchat_time"/>
+		<result column="emp_id" property="emp_id"/>
+		<result column="dept_id" property="dept_id"/>
+	</resultMap>
+
+	<!-- Message 관련 기능 -->
+	<!-- 메시지 저장 -->
+	<insert id="insertChat"
+		parameterType="org.shiftworks.domain.ChatVO">
+		INSERT INTO chat(chat_id, content,
+		sendtime, sender, room_id)
+		VALUES(chat_seq.nextval, #{content}, #{sendtime}, #{sender}, #{room_id})
+	</insert>
+
+	<!-- 지난 메시지 가져오기 -->
+	<!-- resultType이 map일 때, 
+ 		 map의 key는 컬럼명을 대문자로 할당되고,
+ 		 map의 value는 반환되는 row의 key에 해당하는 컬럼의 값이 할당된다. -->
+	<select id="getList" parameterType="Integer" resultMap="chatMap">
+	
+		<![CDATA[
+			SELECT *
+				FROM (select c.chat_id, c.content, c.sendtime, c.sender, cr.room_id, cr.room_name
+						FROM chatroom cr LEFT OUTER JOIN chat c
+                        	ON  c.room_id = cr.room_id
+                        	WHERE cr.room_id = #{room_id}
+                        	ORDER BY sendtime desc
+                        )
+				WHERE rownum <= 5
+				ORDER BY sendtime
+			
+		]]>
+	</select>
+
+</mapper>
