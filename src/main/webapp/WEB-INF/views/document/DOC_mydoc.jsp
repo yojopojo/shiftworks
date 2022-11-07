@@ -4,16 +4,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
 
-    
- <div class="row">
+<link rel="stylesheet" href="/resources/css/post.css">
+
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<div class="container">
+<div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">상세페이지</h1>
+		<h1 class="page-header">내가 쓴 게시물 상세페이지</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<!--게시글 상세 폼-->
+    
+
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
@@ -71,11 +81,12 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
+</div>
 
 
 
 
-
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <script>
 $(document).ready(function () {
 	
@@ -86,3 +97,4 @@ $(document).ready(function () {
 });
 
 </script>
+</html>

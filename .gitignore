@@ -4,7 +4,7 @@ application.properties
 # targe Directory 버전관리 제외
 target/
 
-# .setting Directory 버전관리 제외
+# .settings Directory 버전관리 제외
 .settings/
 
 # .classpath 버전관리 제외
