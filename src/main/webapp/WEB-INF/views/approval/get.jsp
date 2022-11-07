@@ -31,15 +31,6 @@
                <label>결재번호</label> <input class="form-control" name='apr_id'
                   value='<c:out value="${approval.apr_id }"/>' readonly="readonly">
             </div>
-
-            <div class="form-group">
-               <label>결재명</label> <input class="form-control" name='apr_title'
-                  value='<c:out value="${approval.apr_title }"/>' readonly="readonly">
-            </div>
-            <div class="form-group">
-               <label>결재 상태</label> <input class="form-control" name='apr_status'
-                  value='<c:out value="${approval.apr_status }" />' readonly="readonly">
-            </div>            
             <div class="form-group">
                <label>작성 일자</label> <input class="form-control" name='apr_receivedate'
                   value='<fmt:formatDate pattern="yyyy-MM-dd" 
@@ -48,6 +39,27 @@
             <div class="form-group">
                <label>결재 유형</label> <input class="form-control" name='af_id'
                   value='<c:out value="${approval.af_id }"/>' readonly="readonly">
+            </div>
+            <div class="form-group">
+               <label>결재 상태</label> <input class="form-control" name='apr_status'
+                  value='<c:out value="${approval.apr_status }" />' readonly="readonly">
+            </div>            
+
+            <div class="form-group">
+               <label>결재명</label> <input class="form-control" name='apr_title'
+                  value='<c:out value="${approval.apr_title }"/>' readonly="readonly">
+            </div>
+            <div class="form-group">
+               <label for="formFileSm" class="form-label file">첨부파일</label>
+				<input class="form-control form-control-sm" id="formFileSm" type="file" readonly>
+				<ul class="approvalFiles">
+					<c:forEach items="${ approval.fileList }" var="f">
+						<li data-uuid="${ f.uuid }" data-file_name="${ f.file_name }"
+							data-file_src="${ f.file_src }">
+							<a><c:out value="${ f.file_name }"/></a>
+					</li>
+				</c:forEach>
+			</ul>
             </div>
             <div class="form-group">
                <label>작성자</label> <input class="form-control" name='emp_id'
@@ -146,8 +158,56 @@
                 }); 
                 
                 // end onclick event
+                
+                // 첨부파일 클릭 시 다운로드/삭제할 수 있도록 하는 url
+			/* $('.approvalFiles li').each(function(i, obj){
+				var file = {
+						uuid: $(obj).data('uuid'),
+						file_name: $(obj).data('file_name'),
+						file_src: $(obj).data('file_src'),
+					};
+				var filePath = encodeURIComponent(file.file_src + "/" + file.uuid + "_" + file.file_name);
+				$(obj).attr("class", "file");
+				$(obj).children('a').attr("href", "/approval/download?fileName=" + filePath);
+				$(obj).append("<span class='fileDelete' data-file=\'" + filePath + "\'> [x] </span>");
+				$('.fileDelete').hide();
+			}); // end li each
+			
+			
+			// 업로드 파일을 x 버튼으로 삭제
+			$('.approvalFiles').on("click", "span", function(e) {
+				// 토큰 정보 받아오기
+				var csrf_token = $("meta[name='_csrf']").attr("content");
+				var csrf_header = $("meta[name='_csrf_header']").attr("content");
+				
+				var fileName = $(this).data("file");
+				var selectedLi = $(this).parent("li");
+				var uuid = selectedLi.data("uuid");
+				
+				console.log(fileName);
+				$.ajax({
+					url: '/approval/deleteFile',
+					beforeSend : function(xhr){ // csrf 토큰 전달
+		                xhr.setRequestHeader(csrf_header, csrf_token);
+		            },
+		            type: 'delete',
+		            data: {file_name: fileName,
+		            		uuid: uuid},
+		            dataType: 'text',
+					success: function(result) {
+						console.log(this);
+						// 업로드 파일 삭제 성공 시 li 삭제
+						selectedLi.remove();
+					},
+					error : function(xhr, status, er) {
+						console.log(er);
+					}
+				})
+			});  */// 삭제 버튼 함수
+                
+                
 
-             })
+             })// end of document ready function
              
 
             

@@ -13,7 +13,9 @@ import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.ApprovalCriteria;
 import org.shiftworks.domain.ApprovalPageDTO;
 import org.shiftworks.domain.TempApprovalVO;
+import org.shiftworks.mapper.FileMapper;
 import org.shiftworks.service.ApprovalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -45,7 +47,10 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ApprovalController {
 
+	@Autowired
 	private ApprovalService service;
+	@Autowired
+	private FileMapper fileMapper;
 	
 	
 	/*
@@ -188,109 +193,94 @@ public class ApprovalController {
 	}
 	
 	
+	/* * * * * * * * * * * * * * * * * * *
+		파일 업로드 구현
+	 * * * * * * * * * * * * * * * * * * */	
+	
+	
 	// 파일 등록
-		@PostMapping(value="/uploadFile",
-					produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-		@PreAuthorize("isAuthenticated()")
-		public ResponseEntity<List<FileVO>> uploadFile(MultipartFile[] uploadFile) {
-			
-			// 파일에 대한 정보를 리스트에 담아 리턴하기 위해 list 선언
-			List<FileVO> list = new ArrayList<FileVO>();
-			
-			// 파일 업로드 폴더 경로
-			String uploadFolder = "C:\\upload";
-			
-			// 날짜에 맞는 업로드 폴더 존재 확인(없을 경우 생성)
-			File uploadPath = new File(uploadFolder, getFolder());
-			if(uploadPath.exists() == false) {
-				uploadPath.mkdirs();
-			} // 년/월/일 경로 생성
-			
-			// 업로드 파일을 하나씩 처리
-			for(MultipartFile m : uploadFile) {
-				
-				FileVO vo = new FileVO();
-				
-				// 파일 저장 경로
-				vo.setFile_src(getFolder());
-				
-				// uuid 생성
-				UUID uuid = UUID.randomUUID();
-				// uuid 파일객체에 저장
-				vo.setUuid(uuid.toString());
-				
-				// 업로드 파일 실제 이름
-				String uploadFileName = m.getOriginalFilename();
-				// 파일명 vo객체에 저장
-				vo.setFile_name(uploadFileName);
-				
-				// uuid + 실제 파일명
-				uploadFileName = uuid.toString() + "_" + uploadFileName;
-				
-				try {
-					// 파일 객체 생성
-					File saveFile = new File(uploadPath, uploadFileName);
-					// 실제 파일 업로드를 진행하는 메소드
-					m.transferTo(saveFile);
-					
-					list.add(vo);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-			
-			
-			return new ResponseEntity<List<FileVO>>(list, HttpStatus.OK);
-			
-		} // end uploadFile
-		
-		
-		// 파일 다운로드
-		@GetMapping(value="/download",
-					// 다운로드가 가능하도록 MIME 타입 지정
-					produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-		@PreAuthorize("isAuthenticated()")
-		public ResponseEntity<Resource> downloadFile(String fileName) {
-			
-			FileSystemResource resource = new FileSystemResource("C:\\upload\\" + fileName);
-
-			// 다운로드 요청한 파일이 없는 경우
-			if(resource.exists() == false) {
-				return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
-			}
-			
-			String resourceName = resource.getFilename();
-			// C:\\upload에 저장된 파일명에서 uuid 제거
-			String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
-			
-			HttpHeaders headers = new HttpHeaders();
-			
-			try {
-				// 파일 다운로드 시 사용할 이름
-				String downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
-				
-				
-				headers.add("Content-Disposition", "attachment; filename=" + downloadName);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
-		}
-		
-		// 메소드
-		
-		// 파일 저장 폴더를 위한 메소드
-		private String getFolder() {
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = new Date();
-			
-			String str = df.format(date);
-			
-			return str.replace("-", File.separator);
-		}
+	/*
+	 * @PostMapping(value="/uploadFile", produces =
+	 * MediaType.APPLICATION_JSON_UTF8_VALUE)
+	 * 
+	 * @PreAuthorize("isAuthenticated()") public ResponseEntity<List<FileVO>>
+	 * uploadFile(MultipartFile[] uploadFile) {
+	 * 
+	 * // 파일에 대한 정보를 리스트에 담아 리턴하기 위해 list 선언 List<FileVO> list = new
+	 * ArrayList<FileVO>();
+	 * 
+	 * // 파일 업로드 폴더 경로 String uploadFolder = "C:\\upload";
+	 * 
+	 * // 날짜에 맞는 업로드 폴더 존재 확인(없을 경우 생성) File uploadPath = new File(uploadFolder,
+	 * getFolder()); if(uploadPath.exists() == false) { uploadPath.mkdirs(); } //
+	 * 년/월/일 경로 생성
+	 * 
+	 * // 업로드 파일을 하나씩 처리 for(MultipartFile m : uploadFile) {
+	 * 
+	 * FileVO vo = new FileVO();
+	 * 
+	 * // 파일 저장 경로 vo.setFile_src(getFolder());
+	 * 
+	 * // uuid 생성 UUID uuid = UUID.randomUUID(); // uuid 파일객체에 저장
+	 * vo.setUuid(uuid.toString());
+	 * 
+	 * // 업로드 파일 실제 이름 String uploadFileName = m.getOriginalFilename(); // 파일명 vo객체에
+	 * 저장 vo.setFile_name(uploadFileName);
+	 * 
+	 * // uuid + 실제 파일명 uploadFileName = uuid.toString() + "_" + uploadFileName;
+	 * 
+	 * try { // 파일 객체 생성 File saveFile = new File(uploadPath, uploadFileName); // 실제
+	 * 파일 업로드를 진행하는 메소드 m.transferTo(saveFile);
+	 * 
+	 * list.add(vo); } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * }
+	 * 
+	 * 
+	 * return new ResponseEntity<List<FileVO>>(list, HttpStatus.OK);
+	 * 
+	 * } // end uploadFile
+	 * 
+	 * 
+	 * // 파일 다운로드
+	 * 
+	 * @GetMapping(value="/download", // 다운로드가 가능하도록 MIME 타입 지정 produces =
+	 * MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	 * 
+	 * @PreAuthorize("isAuthenticated()") public ResponseEntity<Resource>
+	 * downloadFile(String fileName) {
+	 * 
+	 * FileSystemResource resource = new FileSystemResource("C:\\upload\\" +
+	 * fileName);
+	 * 
+	 * // 다운로드 요청한 파일이 없는 경우 if(resource.exists() == false) { return new
+	 * ResponseEntity<Resource>(HttpStatus.NOT_FOUND); }
+	 * 
+	 * String resourceName = resource.getFilename(); // C:\\upload에 저장된 파일명에서 uuid
+	 * 제거 String resourceOriginalName =
+	 * resourceName.substring(resourceName.indexOf("_") + 1);
+	 * 
+	 * HttpHeaders headers = new HttpHeaders();
+	 * 
+	 * try { // 파일 다운로드 시 사용할 이름 String downloadName = new
+	 * String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+	 * 
+	 * 
+	 * headers.add("Content-Disposition", "attachment; filename=" + downloadName);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK); }
+	 * 
+	 * // 메소드
+	 * 
+	 * // 파일 저장 폴더를 위한 메소드 private String getFolder() { SimpleDateFormat df = new
+	 * SimpleDateFormat("yyyy-MM-dd"); Date date = new Date();
+	 * 
+	 * String str = df.format(date);
+	 * 
+	 * return str.replace("-", File.separator); }
+	 */
 	
 	
 	

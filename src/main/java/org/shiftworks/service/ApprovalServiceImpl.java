@@ -33,16 +33,15 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Transactional
 	public int insertForm(ApprovalVO approval) {
 		
-		boolean result = mapper.insert(approval) == 1;
-		
-		// 업로드된 파일이 없을 경우 메소드 종료
-		if (approval.getFileList() == null || approval.getFileList().size() <= 0) {
-			return mapper.insert(approval);
-			}
-		
-		approval.getFileList().forEach(file -> {
-			filemapper.insertApprovalFile(file);
-		});
+		/*
+		 * boolean result = mapper.insert(approval) == 1;
+		 * 
+		 * // 업로드된 파일이 없을 경우 메소드 종료 if (approval.getFileList() == null ||
+		 * approval.getFileList().size() <= 0) { return mapper.insert(approval); }
+		 * 
+		 * approval.getFileList().forEach(file -> { filemapper.insertApprovalFile(file);
+		 * });
+		 */
 		return mapper.insert(approval);
 	}
 

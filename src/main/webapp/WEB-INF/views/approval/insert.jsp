@@ -243,7 +243,7 @@
             /* * * * * * * * * * * * * * * * * * *
             		파일 업로드 관련(가져옴)
         	* * * * * * * * * * * * * * * * * * */
-        	$('#submitBtn').on("click", function(e) {
+        	/* $('#submitBtn').on("click", function(e) {
 				e.preventDefault();
 				// 업로드 파일 존재 시
 				var fileList = [];
@@ -254,7 +254,7 @@
 						file_src: $(obj).data('file_src'),
 					});
 				}); // end li each
-        	}); // end submit click event	
+        	}); // end submit click event	 */
         	
         	/* * * * * * * * * * * * * * * * * * *
 			첨부파일 업로드
@@ -262,7 +262,7 @@
 		
 		// 첨부파일 확장자, 크기 검증에 쓰이는 변수
 		var regex = new RegExp("(.*?)\.(exe|zip)$"); // exe, zip 타입인지 확인
-		var maxSize = 5242880; // 5MB 이상인지 확인
+		/* var maxSize = 5242880; // 5MB 이상인지 확인
 		
 		// 첨부파일 확장자, 크기를 검증하는 함수
 		function checkExtension(fileName, fileSize) {
@@ -384,7 +384,7 @@
 					console.log(er);
 				}
 			})
-		}); // 삭제 버튼 함수
+		}); */ // 삭제 버튼 함수
 						
             
             
