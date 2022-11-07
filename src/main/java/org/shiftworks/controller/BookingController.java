@@ -226,14 +226,19 @@ public class BookingController {
 	
 	
 	//내 예약 현황보기(게시판 형식)
-	@GetMapping("/list/{emp_id}")
+	@GetMapping("/mylist")
 	@PreAuthorize("isAuthenticated()")
-	public ModelAndView getMyList(@PathVariable("emp_id") String emp_id){
+	public ModelAndView getMyList(Authentication auth){
 		log.info("getMyList controller....................");
+		
+		
+		UserDetails ud = (UserDetails)auth.getPrincipal();
+		log.info(ud.getUsername());
+		String emp_id = ud.getUsername();
 		
 		List<BookingVO> myList = service.getMyList(emp_id);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("booking/BOK_list");
+		mav.setViewName("booking/BOK_myList");
 		mav.addObject("event", myList);
 		log.info(myList);
 		
