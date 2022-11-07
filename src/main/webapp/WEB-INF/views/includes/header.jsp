@@ -143,7 +143,7 @@
 		    <div class="card card-body" style="height: 130px; border-width: 0;">
 		      <ul>
 		      	<a href="/manager/register"><li>계정 생성</li></a><br>
-		      	<a href="/manager/list"><li>계정 수정</li></a><br>
+		      	<a href="/manager/list"><li>계정 관리</li></a><br>
 		      	<!-- <a href="/account/form"><li>계정 양식 설정</li></a><br> -->
 		      	<!-- <a href="/account/{empid}"><li>계정 삭제</li></a><br> -->
 		      	<a href="/manager/retireelist"><li>퇴사자 리스트 관리</li></a><br>
@@ -334,9 +334,9 @@
 			    <div class="collapse multi-collapse" id="multiCollapseBOK">
 			    <div class="card card-body" style="height: 100px; border-width: 0;">
 			      <ul>
-			      	<a href="/booking/cal" class="btmmenu"><li>전체 예약 현황</li></a><br>
+			      	<a href="/booking/cal" class="btmmenu"><li>월별 예약 현황</li></a><br>
 			      	<a href="/booking/new"><li>예약하기</li></a><br>
-			      	<a href="/booking/list"><li>내 예약관리</li></a><br>
+			      	<a href="/booking/list"><li>전체 예약보기</li></a><br>
 			      </ul>
 			    </div> <!-- end card-body -->
 			    </div> <!-- end collapse -->
