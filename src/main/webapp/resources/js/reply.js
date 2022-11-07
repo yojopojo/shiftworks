@@ -5,9 +5,12 @@ var replyService = (function() {
 	function add(reply, callback, error) {
 		
 		$.ajax({
-			type : "post",
-			url : "/replies/new",
-			data : JSON.stringify(reply),
+			type : 'post',
+			url : '/reply/new',
+			data : JSON.stringify(post),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+            },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {

@@ -85,20 +85,24 @@
 					<input class="form-control" name='post_updatedate' value='<c:out value=""/>' readonly="readonly">
 				</div>
 				<div class="form-group" hidden="hidden">
-					<label>emp_id</label> <input class="form-control" name='emp_id'
-						value='<c:out value="${post.emp_id }"/>' readonly="readonly">
+					<label>emp_id</label> 
+					<input class="form-control" name='emp_id' value='<c:out value="${pinfo.username}"/>' readonly="readonly">
 				</div>
-				<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
-				<button id="listBtn" class="btn btn-info">목록보기</button>
+				<sec:authentication property="principal" var="pinfo"/>
+					<sec:authorize access="isAuthenticated()">
+						<c:if test="${pinfo.username eq post.emp_id}">
+							<button id='modifyBtn' class='btn btn-primary btn-xs pull-right'>글수정하기</button>
+						</c:if>
+					</sec:authorize>	
+				<button id="listBtn" class="btn btn-primary">목록보기</button>
+				
 
 
 				<form id='operForm' action="/board/modify" method="get">
-					<input type='hidden' id='post_id' name='post_id'
-						value='<c:out value="${post.post_id}"/>'> 
+					<input type='hidden' id='post_id' name='post_id' value='<c:out value="${post.post_id}"/>'> 
 					<input type='hidden' name='pageNum'  value='<c:out value="${cri.pageNum}"/>'> 
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-					<input type='hidden' name='keyword'
-						value='<c:out value="${cri.keyword}"/>'> 
+					<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> 
 					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 				</form>
 				<!-- 게시글 상세 폼-->
@@ -135,6 +139,9 @@
 					<!-- ./ end row -->
 				</div>
 				<!-- /댓글 -->
+				
+				
+				
 
 			</div>
 			<!--  end panel-body -->
@@ -163,12 +170,11 @@
 						//form value 가져오기 
 						var post_id = $(".panel-body").find("input[name='post_id']").val();
 						var dept_id = $(".panel-body").find("input[name='dept_id']").val();
-						var emp_id = $(".panel-body").find("input[name='emp_id']").val();
 						var post_name = $(".panel-body").find("input[name='post_name']").val();
 						var post_content = $(".panel-body").find("textarea[name='post_content']").val();
 						var post_regdate = $(".panel-body").find("input[name='post_regdate']").val();
 
-						//추후 scrap 에 regdate넣기 console.log(typeof(post_regdate));
+					
 						
 						//csrf_token 가져오기
 						var csrf_token = $("meta[name='_csrf']").attr("content");
@@ -206,13 +212,14 @@
 
 							var post = {
 								post_id : post_id,
-								r_writer : "조현수", //나중에 sesssion 으로 변경해야함 
-								r_content : formInsertContent.val()
+								r_content : formInsertContent.val(),
+								csrf_token:csrf_token,
+					            csrf_header:csrf_header
 							}
 
 							replyService.addReply(post, function(result) {
 
-								alert(result);
+								alert("등록되었습니다.");
 								formInsertContent.val("");
 							});
 
@@ -226,9 +233,9 @@
 							var post = {
 								post_id : post_id,
 								dept_id : dept_id,
-								emp_id : emp_id,
 								post_name : post_name,
 								post_content : post_content,
+								post_regdate:post_regdate,
 								csrf_token:csrf_token,
 					            csrf_header:csrf_header
 							}
@@ -248,6 +255,45 @@
 						});
 						
 						
+						//이전글
+						postService.selectPrev({post_id:post_id},function(result){
+							$(".pre_index").append(
+									"<tb><a href='"+ result.post_id+ "'>"+result.post_name+"</a></tb>")
+							
+						});
+						
+						
+						//다음글
+						postService.selectNext({post_id:post_id},function(result){
+							$(".post_index").append(
+									"<tb><a href='"+ result.post_id+ "'>"+result.post_name+"</a></tb>")
+							
+						});
+						
+						
+						
+						 //이전글 다음글 클릭 시 해당 get.jsp 이동하기
+						  $(".table").on("click","a", function(e){
+							  	
+								e.preventDefault();
+								var post_id = $(this).attr("href");
+								console.log(post_id);
+								
+								 var post={
+										post_id:post_id,
+										csrf_token:csrf_token,
+							    		csrf_header:csrf_header
+								}
+
+								//history 테이블에 넣어서 읽음 표시하기
+								postService.insertHistory(post);
+								
+							 //get.jsp이동
+								 $("#operForm").find("input[name='post_id']").val(post_id);
+							 	$("#operForm").attr("action","/board/get");
+								$("#operForm").submit(); 
+							
+						  });
 						
 	});//end script
 </script>

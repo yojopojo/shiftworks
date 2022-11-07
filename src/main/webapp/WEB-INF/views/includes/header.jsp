@@ -57,7 +57,9 @@
 	 				<!-- <a href="#" class="text-white">홍길동</a> -->
 			 		<a href="#multiCollapseUser" class="" data-bs-toggle="collapse" role="button"
  				aria-expanded="false" aria-controls="multiCollapseUser" style="text-decoration: none; color: white;" id="userName">
+
 			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="85" class="rounded-circle" style="margin-top: -10px; margin-left: 7px;">
+
 			 		<sec:authentication property="principal.username"></sec:authentication> <!-- 사용자 이름 -->
 			 		</a>
 			 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
@@ -239,7 +241,7 @@
 		  <div class="col">
 		    <div class="collapse multi-collapse" id="multiCollapseAPR">
 		    <div class="card card-body" style="height: 120px; border-width: 0;">
-		      <ul>
+		      <ul class="board">
 		      	<a href="/approval/insert"><li>결재 문서 작성</li></a><br>
 		      	<a href="/approval/list"><li>전체 결재문서함</li></a><br>
 		      	<a href="/approval/receivedList"><li>결재 전 문서</li></a><br>
@@ -368,7 +370,7 @@
 		
 		//동적으로 게시판 메뉴 추가해주기
 	     postService.boardList(function(result){
-	        console.log(result[1].b_name);
+	        console.log(result[0].b_id);
 	        
 	        for(var i=0;i<result.length;i++){
 	           

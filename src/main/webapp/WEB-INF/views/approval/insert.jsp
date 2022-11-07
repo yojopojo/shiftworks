@@ -19,6 +19,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
+<div class="container">
 <h1>결재문서 작성</h1>
    <form id="insertForm" role="form" action="/approval/insert" method="post">
           <div class="form-group">
