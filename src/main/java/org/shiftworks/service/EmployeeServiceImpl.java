@@ -19,9 +19,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeMapper mapper;
 
 	@Override
-	public void register(EmployeeVO empVO) {
-		log.info("register..............."+empVO);
-		mapper.insert(empVO);
+	public int register(EmployeeVO empVO) {
+		int result = mapper.insert(empVO);
+		log.info("register..............."+empVO);		
+		return result;
 
 	}
 
@@ -50,25 +51,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
-//	@Override
-//	public List<EmployeeVO> getList(Criteria cri) {
-//		log.info("get list with criteria..." + cri);
-//		
-//		return mapper.getListWithPaging(cri);
-//	}
+	@Override
+	public List<EmployeeVO> getList(AccountCriteria cri) {
+		log.info("get list with criteria..." + cri);
+		
+		return mapper.getListWithPaging(cri);
+	}
 
-//	@Override
-//	public List<EmployeeVO> empSearch(Criteria cri) {
-//		List<EmployeeVO> list = mapper.getEmployeeForSearching(cri);
-//		return list;
-//		
-//	}
+	@Override
+	public List<EmployeeVO> empSearch(AccountCriteria cri) {
+		List<EmployeeVO> list = mapper.getEmployeeForSearching(cri);
+		return list;
+		
+	}
 	
-//	@Override
-//	public int getTotal(Criteria cri) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	@Override
+	public int getTotal(AccountCriteria cri) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 
 

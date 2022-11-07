@@ -5,7 +5,7 @@
 <mapper namespace="org.shiftworks.mapper.ChatRoomUserMapper">
 	
 	<!-- 메시지 수신자 관련 -->
-	<select id="getList" parameterType="int" resultType="org.shiftworks.domain.ChatRoomUserVO">
+	<select id="getList" parameterType="Integer" resultType="org.shiftworks.domain.ChatRoomUserVO">
 		SELECT * FROM chatroom_user WHERE room_id = #{room_id}
 	</select>
 		

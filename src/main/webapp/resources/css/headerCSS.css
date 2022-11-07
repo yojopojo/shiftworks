@@ -18,8 +18,9 @@ body {
 
 .container {
 	/* margin-left: 50px; */
-	padding-left: 180px;
+	padding-left: 300px;
 	padding-top: 30px;
+	margin-top: 80px;
 }
 
 /* hr {
@@ -34,7 +35,8 @@ body {
 } */
 
 #logo {
-	margin-left: 10px;
+	margin-left: 8px;
+	margin-top: 30px;
 }
 
 #profile {
@@ -104,7 +106,7 @@ body {
 	background-color: #1C3359;
 	position: absolute;
 	height: 1500px;
-	width: 230px;
+	width: 290px;
 	/* margin-top: -68px; */
 	float: right;
 	text-align: center;
@@ -123,6 +125,7 @@ body {
 	display: inline-block;
 	color: white;
 	font-weight: bolder;
+	font-size: 18px;
 }
 
 
@@ -163,7 +166,7 @@ body {
 	margin-top: 25px;
 	margin-bottom: -20px;
 	padding-bottom: 15px;
-	text-align: left;
+	text-align: center;
 }
 
 .card li {

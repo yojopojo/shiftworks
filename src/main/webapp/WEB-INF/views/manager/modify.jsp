@@ -3,9 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@include file="../includes/header.jsp"%>
+<%@include file="/WEB-INF/views/includes/header.jsp"%>
+<html>
 
+<head></head>
+<body>
 
+<div class="container">
 <div class="row">
   <div class="col-lg-12">
     <h1 class="page-header">employee Modify</h1>
@@ -18,7 +22,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
 
-      <div class="panel-heading">employee Modify</div>
+      <div class="panel-heading">계정 정보 수정</div>
       <!-- /.panel-heading -->
       <div class="panel-body">
 
@@ -32,27 +36,71 @@
       
  
 <div class="form-group">
-  <label>소속 부서 번호</label> 
+  <label>소속 부서 아이디</label> 
   <input class="form-control" name='dept_id' 
-     value='<c:out value="${employee.dept_id }"/>' readonly="readonly">
+     value='<c:out value="${employee.dept_id }"/>'>
 </div>
+<div class="form-group">
+  <label>비밀번호</label> 
+  <input class="form-control" name='password' 
+    value='<c:out value="${employee.'password' }"/>' >
+</div>
+
+<div class="form-group">
+  <label>직급</label> 
+  <input class="form-control" name='position'
+    value='<c:out value="${employee.position}"/>'>            
+</div>
+
 
 <div class="form-group">
   <label>이름</label> 
   <input class="form-control" name='name' 
-    value='<c:out value="${employee.'name' }"/>' >
+    value='<c:out value="${employee.name }"/>' >
 </div>
+<div class="form-group">
+  <label>생년월일</label> 
+  <input class="form-control" name='birthday' 
+    value='<c:out value="${employee.birthday }"/>' >
+</div>
+<div class="form-group">
+  <label>모바일</label> 
+  <input class="form-control" name='mobile' 
+    value='<c:out value="${employee.mobile }"/>' >
+</div>
+<div class="form-group">
+  <label>사내망</label> 
+  <input class="form-control" name='internal' 
+    value='<c:out value="${employee.internal }"/>' >
+</div>
+<div class="form-group">
+  <label>이메일</label> 
+  <input class="form-control" name='email' 
+    value='<c:out value="${employee.email }"/>' >
+</div>
+<div class="form-group">
+  <label>주소</label> 
+  <input class="form-control" name='address' 
+    value='<c:out value="${employee.address }"/>' >
+</div>
+<div class="form-group">
+  <label>입사일</label> 
+  <input class="form-control" name='entry_date' 
+    value='<c:out value="${employee.entry_date }"/>' >
+</div>
+<div class="form-group">
+  <label>퇴사일</label> 
+  <input class="form-control" name='resignation_date' 
+  	value='<c:out value="${employee.resignation_date }"/>' >
+</div>
+
 
 <%-- <div class="form-group">
   <label>Text area</label>
   <textarea class="form-control" rows="3" name='content' ><c:out value="${employee.content}"/></textarea>
 </div> --%>
 
-<div class="form-group">
-  <label>직급</label> 
-  <input class="form-control" name='position'
-    value='<c:out value="${employee.position}"/>' readonly="readonly">            
-</div>
+
 
 <%-- <div class="form-group">
   <label>RegDate</label> 
@@ -75,8 +123,9 @@
 		</c:if>
 	
 	</sec:authorize> --%>
-
-  <button type="submit" data-oper='list' class="btn btn-info">List</button>
+	<button type="submit" data-oper='modify' class="btn btn-info">수정</button>
+	<button type="submit" data-oper='remove' class="btn btn-info">삭제</button>
+  <button type="submit" data-oper='list' class="btn btn-info">목록</button>
 </form>
 
 
@@ -110,7 +159,7 @@ $(document).ready(function() {
 	    }else if(operation === 'list'){
 	      //move to list
 	      formObj.attr("action", "/manager/list").attr("method","get");
-	      
+	      formObj.empty();
 	   /*    var pageNumTag = $("input[name='pageNum']").clone();
 	      var amountTag = $("input[name='amount']").clone();
 	      var keywordTag = $("input[name='keyword']").clone();
@@ -130,7 +179,9 @@ $(document).ready(function() {
 });
 </script>
   
-
+</div>
+</body>
+</html>
 
 
 

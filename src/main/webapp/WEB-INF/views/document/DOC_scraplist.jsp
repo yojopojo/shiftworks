@@ -3,6 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="/resources/css/post.css">
+
+<meta charset="UTF-8">
+<title></title>
+</head>
 
 <div class="container">
 <div class="row">
@@ -12,6 +21,7 @@
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+
 
 <div class="row">
 	<div class="col-lg-12">
@@ -70,9 +80,8 @@
 								<td><c:out value="${post.emp_id}" /></td>
 								<td><c:out value="${post.dept_id}" /></td>
 								<td><c:out value="${post.post_name}" /></td>
-								<%-- <td><c:out value="${post.post_regdate}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.scrap_date}" /></td> --%>
+								<td><c:out value="${post.post_regdate}" /></td>
+								<td><c:out value="${post.scrap_date}" /></td>
 							</tr>
 						</c:forEach>
 						</tbody>
@@ -112,6 +121,7 @@
 <!--end row-->
 </div>
 
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <script src="/resources/js/document.js" type="text/javascript"></script>
 <script>
 $(document).ready(function () {
@@ -242,6 +252,6 @@ $(document).ready(function () {
 
 })//end script
 </script>		
-
+</html>
 
 

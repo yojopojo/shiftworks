@@ -41,9 +41,9 @@
            WHERE room_id = #{room_id}
 	</delete>
 	
-	<update id="updateLastchat" parameterType="org.shiftworks.domain.ChatRoomVO">
+	<update id="updateLastchat" parameterType="org.shiftworks.domain.ChatVO">
 		UPDATE chatroom
-			SET lastchat = #{lastchat}, lastchat_time = #{lastchat_time}
+			SET lastchat = #{content}, lastchat_time = #{sendtime}
 			WHERE room_id = #{room_id}
 	</update>
 
