@@ -61,7 +61,7 @@
 					<c:if test="${pageMaker.next }">
 						<li class="paginate_button next"><a href="${pageMaker.endPage +1 }">Next</a></li>
 					</c:if>
-					<li style="margin-left: 200px;"><a href="/booking/list/${emp_id }"><c:out value="내 예약목록 보기"></c:out></a></li>
+					<li style="margin-left: 200px;"><a href="/booking/mylist"><c:out value="내 예약목록 보기"></c:out></a></li>
 					<li style="margin-left: 10px;"><a href="/booking/new"><c:out value="예약하기"></c:out></a></li>
 				</ul>
 			</div>
