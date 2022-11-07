@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.BoardCriteria;
+import org.shiftworks.domain.BoardVO;
+import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
@@ -95,9 +97,8 @@ public class PostMapperTests {
 //		vo.setPost_content("scrap test중입니다");
 //
 //
-//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//		Date tempdate = df.parse("2022-10-28");
-//		vo.setPost_regdate(tempdate);
+//		
+//		vo.setPost_regdate("2022-10-20");
 //		
 //		mapper.scrapPost(vo);
 //		
@@ -127,7 +128,33 @@ public class PostMapperTests {
 //		
 //	}
 	
-
+//	@Test
+//	public void testGetDeptId() {
+//		String emp_id ="user1";
+//		log.info(mapper.getDeptId(emp_id));;
+//		
+//	}
 	
+//	@Test
+//	public void testselectPrev() {
+//		int post_id = 25;
+//		log.info(mapper.selectPrev(post_id));
+//	}
+
+//	@Test
+//	public void testInsertNewBoard() {
+//		BoardVO vo  = new BoardVO();
+//		vo.setB_name("자료실");
+//		vo.setB_content("여러 자료실 관련");
+//		vo.setB_private("N");
+//		
+//		mapper.insertNewBoard(vo);
+//	}
+	
+	
+//	@Test
+//	public void testSelectBoardList() {
+//		mapper.selectBoardList().forEach(board ->log.info(board));
+//	}
 	
 }

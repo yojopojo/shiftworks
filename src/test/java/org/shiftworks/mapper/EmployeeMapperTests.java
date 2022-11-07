@@ -1,5 +1,7 @@
 package org.shiftworks.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shiftworks.domain.EmployeeVO;
@@ -17,11 +19,59 @@ public class EmployeeMapperTests {
 	@Autowired
 	private EmployeeMapper mapper;
 	
-	// 인증정보 조회 test
+//	@Test
+//	public void testRead() {
+//		EmployeeVO vo = mapper.read("user1");
+//		log.info(vo);
+//	}
+	
+//	@Test
+//	public void testGetList() {
+//		mapper.getList().forEach(employee->log.info(employee));
+//	}
+//	
 	@Test
-	public void testRead() {
-		EmployeeVO vo = mapper.read("user1");
-		log.info(vo);
+	public void testGetList() {
+		mapper.getList().forEach(employee ->log.info(employee));
 	}
+	
+//	@Test
+//	public void testInsert() {
+//		EmployeeVO empVO = new EmployeeVO();
+//		empVO.setEmp_id("user11");
+//		empVO.setDept_id("dept2");
+//		empVO.setName("u11");
+//		empVO.setPassword("pw11");
+//		
+//		mapper.insert(empVO);
+//		
+//		log.info(empVO);
+//	}
+	
+	@Test
+	public void testDetail() {
+		
+		EmployeeVO empVO = mapper.detail("user11");
+		
+		log.info(empVO);
+	}
+	
+//	@Test
+//	public void testDelete() {
+//		
+//		log.info("Delete Count: " + mapper.delete("user11"));
+//	}
+//	
+//	@Test
+//	public void testUpdate() {
+//		
+//		EmployeeVO empVO = new EmployeeVO();
+//		empVO.setEmp_id("user1");
+//		empVO.setDept_id("dept2");
+//		
+//		int count = mapper.update(empVO);
+//		log.info("Update Count: " + empVO);
+//		
+//	}
 	
 }

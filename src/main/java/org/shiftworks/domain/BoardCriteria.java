@@ -15,6 +15,7 @@ public class BoardCriteria {
 	
 	private String type;
 	private String keyword;
+	private String emp_id;
 	
 
 	
