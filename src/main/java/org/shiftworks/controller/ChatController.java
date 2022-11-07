@@ -8,17 +8,21 @@
 
 package org.shiftworks.controller;
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.shiftworks.domain.ChatRoomVO;
+import org.shiftworks.domain.ChatVO;
+import org.shiftworks.mapper.ChatMapper;
 import org.shiftworks.domain.ChatDTO;
 import org.shiftworks.service.ChatService;
 import org.shiftworks.service.ChatServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -29,6 +33,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,25 +44,25 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
+@RequestMapping("/messenger")
 public class ChatController {
 	
 	@Autowired
 	ChatService chatService;
+	
+	
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/messenger/chat")
-	public String chat(HttpServletRequest request, Model model, Authentication auth) {
+	@GetMapping("/chat")
+	public String chat(Model model, Authentication auth) {
 		
 		UserDetails userDetails = (UserDetails) auth.getPrincipal();
 		log.info("@ChatController, GET Chat / Username : " + userDetails.getUsername());
-		
-		
-		HttpSession session = request.getSession();
 
 		List<ChatRoomVO> chatRoomList = chatService.getChatRoomList(userDetails.getUsername());
-		List<ChatDTO> chatList = chatService.getChatList(1);
+		// List<ChatDTO> chatList = chatService.getChatList(1);
 		
 		model.addAttribute("chatRoomList", chatRoomList);
-		model.addAttribute("chatList", chatList);
+		//model.addAttribute("chatList", chatList);
 
 //		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		
@@ -65,22 +71,32 @@ public class ChatController {
 //		
 //		model.addAttribute("userid", user.getUsername());
 		
-		return "MSG_main";
+		return "messenger/MSG_main";
 	}
 	
-	@GetMapping("/messenger/chat/room/{room_id}")
+	
+	@GetMapping("/chat/room/{room_id}")
+	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
 	public ResponseEntity<List<ChatDTO>> getChat(@PathVariable("room_id") Integer room_id){
-		
+		log.info("@ChatController, GET getChat...............");
 		return new ResponseEntity<>(chatService.getChatList(room_id), HttpStatus.OK);
 	}
 	
-//	@PostMapping("/messenger/send")
-//	@ResponseBody
-//	public ResponseEntity<MessageVO> sendMessage(){
-//		
-//		
-//		
-//		return;
-//	}
+	
+	@PostMapping(value="/send", produces=MediaType.TEXT_PLAIN_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> sendChat(@RequestBody ChatVO chat){
+		log.info("@ChatController, POST sendMessage...............");
+		
+		
+		Integer sendResult = chatService.sendChat(chat);
+		Integer updateResult = chatService.updateLastChat(chat);
+		
+		Integer result = (sendResult == 1 && updateResult == 1) ? 1 : -1;
+		
+		// insert 유무에 따라 헤더값을 다르게 전달
+		return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) // 200
+						: new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR); // 500
+	}
 }
