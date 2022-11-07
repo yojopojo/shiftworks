@@ -124,6 +124,7 @@
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
 				and e.emp_id =#{emp_id}
+				and post_receivedept = #{dept_id}
 				
 				)
 			where rn >(#{pageNum}-1)*#{amount}
@@ -134,13 +135,52 @@
 	
 	<!--부서문서 게시물 상세보기-->
 	<select id="deptSelect" parameterType="org.shiftworks.domain.PostVO" resultType="org.shiftworks.domain.PostVO">
-		select * from post where post_receivedept=#{post_receivedept} and post_id =#{post_id}
+		select * from post where post_receivedept=#{dept_id} and post_id =#{post_id}
 	</select>	
 	
 	<!--결재문서 완료함 리스트 조회-->
-	
+	<select id="approvalSelectList" parameterType="String" resultType="org.shiftworks.domain.ApprovalVO">
+		<![CDATA[
+			select apr_id,af_id,emp_id,apr_receivedate,apr_title,apr_content,apr_status,apr_comment,name,apr_signdate
+			from
+				( select /*+INDEX_DESC(post post_pk) */
+				  rownum rn, apr_id,af_id,e.emp_id as emp_id,apr_receivedate,apr_title,apr_content,apr_status,
+				  apr_comment,e.name as name, apr_signdate
+				from approval a JOIN employee e
+				ON e.emp_id =a.emp_id 
+				where
+		]]>
+			
+		 <trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item='type' collection="typeArr" >
+				<trim prefix="OR">
+					<choose>
+						<when test="type =='T'.toString()">
+							apr_title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type =='C'.toString()">
+							 apr_content like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+	</trim> 
+				
+		<![CDATA[		
+				rownum <=#{pageNum}*#{amount}
+				and apr_status =3
+				and e.emp_id =#{emp_id}
+				
+				)
+			where rn >(#{pageNum}-1)*#{amount}
+			order by apr_id desc
+		]]>
+		
+	</select> 
 	<!--결재문서 완료문서 상세보기-->
-	
+	<select id="approvalSelect" parameterType="org.shiftworks.domain.PostVO" resultType="org.shiftworks.domain.PostVO">
+		select * from approval where emp_id=#{emp_id} apr_id =#{apr_id}
+	</select>	
 	
 	<!-- 내가쓴 글 총 갯수 -->
 	<select id="getTotalMyDoc" resultType="int">
@@ -156,6 +196,16 @@
 	<!-- 해당 부서가 받은 총 글 개수-->
 	<select id="getTotalDept" resultType="int">
 		select count(*) from post where post_receivedept = #{post_receivedept}
+	</select>
+	
+	<!--결재가 완료된 총 글 개수-->
+	<select id="getTotalApproval" resultType="int">
+		select count(*) from approval where apr_status =3
+	</select>
+	
+	<!-- 부서 찾기-->
+	<select id="getDept" parameterType="String" resultType="String">
+		select dept_id from employee where emp_id=#{emp_id}
 	</select>
 
 </mapper>

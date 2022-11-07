@@ -7,9 +7,9 @@
 	<!--데이터 입력-->
 	<insert id="insertPost" parameterType="org.shiftworks.domain.PostVO">
 		insert into post (post_id, b_id, emp_id, dept_id, post_name, post_content,
-		post_regno, post_regdate, post_updatedate, post_fix, post_receivedept)
+		post_regno, post_regdate, post_fix, post_receivedept)
 		values (post_seq.nextval, #{b_id}, #{emp_id}, #{dept_id},#{post_name},
-		#{post_content},0, sysdate, sysdate, 'N', #{post_receivedept})
+		#{post_content},0, sysdate, 'N', #{post_receivedept})
 	</insert> 
 	
 	<!-- <select id="getListPostVO" resultType="org.shiftworks.domain.PostVO">
@@ -51,6 +51,7 @@
 				AND b_id =#{b_id}
 				)
 			where rn >(#{pageNum}-1)*#{amount}
+			order by post_id desc
 			
 		]]>
 		
@@ -91,29 +92,31 @@
 	
 	<!--하나의 post 만 가져오기-->
 	<select id="getPost"  parameterType="int" resultType="org.shiftworks.domain.PostVO">
-		select * from post where post_id = #{post_id}
+		select post_id, b_id, e.dept_id as dept_id, post_name, post_content, e.emp_id as emp_id, post_regno, post_regdate, post_updatedate, post_fix, post_receivedept, e.name as name
+			from post p JOIN employee e ON e.emp_id =p.emp_id 
+			where post_id = #{post_id}
 	</select>
 	
 	<!-- 총 게시글 수 조회-->
 	<select id="getTotal" resultType="int">
-		select count(*) from post
+		select count(*) from post where b_id=#{b_id}
 	</select>
 	
 	<!--스크랩하기-->
 	<insert id="scrapPost" parameterType="org.shiftworks.domain.ScrapVO">
 		merge into scrap 
-			using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id=#{dept_id})
+			using dual on(post_id =#{post_id} and emp_id =#{emp_id} and dept_id =#{dept_id})
 			when not matched then
-				insert (scrap_id, dept_id, emp_id,post_id, scrap_date, post_name,post_content)
-				values(scrap_seq.nextval, #{dept_id}, #{emp_id},#{post_id},sysdate,#{post_name},#{post_content})
+				insert (scrap_id, dept_id, emp_id,post_id, scrap_date, post_name,post_content, post_regdate)
+				values(scrap_seq.nextval, #{dept_id}, #{emp_id},#{post_id},sysdate,#{post_name},#{post_content},TO_DATE(#{post_regdate}, 'yyyy-MM-dd'))
 	</insert>
 	
 	
-	<!--emp_id, b_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트하기 -->
+	<!--emp_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트하기 -->
 	<update id="temporalPost" parameterType="org.shiftworks.domain.Temp_BoardVO">
 		merge into temp_board
-		using dual on(b_id = #{b_id} and emp_id = #{emp_id})
-		when matched then update set post_name=#{post_name}, post_content= #{post_content}
+		using dual on(emp_id = #{emp_id})
+		when matched then update set b_id=#{b_id}, post_name=#{post_name}, post_content= #{post_content}
 		when not matched then
 			insert (temp_id, b_id, dept_id, emp_id, post_name, post_content) 
 			values (temp_board_seq.nextval,#{b_id},#{dept_id},#{emp_id}, #{post_name},#{post_content})
@@ -137,5 +140,52 @@
 	<select id="selectHistory" resultType="org.shiftworks.domain.HistoryVO">
 		select * from history where emp_id =#{emp_id}
 	</select>
+	
+	<!--해당 emp_id와 일치하는 부서번호 불러오기-->
+	<select id="getDeptId" parameterType="String" resultType="String">
+		select dept_id from employee where emp_id =#{emp_id}
+	</select>
+	
+	<!--이전글, 다음글 불러오기-->
+	<select id="selectPrev" resultType="org.shiftworks.domain.PostVO"> 
+	<![CDATA[
+		select post_id, post_name from post
+		where 1=1
+		and post_id in(
+			select max(post_id)
+			from post
+			where 1=1
+			and post_id <#{post_id}
+		)
+	]]>
+	</select>
+	
+	<!--다음글-->
+	<select id="selectNext" resultType="org.shiftworks.domain.PostVO">
+		<![CDATA[
+		select post_id, post_name from post
+		where 1=1
+		and post_id in(
+			select min(post_id)
+			from post
+			where 1=1
+			and post_id >#{post_id}
+		)
+	]]>
+	</select>
+	
+	
+	<!--새로운 게시판 생성하기-->
+	<insert id="insertNewBoard" parameterType="org.shiftworks.domain.BoardVO">
+		insert into board (b_id, b_name, b_content,b_private) values(board_seq.nextval, #{b_name},#{b_content},#{b_private})
+	</insert>
+	
+	<!--게시판 리스트 불러오기-->
+	<select id="selectBoardList" resultType="org.shiftworks.domain.BoardVO">
+		select * from board
+	</select>
+	
+	
+	
 	
 </mapper>

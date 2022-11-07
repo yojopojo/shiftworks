@@ -25,7 +25,7 @@
 	<!-- Message 관련 기능 -->
 	<!-- 메시지 저장 -->
 	<insert id="insertChat"
-		parameterType="org.shiftworks.domain.ChatDTO">
+		parameterType="org.shiftworks.domain.ChatVO">
 		INSERT INTO chat(chat_id, content,
 		sendtime, sender, room_id)
 		VALUES(chat_seq.nextval, #{content}, #{sendtime}, #{sender}, #{room_id})
@@ -38,11 +38,14 @@
 	<select id="getList" parameterType="Integer" resultMap="chatMap">
 	
 		<![CDATA[
-			SELECT c.chat_id, c.content, c.sendtime, c.sender, cr.room_id, cr.room_name
-				FROM chatroom cr LEFT OUTER JOIN chat c
-				ON  c.room_id = cr.room_id
-				WHERE cr.room_id = #{room_id}
-					AND rownum <= 5
+			SELECT *
+				FROM (select c.chat_id, c.content, c.sendtime, c.sender, cr.room_id, cr.room_name
+						FROM chatroom cr LEFT OUTER JOIN chat c
+                        	ON  c.room_id = cr.room_id
+                        	WHERE cr.room_id = #{room_id}
+                        	ORDER BY sendtime desc
+                        )
+				WHERE rownum <= 5
 				ORDER BY sendtime
 			
 		]]>

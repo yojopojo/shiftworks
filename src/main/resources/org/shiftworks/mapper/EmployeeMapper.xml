@@ -4,17 +4,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.EmployeeMapper">
 
+<!-- <sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql> -->
+
+
 	<resultMap type="org.shiftworks.domain.EmployeeVO" id="empMap">
 		<id property="emp_id" column="emp_id"/>
 		<result property="emp_id" column="emp_id"/>
 		<result property="dept_id" column="dept_id"/>
 		<result property="name" column="name"/>
+		<result property="position" column="position"/>
+		<result property="birthday" column="birthday"/>
+		<result property="address" column="address"/>
+		<result property="entry_date" column="entry_date"/>
 		<result property="password" column="password"/>
 		<collection property="authList" resultMap="deptMap"/>
 	</resultMap>
 	
 	<resultMap type="org.shiftworks.domain.DepartmentVO" id="deptMap">
 		<result property="dept_id" column="dept_id"/>
+		<result property="dept_name" column="dept_name"/>
 		<result property="authority" column="authority"/>
 	</resultMap>
 
@@ -26,23 +52,54 @@
 			WHERE emp_id = #{emp_id}
 	</select>
 	
+	
 	<!--계정관리-->
-	<!--전체 list-->
+		<!--전체 list-->
 	<select id="getList" resultType="org.shiftworks.domain.EmployeeVO">
-		select emp_id, dept_id, name, position ,mobile, internal from employee
+			SELECT emp_id, dept_name, position, name, entry_date
+			FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id
+			WHERE  resignation_date is null
+			
 	</select>
 	
-	<!-- 계정추가 -->
+		<!-- 페이징처리 -->
+	<!-- 	<select id="getListWithPaging"
+		resultType="org.shiftworks.domain.EmployeeVO"> 
+		<![CDATA[ 
+		select emp_id, dept_name, name, position
+			from ( 
+				select /*+INDEX_DESC(employee pk_board) */ 
+						rownum rn, bno, title, content, writer, regdate, updatedate, replyCnt
+					from tbl_board 
+					where 
+		]]>
+		
+	<include refid="criteria"/>
+
+	<![CDATA[
+			 rownum <= #{pageNum} * #{amount}
+		) where rn > (#{pageNum} -1) * #{amount}
+	
+	]]>
+	
+
+	</select> -->
+		
+		
+		<!-- 계정추가 -->
 	<insert id="insert">
-		insert into employee(emp_id, dept_id, position, birthday, name, mobile, internal, 
-		email, address, entry_date, password) 
-			values (#{emp_id}, #{dept_id}, #{position}, #{birthday}, #{name}, #{mobile}, #{internal}, 
-			#{email}, #{address}, #{entry_date} ,#{password})
+		insert into employee(emp_id, dept_id, password, position, name, birthday, mobile, internal, 
+		email, address, entry_date) 
+			values (#{emp_id}, #{dept_id}, #{password}, #{position}, #{name}, #{birthday}, #{mobile}, #{internal}, 
+			#{email}, #{address}, #{entry_date})
 	</insert>
 		<!-- 계정상세보기 -->
 	<select id="detail" resultType="org.shiftworks.domain.EmployeeVO">
-		select emp_id, dept_id, position, birthday, name, mobile, internal, 
-		email, address, entry_date, resignation_date  from employee where emp_id = #{emp_id}
+		select emp_id, e.dept_id as dept_id, password, position, name, birthday, mobile, internal, 
+		email, address, entry_date
+		FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id where emp_id = #{emp_id}
 	</select>
 		<!-- 계정삭제 -->
 	<delete id="delete">
@@ -50,9 +107,35 @@
 	</delete>
 		<!-- 계정정보수정 -->
 	<update id="update">
-		update employee set dept_id=#{dept_id}, position=#{position}, mobile=#{mobile}, internal=#{internal}
-		, address=#{address}, resignation_date=#{resignation_date} where emp_id=#{emp_id}
+		update employee set dept_id=#{dept_id}, password=#{password}, position=#{position}, name=#{name}, mobile=#{mobile}, internal=#{internal}
+		, email=#{email}, address=#{address}, resignation_date=#{resignation_date} where emp_id=#{emp_id}
 	</update>
+	<!-- 퇴직자리스트 -->
+	<select id="getRetireeList" resultType="org.shiftworks.domain.EmployeeVO">
+			SELECT emp_id, dept_name, position, name, entry_date
+			FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id
+			WHERE  resignation_date is not null
+			
+	</select>
+	
+	 <!--사원 검색 //미완성-->
+	<!--  <select id="getEmployeeForSearching" resultType="org.shiftworks.domain.EmployeeVO">
+		<![CDATA[
+			select emp_id, dept_id, position, birthday, name, mobile, internal, 
+					email, address, entry_date, resignation_date 
+			from
+				
+		]]>
+
+	</select>  -->
+	
+	<!-- 총 계정 개수 -->
+	<!-- <select id="getTotalCount" resultType="int">
+		select count(*) from tbl_board where 
+		<include refid="criteria"/>
+		bno > 0
+	</select> -->
 	
 	
 </mapper>

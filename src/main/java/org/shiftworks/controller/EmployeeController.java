@@ -5,6 +5,7 @@ import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.domain.AccountPageDTO;
 import org.shiftworks.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,10 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 	
-	//¿¸√º ∏ÆΩ∫∆Æ
+	@Autowired
+	private BCryptPasswordEncoder pwdEncoder;
+	
+
 //	@GetMapping("/list")
 //	public void list(Criteria cri, Model model) {
 //		log.info("list11.............."+cri);
@@ -47,33 +51,40 @@ public class EmployeeController {
 		
 	}
 	
-	//µÓ∑œ get
+	//Í≥ÑÏ†ïÎì±Î°ù get
 	@GetMapping("/register")
 	public void register() {
 		
 	}
-	//µÓ∑œ post
+	//Í≥ÑÏ†ïÎì±Î°ù post
 	@PostMapping("/register")
 	public String register(EmployeeVO empVO, RedirectAttributes rttr){
-		log.info("register..............1" + empVO);
-		service.register(empVO);
+		String inputPass=empVO.getPassword();
+		String pwd=pwdEncoder.encode(inputPass);
+		empVO.setPassword(pwd);
 		
+		log.info("ready register......................");
+		service.register(empVO);
+		log.info("register..............1" + empVO);
 		rttr.addFlashAttribute("result", empVO.getEmp_id());
 		
 		return "redirect:/manager/list";
 		
 	}
 	
-	//∞Ë¡§ªÛºº¡§∫∏ ∫∏±‚
+
 	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("emp_id") String emp_id, Model model) {
 		log.info("get..............");
 		model.addAttribute("empID", service.get(emp_id));		
 	}
 	
-	//∞Ë¡§ªÛºº¡§∫∏ ºˆ¡§
+	//Í≥ÑÏ†ï Ï†ïÎ≥¥ ÏàòÏ†ï
 	@PostMapping("/modify")
 	public String modify(EmployeeVO empVO, RedirectAttributes rttr) {
+		String inputPass=empVO.getPassword();
+		String pwd=pwdEncoder.encode(inputPass);
+		empVO.setPassword(pwd);
 	log.info("modify.............................");
 	if(service.modify(empVO)) {
 		rttr.addFlashAttribute("result", "success");
