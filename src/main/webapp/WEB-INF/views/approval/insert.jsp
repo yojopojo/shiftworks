@@ -16,14 +16,14 @@
    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
    crossorigin="anonymous"></script> -->
+<link rel="stylesheet" href="/resources/css/approval.css">
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 </head>
 <body>
 <div class = "container">
-<h1>결재문서 작성</h1>
-
+<h2>결재문서 작성</h2>
    <form id="insertForm" role="form" action="/approval/insert" method="post"> 
           <div class=""></div>
              <div>
@@ -41,12 +41,12 @@
              <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                	<div class="panel-heading"></div>
-                    	 <!-- /.panel-heding  -->
-                  			<div class="panel-body">
-                    			<div class="form-group uploadDiv">
-                        			<input type="file" name="uploadFile" multiple />
-                    				</div>
+                   <div class="panel-heading"></div>
+                        <!-- /.panel-heding  -->
+                           <div class="panel-body">
+                             <div class="form-group uploadDiv">
+                                 <input type="file" name="uploadFile" multiple />
+                                </div>
                  <div class="uploadResult"> 
                       <ul>
                 
@@ -59,8 +59,8 @@
                 <!-- end panel body -->
            </div>
            <!-- end panel -->
-      	</div>
-     	 <!-- /.row -->
+         </div>
+         <!-- /.row -->
 
 
              <div >
@@ -229,8 +229,8 @@
         
         
         /* * * * * * * * * * * * * * * * * * *
-          	파일 업로드 관련
-     	 * * * * * * * * * * * * * * * * * * */
+             파일 업로드 관련
+         * * * * * * * * * * * * * * * * * * */
        /*  $(document).ready(function(e){
         
            var formObj = $("form[role='form']");

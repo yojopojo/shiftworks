@@ -25,8 +25,8 @@
 </head>
 <body>
 <div class = "container">
-<h1>결재 문서 상세보기</h1>
-   <a href="/approval/list">결재문서 내역</a>
+<h2>결재 문서 상세보기</h2>
+   <a class = "btn btn-default" href="/approval/list">결재문서 내역</a>
             <div class="form-group">
                <label>결재번호</label> <input class="form-control" name='apr_id'
                   value='<c:out value="${approval.apr_id }"/>' readonly="readonly">
@@ -60,8 +60,8 @@
             </div>
             
             
-            <button id = 'aprHandleBtn' data-oper='' class="btn btn-default">결재 처리</button>
-            
+            <button id = 'aprHandleBtn' data-oper='' class="btn btn-outline-secondary">결재 처리</button>
+            <a class = "btn btn-outline-secondary" href="/approval/list">취소</a>
             
             <!-- 결재 처리 모달 구현 -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog"

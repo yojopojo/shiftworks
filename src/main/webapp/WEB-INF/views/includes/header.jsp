@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/security/tags"
+   prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,11 +31,11 @@
 <body>
 
 	<!-- naviBar headBar-->
-	<div class="row">
+	<!-- <div class="row">
 	<nav class="nav-headbar">
 		
 	</nav>
-	</div> <!-- end row -->
+	</div> --> <!-- end row -->
 	
 
 	 <!-- naviBar Sidebar -->
@@ -43,7 +45,7 @@
  		<!-- 로고 -->
  		<div class="row" id="shiftworksLogo">
 	 		<a href="#" class="navbar-brand text-white text-center d-block mx-auto py-3 mb-4 bottom-border">
-	 		<img id="logo" alt="로고자리" src="/resources/css/shiftwork_logo.png" width="200" class=""></a>
+	 		<img id="logo" alt="로고자리" src="/resources/css/shiftwork_logo.png" width="230" class=""></a>
  		</div>
 		
 		<!-- 프로필 -->
@@ -54,7 +56,7 @@
 			 		<a href="#multiCollapseUser" class="" data-bs-toggle="collapse" role="button"
  				aria-expanded="false" aria-controls="multiCollapseUser" style="text-decoration: none; color: white;" id="userName">
 			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="85" class="rounded-circle" style="margin-top: -10px;">
-			 		김본호
+			 		<sec:authentication property="principal.username"></sec:authentication> <!-- 사용자 이름 -->
 			 		</a>
 			 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
 					  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
@@ -67,7 +69,8 @@
 		    <div class="collapse multi-collapse" id="multiCollapseUser">
 		    <div class="card card-body" style="height: 100px; border-width: 0;">
 		      <ul>
-		      	<a href="/messenger"><li>메신저</li></a><br>
+		      	<a href="/messenger/chat" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;"><li>메신저</li></a><br>
+		      	<!-- <a href="/messenger"><li>메신저</li></a><br> -->
 		      	<a href="/approval/insert"><li>나의 계정 관리</li></a><br>
 		      	<a href="/approval/list"><li>조직도 보기</li></a><br>
 		      </ul>
@@ -75,6 +78,77 @@
 		    </div> <!-- end collapse -->
 		  </div> <!-- end col -->
 	 	</div> <!-- end row -->
+	 	
+	 	
+	 	
+	 	<!-- 관리자 버튼(계정 관리) -->
+<!--   		<div class="row">
+ 			<div class="col">
+		 		<ul class="navbar-nav flex-column mt-4">
+		 			<li class="nav-item">
+		 				<a href="/myaccount/modify" class="nav-link text-white p-3 mb-2 sidebar-link" data-bs-toggle="collapse" role="button"
+ 				aria-expanded="false" aria-controls="multiCollapseMGR1"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list-check" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+				</svg>
+				&ensp;나의 계정
+		 				</a>
+		 			</li>
+		 		</ul>
+ 			</div> end col
+ 		</div> end row -->
+ 		
+	 	
+	 	
+	 	<!-- 관리자 버튼(조직도 관리) -->
+  		<!-- <div class="row">
+ 			<div class="col">
+		 		<ul class="navbar-nav flex-column mt-4">
+		 			<li class="nav-item">
+		 				<a href="#multiCollapseMGR2" class="nav-link text-white p-3 mb-2 sidebar-link" data-bs-toggle="collapse" role="button"
+ 				aria-expanded="false" aria-controls="multiCollapseMGR2"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list-check" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+				</svg>
+				&ensp;조직도 관리
+		 				</a>
+		 			</li>
+		 		</ul>
+ 			</div> end col
+ 		</div> end row -->
+	 	
+	 	
+	 	<!-- 관리자 버튼(관리자 계정 관리) -->
+  		<div class="row">
+ 			<div class="col">
+		 		<ul class="navbar-nav flex-column mt-4">
+		 			<li class="nav-item">
+		 				<a href="#multiCollapseMGR3" class="nav-link text-white p-3 mb-2 sidebar-link" data-bs-toggle="collapse" role="button"
+ 				aria-expanded="false" aria-controls="multiCollapseMGR3">
+ 				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-menu-button-fill" viewBox="0 0 16 16">
+				  <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v2A1.5 1.5 0 0 0 1.5 5h8A1.5 1.5 0 0 0 11 3.5v-2A1.5 1.5 0 0 0 9.5 0h-8zm5.927 2.427A.25.25 0 0 1 7.604 2h.792a.25.25 0 0 1 .177.427l-.396.396a.25.25 0 0 1-.354 0l-.396-.396zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2H1zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2h14zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+				</svg>
+				&ensp;사원 계정 관리
+		 				</a>
+		 			</li>
+		 		</ul>
+ 			</div> <!-- end col -->
+ 		</div> <!-- end row -->	 	
+	 	
+	 	
+ 		<div class="row">
+		  <div class="col">
+		    <div class="collapse multi-collapse" id="multiCollapseMGR3">
+		    <div class="card card-body" style="height: 130px; border-width: 0;">
+		      <ul>
+		      	<a href="/manager/register"><li>계정 생성</li></a><br>
+		      	<a href="/manager/list"><li>계정 수정</li></a><br>
+		      	<!-- <a href="/account/form"><li>계정 양식 설정</li></a><br> -->
+		      	<!-- <a href="/account/{empid}"><li>계정 삭제</li></a><br> -->
+		      	<a href="/manager/retireelist"><li>퇴사자 리스트 관리</li></a><br>
+		      </ul>
+		    </div>
+		    </div>
+		  </div>
+		</div>	 	
 	 	
  		
   		<!-- 업무관리 버튼 -->
@@ -162,12 +236,11 @@
  		<div class="row">
 		  <div class="col">
 		    <div class="collapse multi-collapse" id="multiCollapseAPR">
-		    <div class="card card-body" style="height: 130px; border-width: 0;">
+		    <div class="card card-body" style="height: 120px; border-width: 0;">
 		      <ul>
 		      	<a href="/approval/insert"><li>결재 문서 작성</li></a><br>
 		      	<a href="/approval/list"><li>전체 결재문서함</li></a><br>
-		      	<a href="/approval/receivedList"><li>결재할 문서</li></a><br>
-		      	<a href="#"><li>작성한 결재문서</li></a><br>
+		      	<a href="/approval/receivedList"><li>결재 전 문서</li></a><br>
 		      </ul>
 		    </div>
 		    </div>
@@ -196,12 +269,10 @@
  		<div class="row">
 		  <div class="col">
 		    <div class="collapse multi-collapse" id="multiCollapseBOA">
-		    <div class="card card-body" style="height: 130px; border-width: 0;">
+		    <div class="card card-body" style="height: 190px; border-width: 0;">
 		      <ul>
 		      	<a href="/board/new"><li>게시글 등록</li></a><br>
-		      	<a href="/board/list?b_id=1"><li>공지사항</li></a><br>
-		      	<a href="/board/list?b_id=2"><li>행사</li></a><br>
-		      	<a href="/board/list?b_id=3"><li>자유게시판</li></a><br>
+		      	<a href="/board/newboard"><li>새 게시판 생성</li></a><br>
 		      </ul>
 		    </div>
 		    </div>
@@ -230,7 +301,7 @@
 		    <div class="card card-body" style="height: 130px; border-width: 0;">
 		      <ul>
 		      	<a href="/document/myApproval/1"><li>결재문서함</li></a><br>
-		      	<a href="/document/myDoc"><li>내가 쓴 게시물</li></a><br>
+		      	<a href="/document/myDoc/1"><li>내가 쓴 게시물</li></a><br>
 		      	<a href="/document/scrap/1"><li>스크랩 문서함</li></a><br>
 		      	<a href="/document/deptDoc/1"><li>부서수신함</li></a><br>
 		      </ul>
@@ -289,6 +360,24 @@
 			
 			console.log("click success");
 		});
+		
+		
+		
+		
+		//동적으로 게시판 메뉴 추가해주기
+	     postService.boardList(function(result){
+	        console.log(result[1].b_name);
+	        
+	        for(var i=0;i<result.length;i++){
+	           
+	           $(".board").append(
+               "<a href='/board/list?b_id="+result[i].b_id+"'><li>"+result[i].b_name+"</li></a><br>"
+	           )
+	        }
+	         
+	     });
+		
+		
 		
 		
 		

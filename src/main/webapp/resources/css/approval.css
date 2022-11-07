@@ -1,11 +1,22 @@
 @charset "UTF-8";
 
-div.col {
-	border: 200px, solid, black;
-	
-}
 
+/* 결재 메인 페이지 아래쪽 행 */
 #row2{
 	padding-top: 150px;
 }
 
+/* 결재문서작성form 파일 첨부 */
+div.form-group.uploadDiv{
+	padding-top: 10px;
+}
+
+/* 결재선 버튼 */
+#aprLineBtn {
+	margin-top: 10px;
+}
+
+/* 결재 처리 버튼 */
+#aprHandleBtn{
+	margin-top: 10px;	
+}

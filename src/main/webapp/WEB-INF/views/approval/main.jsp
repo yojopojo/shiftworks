@@ -78,12 +78,47 @@
 			    </div>
 			    <!-- end of 결재할 문서 디테일 뷰 -->
 			    
+			<!-- <div class="row" id ="row2">
+			    <table class="table">
+			    	<lable>내가 작성한 문서 목록</lable>
+				 	 <thead>
+				    	<tr>
+					      <th scope="col">결재 번호</th>
+					      <th scope="col">결재 유형</th>
+					      <th scope="col">결재 내용</th>
+					      <th scope="col">결재 상태</th>
+				   		</tr>
+				  	</thead>
+				  	<tbody>
+				    	<tr>
+				      		<th scope="row">1</th>
+				     		<td>Mark</td>
+				      		<td>Otto</td>
+				      		<td>@mdo</td>
+				    	</tr>
+				    	<tr>
+				      		<th scope="row">2</th>
+				      		<td>Jacob</td>
+				      		<td>Thornton</td>
+				     	 	<td>@fat</td>
+				   	 	</tr>
+				   		 <tr>
+				      		<th scope="row">3</th>
+				      		<td colspan="2">Larry the Bird</td>
+				      		<td>@twitter</td>
+				   		 </tr>
+				  	</tbody>
+					</table>
+			   	 </div> -->
+			    <!-- end of table -->
+			    
+			    <!-- 결재진행상태 구현 뷰 -->
 			    <div class="col">
 			    	<label for="customRange3" class="form-label">결재 진행 상태</label>
 						<input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3">
 			    </div>
 			  </div>
-			</div>
+			</div> 
 			
         <!-- 임시저장 모달 구현 -->
       <!-- Modal -->
