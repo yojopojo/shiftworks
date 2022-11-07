@@ -238,6 +238,7 @@ public class TaskController {
 		File file;
 		
 		log.info(vo.getFile_name());
+		log.info(vo.getUuid());
 		try {
 			// 삭제 대상을 파일 객체로 만듦
 			file = new File("C:\\upload\\" + URLDecoder.decode(vo.getFile_name(), "UTF-8"));
