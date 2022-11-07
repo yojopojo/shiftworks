@@ -45,5 +45,13 @@
 	
 	<!-- 핸들러 객체 생성 -->
 	<beans:bean id="chatHandler" class="org.shiftworks.handler.ChatHandler" />
-
+	
+	<!-- stomp -->
+	<websocket:message-broker application-destination-prefix="/app">
+		<websocket:stomp-endpoint path="/stomp" allowed-origins="*">
+			<websocket:sockjs/>
+		</websocket:stomp-endpoint>
+		<websocket:simple-broker prefix="/topic"/>
+	</websocket:message-broker>
+	
 </beans:beans>
