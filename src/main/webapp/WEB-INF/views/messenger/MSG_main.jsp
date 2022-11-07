@@ -30,7 +30,6 @@
 
 <!-- autocomplete  -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -278,7 +277,7 @@ $(document).ready(function() {
     });
     
     
-    $('.search').autocomplete({
+  /*   $('.search').autocomplete({
     	source:function(request, response){
     		
     		$.ajax({
@@ -286,13 +285,11 @@ $(document).ready(function() {
     			url: '/messenger/chat',
     			dataType: 'json'
     			
-    			
-    			
     		})
     		
     	}
     })	//end search
-    
+     */
     function sendEvent(){
     	// 채팅 내용 가져오기
         var content =  $('.write-message').val();
