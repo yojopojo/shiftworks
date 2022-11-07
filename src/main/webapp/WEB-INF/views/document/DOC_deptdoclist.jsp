@@ -77,8 +77,7 @@
 								<td><c:out value="${post.name}" /></td>
 								<td><c:out value="${post.dept_id}" /></td>
 								<td><c:out value="${post.post_name}" /></td>
-								<%-- <td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_regdate}" /></td> --%>
+								<td><c:out value="${post.post_regdate}" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -121,6 +120,7 @@
 <!--end row-->
 </div>
 
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <script src="/resources/js/document.js" type="text/javascript"></script>
 <script>
 $(document).ready(function () {

@@ -2,7 +2,9 @@ package org.shiftworks.controller;
 
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.ibatis.annotations.Delete;
 import org.shiftworks.domain.BoardCriteria;
@@ -10,11 +12,13 @@ import org.shiftworks.domain.HistoryVO;
 import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.BoardVO;
 import org.shiftworks.domain.EmployeeVO;
+import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
 import org.shiftworks.service.PostService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -61,6 +65,11 @@ public class PostController {
 	public ResponseEntity<String> register(@RequestBody PostVO vo){
 		log.info("register......");
 		
+		//파일업로드확인 
+		if(vo.getFileList() !=null) {
+			vo.getFileList().forEach(file -> log.info(file));
+		}
+		
 	
 		int insertCount = service.insertPost(vo);
 		
@@ -70,10 +79,13 @@ public class PostController {
 	}
 	
 	//파일 업로드
-	@PostMapping("/uploadAjaxAction")
-	public void uploadAjaxPost(MultipartFile[] uploadFile) {
+	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<FileVO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 	
 		log.info("update ajax post.........");
+		
+		
+		List<FileVO> list = new ArrayList<FileVO>();
 	
 		String uploadFolder = "C:\\upload";
 	
@@ -82,19 +94,30 @@ public class PostController {
 			log.info("-------------------------------------");
 			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
 			log.info("Upload File Size: " + multipartFile.getSize());
+			
+			FileVO vo = new FileVO();
+			vo.setFile_src(uploadFolder);
+			
+			UUID uuid = UUID.randomUUID();
+			vo.setUuid(uuid.toString());
 	
 			String uploadFileName = multipartFile.getOriginalFilename();
-	
-
-	
-			File saveFile = new File(uploadFolder, uploadFileName);
+			vo.setFile_name(uploadFileName);
+						
+			// uuid + 실제 파일명
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
 	
 			try {
+				// 파일 객체 생성
+				File saveFile = new File(uploadFolder, uploadFileName);
 				multipartFile.transferTo(saveFile);
+				list.add(vo);
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
 		}
+		
+		return new ResponseEntity<List<FileVO>>(list, HttpStatus.OK);
 	}
 	
 		//게시판 번호에 맞는 리스트 호출
@@ -197,6 +220,12 @@ public class PostController {
 		log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		vo.setEmp_id(emp_id);
+		
+		log.info(vo.getPost_regdate());
+		String str = vo.getPost_regdate();
+		String[] regdate = str.split(" ");
+		log.info(regdate[0]);
+		vo.setPost_regdate(regdate[0]);
 		
 		return service.scrapPost(vo)==1
 		? new ResponseEntity<String>("success", HttpStatus.OK)
@@ -334,7 +363,7 @@ public class PostController {
 	public ResponseEntity<List<BoardVO>> selectBoardList(){
 		
 		log.info("boardList.......");
-		
+		service.selectBoardList().forEach(board ->log.info(board));
 		return new ResponseEntity<List<BoardVO>>(service.selectBoardList(),HttpStatus.OK);
 	}
 

@@ -126,6 +126,7 @@
 <!--end row-->
 </div>
 
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <script src="/resources/js/document.js" type="text/javascript"></script>
 <script>
 $(document).ready(function () {

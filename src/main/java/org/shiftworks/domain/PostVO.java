@@ -26,6 +26,6 @@ public class PostVO {
 	private char post_fix;
 	private String post_receivedept;
 	private String name;
-	
+	private List<FileVO> fileList;
 
 }

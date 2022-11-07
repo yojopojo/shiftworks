@@ -323,8 +323,7 @@ $(document).ready(function () {
 				list.push("${post.post_id}");
 			</c:forEach>
 			
-		
-			console.log(result[0].post_id);
+	
 			var arr= [];
 			for(var i=0;i<result.length;i++){
 				arr.push(result[i].post_id+"");

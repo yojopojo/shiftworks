@@ -38,10 +38,7 @@
 
 				<div class="row">
 					<div class="col-lg-12">
-						<div class="panel panel-default">
-
-							<div class="panel-heading">파일첨부</div>
-							<!-- /.panel-heading -->
+							<div>파일첨부</div>
 							<div class="panel-body">
 								<div class="form-group uploadDiv">
 									<input type="file" name='uploadFile' multiple>
@@ -54,8 +51,6 @@
 								</div>
 							</div>
 							<!--  end panel-body -->
-						</div>
-						<!--  end panel-body -->
 					</div>
 					<!-- end panel -->
 				</div>
@@ -142,6 +137,16 @@ $(document).ready(function () {
 	var csrf_token = $("meta[name='_csrf']").attr("content");
 	var csrf_header = $("meta[name='_csrf_header']").attr("content");
 	
+	//각각의 파일을 list로 만들어서 post에도 이름을 저장하기 위함 
+	var fileList=[];
+	$('.uploadResult ul li').each(function(i, obj) {
+		fileList.push({
+			uuid: $(obj).data('uuid'),
+			file_name: $(obj).data('file_name'),
+			file_src: $(obj).data('file_src'),
+		});
+	}); // end li each
+	
 	
 	//글 등록 버튼 클릭 시 post db에 저장하기 
 	  $("#registerBtn").on("click",function(e){
@@ -155,7 +160,8 @@ $(document).ready(function () {
 	            post_content:formInputContent.val(),
 	            post_receivedept:formInputReceive.val(),
 	            csrf_token:csrf_token,
-	            csrf_header:csrf_header
+	            csrf_header:csrf_header,
+	            fileList: fileList
 	          };
 	      
 	     	
@@ -206,6 +212,35 @@ $(document).ready(function () {
 	    
 	    
 	    
+	 	 // 첨부파일 업로드 결과를 출력하는 함수
+		function showUploadResult(uploadResultArr) {
+			
+			// 업로드를 하지 않았거나, 업로드 실패 시 함수 종료
+			if(!uploadResultArr || uploadResultArr.length == 0) {
+				return;
+			}
+			
+			// 결과물을 출력해야 하는 경우 아래 코드 실행
+			var str = "";
+			$(uploadResultArr).each(function(i, obj) {
+				// 파일 경로와 이름을 저장하는 변수
+				var filePath = encodeURIComponent(obj.file_src + "/" + obj.uuid + "_" + obj.file_name);
+				
+				str += "<li data-uuid='"+ obj.uuid +"' data-file_name='" + obj.file_name + "' ";
+				str += "data-file_src='" + obj.file_src + "'>";
+				str += obj.file_name;
+				str += "<span data-file=\'" + filePath + "\'> [x] </span>";
+				str += "</li>";
+			});
+			
+			$('.uploadResult ul').append(str);
+			
+		} // end showUploadResult()
+	    
+	    
+		 //파일 업로드 후 file 태그 내용 초기화를 위해 빈 상태에서 clone
+		var cloneObj = $('.uploadDiv').clone();
+	    
 	    
 	    //파일 업로드
 	    var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -225,12 +260,10 @@ $(document).ready(function () {
 	      return true;
 	    }
 	    
-	    $("#uploadBtn").on("click", function(e){
+	    $('input[type="file"]').change(function(e){
 
 	      var formData = new FormData();
-	      
 	      var inputFile = $("input[name='uploadFile']");
-	      
 	      var files = inputFile[0].files;
 	      
 	      for(var i = 0; i < files.length; i++){
@@ -248,11 +281,15 @@ $(document).ready(function () {
 				processData : false,
 				contentType : false,
 				data : formData,
+				beforeSend : function(xhr){
+	                xhr.setRequestHeader(csrf_header, csrf_token);
+	            },
 				type : 'POST',
 				dataType : 'json',
 				success : function(result) {
 					console.log(result);
 					showUploadResult(result); //업로드 결과 처리 함수 
+					$('.uploadDiv').html(cloneObj.html());
 
 				}
 			}); //$.ajax
@@ -262,7 +299,7 @@ $(document).ready(function () {
 		
 		//동적으로 게시판 메뉴 추가해주기
 		postService.boardList(function(result){
-			console.log(result[1].b_name);
+			console.log(result[0].b_name);
 			
 			for(var i=0;i<result.length;i++){
 				

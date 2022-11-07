@@ -302,6 +302,7 @@ var postService = (function(){
 			success : function(result, status, xhr) {
 				if (callback) {
 					callback(result);
+					console.log(result);
 				}
 			},
 			error : function(xhr, status, er) {

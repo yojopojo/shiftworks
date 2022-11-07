@@ -12,6 +12,7 @@ import org.shiftworks.domain.Temp_BoardVO;
 import org.shiftworks.mapper.FileMapper;
 import org.shiftworks.mapper.PostMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -25,10 +26,19 @@ public class PostServiceImpl implements PostService {
 	
 	private FileMapper filemapper;
 	
+	@Transactional
 	@Override
 	public int insertPost(PostVO postvo) {
 		
+		//post 테이블에 글 삽입 시 filelist 도 함께 삽입
+		postvo.getFileList().forEach(file ->{
+			
+			file.setWork_id(postvo.getPost_id());
+			filemapper.insertBoardFile(file);
+		});
+		
 		return mapper.insertPost(postvo);
+		
 		
 	}
 

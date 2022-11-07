@@ -75,7 +75,7 @@
 
 
 
-
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <script>
 
 
