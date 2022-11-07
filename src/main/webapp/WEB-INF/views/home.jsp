@@ -21,6 +21,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     $(function () {
         var request = $.ajax({
+        	/* url: "booking/mainSch.json", */	
             url: "/booking/cal2.json",
             method: "GET"
         });
@@ -81,27 +82,9 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
-
-
-	<title>Home</title>
+<title>Home</title>
 </head>
 <body>
 	<div class="container">

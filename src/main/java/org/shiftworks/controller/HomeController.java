@@ -50,6 +50,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homeContent(Model model) {
 		
+		//예약 리스트(게시판 형태)
 		model.addAttribute("event", service.getList());
 		
 		return "home"; 
