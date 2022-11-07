@@ -28,7 +28,6 @@
 							부서
 						</button>
 						<ul class="dropdown-menu deptList">
-							<!-- 부서 목록 가져와서 c:foreach로 출력하도록 변경!! -->
 							<li><a class="dropdown-item dept" href="#">all</a></li>
 							<li><a class="dropdown-item dept" href="#">dept1</a></li>
 							<li><a class="dropdown-item dept" href="#">dept2</a></li>

@@ -22,11 +22,14 @@
 <!-- 업무 등록을 위한 입력 폼 -->
 	<div class="newContainer">
 		<div class="mb-3">
-			<label for="dept_name" class="form-label">부서</label>
-			<input type="text" class="form-control"
-			id="dept_name" placeholder="부서명">
+			<select class="form-select dept" aria-label="Default select example">
+  				<option selected>부서를 선택하세요.</option>
+  				<option value="dept1">인사</option>
+  				<option value="dept2">회계</option>
+  				<option value="info_secu">보안</option>
+			</select>
 			<input type="hidden" class="form-control"
-			id="dept_id" value="dept1">
+			id="dept_id" value="">
 		</div>
 		<div class="mb-3">
 			<label for="task_title" class="form-label">제목</label>
@@ -92,6 +95,11 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
+			// 부서 선택 시 input value에 값 입력
+			$('.dept').on("change", function(e){
+				$('#dept_id').val($(this).val());
+			});
 			
 			// 폼 제출(작성) 버튼 클릭 시 이벤트
 			$('#submitBtn').on("click", function(e) {
