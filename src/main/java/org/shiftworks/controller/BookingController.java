@@ -40,7 +40,6 @@ public class BookingController {
 	private BookingService service;
 	
 	
-	
 	//getList 테스트 메서드(jsonArray 테스트)
 	@GetMapping("/cal3")
 	@PreAuthorize("isAuthenticated()")
@@ -161,16 +160,6 @@ public class BookingController {
 		
 		//return map;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
