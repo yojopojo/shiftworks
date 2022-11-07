@@ -14,6 +14,7 @@ public class DocumentCriteria {
   private int pageNum;
   private int amount;
   private String emp_id;
+  private String dept_id;
   
   private String type;
   private String keyword;

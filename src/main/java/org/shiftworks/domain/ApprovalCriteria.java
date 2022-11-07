@@ -15,6 +15,7 @@ public class ApprovalCriteria {
   
   private String type;
   private String keyword;
+  private String emp_id;
 
   public ApprovalCriteria() {
     this(1, 10);
@@ -25,8 +26,8 @@ public class ApprovalCriteria {
     this.amount = amount;
   }
   
-//  public String[] getTypeArr() {
-//    
-//    return type == null? new String[] {}: type.split("");
-//  }
+    public String[] getTypeArr() {
+    
+    return type == null? new String[] {}: type.split("");
+  }
 }

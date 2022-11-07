@@ -3,8 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
 
-<div class ="container">
+<link rel="stylesheet" href="/resources/css/post.css">
+
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<div class="container">
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">내가 쓴 게시물</h1>
@@ -12,6 +21,7 @@
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+
 
 <div class="row">
 	<div class="col-lg-12">
@@ -70,10 +80,8 @@
 								<td><c:out value="${post.emp_id}" /></td>
 								<td><c:out value="${post.dept_id}" /></td>
 								<td><c:out value="${post.post_name}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_regdate}" /></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${post.post_updatedate}" /></td>
+								<td><c:out value="${post.post_regdate}" /></td>
+								<td><c:out value="${post.post_updatedate}" /></td>
 							</tr>	
 						</c:forEach>
 					</tbody>
@@ -118,6 +126,7 @@
 <!--end row-->
 </div>
 
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <script src="/resources/js/document.js" type="text/javascript"></script>
 <script>
 $(document).ready(function () {
@@ -248,7 +257,7 @@ $(document).ready(function () {
 
 })//end script
 </script>		
-
+</html>
 
 
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>
