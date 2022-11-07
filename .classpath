@@ -35,9 +35,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="target/classes"/>
-<<<<<<< HEAD
 </classpath>
-=======
-</classpath>
->>>>>>> 608d2a2393932a63bbb6f9553363f3c227eed2dd
