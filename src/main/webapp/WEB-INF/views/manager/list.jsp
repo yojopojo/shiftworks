@@ -2,10 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="/WEB-INF/views/includes/header.jsp"%>
 <html>
 
-<head><%@include file="../includes/header.jsp"%></head>
-<body class="container">
+<head></head>
+<body>
+<div class="container">
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">계정 관리 페이지</h1>
@@ -53,7 +55,7 @@
 					</c:forEach>
 				</table>
 
-				<%-- <div class='row'>
+				 <div class='row'>
 					<div class="col-lg-12">
 
 						<form id='searchForm' action="/employee/list" method='get'>
@@ -84,10 +86,10 @@
 							<button class='btn btn-default'>Search</button>
 						</form>
 					</div>
-				</div> --%>
+				</div>
 
 
-	<%-- 			<div class='pull-right'>
+	 			<div class='pull-right'>
 					<ul class="pagination">
 
 						            <c:if test="${pageMaker.prev}">
@@ -123,7 +125,7 @@
 
 
 					</ul>
-				</div> --%>
+				</div> 
 				<!--  end Pagination -->
 			</div>
 
@@ -195,10 +197,8 @@
 								return;
 							}
 
-							if (result == "${employee.emp_id}") {
-								$(".modal-body").html(
-										"계정 " + result
-												+ " 이 등록되었습니다.");
+							if (parseInt(result) > 0) {
+								$(".modal-body").html("계정" + parseInt(result) + " 개가 생성되었습니다.");
 							}
 
 							$("#myModal").modal("show");
@@ -271,9 +271,10 @@
 					});
 </script>
 
-
+</div>
 </body>
 </html>
 
 
 <%@include file="../includes/footer.jsp"%>
+

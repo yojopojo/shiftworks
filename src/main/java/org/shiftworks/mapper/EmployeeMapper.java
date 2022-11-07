@@ -10,14 +10,15 @@ public interface EmployeeMapper {
 	
 	
 	public List<EmployeeVO> getList();
-	//public List<EmployeeVO> getListWithPaging	(Criteria cri);
-	public void insert(EmployeeVO empVO);
+	public List<EmployeeVO> getRetireeList();
+	public List<EmployeeVO> getListWithPaging	(AccountCriteria cri);
+	public int insert(EmployeeVO empVO);
 	public EmployeeVO detail(String emp_id);
 	public int delete(String emp_id);
 	public int update(EmployeeVO empVO)	;
-	//public int getTotalCount(Criteria cri);
+	public int getTotalCount(AccountCriteria cri);
 	
 	
-	//public List<EmployeeVO> getEmployeeForSearching(Criteria cri);
+	public List<EmployeeVO> getEmployeeForSearching(AccountCriteria cri);
 	
 }

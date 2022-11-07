@@ -110,6 +110,14 @@
 		update employee set dept_id=#{dept_id}, password=#{password}, position=#{position}, name=#{name}, mobile=#{mobile}, internal=#{internal}
 		, email=#{email}, address=#{address}, resignation_date=#{resignation_date} where emp_id=#{emp_id}
 	</update>
+	<!-- 퇴직자리스트 -->
+	<select id="getRetireeList" resultType="org.shiftworks.domain.EmployeeVO">
+			SELECT emp_id, dept_name, position, name, entry_date
+			FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id
+			WHERE  resignation_date is not null
+			
+	</select>
 	
 	 <!--사원 검색 //미완성-->
 	<!--  <select id="getEmployeeForSearching" resultType="org.shiftworks.domain.EmployeeVO">
