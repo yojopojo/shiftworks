@@ -2,6 +2,8 @@ package org.shiftworks.service;
 
 import java.util.List;
 
+import org.shiftworks.domain.AlarmVO;
+import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.domain.TaskCriteria;
 import org.shiftworks.domain.TaskPageDTO;
 import org.shiftworks.domain.TaskVO;
@@ -66,10 +68,21 @@ public class TaskServiceImpl implements TaskService {
 		if (taskVO.getFileList() == null || taskVO.getFileList().size() <= 0) {
 			return result;
 		}
-		
+		// 파일 목록을 차례로 DB에 등록
 		taskVO.getFileList().forEach(file -> {
 			fileMapper.insertTaskFile(file);
 		});
+		
+		// 부서원들에게 부서 업무에 대한 알림 생성
+		List<EmployeeVO> list = taskMapper.getDeptMember(taskVO.getDept_id());
+		for(EmployeeVO e : list) {
+			AlarmVO alarm = new AlarmVO();
+			alarm.setEmp_id(e.getEmp_id());
+			alarm.setDept_id(e.getDept_id());
+			alarm.setContent("[" + taskVO.getTask_title() + "] 업무가 등록되었습니다.");
+			
+			alarmMapper.insertAlarm(alarm);
+		}
 		
 		return result;
 	}

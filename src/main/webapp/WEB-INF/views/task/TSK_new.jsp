@@ -26,7 +26,7 @@
 			<input type="text" class="form-control"
 			id="dept_name" placeholder="부서명">
 			<input type="hidden" class="form-control"
-			id="dept_id" value="dept1">
+			id="dept_id" value="dept_1">
 		</div>
 		<div class="mb-3">
 			<label for="task_title" class="form-label">제목</label>

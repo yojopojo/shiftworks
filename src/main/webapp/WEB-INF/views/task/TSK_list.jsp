@@ -30,9 +30,9 @@
 						<ul class="dropdown-menu deptList">
 							<!-- 부서 목록 가져와서 c:foreach로 출력하도록 변경!! -->
 							<li><a class="dropdown-item dept" href="#">all</a></li>
-							<li><a class="dropdown-item dept" href="#">dept1</a></li>
-							<li><a class="dropdown-item dept" href="#">dept2</a></li>
-							<li><a class="dropdown-item dept" href="#">dept3</a></li>
+							<li><a class="dropdown-item dept" href="#">dept_1</a></li>
+							<li><a class="dropdown-item dept" href="#">dept_2</a></li>
+							<li><a class="dropdown-item dept" href="#">dept_3</a></li>
 						</ul>
 						<button class="btn btn-outline-secondary dropdown-toggle searchType" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false" value="T">

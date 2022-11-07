@@ -116,4 +116,14 @@
 
 	</select>
 	
+	
+	<!-- 알림 생성을 위한 부서원 조회 -->
+	<select id="getDeptMember" resultType="org.shiftworks.domain.EmployeeVO">
+	
+		SELECT emp_id, dept_id
+			FROM employee
+			WHERE dept_id = #{dept_id}
+	
+	</select>
+	
 </mapper>
