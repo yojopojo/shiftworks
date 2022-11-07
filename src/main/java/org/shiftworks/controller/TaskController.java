@@ -102,6 +102,16 @@ public class TaskController {
 		return mav;
 	}
 	
+	
+	// 비공개 게시물 접근 시 처리
+	@GetMapping(value="/accessDenied")
+	public ModelAndView accessDenied() {
+		ModelAndView mav = new ModelAndView("/task/TSK_denied");
+		
+		return mav;
+	}
+	
+	
 	// 업무 등록 폼으로 이동
 	@GetMapping(value="/new")
 	public ModelAndView insertForm() {

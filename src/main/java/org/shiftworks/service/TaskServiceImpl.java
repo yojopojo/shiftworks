@@ -50,7 +50,11 @@ public class TaskServiceImpl implements TaskService {
 		
 		// 게시글 정보 가져오기
 		TaskVO vo = taskMapper.getTask(task_id);
+		
 		// 게시글의 파일 목록 가져오기
+		if(fileMapper.selectTaskFile(task_id) == null) {
+			return vo;
+		}
 		vo.setFileList(fileMapper.selectTaskFile(task_id));
 		
 		return vo;

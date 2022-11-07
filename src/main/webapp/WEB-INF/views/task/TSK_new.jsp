@@ -26,7 +26,7 @@
 			<input type="text" class="form-control"
 			id="dept_name" placeholder="부서명">
 			<input type="hidden" class="form-control"
-			id="dept_id" value="dept_1">
+			id="dept_id" value="dept1">
 		</div>
 		<div class="mb-3">
 			<label for="task_title" class="form-label">제목</label>
@@ -44,25 +44,25 @@
 		<div class="mb-3 form-check">
 			<div>
 				<input class="form-check-input" type="radio" name="notification"
-					id="notification1" checked> <label
-					class="form-check-label" for="notification1"> E-mail 알림 허용 </label>
+					id="notificationY" checked> <label
+					class="form-check-label" for="notificationY"> E-mail 알림 허용 </label>
 			</div>
 			<div>
 				<input class="form-check-input" type="radio" name="notification"
-					id="notification2"> <label class="form-check-label"
-					for="notification2"> E-mail 알림 거부 </label>
+					id="notificationN"> <label class="form-check-label"
+					for="notificationN"> E-mail 알림 거부 </label>
 			</div>
 		</div>
 		<div class="mb-3 form-check">
 			<div>
 				<input class="form-check-input" type="radio" name="t_private"
-					id="t_private1" checked> <label
-					class="form-check-label" for="t_private1"> 전체공개 </label>
+					id="t_privateN" checked> <label
+					class="form-check-label" for="t_privateN"> 전체공개 </label>
 			</div>
 			<div>
 				<input class="form-check-input" type="radio" name="t_private"
-					id="t_private2"> <label class="form-check-label"
-					for="t_private2"> 부서원에게만 공개 </label>
+					id="t_privateY"> <label class="form-check-label"
+					for="t_privateY"> 부서원에게만 공개 </label>
 			</div>
 		</div>
 		<div class="mb-3">
@@ -100,12 +100,12 @@
 				// 항목 체크에 따른 값 저장
 				let isPrivate;
 				let isNotification;
-				if($('#t_private1').is(":checked")) {
+				if($('#t_privateY').is(":checked")) {
 					isPrivate = 'Y';
 				} else {
 					isPrivate = 'N';
 				}
-				if($('#notification1').is(":checked")) {
+				if($('#notificationY').is(":checked")) {
 					isNotification = 'Y';
 				} else {
 					isNotification = 'N';
@@ -126,8 +126,7 @@
 					dept_id: $('#dept_id').val(),
 					task_title: $('#task_title').val(),
 					task_content: $('#task_content').val(),
-					// 세션 추가 후 아이디 부분 변경 필요
-					emp_id: 'U3948709',
+					emp_id: $('#emp_id').val(),
 					t_private: isPrivate,
 					notification: isNotification,
 					fileList: fileList

@@ -50,3 +50,7 @@
 .new {
 	float: right;
 }
+
+.denied {
+	text-align: center;
+}

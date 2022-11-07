@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,20 @@
 <title>업무 관리</title>
 </head>
 <body>
+
+<c:if test="${ fn:contains(task.t_private, 'Y') }">
+	
+		<script type="text/javascript">
+			var taskDept_id = '<c:out value="${ task.dept_id }"/>';
+			var principalDept_id = '<sec:authentication property="principal.employee.dept_id"/>';
+			console.log(taskDept_id);
+			console.log(principalDept_id);
+			if(taskDept_id != principalDept_id) {
+				location.href="/task/accessDenied";
+			}
+		</script>
+
+</c:if>
 
 <div class="container">
 

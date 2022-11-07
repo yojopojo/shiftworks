@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.shiftworks.mapper.TaskMapper">
 
-		<!-- 업무 등록 -->
+	<!-- 업무 등록 -->
 	<insert id="insertTask">
 		INSERT INTO task(task_id, dept_id, task_title,
 		task_content, emp_id, t_private, notification, date_created)

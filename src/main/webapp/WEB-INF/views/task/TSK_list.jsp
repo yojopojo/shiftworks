@@ -30,9 +30,9 @@
 						<ul class="dropdown-menu deptList">
 							<!-- 부서 목록 가져와서 c:foreach로 출력하도록 변경!! -->
 							<li><a class="dropdown-item dept" href="#">all</a></li>
-							<li><a class="dropdown-item dept" href="#">dept_1</a></li>
-							<li><a class="dropdown-item dept" href="#">dept_2</a></li>
-							<li><a class="dropdown-item dept" href="#">dept_3</a></li>
+							<li><a class="dropdown-item dept" href="#">dept1</a></li>
+							<li><a class="dropdown-item dept" href="#">dept2</a></li>
+							<li><a class="dropdown-item dept" href="#">dept3</a></li>
 						</ul>
 						<button class="btn btn-outline-secondary dropdown-toggle searchType" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false" value="T">
@@ -58,14 +58,14 @@
 				<td class="no">글 번호</td>
 				<td class="title">제목</td>
 				<td class="writer">작성자</td>
-				<td class="hasFile">파일</td>
+				<td class="writer">비공개여부</td>
 			</tr>
 			<c:forEach items="${dto.list}" var="task">
 				<tr class="goDetail" id="${task.task_id}">
 					<td><c:out value="${task.task_id}"/></td>
 					<td><c:out value="${task.task_title}"/></td>
 					<td><c:out value="${task.name}"/></td>
-					<td></td>
+					<td><c:out value="${task.t_private}"/></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -101,14 +101,14 @@
 		
 		/* 부서 목록부분 변경 시 함께 변경하기 */
 		// 선택된 부서 존재 시 해당 항목으로 출력
-		if($('.selectedDept').val() == 'dept1') {
-			$('.selectedDept').text('dept1');
+		if($('.selectedDept').val() == 'dept_1') {
+			$('.selectedDept').text('dept_1');
 		}
-		if($('.selectedDept').val() == 'dept2') {
-			$('.selectedDept').text('dept2');
+		if($('.selectedDept').val() == 'dept_2') {
+			$('.selectedDept').text('dept_2');
 		}
-		if($('.selectedDept').val() == 'dept3') {
-			$('.selectedDept').text('dept3');
+		if($('.selectedDept').val() == 'dept_3') {
+			$('.selectedDept').text('dept_3');
 		}
 		
 		// model attribute 값을 이용하기 위해 변수에 저장
@@ -151,6 +151,7 @@
 		
 		// 검색 버튼 클릭 시 이벤트
 		$('#searchBtn').on("click", function(e) {
+			
 			e.preventDefault();
 			location.href="/task/pages/"+ dept_id + "/" + $('.searchType').val() + "/"
 							+ $('#searchForm').val() + "/" + pageNum;

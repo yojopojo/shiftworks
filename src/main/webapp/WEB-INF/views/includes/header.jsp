@@ -273,11 +273,7 @@
 		  <div class="col">
 		    <div class="collapse multi-collapse" id="multiCollapseBOA">
 		    <div class="card card-body" style="height: 190px; border-width: 0;">
-<<<<<<< HEAD
-		      <ul>
-=======
 		      <ul class="board">
->>>>>>> refs/heads/develop
 		      	<a href="/board/new"><li>게시글 등록</li></a><br>
 		      	<a href="/board/newboard"><li>새 게시판 생성</li></a><br>
 		      </ul>
