@@ -2,13 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="/WEB-INF/views/includes/header.jsp"%>
 <html>
 
-<head><%@include file="../includes/header.jsp"%></head>
-<body class="container">
+<head></head>
+<body>
+<div class="container">
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tables</h1>
+		<h1 class="page-header">계정 관리 페이지</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -18,9 +20,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Emp Account Page
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">Register
-					New employee</button>
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">계정 생성</button>
 			</div>
 
 			<!-- /.panel-heading -->
@@ -29,30 +29,33 @@
 					<thead>
 						<tr>
 							<th>사번</th>
-							<th>부서번호</th>
+							<th>부서명</th>
 							<th>이름</th>
 							<th>직급</th>
+							<th>입사일</th>
 						</tr>
 					</thead>
 
 					<c:forEach items="${list}" var="employee">
 						<tr>
-							<td><c:out value="${employee.emp_id}" /></td>
-							<%-- <td><a href='/employee/get?emp_id=<c:out value="${employee.emp_id}"/>'><c:out value="${employee.name}"/></a></td> --%>
+							<td><a href='/manager/get?emp_id=<c:out value="${employee.emp_id}"/>'>
+							<c:out value="${employee.emp_id}" /></a></td>
+						<td><c:out value="${employee.dept_name}"/></td>
 
-							<td><a class='move' href='<c:out value="${employee.emp_id}"/>'>
+							<%-- <td><a class='move' href='<c:out value="${employee.emp_id}"/>'>
 									<c:out value="${employee.dept_id}" />
-									<%-- <b>[ <c:out value = "${employee.replyCnt}" />]</b> --%>
-							</a></td>
+									<b>[ <c:out value = "${employee.replyCnt}" />]</b>
+							</a></td> --%>
 
 							<td><c:out value="${employee.name}" /></td>
 							<td><c:out value="${employee.position}" /></td>
+							<td><c:out value="${employee.entry_date}" /></td>
 				
 						</tr>
 					</c:forEach>
 				</table>
 
-				<%-- <div class='row'>
+				 <div class='row'>
 					<div class="col-lg-12">
 
 						<form id='searchForm' action="/employee/list" method='get'>
@@ -83,10 +86,10 @@
 							<button class='btn btn-default'>Search</button>
 						</form>
 					</div>
-				</div> --%>
+				</div>
 
 
-	<%-- 			<div class='pull-right'>
+	 			<div class='pull-right'>
 					<ul class="pagination">
 
 						            <c:if test="${pageMaker.prev}">
@@ -122,7 +125,7 @@
 
 
 					</ul>
-				</div> --%>
+				</div> 
 				<!--  end Pagination -->
 			</div>
 
@@ -195,9 +198,7 @@
 							}
 
 							if (parseInt(result) > 0) {
-								$(".modal-body").html(
-										"계정 " + parseInt(result)
-												+ " 이 등록되었습니다.");
+								$(".modal-body").html("계정" + parseInt(result) + " 개가 생성되었습니다.");
 							}
 
 							$("#myModal").modal("show");
@@ -270,9 +271,10 @@
 					});
 </script>
 
-
+</div>
 </body>
 </html>
 
 
 <%@include file="../includes/footer.jsp"%>
+

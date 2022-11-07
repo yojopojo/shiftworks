@@ -36,4 +36,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
+<<<<<<< HEAD
 </classpath>
+=======
+</classpath>
+>>>>>>> 608d2a2393932a63bbb6f9553363f3c227eed2dd
