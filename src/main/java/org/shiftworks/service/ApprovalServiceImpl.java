@@ -25,10 +25,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	
 	@Autowired
 	private ApprovalMapper mapper;
+	
+	@Autowired
 	private FileMapper filemapper;
 
 	@Override
+	@Transactional
 	public int insertForm(ApprovalVO approval) {
+		approval.getFileList().forEach(file -> {
+			filemapper.insertApprovalFile(file);
+		});
 		return mapper.insert(approval);
 	}
 
