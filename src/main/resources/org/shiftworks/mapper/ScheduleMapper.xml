@@ -6,7 +6,7 @@
 
 	<!-- 각 일정을 DB에 등록 -->
 	<insert id="insertSchedule">
-		INSERT INTO schedule
+		INSERT INTO schedule(sch_id, dept_id, book_id, sch_title, sch_content, start_date, end_date, sch_group, emp_id)
 			VALUES(schedule_seq.nextval, #{dept_id}, #{book_id}, #{sch_title}, #{sch_content},
 					#{start_date}, #{end_date}, #{sch_group}, #{emp_id})
 	</insert>
@@ -15,7 +15,7 @@
 	<insert id="insertParticipant">
 		
 			INSERT INTO sch_participant
-				VALUES(#{emp_id}, #{dept_id}, schedule_seq.currval, 'N')
+				VALUES(#{emp_id}, #{dept_id}, schedule_seq.currval)
 
 	</insert>
 	
@@ -125,6 +125,14 @@
 			FROM employee e JOIN work_sch w
 			ON e.emp_id = w.emp_id
 			WHERE w.dept_id = #{dept_id}
+	</select>
+	
+	
+	<!-- 일정 검색 -->
+	<select id="searchBooking" resultType="org.shiftworks.domain.BookingVO">
+		SELECT book_id, book_title, book_date
+			FROM rsc_booking
+			WHERE book_title LIKE '%'||#{keyword}||'%'
 	</select>
 
 </mapper>
