@@ -58,8 +58,10 @@ public class ApprovalController {
 	*/
 	@GetMapping("/main")
 	@PreAuthorize("isAuthenticated()")
-	public void approvalMain() {
-		
+	public void approvalMain(ApprovalCriteria cri, Model model) {
+		log.info("list" + cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
 	}
 	
 	/*
