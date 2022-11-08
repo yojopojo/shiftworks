@@ -45,5 +45,17 @@
 	
 	<!-- 핸들러 객체 생성 -->
 	<beans:bean id="chatHandler" class="org.shiftworks.handler.ChatHandler" />
-
+	
+	<!-- stomp -->
+	<!-- 클라이언트에서 보낸 메세지를 받을 prefix -->
+	<websocket:message-broker application-destination-prefix="/app">
+		<!-- SockJS 연결 주소 : 주소(ws://localhost:8081/messenger/chat)-->
+		<websocket:stomp-endpoint path="/messenger/chat" allowed-origins="*">
+			<!-- 버전 낮은 브라우저에서도 적용 가능 -->
+			<websocket:sockjs/>
+		</websocket:stomp-endpoint>
+		<!-- 해당 주소를 구독하고 있는 클라이언트들에게 메세지 전달 -->
+		<websocket:simple-broker prefix="/pub, /sub" />	
+	</websocket:message-broker>
+	
 	</beans:beans>

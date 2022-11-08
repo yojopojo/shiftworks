@@ -27,9 +27,9 @@
 	</resultMap>
 	  -->
 	
-	<insert id="insertChatRoom" parameterType="org.shiftworks.domain.ChatRoomVO">
+	<insert id="insertChatRoom" parameterType="org.shiftworks.domain.ChatRoomDTO">
 		INSERT INTO chatroom(room_id, room_name, emp_id, dept_id) 
-			VALUES(chatroom_seq.nextval, #{room_name}, #{emp_id}, #{dept_id})
+			VALUES(#{room_id}, #{room_name}, #{emp_id}, #{dept_id})
 	</insert>
 	
 	<select id="getList" parameterType="String" resultType="org.shiftworks.domain.ChatRoomVO">

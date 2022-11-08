@@ -35,7 +35,7 @@
 	<!-- resultType이 map일 때, 
  		 map의 key는 컬럼명을 대문자로 할당되고,
  		 map의 value는 반환되는 row의 key에 해당하는 컬럼의 값이 할당된다. -->
-	<select id="getList" parameterType="Integer" resultMap="chatMap">
+	<select id="getList" parameterType="String" resultMap="chatMap">
 	
 		<![CDATA[
 			SELECT *
