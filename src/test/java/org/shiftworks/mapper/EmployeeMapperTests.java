@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.shiftworks.domain.AccountCriteria;
 import org.shiftworks.domain.EmployeeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -48,13 +49,13 @@ public class EmployeeMapperTests {
 //		log.info(empVO);
 //	}
 	
-	@Test
-	public void testDetail() {
-		
-		EmployeeVO empVO = mapper.detail("user11");
-		
-		log.info(empVO);
-	}
+//	@Test
+//	public void testDetail() {
+//		
+//		EmployeeVO empVO = mapper.detail("user11");
+//		
+//		log.info(empVO);
+//	}
 	
 //	@Test
 //	public void testDelete() {
@@ -73,5 +74,14 @@ public class EmployeeMapperTests {
 //		log.info("Update Count: " + empVO);
 //		
 //	}
-	
+//	@Test
+//	public void testgetList() {
+//		AccountCriteria cri = new AccountCriteria();
+//		cri.setKeyword("회계팀");
+//		cri.setType("D");
+//		cri.setPageNum(1);
+//		cri.setAmount(10);
+//		
+//		mapper.getListWithPaging(cri);
+//	}
 }
