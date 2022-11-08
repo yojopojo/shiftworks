@@ -49,6 +49,16 @@
 	 		<a href="#" class="navbar-brand text-white text-center d-block mx-auto py-3 mb-4 bottom-border">
 	 		<img id="logo" alt="로고자리" src="/resources/css/shiftwork_logo.png" width="230" class=""></a>
  		</div>
+
+		<div class="alarm">
+			<span class="badge text-bg-danger">+10</span>
+			<!-- <button type="button" class="btn btn-primary position-relative" style="size: 10px;"> Alarm
+				<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+					99+ 
+				<span class="visually-hidden">unread messages</span>
+				</span>
+			</button>  -->
+		</div><!-- 알림 버튼 -->
 		
 		<!-- 프로필 -->
 		<div class="row">
@@ -57,14 +67,9 @@
 	 				<!-- <a href="#" class="text-white">홍길동</a> -->
 			 		<a href="#multiCollapseUser" class="" data-bs-toggle="collapse" role="button"
  				aria-expanded="false" aria-controls="multiCollapseUser" style="text-decoration: none; color: white;" id="userName">
-			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="85" class="rounded-circle" style="margin-top: -10px;">
-			 		<sec:authentication property="principal.username"></sec:authentication> <!-- 사용자 이름 -->
-			 		</a>
-			 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-					  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-					</svg>
-					<!-- <p style="font-size: 5px;">알림</p> -->
- 	 			</div> <!-- end card -->
+			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="80" class="rounded-circle" style="margin-top: -10px;">
+			 		<sec:authentication property="principal.username"></sec:authentication><!-- 사용자 이름 --></a>
+					</div> <!-- end card -->
 	 		</div> <!-- end profile -->
 	 		
 		  <div class="col">
@@ -143,7 +148,7 @@
 		    <div class="card card-body" style="height: 130px; border-width: 0;">
 		      <ul>
 		      	<a href="/manager/register"><li>계정 생성</li></a><br>
-		      	<a href="/manager/list"><li>계정 수정</li></a><br>
+		      	<a href="/manager/list"><li>계정 관리</li></a><br>
 		      	<!-- <a href="/account/form"><li>계정 양식 설정</li></a><br> -->
 		      	<!-- <a href="/account/{empid}"><li>계정 삭제</li></a><br> -->
 		      	<a href="/manager/retireelist"><li>퇴사자 리스트 관리</li></a><br>
@@ -334,9 +339,9 @@
 			    <div class="collapse multi-collapse" id="multiCollapseBOK">
 			    <div class="card card-body" style="height: 100px; border-width: 0;">
 			      <ul>
-			      	<a href="/booking/cal" class="btmmenu"><li>전체 예약 현황</li></a><br>
+			      	<a href="/booking/cal" class="btmmenu"><li>월별 예약 현황</li></a><br>
 			      	<a href="/booking/new"><li>예약하기</li></a><br>
-			      	<a href="/booking/list"><li>내 예약관리</li></a><br>
+			      	<a href="/booking/list"><li>전체 예약보기</li></a><br>
 			      </ul>
 			    </div> <!-- end card-body -->
 			    </div> <!-- end collapse -->
