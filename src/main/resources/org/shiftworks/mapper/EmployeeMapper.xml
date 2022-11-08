@@ -69,7 +69,7 @@
 		<![CDATA[ 
 		select emp_id, dept_name, position, name, entry_date
 			from ( 
-				select /*+INDEX_DESC(employee pk_board) */ 
+				select /*+INDEX_DESC(employee pk_emp_id) */ 
 						rownum rn, emp_id, dept_name, position, name, entry_date
 					from employee e JOIN department d
 					on e.dept_id = d.dept_id
@@ -85,6 +85,9 @@
 		<!-- 총 계정 개수 -->
 	 <select id="getTotalCount" resultType="int">
 		select count(*) from employee 
+		where
+		<include refid="criteria"/>
+		emp_id is not null
 	</select>
 		
 		<!-- 계정추가 -->
@@ -121,6 +124,17 @@
 			ON e.dept_id = d.dept_id
 			WHERE  resignation_date is not null			
 	</select>
+	<!-- 관리자 계정 끝 -->
+	
+	
+	
+	
+	<!-- 일반 계정 -->
+		<!-- 일반 계정정보 수정 -->
+	<update id="updateMyAccount">
+		update employee set password=#{password}, mobile=#{mobile}, email=#{email} 
+		where emp_id=#{emp_id}
+	</update>
 
 	
 </mapper>

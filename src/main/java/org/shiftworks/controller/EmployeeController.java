@@ -42,6 +42,18 @@ public class EmployeeController {
 		log.info("list11.............."+model);
 		
 	}
+	@GetMapping("/retireelist")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void retireeList(AccountCriteria cri, Model model) {
+		model.addAttribute("list", service.getRetireeList(cri));
+		
+		int total = service.getTotal(cri);
+		log.info("total: " + total);
+		model.addAttribute("pageMaker", new AccountPageDTO(cri, total));
+		
+		log.info("list11.............."+model);
+		
+	}
 
 	@GetMapping("/register")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -61,7 +73,7 @@ public class EmployeeController {
 		log.info("ready register......................");
 		service.register(empVO);
 		log.info("register..............1" + empVO);
-		rttr.addFlashAttribute("modifyResult", empVO.getEmp_id());
+		rttr.addFlashAttribute("result", empVO.getEmp_id());
 		
 		return "redirect:/manager/list";
 		

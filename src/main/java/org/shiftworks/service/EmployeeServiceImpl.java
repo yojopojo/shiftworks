@@ -55,7 +55,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int getTotal(AccountCriteria cri) {
 		return mapper.getTotalCount(cri);
 	}
+
+	@Override
+	public List<EmployeeVO> getRetireeList(AccountCriteria cri) {
+		log.info("getRetireeList with criteria..." + cri);
+		
+		return mapper.getRetireeList(cri);
+	}
+
 	
+	
+	//일반계정
+	@Override
+	public boolean modifyMyAccount(EmployeeVO empVO) {
+		log.info("modify..............." + empVO);
+		return mapper.updateMyAccount(empVO) ==1;
+	}
+
+
 
 
 

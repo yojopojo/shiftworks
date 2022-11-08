@@ -1,7 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@include file="/WEB-INF/views/includes/header.jsp"%>
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>jOrgChart - A jQuery OrgChart Plugin</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/orgchart.css"/>
     <link rel="stylesheet" href="css/custom.css"/>
     <link href="css/prettify.css" type="text/css" rel="stylesheet" />
@@ -12,7 +14,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
     
-    <script src="jquery.jOrgChart.js"></script>
+    <script src="jquery.orgchart.js"></script>
 
     <script>
     jQuery(document).ready(function() {
@@ -28,14 +30,14 @@
     <div class="topbar">
         <div class="topbar-inner">
             <div class="container">
-                <a class="brand" href="#">jQuery Organisation Chart</a>
-                <ul class="nav">
+                <a class="brand" href="#">조직도</a>
+                <!-- <ul class="nav">
                     <li><a href="http://github.com/wesnolte">Github</a></li>
                     <li><a href="http://twitter.com/wesnolte">Twitter</a></li>                  
                     <li><a href="http://th3silverlining.com">Blog</a></li>      
-                </ul>
+                </ul> -->
                 <div class="pull-right">
-                    <div class="alert-message info" id="show-list">Show underlying list.</div>
+                    <!-- <div class="alert-message info" id="show-list">Show underlying list.</div> -->
                     
 <pre class="prettyprint lang-html" id="list-html" style="display:none"></pre>       
                 </div>              
@@ -45,11 +47,11 @@
     
     <ul id="org" style="display:none">
     <li>
-       Food
+       사장
        <ul>
-         <li id="beer">Beer</li>
-         <li>Vegetables
-           <a href="http://wesnolte.com" target="_blank">Click me</a>
+         <li id="beer">상위부서</li>
+         <li>하위부서
+           <!-- <a href="http://wesnolte.com" target="_blank">Click me</a> -->
            <ul>
              <li>Pumpkin</li>
              <li>
@@ -119,3 +121,5 @@
 
 </body>
 </html>
+
+<%@include file="/WEB-INF/views/includes/footer.jsp"%>
