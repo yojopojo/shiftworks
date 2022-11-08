@@ -13,9 +13,10 @@ public interface ApprovalService {
 	// 결재 문서 생성, 조회
 //	public List<ApprovalDTO> getList();
 	public int insertForm(ApprovalVO approval);
-	public ApprovalVO get(int apr_id);
+	public ApprovalDTO get(int apr_id);
 	public List<ApprovalDTO> getList(ApprovalCriteria cri);
 	public int getTotal();
+	public int getReceivedTotal();
 	public List<ApprovalDTO> getReceivedList(ApprovalCriteria cri);
 	
 	// 결재 상태 변경
@@ -28,7 +29,9 @@ public interface ApprovalService {
 	public TempApprovalVO tempSelect(int temp_id);
 //	public TempApprovalVO temporalSelect(String emp_id);
 	
-	// 파일 업로드
+	// 파일업로드
+	
+
 	
 	
 }
