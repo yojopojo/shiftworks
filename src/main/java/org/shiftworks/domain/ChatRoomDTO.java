@@ -15,7 +15,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class ChatRoomDTO {
 	
@@ -28,6 +27,10 @@ public class ChatRoomDTO {
 	
 	// WebSocketSession은 spring에서 Websocket connection이 맺어진 세션
 	private Set<WebSocketSession> session = new HashSet<>();
+	
+	public ChatRoomDTO() {
+		this.room_id = UUID.randomUUID().toString();
+	}
 
 	public ChatRoomDTO(String room_name, String emp_id, String dept_id) {
 		super();

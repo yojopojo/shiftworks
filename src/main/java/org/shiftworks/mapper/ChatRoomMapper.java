@@ -11,6 +11,6 @@ public interface ChatRoomMapper {
 	
 	int insertChatRoom(ChatRoomDTO chatRoom);
 	List<ChatRoomVO> getList(String emp_id);
-	int deleteChatRoom(Integer room_id);
+	int deleteChatRoom(String room_id);
 	int updateLastchat(ChatVO chat);
 }

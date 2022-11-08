@@ -31,7 +31,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<ChatDTO> getChatList(Integer room_id) {
+	public List<ChatDTO> getChatList(String room_id) {
 
 		log.info("#ChatServiceImpl, getChatList....................");
 

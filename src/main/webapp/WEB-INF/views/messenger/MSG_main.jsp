@@ -19,7 +19,7 @@
 <!-- icon을 사용하기 위함 -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-<link rel='stylesheet'
+<link rel='stylesheet' 
 	href='https://fonts.googleapis.com/css?family=Montserrat'>
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
@@ -40,6 +40,7 @@
 <!-- socket 라이브러리 -->
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <!-- 실시간 검색을 위한 라이브러리 -->
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -50,7 +51,7 @@
 
 <script type="text/javascript" src="/resources/js/messenger/service.js" />
 <script type="text/javascript" src="/resources/js/messenger/sockjs.js" />
-<!-- <script type="text/javascript" src="../../resources/js/messenger/event.js" /> -->
+<!-- <script type="text/javascript" src="/resources/js/messenger/event.js" /> -->
 
 <script type="text/javascript"></script>
 </head>
@@ -89,7 +90,7 @@
 				<!-- ChatRoom DB에서 채팅방 리스트 출력 -->
 				<c:forEach items="${chatRoomList}" var="chatRoom">
 
-					<div class="discussion" id="${chatRoom.room_id }">
+					<div class="discussion" id="${chatRoom.room_id }" data-room-id="${chatRoom.room_id }">
 						<div class="photo"
 							style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
 							<div class="online"></div>
@@ -174,19 +175,74 @@
 		</div>
 	</div>
 
-
 	<sec:authentication property="principal.username" var="login_id" />
-
-
 
 	<script type="text/javascript">
 
 $(document).ready(function() {
-
+	
 	// 로그인된 사번 
 	var login_id = "<c:out value='${login_id}'/>";
 	
-    var socket = null;
+    var sockJs = new SockJS("/messenger/chat");
+    
+    // 1. SockJS를 내부에 들고 있는 stomp를 내어줌
+    stomp = Stomp.over(sockJs);
+    
+ 	// 2. connection이 맺어지면 실행
+    stomp.connect({}, function(){
+    	
+    	console.log("STOMP Connection");
+    	
+    	// 4. subscribe(path, callback)으로 메세지를 받을 수 있음.
+    	stomp.subscribe("/sub/chat/room/" + room_id, function (chat){
+    		
+    		var content = JSON.parse(chat.content);
+        	
+        	var writer = content.sender;
+        
+        	console.log("stomp : " + chat);
+            $('.chat .header-chat .name').attr('id', "chat_" + chat.room_id);
+      	 	
+            
+      	 	// 채팅 내용이 있을 때만 출력
+      	 	if(chat.content != null){
+
+      			// 상대방의 채팅 내용
+      	 		if(chat.sender != login_id){
+      		 		var content = '<div class="message" id="msg_'+ chat.chat_id + '">' +
+      		 		'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
+      		 		'<div class="online"></div></div>' + 
+      		 		'<p class="text">'+ chat.content + '</p>	</div>' +
+      		 		'<p class="time">' + chat.sendtime.substr(0,16) + '</p>';
+      		 		$(".messages-chat").append(content);
+      		 		
+      	 		}else{	// 나의 채팅 내용
+      	 			var content = '	<div class="message text-only">' +
+      	 				'<div class="response">' +
+      	 				'<p class="text">'+ chat.content +'</p>' +
+      	 				'</div></div>' +
+      	 				'<p class="response-time time">' + chat.sendtime.substr(0,16) + '</p>';
+      	 			$(".messages-chat").append(content);
+      	 		}
+      	 		
+      	 	$(".messages-chat").animate({ scrollTop: $(".messages-chat")[0].scrollHeight });	    		 			
+       		}
+
+    	});
+    	
+    	// 3. send(path, header, message)로 메세지를 보낼 수 있음
+    	var chat = {
+    		
+    		sender: login_id,
+    		room_id: $('.discussions').data('room-id')
+    		
+    	};
+    	
+    	console.log("stomp room_id : " + $('.discussions').data('room-id'))
+    	stomp.send('/pub/messenger/chat/enter', {}, JSON.stringify(chat));
+
+    });
     
     console.log('js start');
     
@@ -262,8 +318,8 @@ $(document).ready(function() {
     	 console.log("room_id : " + $(this).attr("id"));
     	 
     	 // 선택된 채팅방의 지난 채팅 내역 가져옴
-    	 messengerService.getChat(parseInt($(this).attr("id")), function(data){
- 
+    	 messengerService.getChat($(this).attr("id"), function(data){
+ 			console.log("getchat : ");
     		$('.messages-chat').empty(); 
     		
     	 	if(data != null){
@@ -289,7 +345,7 @@ $(document).ready(function() {
     		loadChat(chatList)	// 저장된 채팅 불러오기
     		
     		// /room/{roomId}를 구독
-    		stompClient.subscribe('/room' + roomId, function(chatMessage){
+    		stompClient.subscribe('/room' + room_id, function(chatMessage){
     			
     			// 메시지를 보내면 서버를 거쳐 구독하고 있는 클라이언트들에게 showChat로 메세지 보여진다.
     			showChat(JSON.parse(chatMessage.body));
@@ -300,7 +356,7 @@ $(document).ready(function() {
     
     function sendChat(){
     	
-    	stompClient.send("/send/")
+    	stompClient.send("/chat/send/")
     	
     }
     
@@ -333,8 +389,6 @@ $(document).ready(function() {
 		const timestamp = new Date(+d + 3240 * 10000).toISOString().replace('T', ' ').replace(/\..*/, '');
         console.log("전송 버튼 클릭 이벤트 : sendtime : " + timestamp);	
         
-        
-        
         var chat = {
 	            content: $('.write-message').val(),
 	            sendtime: timestamp,
@@ -345,7 +399,8 @@ $(document).ready(function() {
         messengerService.sendChat(chat, function(result){
         	console.log("메시지 전송 결과 : " + result);
         	
-        	if(result == 'success'){       		
+        	if(result == 'success'){
+        		stomp.send('/pub/messager/chat/send', {}, JSON.stringify(chat));
         		printChat(chat);
         	}
         	
@@ -361,6 +416,8 @@ $(document).ready(function() {
     }
     
  function printChat(chat){
+	 
+	 console.log("printChat : " + chat);
 	 
 	 $('.chat .header-chat .name').attr('id', "chat_" + chat.room_id);
 	 

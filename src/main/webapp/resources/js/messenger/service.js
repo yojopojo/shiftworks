@@ -30,7 +30,7 @@ var messengerService = (function () {
  	}
     
     function getChat(room_id, callback, error) {
-  
+  		
         $.ajax({
             type: 'GET',
             url: '/messenger/chat/room/' + room_id,
@@ -61,7 +61,7 @@ var messengerService = (function () {
     	
     	$.ajax({
     		type: 'POST',
-    		url: '/messenger/send',
+    		url: '/messenger/chat/send',
     		data : JSON.stringify(chat),
 			contentType : 'application/json; charset=utf-8',
     		beforeSend : function(xhr){
@@ -79,7 +79,7 @@ var messengerService = (function () {
             }
     	})
     
-        socket.send(chat);    
+        //socket.send(chat);    
 
 	}//end sendChat
 	
@@ -96,6 +96,11 @@ return {
 }) ();
 
 
+
+
+
+
+/*
  var socket = new SockJS('http://localhost:8081/messenger/chat');
      
  socket.onmessage = onMessage;
@@ -146,3 +151,5 @@ return {
      
  //    $(".messages-chat").append("끊김");
  }
+ 
+  */
