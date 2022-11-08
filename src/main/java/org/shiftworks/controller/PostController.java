@@ -402,7 +402,7 @@ public class PostController {
 	
 	//새 게시판 만드는 페이지 이동
 	@GetMapping(value = "/newboard")
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ModelAndView newBoard() {
 		
 		ModelAndView mav = new ModelAndView();
