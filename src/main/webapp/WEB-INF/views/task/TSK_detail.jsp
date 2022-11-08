@@ -191,7 +191,7 @@
 				var selectedLi = $(this).parent("li");
 				var uuid = selectedLi.data("uuid");
 				
-				console.log(fileName);
+				console.log(typeof(fileName));
 				$.ajax({
 					url: '/task/deleteFile',
 					beforeSend : function(xhr){ // csrf 토큰 전달

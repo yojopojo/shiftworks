@@ -20,7 +20,7 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<td colspan="4">
+				<td colspan="5">
 					<div class="dropdown">
 						<button class="btn btn-outline-secondary dropdown-toggle selectedDept" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false"
@@ -55,6 +55,7 @@
 		<tbody>
 			<tr>
 				<td class="no">글 번호</td>
+				<td class="dept">부서</td>
 				<td class="title">제목</td>
 				<td class="writer">작성자</td>
 				<td class="writer">비공개여부</td>
@@ -62,6 +63,7 @@
 			<c:forEach items="${dto.list}" var="task">
 				<tr class="goDetail" id="${task.task_id}">
 					<td><c:out value="${task.task_id}"/></td>
+					<td><c:out value="${task.dept_name}"/></td>
 					<td><c:out value="${task.task_title}"/></td>
 					<td><c:out value="${task.name}"/></td>
 					<td><c:out value="${task.t_private}"/></td>
@@ -70,7 +72,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="4">
+				<td colspan="5">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 							<!-- 이전버튼 출력 -->

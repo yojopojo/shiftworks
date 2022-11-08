@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -242,7 +243,7 @@ public class TaskController {
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 	
-	
+	@Transactional
 	@DeleteMapping("/deleteFile")
 	public ResponseEntity<String> deleteFile(@RequestBody FileVO vo) {
 		File file;
@@ -252,11 +253,10 @@ public class TaskController {
 		try {
 			// 삭제 대상을 파일 객체로 만듦
 			file = new File("C:\\upload\\" + URLDecoder.decode(vo.getFile_name(), "UTF-8"));
-			
-			// DB에서 파일 삭제
-			mapper.deleteTaskFile(vo.getUuid());
 			// 실제 파일 삭제
 			file.delete();
+			// DB에서 파일 삭제
+			mapper.deleteTaskFile(vo.getUuid());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

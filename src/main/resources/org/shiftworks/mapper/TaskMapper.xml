@@ -66,14 +66,16 @@
 		resultType="org.shiftworks.domain.TaskVO">
 
 		<![CDATA[
-		SELECT task_id, dept_id, task_title, task_content, emp_id, name, t_private, date_created
+		SELECT task_id, dept_id, dept_name, task_title, task_content, emp_id, name, t_private, date_created
 			FROM (
 				SELECT /*+INDEX_DESC (t task_pk) */
-					ROWNUM rn, task_id, t.dept_id as dept_id, task_title,
+					ROWNUM rn, task_id, t.dept_id as dept_id, dept_name, task_title,
 					DBMS_LOB.SUBSTR(task_content, 4000, 1) as task_content,
 					t.emp_id as emp_id, name, t_private, date_created
 	        	FROM task t JOIN employee e
 	        	ON t.emp_id = e.emp_id
+	        	JOIN department d
+	        	ON e.dept_id = d.dept_id
 	        	WHERE
 		]]>
 

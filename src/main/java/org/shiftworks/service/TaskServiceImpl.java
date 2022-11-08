@@ -1,9 +1,13 @@
 package org.shiftworks.service;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.shiftworks.domain.AlarmVO;
 import org.shiftworks.domain.EmployeeVO;
+import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.TaskCriteria;
 import org.shiftworks.domain.TaskPageDTO;
 import org.shiftworks.domain.TaskVO;
@@ -105,6 +109,23 @@ public class TaskServiceImpl implements TaskService {
 	public boolean deleteTask(Integer task_id) {
 		log.info("service: insertTask..........");
 		boolean result = taskMapper.deleteTask(task_id) == 1;
+		List<FileVO> list = fileMapper.selectTaskFile(task_id);
+		
+		for(FileVO vo : list) {
+			
+			try {
+				File file = new File("C:\\upload\\"
+						+ URLDecoder.decode(vo.getFile_src() + "\\" + vo.getUuid() + "_" + vo.getFile_name(), "UTF-8"));
+				if(file.exists()) {
+					file.delete();
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			fileMapper.deleteTaskFile(vo.getUuid());
+		}
+		
 		return result;
 	}
 
