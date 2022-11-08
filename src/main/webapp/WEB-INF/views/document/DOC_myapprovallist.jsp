@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,7 +81,14 @@
 								<td><c:out value="${approval.emp_id}" /></td>
 								<td><c:out value="${approval.apr_title}" /></td>
 								<td><c:out value="${approval.apr_content}" /></td>
-								<td><c:out value="${approval.apr_status}" /></td>
+								<td>
+									<c:if test="${ fn:contains(approval.apr_status, '1') }">
+										<p>승인</p>
+									</c:if>
+									<c:if test="${ fn:contains(approval.apr_status, '2') }">
+										<p>반려</p>
+									</c:if>
+								</td>
 								<td><c:out value="${approval.apr_signdate}" /></td>
 							</tr>	
 						</c:forEach>
@@ -249,6 +257,7 @@ $(document).ready(function () {
 	   });//end pagination
 	   
 	
+	   
 	
 	
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.DocumentPageDTO;
 import org.shiftworks.domain.ApprovalCriteria;
+import org.shiftworks.domain.ApprovalListDTO;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
@@ -239,7 +240,6 @@ public class DocumentController {
 			ApprovalCriteria cri = new ApprovalCriteria();
 			cri.setPageNum(pageNum);
 			cri.setEmp_id(emp_id);
-			
 			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/document/DOC_myapprovallist");

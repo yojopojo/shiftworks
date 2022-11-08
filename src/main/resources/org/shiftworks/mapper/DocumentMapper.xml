@@ -168,11 +168,11 @@
 				
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
-				and apr_status =3
 				and e.emp_id =#{emp_id}
 				
 				)
 			where rn >(#{pageNum}-1)*#{amount}
+			and apr_status ='1' OR apr_status='2'
 			order by apr_id desc
 		]]>
 		
