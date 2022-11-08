@@ -231,13 +231,13 @@ public class BookingController {
 	public ModelAndView getMyList(Authentication auth){
 		log.info("getMyList controller....................");
 		
-		
 		UserDetails ud = (UserDetails)auth.getPrincipal();
 		log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		
 		List<BookingVO> myList = service.getMyList(emp_id);
 		ModelAndView mav = new ModelAndView();
+
 		mav.setViewName("booking/BOK_myList");
 		mav.addObject("event", myList);
 		log.info(myList);
