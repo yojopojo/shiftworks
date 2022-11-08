@@ -9,6 +9,9 @@ var bookingService = (function(){
 			type: 'post',
 			url: '/booking/new',
 			data: JSON.stringify(bookingData),
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(bookingData.csrf_header, bookingData.csrf_token);
+            },
 			contentType: "application/json; charset=utf-8",
 			success: function(result, status, xhr){
 				if(callback){

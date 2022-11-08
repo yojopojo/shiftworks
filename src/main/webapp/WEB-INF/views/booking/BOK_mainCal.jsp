@@ -2,6 +2,8 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://www.springframework.org/security/tags"
+   prefix="sec"%>
 <%@include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -34,10 +36,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 headerToolbar: {
-                    left: 'prev,next today',
+                    left: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    right: 'today prev,next'
                 },
+                eventTimeFormat: { // like '14:30'
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                  }, //시간 표시 옵션
+                eventBackgroundColor : "#1C3359",
+                selectable: true,
+                navLinks: true,
                 editable: true,
                 droppable: true, // things to be dropped onto the calendar
                 events:data
