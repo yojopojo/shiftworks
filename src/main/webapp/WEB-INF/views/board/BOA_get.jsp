@@ -51,24 +51,19 @@
 				<button id='scrapBtn' class='btn btn-primary btn-xs pull-right'>스크랩하기</button>
 				<!--게시글 상세 폼-->
 				<div class="form-group">
-					<label>게시판번호</label> <input class="form-control" name='b_id'
-						value='<c:out value="${post.b_id }"/>' readonly="readonly">
+					<label>게시판번호</label> <input class="form-control" name='b_id' value='<c:out value="${post.b_id }"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>게시글번호</label> <input class="form-control" name='post_id'
-						value='<c:out value="${post.post_id }"/>' readonly="readonly">
+					<label>게시글번호</label> <input class="form-control" name='post_id' value='<c:out value="${post.post_id }"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>작성자</label> <input class="form-control" name='name'
-						value='<c:out value="${post.name }"/>' readonly="readonly">
+					<label>작성자</label> <input class="form-control" name='name' value='<c:out value="${post.name }"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>작성부서</label> <input class="form-control" name='dept_id'
-						value='<c:out value="${post.dept_id }"/>' readonly="readonly">
+					<label>작성부서</label> <input class="form-control" name='dept_id' value='<c:out value="${post.dept_id }"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>제목</label> <input class="form-control" name='post_name'
-						value='<c:out value="${post.post_name}"/>' readonly="readonly">
+					<label>제목</label> <input class="form-control" name='post_name' value='<c:out value="${post.post_name}"/>' readonly="readonly">
 				</div>
 				<div class="form-group">
 					<label>내용</label>
@@ -84,6 +79,18 @@
 					<label>수정일</label> 
 					<input class="form-control" name='post_updatedate' value='<c:out value=""/>' readonly="readonly">
 				</div>
+				<!--첨부파일-->
+				<div class="mb-3">
+					<label for="formFileSm" class="form-label file">첨부파일</label>
+						<ul class="boardFiles">
+							<c:forEach items="${ post.fileList }" var="f">
+							<li data-uuid="${ f.uuid }" data-file_name="${ f.file_name }"
+									data-file_src="${ f.file_src }">
+									<a href="#"><c:out value="${ f.file_name }"/></a>
+							</li>
+							</c:forEach>
+						</ul>
+				</div>
 				<div class="form-group" hidden="hidden">
 					<label>emp_id</label> 
 					<input class="form-control" name='emp_id' value='<c:out value="${pinfo.username}"/>' readonly="readonly">
@@ -95,7 +102,7 @@
 						</c:if>
 					</sec:authorize>	
 				<button id="listBtn" class="btn btn-primary">목록보기</button>
-				
+
 
 
 				<form id='operForm' action="/board/modify" method="get">
@@ -106,6 +113,8 @@
 					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 				</form>
 				<!-- 게시글 상세 폼-->
+				
+				
 
 
 
@@ -196,7 +205,7 @@
 												str += "<li class='left clearfix' data-reply_id='"+list[i].reply_id+"'>";
 												str += "<div>" + list[i].r_writer + "</div>";
 												str += "<div>" + list[i].r_content + "</div>";
-												str += "<div>" + list[i].r_regdate + "</div>"; //추후 시간 바꾸기 
+												str += "<div>" + list[i].r_regdate + "</div>"; 
 											}
 
 											replyUl.html(str);
@@ -294,6 +303,23 @@
 								$("#operForm").submit(); 
 							
 						  });
+						 
+						 
+						// 첨부파일 클릭 시 다운로드/삭제할 수 있도록 하는 url
+							$('.boardFiles li').each(function(i, obj){
+								var file = {
+										uuid: $(obj).data('uuid'),
+										file_name: $(obj).data('file_name'),
+										file_src: $(obj).data('file_src'),
+									};
+								var filePath = encodeURIComponent(file.uuid + "_" + file.file_name);
+								
+								$(obj).children('a').attr("href", "/board/download?fileName=" + filePath);
+								
+							}); // end li each
+								
+							
+								
 						
 	});//end script
 </script>

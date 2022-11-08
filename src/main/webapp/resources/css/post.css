@@ -6,3 +6,10 @@
 }
 
 
+#post_content{
+		text-align: left;
+}
+
+.chat {
+	 list-style:none;
+}
