@@ -26,7 +26,7 @@
 	<!--업무 파일 업로드-->
 	 <insert id="insertTaskFile" parameterType="org.shiftworks.domain.FileVO">
 		insert into task_file (uuid, task_id, file_name, file_src)
-			values(#{uuid}, #{work_id}, #{file_name}, #{file_src})
+			values(#{uuid}, task_seq.currval, #{file_name}, #{file_src})
 	</insert>
 	
 	<!--업무 파일 목록-->

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ChatRoomVO {
-	private int room_id;
+	private String room_id;
 	private String room_name;
 	private String lastchat;
 	private String lastchat_time;

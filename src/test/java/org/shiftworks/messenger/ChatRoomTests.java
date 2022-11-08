@@ -2,6 +2,7 @@ package org.shiftworks.messenger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.shiftworks.domain.ChatRoomDTO;
 import org.shiftworks.domain.ChatRoomVO;
 import org.shiftworks.domain.ChatVO;
 import org.shiftworks.mapper.ChatRoomMapper;
@@ -20,24 +21,24 @@ public class ChatRoomTests {
 	@Autowired
 	ChatRoomMapper mapper;
 	
-	@Test
-	public void testUpdateLastchat() {
-		ChatVO chat = new ChatVO();
-		chat.setRoom_id(1);
-		chat.setContent("test3");
-		chat.setSendtime("2022-10-25 11:58:33");
-		log.info(mapper.updateLastchat(chat));
-	}
-	
 //	@Test
-//	public void testInsert() {
-//		ChatRoomVO chatRoom = new ChatRoomVO();
-//		chatRoom.setRoom_name("채팅방3");
-//		chatRoom.setEmp_id("user1");
-//		chatRoom.setDept_id("dept1");
-//		
-//		log.info(mapper.insertChatRoom(chatRoom));
+//	public void testUpdateLastchat() {
+//		ChatVO chat = new ChatVO();
+//		chat.setRoom_id("1");
+//		chat.setContent("test3");
+//		chat.setSendtime("2022-10-25 11:58:33");
+//		log.info(mapper.updateLastchat(chat));
 //	}
+	
+	@Test
+	public void testInsert() {
+		ChatRoomDTO chatRoom = new ChatRoomDTO();
+		chatRoom.setRoom_name("채팅방3");
+		chatRoom.setEmp_id("user1");
+		chatRoom.setDept_id("dept1");
+		
+		log.info(mapper.insertChatRoom(chatRoom));
+	}
 	
 //	@Test
 //	public void testGetList() {

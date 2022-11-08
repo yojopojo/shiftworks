@@ -3,6 +3,7 @@ package org.shiftworks.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.shiftworks.domain.BookingVO;
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
 import org.shiftworks.domain.WorkScheduleVO;
@@ -26,4 +27,6 @@ public interface ScheduleMapper {
 	int updateMemo(@Param("emp_id") String emp_id, @Param("memo") String memo);
 	
 	List<WorkScheduleVO> getWorkerList(String dept_id);
+	
+	List<BookingVO> searchBooking(String keyword);
 }
