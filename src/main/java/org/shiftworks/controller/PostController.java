@@ -2,6 +2,7 @@ package org.shiftworks.controller;
 
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,11 @@ import org.shiftworks.domain.FileVO;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.domain.Temp_BoardVO;
+import org.shiftworks.mapper.FileMapper;
 import org.shiftworks.service.PostService;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +53,8 @@ public class PostController {
 	
 	
 	private PostService service;
+	
+	private FileMapper mapper;
 	
 	//register form 이동
 	@GetMapping(value = "/new")
@@ -96,7 +103,6 @@ public class PostController {
 			log.info("Upload File Size: " + multipartFile.getSize());
 			
 			FileVO vo = new FileVO();
-			vo.setFile_src(uploadFolder);
 			
 			UUID uuid = UUID.randomUUID();
 			vo.setUuid(uuid.toString());
@@ -119,6 +125,9 @@ public class PostController {
 		
 		return new ResponseEntity<List<FileVO>>(list, HttpStatus.OK);
 	}
+	
+	
+		
 	
 		//게시판 번호에 맞는 리스트 호출
 		@GetMapping(value = "/list")
@@ -207,6 +216,64 @@ public class PostController {
 		? new ResponseEntity<String>("success", HttpStatus.OK)
 		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		
+	}
+	
+	// 파일 다운로드
+	@GetMapping(value="/download",
+				// 다운로드가 가능하도록 MIME 타입 지정
+				produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Resource> downloadFile(String fileName) {
+				
+		FileSystemResource resource = new FileSystemResource("C:\\upload\\" + fileName);
+
+		// 다운로드 요청한 파일이 없는 경우
+		if(resource.exists() == false) {
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+				
+		String resourceName = resource.getFilename();
+		// C:\\upload에 저장된 파일명에서 uuid 제거
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
+				
+		HttpHeaders headers = new HttpHeaders();
+				
+		try {
+			// 파일 다운로드 시 사용할 이름
+			String downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+					
+			headers.add("Content-Disposition", "attachment; filename=" + downloadName);
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+	}
+		
+		
+	//파일 삭제
+	@DeleteMapping("/deleteFile")
+	public ResponseEntity<String> deleteFile(@RequestParam FileVO vo) {
+		File file;
+			
+		log.info(vo.getFile_name());
+		log.info(vo.getUuid());
+		try {
+		// 삭제 대상을 파일 객체로 만듦
+		file = new File("C:\\upload\\" + URLDecoder.decode(vo.getFile_name(), "UTF-8"));
+				
+		// DB에서 파일 삭제
+		mapper.deleteBoardFile(vo.getUuid());
+		// 실제 파일 삭제
+		file.delete();
+				
+	} catch (Exception e) {
+		e.printStackTrace();
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	}
+			
+	return new ResponseEntity<String>("success", HttpStatus.OK);
+			
 	}
 	
 	//스크랩하기
