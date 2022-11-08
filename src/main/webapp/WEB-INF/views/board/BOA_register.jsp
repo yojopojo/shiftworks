@@ -87,7 +87,7 @@
 
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="20" cols="150" name='post_content'>
+						<textarea class="form-control" rows="20" cols="150" name='post_content' id='post_content'>
 							<c:out value="${post.post_content}" />
 						</textarea>
 					</div>

@@ -205,7 +205,7 @@
 												str += "<li class='left clearfix' data-reply_id='"+list[i].reply_id+"'>";
 												str += "<div>" + list[i].r_writer + "</div>";
 												str += "<div>" + list[i].r_content + "</div>";
-												str += "<div>" + list[i].r_regdate + "</div>"; //추후 시간 바꾸기 
+												str += "<div>" + list[i].r_regdate + "</div>"; 
 											}
 
 											replyUl.html(str);
