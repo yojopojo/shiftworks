@@ -77,7 +77,7 @@
 		]]>
 	<include refid="criteria"/>
 	<![CDATA[
-			 rownum <= #{pageNum} * #{amont}
+			 rownum <= #{pageNum} * #{amount}
 		) where rn > (#{pageNum} -1) * #{amount}
 	]]>
 	</select>
