@@ -90,7 +90,11 @@
 	<select id="getTotal" resultType="int">
 		select count(*) from approval
 	</select>
-	
+
+	<!-- 결재할 문서함 전체 결재 문서수 조회 -->
+	<select id="getReceivedTotal" resultType="int">
+		select count(*) from approval where apr_status = 0
+	</select>
 	
 	<!-- 임시저장 구현 -->
 	
@@ -122,19 +126,9 @@
 		</select>
 	
 	
-	<!-- 임시저장 불러오기 -->
-		<!-- 	<select id="temporalSelect" parameterType="String" resultType="org.shiftworks.domain.TempApprovalVO">
-		select * from TempApprovalVO where emp_id = #{emp_id}	
-		</select> -->	
 	
-	<!-- emp_id, af_id가 일치하는 것이 없으면 새롭게 임시저장하고 있으면 업데이트 -->
-		<!-- 	<update id="temporalApr" parameterType="org.shiftworks.domain.TempApprovalVO">
-		merge into temp_apr
-		using dual on(af_id = #{af_id} and emp_id = #{emp_id})
-		when matched then update set temp_title = #{temp_title}, temp_content = #{temp_content}
-		when not matched then
-			insert (temp_id, dept_id, emp_id, af_id, temp_title, temp_content)
-			values (temp_apr_seq.nextval, #{dept_id}, #{emp_id}, #{af_id}, #{temp_title}, #{temp_content})
-		</update> -->
+	
+	
+	
 
 </mapper>

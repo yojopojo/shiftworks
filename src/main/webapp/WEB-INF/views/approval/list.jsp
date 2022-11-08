@@ -9,10 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 <!--  <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -27,14 +23,12 @@
 </head>
 <body>
 <div class = "container">
+	<h2>전체 결재 문서 목록</h2>
+	<a class = "btn btn-default" href="/approval/main" role="button">메인</a>
+	<a class = "btn btn-default" href="/approval/insert" role="button">결재문서작성</a>
+	<a class ="btn btn-default" href="/approval/receivedList" role ="button">결재할 문서함</a>
 
-
-
-	<h1>전체 결재 문서 LIST 페이지</h1>
-	<a href="/approval/insert">결재문서작성</a>
-	<a href="/approval/receivedList">결재할 문서함</a>
-
-	<table border="1" width="900">
+	<table class="table table-hover" >
 		<tr>
 			<th>결재 번호</th>
 			<th>결재 유형</th>
@@ -66,30 +60,32 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<br>
-	<br>
+	
 
 	<!-- 페이징 처리 뷰-->
-	<div class='pull-right'>
-		<ul class="pagination">
+	<nav aria-label="Page navigation">
+		<ul class="pagination justify-content-center">
 			<c:if test="${pageMaker.prev}">
-				<li class="paginate_button previous">
-					<a href="${pageMaker.startPage -1}">이전</a>
-				</li>
-			</c:if>
-			<c:forEach var="num" begin="${pageMaker.startPage}"
-					end="${pageMaker.endPage}">
-					<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
-						<a href="${num}">${num}</a>
-					</li>
-			</c:forEach>
+		 		<li class="page-item">
+		 			<a class="page-link" href="${pageMaker.startPage -1}" aria-label="Previous">
+		 					<span aria-hidden="true">&laquo;</span> 
+						</a>						
+							</li>
+								</c:if>
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+				<li class="page-item"  ${pageMaker.cri.pageNum == num ? "active":""} ">
+					<a class = "page-link" href="${num}">${num}</a>
+							</li>
+								</c:forEach>
 			<c:if test="${pageMaker.next}">
-				<li class="paginate_button next">
-					<a href="${pageMaker.endPage +1 }">이후</a>
-				</li>
-			</c:if>
+				<li class="page-item">
+					<a class = "page-link" href="${pageMaker.endPage +1 }" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+     				 		</a>
+								</li>
+									</c:if>
 		</ul>
-	</div>
+	</nav>
 	<!--  end Pagination -->
 
 	<form id='actionForm' action='/approval/list' method='get'>
@@ -97,14 +93,13 @@
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 		
 	</form>
-</div>
+
 
 
 	<script type="text/javascript">
-		//pagination
 		var actionForm = $("#actionForm");
 
-		$(".paginate_button a").on(
+		$(".page-item a").on(
 				"click",
 				function(e) {
 					e.preventDefault();
@@ -125,6 +120,6 @@
 					actionForm.submit();
 				});
 	</script>
-
+</div>
 </body>
 </html>
