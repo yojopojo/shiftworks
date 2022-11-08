@@ -70,7 +70,7 @@ public class PostController {
 	@PostMapping(value = "/new")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> register(@RequestBody PostVO vo){
-		log.info("register......");
+		//log.info("register......");
 		
 		//파일업로드확인 
 		if(vo.getFileList() !=null) {
@@ -89,7 +89,7 @@ public class PostController {
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<FileVO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 	
-		log.info("update ajax post.........");
+		//log.info("update ajax post.........");
 		
 		
 		List<FileVO> list = new ArrayList<FileVO>();
@@ -98,9 +98,9 @@ public class PostController {
 	
 		for (MultipartFile multipartFile : uploadFile) {
 	
-			log.info("-------------------------------------");
-			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " + multipartFile.getSize());
+			//log.info("-------------------------------------");
+			//log.info("Upload File Name: " + multipartFile.getOriginalFilename());
+			//log.info("Upload File Size: " + multipartFile.getSize());
 			
 			FileVO vo = new FileVO();
 			
@@ -134,7 +134,7 @@ public class PostController {
 		@PreAuthorize("isAuthenticated()")
 		public ModelAndView getList(BoardCriteria cri, Authentication auth) {
 			
-			log.info("getList..........");
+			//log.info("getList..........");
 			ModelAndView mav = new ModelAndView();
 			
 			
@@ -161,7 +161,7 @@ public class PostController {
 			cri.setKeyword(keyword);
 		}
 		
-		log.info("getListEntity......");
+		//log.info("getListEntity......");
 		
 		return new ResponseEntity<BoardPageDTO>(service.getListSearch(cri),HttpStatus.OK);
 		
@@ -173,7 +173,7 @@ public class PostController {
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getPost(@RequestParam("post_id") int post_id, 
 												@ModelAttribute("cri") BoardCriteria cri) throws Exception{
-		log.info("get.........");
+		//log.info("get.........");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/board/BOA_get");
 		mav.addObject("post", service.getPost(post_id));
@@ -188,7 +188,7 @@ public class PostController {
 	@PreAuthorize("isAuthenticated()")
 		public ModelAndView modify(@RequestParam("post_id") int post_id, 
 								  					@ModelAttribute("cri") BoardCriteria cri) throws Exception{
-			log.info("modify.........");
+			//log.info("modify.........");
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/board/BOA_modify");
 			mav.addObject("post", service.getPost(post_id));
@@ -200,7 +200,7 @@ public class PostController {
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> modify(@RequestBody PostVO post){
 		
-		log.info("modify..................");
+		//log.info("modify..................");
 		return service.updatePost(post)==1
 		? new ResponseEntity<String>("success",HttpStatus.OK)
 		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -256,14 +256,12 @@ public class PostController {
 	public ResponseEntity<String> deleteFile(@RequestParam FileVO vo) {
 		File file;
 			
-		log.info(vo.getFile_name());
-		log.info(vo.getUuid());
+		//log.info(vo.getFile_name());
+		//log.info(vo.getUuid());
 		try {
 		// 삭제 대상을 파일 객체로 만듦
 		file = new File("C:\\upload\\" + URLDecoder.decode(vo.getFile_name(), "UTF-8"));
 				
-		// DB에서 파일 삭제
-		mapper.deleteBoardFile(vo.getUuid());
 		// 실제 파일 삭제
 		file.delete();
 				
@@ -280,18 +278,17 @@ public class PostController {
 	@PostMapping(value="/scrap")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> scrapPost(@RequestBody ScrapVO vo, Authentication auth){
-		log.info("scrap..........");
+		//log.info("scrap..........");
 		
 		//로그인한 사람의 emp_id 구하기
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		vo.setEmp_id(emp_id);
 		
-		log.info(vo.getPost_regdate());
 		String str = vo.getPost_regdate();
 		String[] regdate = str.split(" ");
-		log.info(regdate[0]);
+		//log.info(regdate[0]);
 		vo.setPost_regdate(regdate[0]);
 		
 		return service.scrapPost(vo)==1
@@ -304,7 +301,7 @@ public class PostController {
 	@PostMapping(value = "/temporal")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> temporalPost(@RequestBody Temp_BoardVO vo){
-		log.info("temporal......");
+		//log.info("temporal......");
 		
 		return service.temporalPost(vo)==1
 		? new ResponseEntity<String>("success",HttpStatus.OK)
@@ -316,11 +313,11 @@ public class PostController {
 	@GetMapping(value = "/temporal")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Temp_BoardVO> temporalSelect(Authentication auth){
-		log.info("temporalSelect.....");
+		//log.info("temporalSelect.....");
 		
 		//로그인한 사람의 emp_id 구하기
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		
 		
@@ -332,11 +329,11 @@ public class PostController {
 		//임시저장 뷰
 		@GetMapping(value = "/temporalview")
 		public ModelAndView temporalview(Authentication auth){
-			log.info("temporalSelect.....");
+			//log.info("temporalSelect.....");
 			
 			//로그인한 사람의 emp_id 구하기
 			UserDetails ud = (UserDetails)auth.getPrincipal();
-			log.info(ud.getUsername());
+			//log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 
 			
@@ -351,11 +348,11 @@ public class PostController {
 	@PostMapping(value = "/history/{post_id}")
 	public ResponseEntity<String> insertHistory(@PathVariable("post_id") int post_id, Authentication auth){
 		
-		log.info("history.......");
+		//log.info("history.......");
 		
 		//로그인한 사람의 emp_id 구하기
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		String dept_id = service.getDeptId(emp_id);
 		
@@ -374,11 +371,11 @@ public class PostController {
 		@GetMapping(value = "/history")
 		public ResponseEntity<List<HistoryVO>> getHistory(Authentication auth){
 			
-			log.info("gethistory.......");
+			//log.info("gethistory.......");
 			
 			//로그인한 사람의 emp_id 구하기
 			UserDetails ud = (UserDetails)auth.getPrincipal();
-			log.info(ud.getUsername());
+			//log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 			
 			return new ResponseEntity<List<HistoryVO>>(service.selectHistory(emp_id),HttpStatus.OK);
@@ -388,7 +385,7 @@ public class PostController {
 	@GetMapping(value = "/selectPrev/{post_id}", produces = "application/json; charset=UTF-8")
 	public ResponseEntity<PostVO> selectPrev(@PathVariable("post_id") int post_id){
 		
-		log.info("selectPrev........");
+		//log.info("selectPrev........");
 		
 		return new ResponseEntity<PostVO>(service.selectPrev(post_id),HttpStatus.OK);
 	}
@@ -397,7 +394,7 @@ public class PostController {
 	@GetMapping(value = "/selectNext/{post_id}", produces = "application/json; charset=UTF-8")
 	public ResponseEntity<PostVO> selectNext(@PathVariable("post_id") int post_id){
 			
-		log.info("selectNext........");
+		//log.info("selectNext........");
 		
 		
 		return new ResponseEntity<PostVO>(service.selectNext(post_id),HttpStatus.OK);
@@ -405,6 +402,7 @@ public class PostController {
 	
 	//새 게시판 만드는 페이지 이동
 	@GetMapping(value = "/newboard")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ModelAndView newBoard() {
 		
 		ModelAndView mav = new ModelAndView();
@@ -416,7 +414,7 @@ public class PostController {
 	@PostMapping(value = "/newBoard")
 	public ResponseEntity<String> insertNewBoard(@RequestBody BoardVO vo){
 		
-		log.info("new Board.........");
+		//log.info("new Board.........");
 		
 		return service.insertNewBoard(vo)==1
 		? new ResponseEntity<String>("success",HttpStatus.OK)
@@ -425,13 +423,43 @@ public class PostController {
 	}
 	
 	
-	//게시판 목록 불러오기
+	//공개게시판 목록 불러오기
 	@GetMapping(value = "/boardList")
 	public ResponseEntity<List<BoardVO>> selectBoardList(){
 		
-		log.info("boardList.......");
-		service.selectBoardList().forEach(board ->log.info(board));
+		//log.info("boardList.......");
 		return new ResponseEntity<List<BoardVO>>(service.selectBoardList(),HttpStatus.OK);
+	}
+	
+	
+	//게시판 관리 페이지 이동
+	@GetMapping(value = "/boardmanage")
+	public ModelAndView boardManage(){
+				
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/board/BOA_boardmanage");
+				
+		return mav;
+	}
+	
+	
+	//게시판 목록 불러오기
+	@GetMapping(value = "/allBoardList")
+	public ResponseEntity<List<BoardVO>> allBoardList(){
+			
+		//log.info("allboardList.......");
+			
+		return new ResponseEntity<List<BoardVO>>(service.allBoardList(),HttpStatus.OK);
+	}
+		
+		
+	//게시판 삭제하기
+	@DeleteMapping(value = "/deleteBoard/{b_id}")
+	public ResponseEntity<String> deleteBoard(@PathVariable("b_id") int b_id){
+		
+		return service.deleteBoard(b_id) ==1
+		? new ResponseEntity<String>("success", HttpStatus.OK)
+		: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

@@ -180,6 +180,7 @@ $(document).ready(function () {
 	        form.find("input").val(""); 
 	        form.find("textarea").val(""); 
 	        $(".uploadResult ul").html('');
+	        location.href ="/board/list?b_id=1";
 	      });  
 	      
 	    });//end register
