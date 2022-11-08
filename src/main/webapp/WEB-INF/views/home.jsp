@@ -160,11 +160,11 @@ $(document).ready(function(){
 			<table class="table table-sm" id="tabOne">
  				<thead>
 					<tr>
-						<th>예약번호</th>
-						<th>예약명</th>
-						<th>예약자</th>
-						<th>예약일자</th>
-						<th>예약시간</th>
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>일자</th>
+						<!-- <th>예약시간</th> -->
 					</tr>
 				</thead>
 				
@@ -175,7 +175,7 @@ $(document).ready(function(){
 						<td><c:out value="${reserv.emp_id }"></c:out></td>
 						<td><c:set var="book_date" value="${reserv.book_date }"></c:set>
 						<c:out value="${fn:substring(book_date,0,10) }"></c:out></td>
-						<td><c:out value="${reserv.book_begin }시~${reserv.book_begin+2 }시"></c:out> </td>
+						<%-- <td><c:out value="${reserv.book_begin }시~${reserv.book_begin+2 }시"></c:out> </td> --%>
 					</tr>
 				</c:forEach>
 					
