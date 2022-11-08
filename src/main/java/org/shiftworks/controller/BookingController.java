@@ -12,6 +12,9 @@ import org.shiftworks.service.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,9 +40,9 @@ public class BookingController {
 	private BookingService service;
 	
 	
-	
 	//getList 테스트 메서드(jsonArray 테스트)
 	@GetMapping("/cal3")
+	@PreAuthorize("isAuthenticated()")
 	public String listTojsonArray() {
 		List<BookingVO> bookingList = service.getList();
 		
@@ -62,6 +65,7 @@ public class BookingController {
 	
 	//getList 테스트 메서드(list만 가져오고 view없음) -> 리스트 출력은 ok, 달력에 출력은 x
 	@GetMapping("/cal2")
+	@PreAuthorize("isAuthenticated()")
 	public List<Map<String, Object>> getCalbookings() {
 		List<BookingVO> bookingList = service.getList();
 		
@@ -69,10 +73,17 @@ public class BookingController {
 
 		for(int i=0;i<bookingList.size();i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("title", bookingList.get(i).getBook_title());
 			//map.put("start", bookingList.get(i).getBook_date());
-			map.put("start", bookingList.get(i).getBook_date().substring(0, 10));
+
+			String begin = bookingList.get(i).getBook_begin();
+			int getEndTime = Integer.parseInt(bookingList.get(i).getBook_begin())+2;
+			String end = Integer.toString(getEndTime);
 			
+			map.put("title", bookingList.get(i).getBook_title());
+			map.put("start", bookingList.get(i).getBook_date().substring(0, 10)+"T"+begin+":00");
+			map.put("end", bookingList.get(i).getBook_date().substring(0, 10)+"T"+end+":00");
+			/* map.put("color", "red"); */
+			/* map.put("backgroundColor", "#1C3359"); */
 			calList.add(i, map);
 			//calList.add(map);
 		}
@@ -84,6 +95,7 @@ public class BookingController {
 	
 	//calendar test method -> calendar view 출력용(list 못가져옴)
 	@GetMapping("/cal")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getCalList() {
 		ModelAndView mav = new ModelAndView();
 		List<BookingVO> list = service.getList();
@@ -92,7 +104,7 @@ public class BookingController {
 		String json = new Gson().toJson(list);
 		log.info("json변환 확인....................................."+json);
 
-		mav.setViewName("booking/bookingCal");
+		mav.setViewName("booking/BOK_mainCal");
 		mav.addObject("event", json);
 		
 		log.info("cal controller..........................mav.......................");
@@ -105,6 +117,7 @@ public class BookingController {
 	
 	//예약1개 보기 테스트 메서드(booking만 반환, view없음) -> 달력 출력ok
 	@GetMapping("/getCal")
+	@PreAuthorize("isAuthenticated()")
 	public Map<String, Object> getCal() {
 		BookingVO getOne = service.getBooking(1);
 		
@@ -154,26 +167,18 @@ public class BookingController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//예약폼 페이지로 이동
 	@GetMapping("/new")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView insertBooking() throws Exception{
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("booking/insertBookingForm");
+		mav.setViewName("booking/BOK_insertForm");
 		return mav;
 	}
 	
 	//예약하기
 	@PostMapping(value ="/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> insertBooking(@RequestBody BookingVO vo) {
 		
 		log.info("insertBooking controller.............");
@@ -190,10 +195,11 @@ public class BookingController {
 	
 	//예약 1개 상세보기
 	@GetMapping("/{book_id}")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getBooking(@PathVariable("book_id") int book_id) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("booking/detail");
+		mav.setViewName("booking/BOK_detail");
 		mav.addObject("event", service.getBooking(book_id));
 		
 		return mav;
@@ -202,11 +208,12 @@ public class BookingController {
 	
 	//전체 예약 현황보기(+페이징)(게시판 이동)
 	@GetMapping("/list")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getList(BookingCriteria cri, ModelAndView mav) {
 		//List<BookingVO> list = service.getList();
 		//ModelAndView mav = new ModelAndView();
 		log.info("list: "+cri);
-		mav.setViewName("booking/bookingList");
+		mav.setViewName("booking/BOK_list");
 		mav.addObject("event", service.getListwithPaging(cri));
 		//mav.addObject("pageMaker", new BookingPageDTO(cri, 123));
 		
@@ -219,12 +226,19 @@ public class BookingController {
 	
 	
 	//내 예약 현황보기(게시판 형식)
-	@GetMapping("/list/{emp_id}")
-	public ModelAndView getMyList(@PathVariable("emp_id") String emp_id){
+	@GetMapping("/mylist")
+	@PreAuthorize("isAuthenticated()")
+	public ModelAndView getMyList(Authentication auth){
 		log.info("getMyList controller....................");
+		
+		UserDetails ud = (UserDetails)auth.getPrincipal();
+		log.info(ud.getUsername());
+		String emp_id = ud.getUsername();
+		
 		List<BookingVO> myList = service.getMyList(emp_id);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("booking/bookingList");
+
+		mav.setViewName("booking/BOK_myList");
 		mav.addObject("event", myList);
 		log.info(myList);
 		
@@ -233,6 +247,7 @@ public class BookingController {
 	
 	//예약 취소하기
 	@PostMapping("/{book_id}")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> deleteBooking(@PathVariable("book_id") int book_id) {
 		log.info("deleteBooking controller..................");
 		int re = service.deleteBooking(6);
