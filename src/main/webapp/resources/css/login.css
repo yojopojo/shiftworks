@@ -21,8 +21,9 @@
 	margin: 150px 0;	
 }
 .logo_wrap>span{
-	font-size : 50px;
-	font-weight: 900;
+	font-size : 100px;
+	font-weight: 1000;
+	text-transform: uppercase;
 }
 
 
@@ -69,13 +70,24 @@
 .login_button{
 	width: 84%;
     height: 80px;
-    background-color: #6AAFE6;
+    background-color: #1C3359;
+    font-family: 'NanumSquareRound';
     font-size: 40px;
     font-weight: 900;
     color: white;
     margin : auto;
 }
 
+body {
+	font-family: 'NanumSquareRound';
+}
+
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* 로그인 실패시 경고글 */
 .login_warn{
 	margin-top: 30px;

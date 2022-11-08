@@ -9,7 +9,7 @@ public class ChatDTO {
 	private String content;
 	private String sendtime;
 	private String sender;	// 보낸 사람 사번
-	private Integer room_id;
+	private String room_id;
 	
 	private ChatRoomVO chatRoom;
 }

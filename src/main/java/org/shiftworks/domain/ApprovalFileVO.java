@@ -3,7 +3,7 @@ package org.shiftworks.domain;
 import lombok.Data;
 
 @Data
-public class TaskFileVO {
+public class ApprovalFileVO {
 
 	private String uuid;
 	private String file_name;

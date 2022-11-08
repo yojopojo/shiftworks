@@ -8,7 +8,7 @@ import org.shiftworks.domain.ChatDTO;
 
 public interface ChatService {
 	List<ChatRoomVO> getChatRoomList(String emp_id);
-	List<ChatDTO> getChatList(Integer room_id);
+	List<ChatDTO> getChatList(String room_id);
 	Integer sendChat(ChatVO chat);
 	Integer updateLastChat(ChatVO chat);
 }

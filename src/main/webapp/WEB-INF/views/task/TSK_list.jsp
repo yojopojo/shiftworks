@@ -10,25 +10,17 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <script type="text/javascript" src="/resources/js/task.js"></script>
 <link rel="stylesheet" href="/resources/css/task.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-	integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>업무 관리</title>
 </head>
 <body>
 
-
+<div class="container">
 
 	<table class="table">
 		<thead>
 			<tr>
-				<td colspan="4">
+				<td colspan="5">
 					<div class="dropdown">
 						<button class="btn btn-outline-secondary dropdown-toggle selectedDept" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false"
@@ -36,7 +28,6 @@
 							부서
 						</button>
 						<ul class="dropdown-menu deptList">
-							<!-- 부서 목록 가져와서 c:foreach로 출력하도록 변경!! -->
 							<li><a class="dropdown-item dept" href="#">all</a></li>
 							<li><a class="dropdown-item dept" href="#">dept1</a></li>
 							<li><a class="dropdown-item dept" href="#">dept2</a></li>
@@ -64,22 +55,24 @@
 		<tbody>
 			<tr>
 				<td class="no">글 번호</td>
+				<td class="dept">부서</td>
 				<td class="title">제목</td>
 				<td class="writer">작성자</td>
-				<td class="hasFile">파일</td>
+				<td class="writer">비공개여부</td>
 			</tr>
 			<c:forEach items="${dto.list}" var="task">
 				<tr class="goDetail" id="${task.task_id}">
 					<td><c:out value="${task.task_id}"/></td>
+					<td><c:out value="${task.dept_name}"/></td>
 					<td><c:out value="${task.task_title}"/></td>
 					<td><c:out value="${task.name}"/></td>
-					<td></td>
+					<td><c:out value="${task.t_private}"/></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="4">
+				<td colspan="5">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 							<!-- 이전버튼 출력 -->
@@ -100,6 +93,8 @@
 			</tr>
 		</tfoot>
 	</table>
+	
+	</div>
 
 <script type="text/javascript">
 
@@ -107,14 +102,14 @@
 		
 		/* 부서 목록부분 변경 시 함께 변경하기 */
 		// 선택된 부서 존재 시 해당 항목으로 출력
-		if($('.selectedDept').val() == 'dept2') {
-			$('.selectedDept').text('dept2');
+		if($('.selectedDept').val() == 'dept_1') {
+			$('.selectedDept').text('dept_1');
 		}
-		if($('.selectedDept').val() == 'neuro289') {
-			$('.selectedDept').text('neuro289');
+		if($('.selectedDept').val() == 'dept_2') {
+			$('.selectedDept').text('dept_2');
 		}
-		if($('.selectedDept').val() == 'neuro333') {
-			$('.selectedDept').text('neuro333');
+		if($('.selectedDept').val() == 'dept_3') {
+			$('.selectedDept').text('dept_3');
 		}
 		
 		// model attribute 값을 이용하기 위해 변수에 저장
@@ -157,6 +152,7 @@
 		
 		// 검색 버튼 클릭 시 이벤트
 		$('#searchBtn').on("click", function(e) {
+			
 			e.preventDefault();
 			location.href="/task/pages/"+ dept_id + "/" + $('.searchType').val() + "/"
 							+ $('#searchForm').val() + "/" + pageNum;
@@ -165,7 +161,7 @@
 		
 	}); //end document ready
 
-</script>>
+</script>
 
 </body>
 </html>

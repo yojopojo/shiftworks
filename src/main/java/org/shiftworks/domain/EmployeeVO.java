@@ -18,8 +18,8 @@ public class EmployeeVO {
 	private String mobile;
 	private String internal;
 	private String email;
-	private Date entry_date;
-	private Date resignation_date;
+	private String entry_date;
+	private String resignation_date;
 	private String digital_sign;
 	private String profile_photo;
 	private int failures_num;
