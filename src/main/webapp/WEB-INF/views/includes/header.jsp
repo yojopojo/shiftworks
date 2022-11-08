@@ -34,7 +34,7 @@
 <!-- Custom CSS -->
 <link href="/resources/css/headerCSS.css" rel="stylesheet">
 
-
+<script type="text/javascript" src="/resources/js/post.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
