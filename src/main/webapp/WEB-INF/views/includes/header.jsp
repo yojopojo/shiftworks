@@ -57,9 +57,7 @@
 	 				<!-- <a href="#" class="text-white">홍길동</a> -->
 			 		<a href="#multiCollapseUser" class="" data-bs-toggle="collapse" role="button"
  				aria-expanded="false" aria-controls="multiCollapseUser" style="text-decoration: none; color: white;" id="userName">
-
-			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="85" class="rounded-circle" style="margin-top: -10px; margin-left: 7px;">
-
+			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="85" class="rounded-circle" style="margin-top: -10px; margin-left: 2px;">
 			 		<sec:authentication property="principal.username"></sec:authentication> <!-- 사용자 이름 -->
 			 		</a>
 			 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
@@ -71,12 +69,13 @@
 	 		
 		  <div class="col">
 		    <div class="collapse multi-collapse" id="multiCollapseUser">
-		    <div class="card card-body" style="height: 100px; border-width: 0;">
+		    <div class="card card-body" style="height: 140px; border-width: 0; margin-top: -10px;">
 		      <ul>
 		      	<a href="/messenger/chat" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;"><li>메신저</li></a><br>
 		      	<!-- <a href="/messenger"><li>메신저</li></a><br> -->
 		      	<a href="/approval/insert"><li>나의 계정 관리</li></a><br>
 		      	<a href="/approval/list"><li>조직도 보기</li></a><br>
+		      	<a href="/customLogout"><li>로그아웃</li></a><br>
 		      </ul>
 		    </div> <!-- end card -->
 		    </div> <!-- end collapse -->
@@ -370,7 +369,6 @@
 		
 		//동적으로 게시판 메뉴 추가해주기
 	     postService.boardList(function(result){
-	        console.log(result[0].b_id);
 	        
 	        for(var i=0;i<result.length;i++){
 	           
