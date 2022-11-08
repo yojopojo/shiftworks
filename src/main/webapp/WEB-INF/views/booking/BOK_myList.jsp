@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@taglib uri="http://www.springframework.org/security/tags"
-   prefix="sec"%>
 <%@include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -17,7 +15,7 @@
 	<div class="container">
 	<div class="row">
 	<div class="col-12">
-	<h2>All Booking List</h2>
+	<h2>My Booking List</h2>
 	<div class="bookingList">
 		 <div class="list-body">
 			<table class="table table-sm">
@@ -67,7 +65,7 @@
 			</div>
 
 			
-			<form id="actionForm" action="/booking/list" method="get">
+			<form id="actionForm" action="/booking/mylist" method="get">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 			</form>

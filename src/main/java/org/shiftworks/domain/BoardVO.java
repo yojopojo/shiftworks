@@ -9,5 +9,7 @@ public class BoardVO {
 	private String b_content;
 	private String b_private;
 	
+	private String emp_id;
+	
 
 }
