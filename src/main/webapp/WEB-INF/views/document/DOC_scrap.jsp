@@ -73,6 +73,12 @@
 				</div>
 				<button id='listBtn' class='btn btn-primary btn-xs pull-right'>목록</button>
 <!-- 게시글 상세 폼-->
+
+
+
+				
+				
+				
 			</div>
 			<!--  end panel-body -->
 
@@ -88,8 +94,19 @@
 
 <script type="text/javascript" src="/resources/js/post.js"></script>
 <script>
+$(document).ready(function () {
+	
+	
 
+	
+	//list버튼 클릭 시 목록이동 추후 페이지까지 들고 가야 함
+	$('#listBtn').on("click", function(e) {
 
+		location.href = "/document/scrap/1";
 
+	});
+
+	
+});
 </script>
 </html>

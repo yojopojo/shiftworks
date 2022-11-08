@@ -77,7 +77,12 @@
 
 <script type="text/javascript" src="/resources/js/post.js"></script>
 <script>
+//list버튼 클릭 시 목록이동 추후 페이지까지 들고 가야 함
+$('#listBtn').on("click", function(e) {
 
+	location.href = "/document/deptDoc/1";
+
+});
 
 
 </script>
