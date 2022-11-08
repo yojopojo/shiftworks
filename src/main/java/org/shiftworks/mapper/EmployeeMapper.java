@@ -8,18 +8,18 @@ import org.shiftworks.domain.EmployeeVO;
 public interface EmployeeMapper {
 	public EmployeeVO read(String emp_id);
 	
-	//°ü¸®ÀÚ °èÁ¤ ¸Þ´º
-	public List<EmployeeVO> getList(AccountCriteria cri);//ÀüÃ¼ ¸®½ºÆ®
-	public List<EmployeeVO> getRetireeList(AccountCriteria cri);//Åð»çÀÚ ¸®½ºÆ®
-	public List<EmployeeVO> getListWithPaging	(AccountCriteria cri);//ÆäÀÌÂ¡Ã³¸®
-	public void insert(EmployeeVO empVO);//°èÁ¤»ý¼º
-	public EmployeeVO detail(String emp_id);//°èÁ¤»ó¼¼Á¤º¸
-	public int delete(String emp_id);//°èÁ¤»èÁ¦
-	public int update(EmployeeVO empVO);//°èÁ¤Á¤º¸¼öÁ¤
-	public int getTotalCount(AccountCriteria cri);//ÃÑ °èÁ¤ °³¼ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½
+	public List<EmployeeVO> getList(AccountCriteria cri);//ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½Æ®
+	public List<EmployeeVO> getRetireeList(AccountCriteria cri);//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+	public List<EmployeeVO> getListWithPaging	(AccountCriteria cri);//ï¿½ï¿½ï¿½ï¿½Â¡Ã³ï¿½ï¿½
+	public void insert(EmployeeVO empVO);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public EmployeeVO detail(String emp_id);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public int delete(String emp_id);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public int update(EmployeeVO empVO);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public int getTotalCount(AccountCriteria cri);//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	
-	//ÀÏ¹Ý °èÁ¤ ¸Þ´º
-	public int updateMyAccount(EmployeeVO empVO);//°èÁ¤Á¤º¸¼öÁ¤
+	//ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½
+	public int updateMyAccount(EmployeeVO empVO);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	
 }
