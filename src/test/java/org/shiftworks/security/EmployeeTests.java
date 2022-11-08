@@ -28,12 +28,12 @@ public class EmployeeTests {
 	@Autowired
 	private DataSource ds;
 	
-	// ì‚¬ìš©ì ì¶”ê°€
+	// »ç¿ëÀÚ Ãß°¡
 	@Test
 	public void testInsertMember() {
-		String sql = "INSERT INTO employee(emp_id, dept_id, password, name, address, birthday, position, mobile, internal, email, entry_date) values(?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,?)";
+		String sql = "INSERT INTO employee(emp_id,password, dept_id) values(?, ?, ?)";
 		
-		for(int i=1; i<51; i++) {
+		for(int i=0; i<70; i++) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -41,50 +41,30 @@ public class EmployeeTests {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(sql);
 				
-				// pw1, pw2, pw3... í˜•ì‹ìœ¼ë¡œ ë¹„ë°€ë²ˆí˜¸ ì„¤ì •
-				pstmt.setString(3, pwEncoder.encode("pw" + i));
+				// pw1, pw2, pw3... Çü½ÄÀ¸·Î ºñ¹Ğ¹øÈ£ ¼³Á¤
+				pstmt.setString(2, pwEncoder.encode("pw" + i));
 				
-				if(i<31) {
+				if(i<21) {
 					pstmt.setString(1, "user" + i);
-					pstmt.setString(2, "dept_1");
-					pstmt.setString(4, "ì´ë¦„"+i);
-					pstmt.setString(5, "ì£¼ì†Œ"+i);
-					pstmt.setString(6, "1990.09.09");
-					pstmt.setString(7, "ì§ê¸‰");
-					pstmt.setString(8, "010-"+i);
-					pstmt.setString(9, "091-"+i);
-					pstmt.setString(10, "id"+i+"@mail.com");
-					pstmt.setString(11, "2020.03.05");
+					pstmt.setString(3, "dept1");
 				}else if(i<41) {
 					pstmt.setString(1, "user" + i);
-					pstmt.setString(2, "dept_2");
-					pstmt.setString(4, "ì´ë¦„"+i);
-					pstmt.setString(5, "ì£¼ì†Œ"+i);
-					pstmt.setString(6, "1993.11.11");
-					pstmt.setString(7, "ì§ê¸‰");
-					pstmt.setString(8, "010-"+i);
-					pstmt.setString(9, "091-"+i);
-					pstmt.setString(10, "id"+i+"@mail.com");
-					pstmt.setString(11, "2020.12.05");
+					pstmt.setString(3, "dept2");
+				
+				}else if(i<61) {
+					pstmt.setString(1, "user" + i);
+					pstmt.setString(3, "dept3");
 				
 				}else {
 					pstmt.setString(1, "admin" + i);
-					pstmt.setString(2, "info_secu");
-					pstmt.setString(4, "ì´ë¦„"+i);
-					pstmt.setString(5, "ì£¼ì†Œ"+i);
-					pstmt.setString(6, "1990.12.11");
-					pstmt.setString(7, "ì§ê¸‰");
-					pstmt.setString(8, "010-"+i);
-					pstmt.setString(9, "091-"+i);
-					pstmt.setString(10, "id"+i+"@mail.com");
-					pstmt.setString(11, "2020.01.05");	
+					pstmt.setString(3, "infosecu");			
 				}
 				pstmt.executeUpdate();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				// ìì› ë°˜ë‚©
+				// ÀÚ¿ø ¹İ³³
 				if(pstmt != null) { try {pstmt.close();} catch(Exception e) {} }
 				if(con != null) { try {con.close();} catch(Exception e) {} }
 			}

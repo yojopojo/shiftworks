@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -24,7 +24,7 @@
 					<div class="panel-heading">계정 상세 정보</div>
 					<!-- /.panel-heading -->
 					<div class="panel-body">
-					
+
 
 						<div class="form-group">
 							<label>사번</label> <input class="form-control" name='emp_id'
@@ -32,7 +32,8 @@
 						</div>
 						<div class="form-group">
 							<label>비밀번호</label> <input class="form-control" name='password'
-								value='<c:out value="${employee.password }"/>' readonly="readonly">
+								value='<c:out value="${employee.password }"/>'
+								readonly="readonly">
 						</div>
 
 						<div class="form-group">
@@ -77,35 +78,20 @@
 								value='<c:out value="${employee.entry_date }"/>'
 								readonly="readonly">
 						</div>
-						<div class="form-group">
-							<label>퇴사일</label> <input class="form-control"
-								name='resignation_date'
-								value='<c:out value="${employee.resignation_date }"/>' readonly="readonly">
-						</div>
 
 
-						
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							
+
+
+						<sec:authentication property="principal" var="pinfo" />
+						<sec:authorize access="isAuthenticated()">
+							<c:if test="${pinfo.username eq employee.emp_id}">
 								<button data-oper='modify' class="btn btn-default">수정</button>
-							
+							</c:if>
 						</sec:authorize>
 
 
 						<button data-oper='list' class="btn btn-default">목록</button>
 
-						<form id='operForm' action="/manager/modify" method="get">
-							<input type='hidden' id='emp_id' name='emp_id'
-								value='<c:out value="${employee.emp_id}"/>'> <input
-								type='hidden' name='pageNum'
-								value='<c:out value="${cri.pageNum}"/>'> <input
-								type='hidden' name='amount'
-								value='<c:out value="${cri.amount}"/>'> <input
-								type='hidden' name='keyword'
-								value='<c:out value="${cri.keyword}"/>'> <input
-								type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
-
-						</form>
 
 
 
@@ -117,39 +103,23 @@
 			</div>
 			<!-- end panel -->
 		</div>
+		</div>
 		<!-- /.row -->
 		<script type="text/javascript">
 			$(document).ready(function() {
 
 				var operForm = $("#operForm");
 				$("button[data-oper='modify']").on("click", function(e) {
-					operForm.attr("action", "/manager/modify").submit();
+					operForm.attr("action", "/myaccount/modify").submit();
 
 				});
 
-				$("button[data-oper='list']").on("click", function(e) {
-					operForm.find('#emp_id').remove();
-					operForm.attr("action", "/manager/list");
-					operForm.submit();
-
-				});
 			});
 		</script>
-			
-			<!-- /.panel-heading -->
-			<div class="panel-body">
-				<ul class="chat">
 
-				</ul>
-				<!-- ./ end ul -->
-			</div>
-			<!-- /.panel .chat-panel -->
 
-			<div class="panel-footer"></div>
-		</div>
 
-	<!-- ./ end row -->
-
+		<!-- ./ end row -->
 </body>
 </html>
 
