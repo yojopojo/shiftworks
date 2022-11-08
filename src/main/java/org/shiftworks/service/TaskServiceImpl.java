@@ -56,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
 		TaskVO vo = taskMapper.getTask(task_id);
 		
 		// 게시글의 파일 목록 가져오기
-		if(fileMapper.selectTaskFile(task_id) == null) {
+		if(fileMapper.selectTaskFile(task_id) == null || fileMapper.selectTaskFile(task_id).size() <= 0) {
 			return vo;
 		}
 		vo.setFileList(fileMapper.selectTaskFile(task_id));
@@ -108,24 +108,26 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public boolean deleteTask(Integer task_id) {
 		log.info("service: insertTask..........");
-		boolean result = taskMapper.deleteTask(task_id) == 1;
-		List<FileVO> list = fileMapper.selectTaskFile(task_id);
 		
-		for(FileVO vo : list) {
-			
-			try {
+		List<FileVO> list = fileMapper.selectTaskFile(task_id);
+		log.info(list);
+		
+		if(list != null || list.size() > 0) {
+			for(FileVO vo : list) {
+				
 				File file = new File("C:\\upload\\"
-						+ URLDecoder.decode(vo.getFile_src() + "\\" + vo.getUuid() + "_" + vo.getFile_name(), "UTF-8"));
+						+ vo.getFile_src() + "\\" + vo.getUuid() + "_" + vo.getFile_name());
+				log.info(file.getPath());
 				if(file.exists()) {
 					file.delete();
 				}
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			fileMapper.deleteTaskFile(vo.getUuid());
+			}
+			
 		}
 		
+		boolean result = taskMapper.deleteTask(task_id) == 1;
 		return result;
 	}
 
