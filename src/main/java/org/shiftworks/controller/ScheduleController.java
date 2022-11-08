@@ -1,15 +1,14 @@
 package org.shiftworks.controller;
 
-import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import org.shiftworks.domain.BookingVO;
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
 import org.shiftworks.domain.WorkScheduleVO;
+import org.shiftworks.mapper.ScheduleMapper;
 import org.shiftworks.service.ScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,11 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ScheduleController {
 
+	@Autowired
 	private ScheduleService service;
+	
+	@Autowired
+	private ScheduleMapper mapper;
 	
 	@GetMapping("/main")
 	public ModelAndView schedule() {
@@ -154,5 +157,16 @@ public class ScheduleController {
 		
 		return new ResponseEntity<List<WorkScheduleVO>>(list, HttpStatus.OK);
 	}
+	
+	// 회의실 예약 목록 불러오기
+	@GetMapping(value="/search/booking/{keyword}",
+			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<BookingVO>> searchBooking(@PathVariable String keyword) {
+		
+		List<BookingVO> list = mapper.searchBooking(keyword);
+		
+		return new ResponseEntity<List<BookingVO>>(list, HttpStatus.OK);
+	}
+	
 	
 }

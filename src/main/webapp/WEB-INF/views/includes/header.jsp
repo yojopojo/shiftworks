@@ -57,7 +57,7 @@
 	 				<!-- <a href="#" class="text-white">홍길동</a> -->
 			 		<a href="#multiCollapseUser" class="" data-bs-toggle="collapse" role="button"
  				aria-expanded="false" aria-controls="multiCollapseUser" style="text-decoration: none; color: white;" id="userName">
-			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="85" class="rounded-circle" style="margin-top: -10px; margin-left: 2px;">
+			 		<img id="userProfile" alt="유저사진" src="/resources/css/bonoUser.png" width="85" class="rounded-circle" style="margin-top: -10px; margin-left: 7px;">
 			 		<sec:authentication property="principal.username"></sec:authentication> <!-- 사용자 이름 -->
 			 		</a>
 			 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
