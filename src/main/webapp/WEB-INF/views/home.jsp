@@ -186,54 +186,6 @@ $(document).ready(function(){
 
 
 
-<!-- 	<div class="row">
-		<div class="col-6 card" style="background: white; height: 600px;">1row 1번째
-			
-			 <div class="col">
-				    <ul class="list-group">				    	
-	  					<li class="list-group-item d-flex justify-content-between align-items-center">   					 
-	   					 	결재가 필요한 문서
-	    					<span class="badge bg-primary rounded-pill">14</span>
-	  					</li>
-	  					<li class="list-group-item d-flex justify-content-between align-items-center">
-	    					결재 중인 문서
-	    					<span class="badge bg-primary rounded-pill">2</span>
-	 					</li>
-	  					<li class="list-group-item d-flex justify-content-between align-items-center">
-	  						 반려된 문서
-	    					<span class="badge bg-primary rounded-pill">1</span>
-	 					</li>
-					</ul>			    
-			    </div>
-			
-				<ul class="nav nav-tabs">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">주간 회의일정</a></li>
-					<li class="nav-item"><a class="nav-link" href="/booking/cal">월간 회의일정</a></li>
-					<li class="nav-item"><a class="nav-link" href="/booking/new">예약 바로가기</a></li>
-					<li class="nav-item"><a class="nav-link disabled" href="#"
-						tabindex="-1" aria-disabled="true">Disabled</a></li>
-				</ul>
-						<div id='calendar' style="height: 200px; font-size: 13px;"></div>
-		</div> end 1row 1st
-		
-		<div class="col">
-			공간
-		</div>
-		
-		<div class="col-5 card" style="background: red;">1row 2번째
-				<ul class="nav nav-tabs">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">Active</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link disabled" href="#"
-						tabindex="-1" aria-disabled="true">Disabled</a></li>
-				</ul>
-			</div>
-	</div> --> <!-- end 2nd row -->
-
-
 
 
 
