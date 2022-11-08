@@ -61,7 +61,7 @@ var messengerService = (function () {
     	
     	$.ajax({
     		type: 'POST',
-    		url: '/messenger/chat/send',
+    		url: '/messenger/chat/send/' + chat.room_id,
     		data : JSON.stringify(chat),
 			contentType : 'application/json; charset=utf-8',
     		beforeSend : function(xhr){
@@ -84,13 +84,11 @@ var messengerService = (function () {
 	}//end sendChat
 	
 	
-	
-
 
 
 return {
     getChat: getChat,
-    sendChat: sendChat
+    sendChat: sendChat,
 };
 
 }) ();
