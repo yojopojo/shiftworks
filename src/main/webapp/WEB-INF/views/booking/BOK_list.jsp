@@ -55,7 +55,7 @@
 					</c:if>
 					
 					<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-						<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active':''} "><a href="${num }">${num}</a></li>
+						<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active':''} "><a href="${num }">${num}&ensp;</a></li>
 					</c:forEach>
 					
 					<c:if test="${pageMaker.next }">
