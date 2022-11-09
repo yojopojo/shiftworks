@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.shiftworks.domain.ApprovalCriteria;
 import org.shiftworks.domain.BookingVO;
+import org.shiftworks.service.ApprovalService;
 import org.shiftworks.service.BookingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +30,8 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	private BookingService service;
-	
+	private BookingService bookingService;
+	private ApprovalService appService;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -49,9 +51,26 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homeContent(Model model) {
+		List<BookingVO> eventList = new ArrayList<BookingVO>();
+		List<BookingVO> list = bookingService.getList();
+
+		for(int i=0;i<5;i++) {
+			
+			eventList.add(list.get(i));
+		
+		}
 		
 		//예약 리스트(게시판 형태)
-		model.addAttribute("event", service.getList());
+		//model.addAttribute("event", bookingService.getList());
+		model.addAttribute("event", eventList);
+		
+		model.addAttribute("get", bookingService.getBooking(205));
+		//model.addAttribute("event2", sservice.getList());
+		
+		//model.addAttribute("board", service.boardList());
+		//게시판 글목록 가져오기
+		//model.addAttribute("board", service.boardList());
+		
 		
 		return "home"; 
 	}

@@ -50,11 +50,11 @@
 			    	<div class="list-group">
 	  					<a href="/approval/get" class="list-group-item" aria-current="true">
 	   						 <div class="d-flex w-100 justify-content-between">
-	     						 <h5 class="mb-1">List group item heading</h5>
-	     							 <small>3 days ago</small>
+	     						 <h5 class="mb-1" >휴가 신청서</h5>
+	     							 <small>대기중</small>
 	   				 		</div>
-	    						<p class="mb-1">Some placeholder content in a paragraph.</p>
-	    							<small>And some small print.</small>
+	    						<p class="mb-1">회계팀 김ㅇㅇ 대리</p>
+	    							<small>상기 본인은 11월 11일부터 11월 14일까지 휴가를 신청합니다.</small>
 	 					</a>
  					</div>	
  					 <!-- end of list-group -->		    			    
@@ -195,4 +195,5 @@
 	})
 </script>	
 </body>
+<%@include file="/WEB-INF/views/includes/footer.jsp"%>
 </html>

@@ -155,7 +155,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		@Override
 		@Transactional
 		public TempApprovalVO tempSelect(int temp_id) {
-			log.info("temp_id : " + temp_id);
+			//log.info("temp_id : " + temp_id);
 			
 			TempApprovalVO temp = mapper.tempSelect(temp_id);
 			

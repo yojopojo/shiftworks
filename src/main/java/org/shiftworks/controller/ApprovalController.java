@@ -58,8 +58,10 @@ public class ApprovalController {
 	*/
 	@GetMapping("/main")
 	@PreAuthorize("isAuthenticated()")
-	public void approvalMain() {
-		
+	public void approvalMain(ApprovalCriteria cri, Model model) {
+		//log.info("list" + cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
 	}
 	
 	/*
@@ -68,7 +70,7 @@ public class ApprovalController {
 	@GetMapping("/list")
 	@PreAuthorize("isAuthenticated()")
 	public void list(ApprovalCriteria cri, Model model) {
-		log.info("list" + cri);
+		//log.info("list" + cri);
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
 	}
@@ -80,7 +82,7 @@ public class ApprovalController {
 	@GetMapping("/receivedList")
 	@PreAuthorize("isAuthenticated()")
 	public void receivedList(ApprovalCriteria cri, Model model) {
-		log.info("list" + cri);
+		//log.info("list" + cri);
 		model.addAttribute("list", service.getReceivedList(cri));
 		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getReceivedTotal()));
 	}
@@ -91,7 +93,7 @@ public class ApprovalController {
 	@PostMapping("/insert")
 	@PreAuthorize("isAuthenticated()")
 	public String insert(ApprovalVO approval, RedirectAttributes rttr) {
-		log.info("insert: "+ approval);
+		//log.info("insert: "+ approval);
 		service.insertForm(approval);
 		
 		rttr.addFlashAttribute("result",approval.getApr_id());
@@ -104,7 +106,7 @@ public class ApprovalController {
 	@GetMapping("/get")
 	@PreAuthorize("isAuthenticated()")
 	public void get(@RequestParam("apr_id") int apr_id, Model model) {
-		log.info("/get");
+		//log.info("/get");
 		model.addAttribute("approval",service.get(apr_id));
 	}
 	
@@ -114,7 +116,7 @@ public class ApprovalController {
 	@PostMapping("/update")
 	@PreAuthorize("isAuthenticated()")
 	public String update(ApprovalVO approval, RedirectAttributes rttr) {
-		log.info("update: "+approval);
+		//log.info("update: "+approval);
 		
 		if (service.update(approval)) {
 			rttr.addFlashAttribute("result", "success");			
@@ -138,11 +140,11 @@ public class ApprovalController {
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> updateStatus(@PathVariable int apr_id, @RequestBody ApprovalVO approval){
-		log.info("approval sign controller.......");
+		//log.info("approval sign controller.......");
 		
 		approval.setApr_id(apr_id);
 		
-		log.info("approval : " + approval);
+		//log.info("approval : " + approval);
 		
 		service.update(approval);
 		
@@ -157,8 +159,8 @@ public class ApprovalController {
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> temporalPost(@RequestBody TempApprovalVO vo){
-		log.info("vo : " + vo);
-		log.info("temporal.....");
+		//log.info("vo : " + vo);
+		//log.info("temporal.....");
 		
 		service.temporalApr(vo);
 		
@@ -173,7 +175,7 @@ public class ApprovalController {
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<List<TempApprovalVO>> tempList(@RequestParam String emp_id){
 		
-		log.info("emp_id : " + emp_id);
+		//log.info("emp_id : " + emp_id);
 		
 		return new ResponseEntity<List<TempApprovalVO>>(service.tempList(emp_id), HttpStatus.OK);
 	
@@ -187,7 +189,7 @@ public class ApprovalController {
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<TempApprovalVO> tempSelect(@PathVariable int temp_id){
 		
-		log.info("tempSelect.....tempId : " + temp_id);
+		//log.info("tempSelect.....tempId : " + temp_id);
 		
 		return new ResponseEntity<TempApprovalVO>(service.tempSelect(temp_id), HttpStatus.OK);
 	}

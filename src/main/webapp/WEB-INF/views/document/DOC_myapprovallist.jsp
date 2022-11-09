@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,10 +63,9 @@
 					<thead>
 						<tr>
 							<th>결재문서번호</th>
-							<th>문서양식번호</th>
+							<th>문서양식</th>
 							<th>작성자</th>
 							<th>결재제목</th>
-							<th>결재내용</th>
 							<th>결재상태</th>
 							<th>결재일자</th>
 						</tr>
@@ -76,11 +76,27 @@
 								<td><a class="getMyDoc" href='<c:out value="${approval.apr_id}"/>'>
 									<c:out value="${approval.apr_id}" /></a>
 								</td>
-								<td><c:out value="${approval.af_id}" /></td>
-								<td><c:out value="${approval.emp_id}" /></td>
+								<td>
+									<c:if test="${ fn:contains(approval.af_id, '1') }">
+										<p>기안서</p>
+									</c:if>
+									<c:if test="${ fn:contains(approval.af_id, '2') }">
+										<p>품의서</p>
+									</c:if>
+									<c:if test="${ fn:contains(approval.af_id, '3') }">
+										<p>휴가신청서</p>
+									</c:if>
+								</td>
+								<td><c:out value="${approval.name}" /></td>
 								<td><c:out value="${approval.apr_title}" /></td>
-								<td><c:out value="${approval.apr_content}" /></td>
-								<td><c:out value="${approval.apr_status}" /></td>
+								<td>
+									<c:if test="${ fn:contains(approval.apr_status, '1') }">
+										<p>승인</p>
+									</c:if>
+									<c:if test="${ fn:contains(approval.apr_status, '2') }">
+										<p>반려</p>
+									</c:if>
+								</td>
 								<td><c:out value="${approval.apr_signdate}" /></td>
 							</tr>	
 						</c:forEach>
@@ -109,7 +125,7 @@
 				</div>
 				<!--  end Pagination -->
 				
-				<form id='actionForm' action='/document/detail' method='get'>
+				<form id='actionForm' action='/document/approvalDetail' method='get'>
 					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 					<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>' /> 	
@@ -137,7 +153,7 @@ $(document).ready(function () {
 			
 			console.log($(this).attr("href"));
 			 $("#actionForm") .
-				append("<input type='hidden' name='post_id' value='"+ $(this).attr("href")+ "'>");
+				append("<input type='hidden' name='apr_id' value='"+ $(this).attr("href")+ "'>");
 			$("#actionForm").submit();  
 	})
 	
@@ -172,7 +188,7 @@ $(document).ready(function () {
 				
 				
 				
-				 documentService.getList(Criteria, function(result){
+				 documentService.getApprovalList(Criteria, function(result){
 					console.log(result); 
 					
 					$("#main").html('');
@@ -180,16 +196,15 @@ $(document).ready(function () {
 					var str ="";
 					for(var i=0;i<list.length;i++){
 						console.log(list[i]);
-						//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-						//Date list[i].post_regdate = format.parse(list[i].post_regdate);
-						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
+						
 						
 						str += "<tr>";
-						str +="<td>"+list[i].b_id+"</td>";
-						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
-						str +="<td>"+list[i].emp_id+"</td>";
-						str +="<td>"+list[i].dept_id+"</td>";
-						str +="<td>"+list[i].post_name+"</td>";
+						str +="<td>"+list[i].apr_id+"</td>";
+						str +="<td><a class='getMyDoc' href='"+list[i].af_id+"'>"+list[i].af_id+"</td>";
+						str +="<td>"+list[i].name+"</td>";
+						str +="<td>"+list[i].apr_title+"</td>";
+						str +="<td>"+list[i].apr_status+"</td>";
+						str +="<td>"+list[i].apr_signdate+"</td>";
 						str +="</tr>";
 					}
 					$("#main").html(str);
@@ -220,7 +235,7 @@ $(document).ready(function () {
 				
 					
 				//pageNum, keyword, type을 들고 controller로 가서 result 값 가져오기
-				 documentService.getList(Criteria, function(result){
+				 documentService.getApprovalList(Criteria, function(result){
 					console.log(result); 
 					
 					
@@ -229,16 +244,14 @@ $(document).ready(function () {
 					var str ="";
 					for(var i=0;i<list.length;i++){
 						console.log(list[i]);
-						//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-						//Date list[i].post_regdate = format.parse(list[i].post_regdate);
-						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
-						str +="<td>"+list[i].b_id+"</td>";
-						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
-						str +="<td>"+list[i].emp_id+"</td>";
-						str +="<td>"+list[i].dept_id+"</td>";
-						str +="<td>"+list[i].post_name+"</td>";
+						str +="<td>"+list[i].apr_id+"</td>";
+						str +="<td><a class='getMyDoc' href='"+list[i].af_id+"'>"+list[i].af_id+"</td>";
+						str +="<td>"+list[i].name+"</td>";
+						str +="<td>"+list[i].apr_title+"</td>";
+						str +="<td>"+list[i].apr_status+"</td>";
+						str +="<td>"+list[i].apr_signdate+"</td>";
 						str +="</tr>";
 					}
 					
@@ -249,6 +262,7 @@ $(document).ready(function () {
 	   });//end pagination
 	   
 	
+	   
 	
 	
 	

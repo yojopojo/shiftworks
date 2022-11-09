@@ -75,16 +75,19 @@ public class DocumentSerivceImpl implements DocumentService {
 	
 		return mapper.deptSelect(vo);
 	}
-
+	
+	//결재완료함
 	@Override
 	public ApprovalListDTO approvalSelectList(ApprovalCriteria cri) {
 		List<ApprovalVO>list = mapper.approvalSelectList(cri);
+		
 		
 		String emp_id = cri.getEmp_id();
 		ApprovalListDTO dto = new ApprovalListDTO(cri, mapper.getTotalApproval(), list);
 		return dto;
 	}
-
+	
+	//결재완료함 상세
 	@Override
 	public ApprovalVO approvalSelect(ApprovalVO vo) {
 		return mapper.approvalSelect(vo);

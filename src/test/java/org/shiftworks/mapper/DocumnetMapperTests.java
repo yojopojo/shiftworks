@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.PostVO;
 import org.shiftworks.domain.ScrapVO;
@@ -60,20 +61,20 @@ public class DocumnetMapperTests {
 //		
 //	}
 	
-	@Test
-	public void testDeptSelectList() {
-		String dept_id = "dept1";
-		String emp_id = "ul";
-	
-		DocumentCriteria cri = new DocumentCriteria();
-		cri.setDept_id(dept_id);
-		cri.setEmp_id(emp_id);
-		cri.setAmount(10);
-		cri.setPageNum(1);
-	
-		
-		mapper.deptSelectList(cri).forEach(post -> log.info(post));
-	}
+//	@Test
+//	public void testDeptSelectList() {
+//		String dept_id = "dept1";
+//		String emp_id = "ul";
+//	
+//		DocumentCriteria cri = new DocumentCriteria();
+//		cri.setDept_id(dept_id);
+//		cri.setEmp_id(emp_id);
+//		cri.setAmount(10);
+//		cri.setPageNum(1);
+//	
+//		
+//		mapper.deptSelectList(cri).forEach(post -> log.info(post));
+//	}
 	
 //	@Test
 //	public void testDeptSelect() {
@@ -89,5 +90,8 @@ public class DocumnetMapperTests {
 //		String emp_id ="U3948709";
 //		log.info(mapper.getTotalMyDoc(emp_id));
 //	}
+	
+	
+
 
 }

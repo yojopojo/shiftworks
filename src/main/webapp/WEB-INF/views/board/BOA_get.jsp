@@ -77,7 +77,7 @@
 				</div>
 				<div class="form-group">
 					<label>수정일</label> 
-					<input class="form-control" name='post_updatedate' value='<c:out value=""/>' readonly="readonly">
+					<input class="form-control" name='post_updatedate' value='<c:out value="${post.post_updatedate}"/>' readonly="readonly">
 				</div>
 				<!--첨부파일-->
 				<div class="mb-3">

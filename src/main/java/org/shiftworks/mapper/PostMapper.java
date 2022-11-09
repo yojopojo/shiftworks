@@ -45,5 +45,9 @@ public interface PostMapper {
 	
 	public List<BoardVO> selectBoardList();
 	
+	public List<BoardVO> allBoardList();
+	
+	public int deleteBoard(int b_id);
+	
 
 }

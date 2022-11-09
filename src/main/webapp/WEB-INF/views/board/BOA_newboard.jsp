@@ -54,6 +54,7 @@
 						</select>
 
 				<button id="registerBtn" type="button" class="btn btn-primary" value="">게시판 생성</button>
+				<button id="manageBtn" type="button" class="btn btn-primary" value="">게시판 관리</button>
 
 			</div>
 			<!--  end panel-body -->
@@ -96,6 +97,11 @@ $(document).ready(function () {
 	     
 	      
 	    });//end register
+	    
+	    
+	    $("#manageBtn").on("click",function(){
+	    	location.href = "/board/boardmanage";
+	    })
 	    
 	
 });

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -86,10 +87,10 @@ public class ChatRoomController {
 	}
 	
 	// 메시지 전송 요청
-	@PostMapping(value="/send", produces=MediaType.TEXT_PLAIN_VALUE)
+	@PostMapping(value="/send/{room_id}", produces=MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> sendChat(@RequestBody ChatVO chat){
-		log.info("@ChatController, POST sendMessage...............");
+	public ResponseEntity<String> sendChat(@PathVariable("room_id") String room_id, @RequestBody ChatVO chat){
+		log.info("@ChatRoomController, POST sendMessage...............");
 		
 		
 		Integer sendResult = chatService.sendChat(chat);

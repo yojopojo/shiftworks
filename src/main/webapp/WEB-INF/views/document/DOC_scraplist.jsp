@@ -167,7 +167,7 @@ $(document).ready(function () {
 				
 				
 				
-				 documentService.getList(Criteria, function(result){
+				 documentService.getScrapList(Criteria, function(result){
 					console.log(result); 
 					
 					$("#main").html('');
@@ -175,9 +175,6 @@ $(document).ready(function () {
 					var str ="";
 					for(var i=0;i<list.length;i++){
 						console.log(list[i]);
-						//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-						//Date list[i].post_regdate = format.parse(list[i].post_regdate);
-						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
 						str +="<td>"+list[i].scrap_id+"</td>";
@@ -185,6 +182,8 @@ $(document).ready(function () {
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
 						str +="<td>"+list[i].post_name+"</td>";
+						str +="<td>"+list[i].post_regdate+"</td>";
+						str +="<td>"+list[i].post_updatedate+"</td>";
 						str +="</tr>";
 					}
 					$("#main").html(str);
@@ -215,7 +214,7 @@ $(document).ready(function () {
 				
 					
 				//pageNum, keyword, type을 들고 controller로 가서 result 값 가져오기
-				 documentService.getList(Criteria, function(result){
+				 documentService.getScrapList(Criteria, function(result){
 					console.log(result); 
 					
 					
@@ -224,9 +223,7 @@ $(document).ready(function () {
 					var str ="";
 					for(var i=0;i<list.length;i++){
 						console.log(list[i]);
-						//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-						//Date list[i].post_regdate = format.parse(list[i].post_regdate);
-						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
+						
 						
 						str += "<tr>";
 						str +="<td>"+list[i].scrap_id+"</td>";
@@ -234,6 +231,8 @@ $(document).ready(function () {
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
 						str +="<td>"+list[i].post_name+"</td>";
+						str +="<td>"+list[i].post_regdate+"</td>";
+						str +="<td>"+list[i].post_updatedate+"</td>";
 						str +="</tr>";
 					}
 					
@@ -243,6 +242,7 @@ $(document).ready(function () {
 						
 	   });//end pagination
 	   
+		
 	
 	
 	
