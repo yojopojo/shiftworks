@@ -105,7 +105,7 @@
 				</div>
 				<!--  end Pagination -->
 				
-				<form id='actionForm' action='/document/scrapDetail' method='get'>
+				<form id='actionForm' action='/document/deptDocDetail' method='get'>
 					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 					<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>' /> 	
@@ -175,15 +175,13 @@ $(document).ready(function () {
 					var str ="";
 					for(var i=0;i<list.length;i++){
 						console.log(list[i]);
-						//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-						//Date list[i].post_regdate = format.parse(list[i].post_regdate);
-						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
 						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
 						str +="<td>"+list[i].post_name+"</td>";
+						str +="<td>"+list[i].post_regdate+"</td>";
 						str +="</tr>";
 					}
 					$("#main").html(str);
@@ -223,15 +221,13 @@ $(document).ready(function () {
 					var str ="";
 					for(var i=0;i<list.length;i++){
 						console.log(list[i]);
-						//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-						//Date list[i].post_regdate = format.parse(list[i].post_regdate);
-						//Date list[i].post_updatedate =format.parse(list[i].post_updatedate);
 						
 						str += "<tr>";
 						str +="<td><a class='getMyDoc' href='"+list[i].post_id+"'>"+list[i].post_id+"</td>";
 						str +="<td>"+list[i].emp_id+"</td>";
 						str +="<td>"+list[i].dept_id+"</td>";
 						str +="<td>"+list[i].post_name+"</td>";
+						str +="<td>"+list[i].post_regdate+"</td>";
 						str +="</tr>";
 					}
 					

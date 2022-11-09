@@ -149,7 +149,6 @@
         	<div class="modal-dialog">
           		<div class="modal-content">
             		<div class="modal-header">
-              			<button type="button" class="close" data-dismiss="modal"></button>
               			<h4 class="modal-title" id="myModalLabel">알림</h4>
            		   </div>
             		<div class="modal-body">
@@ -174,7 +173,6 @@
         	<div class="modal-dialog">
           		<div class="modal-content">
             		<div class="modal-header">
-              			<button type="button" class="close" data-dismiss="modal"></button>
               			<h4 class="modal-title" id="myModalLabel">삭제</h4>
            		   </div>
             		<div class="modal-body">
@@ -254,8 +252,8 @@ $(document).ready(function () {
 							list.push("${post.b_id}");
 						</c:forEach>
 					
-					console.log(list[1]);
-					console.log('click');
+					//console.log(list[1]);
+					//console.log('click');
 					$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
 					$("#actionForm").find("input[name='b_id']").val(list[1]);
 					$("#actionForm").submit();
@@ -281,7 +279,7 @@ $(document).ready(function () {
 				list.push("${post.b_id}");
 			</c:forEach>
 		
-			console.log(list[1]);
+			//console.log(list[1]);
 			
 			searchForm.find("input[name='pageNum']").val("1");
 			searchForm.find("input[name='b_id']").val(list[1]);
@@ -331,8 +329,8 @@ $(document).ready(function () {
 				arr.push(result[i].post_id+"");
 			}
 			
-			console.log(list);
-			console.log(arr);
+			//console.log(list);
+			//console.log(arr);
 			var x = list.filter(x=> !arr.includes(x));
 			console.log(x); //안읽은 게시물의 게시물 번호
 			 
@@ -387,7 +385,7 @@ $(document).ready(function () {
 	 //게시판 제목 동적으로 바뀌게 만들기
 	 postService.boardList(function(result){
 		 
-		 console.log('${pageMaker.cri.b_id}')
+		// console.log('${pageMaker.cri.b_id}')
 		 for(var i=0;i<result.length;i++){
 	            if('${pageMaker.cri.b_id}' ==result[i].b_id){
 	            	$(".page-header").append(result[i].b_name);

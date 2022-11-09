@@ -1,4 +1,4 @@
-console.log("Post module..");
+//console.log("Post module..");
 
 var postService = (function(){
 	
@@ -134,7 +134,6 @@ var postService = (function(){
 			contentType : "application/json;charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
-				console.log(result);
 					callback(result);
 				}
 			},
@@ -292,7 +291,7 @@ var postService = (function(){
 	}
 	
 	
-	//게시판 불러오기
+	//공개 게시판 불러오기
 	function boardList(callback, error) {
 		
 		$.ajax({
@@ -302,7 +301,7 @@ var postService = (function(){
 			success : function(result, status, xhr) {
 				if (callback) {
 					callback(result);
-					console.log(result);
+					//console.log(result);
 				}
 			},
 			error : function(xhr, status, er) {
@@ -314,6 +313,51 @@ var postService = (function(){
 	}
 	
 	
+	//게시판 불러오기
+	function allBoardList(callback, error) {
+		
+		$.ajax({
+			type : 'get',
+			url : '/board/allBoardList'+".json",
+			contentType : "application/json; charset:UTF-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
+	
+	
+	
+	
+	//게시판 삭제하기
+	function deleteBoard(post, callback, error) {
+		
+		$.ajax({
+			type : 'delete',
+			url : '/board/deleteBoard/'+post.b_id + ".json",
+			contentType : "application/json; charset:UTF-8",
+			beforeSend : function(xhr){
+                xhr.setRequestHeader(post.csrf_header, post.csrf_token);
+            },
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		})
+	}
 	
 	
 	
@@ -330,7 +374,9 @@ var postService = (function(){
 		selectPrev:selectPrev,
 		selectNext:selectNext,
 		insertNewBoard:insertNewBoard,
-		boardList:boardList
+		boardList:boardList,
+		allBoardList:allBoardList,
+		deleteBoard:deleteBoard
 	}
 	
 	

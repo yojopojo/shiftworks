@@ -45,4 +45,8 @@ public interface PostService {
 	public int insertNewBoard(BoardVO vo);
 	
 	public List<BoardVO> selectBoardList();
+	
+	public List<BoardVO> allBoardList();
+	
+	public int deleteBoard(int b_id);
 }
