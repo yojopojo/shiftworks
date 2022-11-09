@@ -168,18 +168,18 @@
 				
 		<![CDATA[		
 				rownum <=#{pageNum}*#{amount}
-				and apr_status =3
 				and e.emp_id =#{emp_id}
 				
 				)
 			where rn >(#{pageNum}-1)*#{amount}
+			and apr_status ='1' OR apr_status='2'
 			order by apr_id desc
 		]]>
 		
 	</select> 
 	<!--결재문서 완료문서 상세보기-->
-	<select id="approvalSelect" parameterType="org.shiftworks.domain.PostVO" resultType="org.shiftworks.domain.PostVO">
-		select * from approval where emp_id=#{emp_id} apr_id =#{apr_id}
+	<select id="approvalSelect" parameterType="org.shiftworks.domain.ApprovalVO" resultType="org.shiftworks.domain.ApprovalVO">
+		select * from approval where emp_id=#{emp_id} and apr_id =#{apr_id}
 	</select>	
 	
 	<!-- 내가쓴 글 총 갯수 -->
