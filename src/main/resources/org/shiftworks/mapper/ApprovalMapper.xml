@@ -26,7 +26,7 @@
 					apr_status, apr_comment, apr_signdate	
 				from
 					approval
-				where rownum <= #{pageNum} * #{amount} and apr_status = '0'
+				where rownum <= #{pageNum} * #{amount} and apr_status = '0' and emp_id = #{emp_id}
 			)
 			where rn > (#{pageNum} -1) * #{amount} 
 		]]>	
@@ -61,7 +61,8 @@
 				apr_status, apr_comment, apr_signdate	
 			from
 				approval
-			where rownum <= #{pageNum} * #{amount} 	
+			where rownum <= #{pageNum} * #{amount} and emp_id = #{emp_id}
+				
 			)
 			where rn > (#{pageNum} -1) * #{amount}
 		]]>	
@@ -89,11 +90,13 @@
 	<!-- 전체 결재 문서수 조회 -->
 	<select id="getTotal" resultType="int">
 		select count(*) from approval
+		 where emp_id = #{emp_id}
 	</select>
 
 	<!-- 결재할 문서함 전체 결재 문서수 조회 -->
 	<select id="getReceivedTotal" resultType="int">
-		select count(*) from approval where apr_status = 0
+		select count(*) from approval 
+			where apr_status = 0 and emp_id = #{emp_id}
 	</select>
 	
 	<!-- 임시저장 구현 -->
