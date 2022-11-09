@@ -30,11 +30,6 @@
 							<label>사번</label> <input class="form-control" name='emp_id'
 								value='<c:out value="${employee.emp_id }"/>' readonly="readonly">
 						</div>
-						<div class="form-group">
-							<label>비밀번호</label> <input class="form-control" name='password'
-								value='<c:out value="${employee.password }"/>'
-								readonly="readonly">
-						</div>
 
 						<div class="form-group">
 							<label>부서번호</label> <input class="form-control" name='dept_id'
@@ -85,7 +80,7 @@
 						<sec:authentication property="principal" var="pinfo" />
 						<sec:authorize access="isAuthenticated()">
 							<c:if test="${pinfo.username eq employee.emp_id}">
-								<button data-oper='modify' class="btn btn-default">수정</button>
+								<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
 							</c:if>
 						</sec:authorize>
 
