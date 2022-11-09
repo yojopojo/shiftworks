@@ -144,6 +144,18 @@ public class PostServiceImpl implements PostService {
 	}
 
 
+	@Override
+	public List<BoardVO> allBoardList() {
+		return mapper.allBoardList();
+	}
+
+
+	@Override
+	public int deleteBoard(int b_id) {
+		return mapper.deleteBoard(b_id);
+	}
+
+
 
 
 	

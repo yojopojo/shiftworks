@@ -180,6 +180,7 @@ $(document).ready(function () {
 	        form.find("input").val(""); 
 	        form.find("textarea").val(""); 
 	        $(".uploadResult ul").html('');
+	        location.href ="/board/list?b_id=1";
 	      });  
 	      
 	    });//end register
@@ -197,7 +198,7 @@ $(document).ready(function () {
 	    		alert("게시판 번호를 입력하세요");
 	    		return;
 	    	}
-	    	console.log(typeof(formInputBoard.val()));
+	    	//console.log(typeof(formInputBoard.val()));
 	    	
 	    	 var post = {
 	 	            b_id: formInputBoard.val(),
@@ -294,7 +295,7 @@ $(document).ready(function () {
 				type : 'POST',
 				dataType : 'json',
 				success : function(result) {
-					console.log(result);
+					//console.log(result);
 					showUploadResult(result); //업로드 결과 처리 함수 
 					$('.uploadDiv').html(cloneObj.html());
 
@@ -309,12 +310,12 @@ $(document).ready(function () {
 		// 업로드 파일을 x 버튼으로 삭제
 		$('.uploadResult').on("click", "span", function(e) {
 			// 토큰 정보 받아오기
-			console.log(csrf_token);
+			//console.log(csrf_token);
 			
 			var fileName = $(this).data("file");
 			var selectedLi = $(this).parent("li");
 			
-			console.log(fileName);
+			//console.log(fileName);
 			$.ajax({
 				url: '/board/deleteFile',
 				beforeSend : function(xhr){ // csrf 토큰 전달
@@ -324,12 +325,12 @@ $(document).ready(function () {
 	            data: fileName,
 	            dataType: 'text',
 				success: function(result) {
-					console.log(this);
+					//console.log(this);
 					// 업로드 파일 삭제 성공 시 li 삭제
 					selectedLi.remove();
 				},
 				error : function(xhr, status, er) {
-					console.log(er);
+					//console.log(er);
 				}
 			})
 		}); // 삭제 버튼 함수

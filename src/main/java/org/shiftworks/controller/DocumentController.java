@@ -5,9 +5,11 @@ import java.util.List;
 import org.shiftworks.domain.DocumentCriteria;
 import org.shiftworks.domain.DocumentPageDTO;
 import org.shiftworks.domain.ApprovalCriteria;
+import org.shiftworks.domain.ApprovalListDTO;
 import org.shiftworks.domain.ApprovalVO;
 import org.shiftworks.domain.BoardPageDTO;
 import org.shiftworks.domain.PostVO;
+import org.shiftworks.domain.ScrapDTO;
 import org.shiftworks.domain.ScrapVO;
 import org.shiftworks.service.DocumentService;
 import org.springframework.http.HttpStatus;
@@ -44,10 +46,10 @@ public class DocumentController {
 		
 		//로그인한 사람만 접근 가능
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		
-		log.info("mydoclist.........");
+		//log.info("mydoclist.........");
 		DocumentCriteria cri = new DocumentCriteria();
 		cri.setPageNum(pageNum);
 		cri.setEmp_id(emp_id);
@@ -68,11 +70,11 @@ public class DocumentController {
 																				@PathVariable("keyword")String keyword,
 																				Authentication auth){
 			
-			log.info("mydoclist.........");
+			//log.info("mydoclist.........");
 			
 			//로그인한 사람만 접근 가능
 			UserDetails ud = (UserDetails)auth.getPrincipal();
-			log.info(ud.getUsername());
+			//log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 			
 			DocumentCriteria cri = new DocumentCriteria();
@@ -99,11 +101,11 @@ public class DocumentController {
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getMyDocument(@RequestParam("post_id")int post_id, Authentication auth){
 		
-		log.info("mydoc........");
+		//log.info("mydoc........");
 		
 		//로그인한 사람만 접근 가능
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		
 		PostVO vo = new PostVO();
@@ -125,11 +127,11 @@ public class DocumentController {
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getScrapList(@PathVariable("pageNum")int pageNum, Authentication auth){
 		
-		log.info("scraplist.........");
+		//log.info("scraplist.........");
 		
 		//로그인한 사람만 접근 가능
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		
 		DocumentCriteria cri = new DocumentCriteria();
@@ -145,17 +147,48 @@ public class DocumentController {
 	}
 	
 	
+	//스크랩 list ajax
+	@ResponseBody
+	@GetMapping(value = "/scrap/{pageNum}/{type}/{keyword}")
+	public ResponseEntity<ScrapDTO> ScrapListWithPaging(@PathVariable("pageNum")int pageNum,
+																			@PathVariable("type") String type,
+																			@PathVariable("keyword")String keyword,
+																			Authentication auth){
+				
+		//log.info("scraplist.........");
+				
+		//로그인한 사람만 접근 가능
+		UserDetails ud = (UserDetails)auth.getPrincipal();
+		//log.info(ud.getUsername());
+		String emp_id = ud.getUsername();
+				
+		DocumentCriteria cri = new DocumentCriteria();
+		cri.setPageNum(pageNum);
+		if(type.equals("empty")) {
+			type = null;
+		}
+		if(keyword.equals("empty")) {
+			keyword = null;
+		}
+		cri.setType(type);
+		cri.setKeyword(keyword);
+		cri.setEmp_id(emp_id);
+				
+		return new ResponseEntity <ScrapDTO>(service.getScrapListWithPaging(cri),HttpStatus.OK);
+	}
+	
+	
 	//스크랩 상세보기
 	@ResponseBody
 	@GetMapping(value = "/scrapDetail")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getScrap(@RequestParam("post_id")int post_id, Authentication auth){
 		
-		log.info("scrap........");
+		//log.info("scrap........");
 		
 		//로그인한 사람만 접근 가능
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		
 		ScrapVO vo = new ScrapVO();
@@ -177,11 +210,11 @@ public class DocumentController {
 	public ModelAndView getDeptDocList(
 					@PathVariable("pageNum") int pageNum, Authentication auth){
 		
-		log.info("deptdoclist........");
+		//log.info("deptdoclist........");
 		
 		//로그인한 사람만 접근 가능
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		 String emp_id = ud.getUsername();
 		
 		DocumentCriteria cri = new DocumentCriteria();
@@ -204,11 +237,11 @@ public class DocumentController {
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView getDeptDoc(@RequestParam("post_id")int post_id, Authentication auth){
 		
-		log.info("deptdoc........");
+		//log.info("deptdoc........");
 		
 		//로그인한 사람만 접근 가능
 		UserDetails ud = (UserDetails)auth.getPrincipal();
-		log.info(ud.getUsername());
+		//log.info(ud.getUsername());
 		String emp_id = ud.getUsername();
 		
 		PostVO vo = new PostVO();
@@ -232,14 +265,13 @@ public class DocumentController {
 			
 			//로그인한 사람만 접근 가능
 			UserDetails ud = (UserDetails)auth.getPrincipal();
-			log.info(ud.getUsername());
+			//log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 			
-			log.info("approvallist.........");
+			//log.info("approvallist.........");
 			ApprovalCriteria cri = new ApprovalCriteria();
 			cri.setPageNum(pageNum);
 			cri.setEmp_id(emp_id);
-			
 			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/document/DOC_myapprovallist");
@@ -247,6 +279,36 @@ public class DocumentController {
 			
 			return mav;
 		}
+		
+		//결재문서함 list ajax
+		@ResponseBody
+		@GetMapping(value = "/myApproval/{pageNum}/{type}/{keyword}")
+		public ResponseEntity<ApprovalListDTO> MyApprovalListWithPaging(@PathVariable("pageNum")int pageNum,
+																			@PathVariable("type") String type,
+																			@PathVariable("keyword")String keyword,
+																			Authentication auth){
+					
+				//log.info("myapproval.........");
+					
+				//로그인한 사람만 접근 가능
+				UserDetails ud = (UserDetails)auth.getPrincipal();
+				//log.info(ud.getUsername());
+				String emp_id = ud.getUsername();
+					
+				ApprovalCriteria cri = new ApprovalCriteria(); 
+				cri.setPageNum(pageNum);
+				if(type.equals("empty")) {
+					type = null;
+				}
+				if(keyword.equals("empty")) {
+					keyword = null;
+				}
+				cri.setType(type);
+				cri.setKeyword(keyword);
+				cri.setEmp_id(emp_id);
+					
+				return new ResponseEntity <ApprovalListDTO>(service.approvalSelectList(cri),HttpStatus.OK);
+			}
 		
 		
 		
@@ -256,11 +318,11 @@ public class DocumentController {
 		@PreAuthorize("isAuthenticated()")
 		public ModelAndView getMyApproval(@RequestParam("apr_id")int apr_id, Authentication auth){
 			
-			log.info("approvaldoc........");
+			//log.info("approvaldoc........");
 			
 			//로그인한 사람만 접근 가능
 			UserDetails ud = (UserDetails)auth.getPrincipal();
-			log.info(ud.getUsername());
+			//log.info(ud.getUsername());
 			String emp_id = ud.getUsername();
 			
 			ApprovalVO vo = new ApprovalVO();

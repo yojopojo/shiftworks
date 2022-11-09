@@ -17,6 +17,7 @@ public class ApprovalVO {
 	private char apr_status;
 	private String apr_comment;
 	private Date apr_signdate;
+	private String name;
 	
 	private List<FileVO> fileList;
 	
