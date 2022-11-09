@@ -30,16 +30,16 @@
 	</insert>
 	
 	<!--업무 파일 목록-->
-	<select id="selectTaskFile" parameterType="int" resultType="org.shiftworks.domain.FileVO">
+	<select id="selectTaskFile" resultType="org.shiftworks.domain.FileVO">
 		select uuid, f.task_id as work_id, file_name,file_src 
 			from task_file f JOIN task t 
 			ON f.task_id = t.task_id
-			where f.task_id =#{task_id}
+			where f.task_id = #{task_id}
 	</select>
 	
 	<!--업무 파일 삭제-->
 	<delete id="deleteTaskFile" parameterType="String">
-		delete from task_file where uuid =#{uuid}
+		delete from task_file where uuid = #{uuid}
 	</delete>
 	
 	<!--결재 파일 업로드-->

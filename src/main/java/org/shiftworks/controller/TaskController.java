@@ -250,13 +250,18 @@ public class TaskController {
 		
 		log.info(vo.getFile_name());
 		log.info(vo.getUuid());
+		// DB까지 업로드된 경우 DB에서 해당 데이터 삭제
+		if(vo.getUuid() != null) {
+			mapper.deleteTaskFile(vo.getUuid());
+		}
+		
 		try {
 			// 삭제 대상을 파일 객체로 만듦
-			file = new File("C:\\upload\\" + URLDecoder.decode(vo.getFile_name(), "UTF-8"));
-			// 실제 파일 삭제
-			file.delete();
-			// DB에서 파일 삭제
-			mapper.deleteTaskFile(vo.getUuid());
+			file = new File("C:\\upload\\" + vo.getFile_name());
+			// 실제 파일이 존재하는 경우 삭제
+			if(file.exists()) {
+				file.delete();
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
