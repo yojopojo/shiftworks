@@ -39,24 +39,24 @@ public class StompChatController {
 	// client가 send할 수 있는 경로
 	// servlet-context.xml에서 설정한 application-destination-prefix와 @messageMapping 경로가 병합
 	// "pub/messenger/chat/enter"
-	@MessageMapping("/enter")
+	@MessageMapping("/chatroom/enter")
 	public void enterChatRoom(ChatVO chat) {
 		
-		log.info("@StompChatController, enterChatRoom");
+		//log.info("@StompChatController, enterChatRoom");
 		// 입장했을 때 
 		chat.setContent(chat.getSender() + "님이 채팅방에 참여하였습니다.");
-		simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chat.getRoom_id(), chat);
+		simpMessagingTemplate.convertAndSend("/sub/messenger/chat/room/" + chat.getRoom_id(), chat);
 	}
 	
 	
-	@MessageMapping("/send")
+	@MessageMapping(value="/chatroom/{room_id}")
 	@ResponseBody
 	public void sendChat(@RequestBody ChatVO chat) {
 		
-		log.info("@StompChatController, sendChat");
+		//log.info("@StompChatController, sendChat");
 		
 		// 채팅 전송
-		simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chat.getRoom_id(), chat);
+		simpMessagingTemplate.convertAndSend("/sub/chatroom/" + chat.getRoom_id(), chat);
 		
 	}
 	
@@ -66,7 +66,7 @@ public class StompChatController {
 	public ResponseEntity<String> stomp(String request) {
 		
 		
-		log.info("@StompChatController, stomp");
+		//log.info("@StompChatController, stomp");
 		
 		return new ResponseEntity<String>(request, HttpStatus.OK);
 	}

@@ -92,7 +92,7 @@
 
 					<div class="discussion" id="${chatRoom.room_id }" data-room-id="${chatRoom.room_id }">
 						<div class="photo"
-							style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);">
+							style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
 							<div class="online"></div>
 						</div>
 						<div class="desc-contact">
@@ -180,6 +180,8 @@
 	<script type="text/javascript">
 
 $(document).ready(function() {
+	
+	var stompClient = null;
 	
 	// 로그인된 사번 
 	var login_id = "<c:out value='${login_id}'/>";
@@ -340,10 +342,10 @@ $(document).ready(function() {
 	 // 서버에서 브로커에 설정해준 "sub"라는 prefix에 room_id를 구독함.
 	 // 메세지를 보내면 서버를 거쳐 구독하고 있는 클라이언트들에서 메세지를 전송
     function connect(room_id){
- 		
-    	stompClient = null;
-    	
-    	disconnect();
+
+    	if(stompClient != null){
+    		disconnect(stompClient);
+    	}
     	
     	socket = new SockJS('/messenger/chat');	// servlet-context에서 설정한 sockJS 연결 주소
     	stompClient = Stomp.over(socket);
@@ -352,15 +354,16 @@ $(document).ready(function() {
     		console.log('connected : ' + frame);
     		
     		// /room/{roomId}를 구독
-    		stompClient.subscribe('/sub/chat/' + room_id, function(chat){
-    			
+    		stompClient.subscribe('/sub/chatroom/' + room_id, function(chat){
+    			console.log("받은 메시지 : " + chat.body);
+    			printChat(JSON.parse(chat.body));
     			// 메시지를 보내면 서버를 거쳐 구독하고 있는 클라이언트들에게 showChat로 메세지 보여진다.
-    			
-    			messengerService.sendChat(chat, function(result){
+    			messengerService.sendChat(chat.body, function(result){
         			console.log("메시지 받은 결과 : " + result);
-        	
+        			
+        			printChat(JSON.parse(chat.body));
         			if(result == 'success'){
-        				printChat(JSON.parse(chat));
+        				printChat(chat.body);
         			}
         	
         });
@@ -395,7 +398,7 @@ $(document).ready(function() {
         var content =  $('.write-message').val();
         console.log("전송 버튼 클릭 이벤트 : content : " + content);
        
-        if(content != ""){
+        if(content != "" && content != null){
         // room_id 가져오기
         var room_id = $('.chat .header-chat .name').attr('id').substr(5);
         console.log("전송 버튼 클릭 이벤트 : room_id : " + room_id);
@@ -411,16 +414,8 @@ $(document).ready(function() {
 	            sender: login_id,
 	            room_id: room_id
 	          };
-     
-        messengerService.sendChat(chat, function(result){
-        	console.log("메시지 전송 결과 : " + result);
-        	
-        	if(result == 'success'){
-        		stompClient.send('/pub/send', {}, JSON.stringify(chat));
-        		printChat(chat);
-        	}
-        	
-        });
+        console.log("전송 버튼 클릭 이벤트 : room_id : " + room_id);
+        stompClient.send('/sub/chatroom/'+ room_id, {}, JSON.stringify(chat));
         
         // 채팅 입력창 비우고 포커스
         $('.write-message').val('').focus();
@@ -430,8 +425,39 @@ $(document).ready(function() {
         var vScrollDown = $('.messages-chat').prop('scrollHeight');
     	$('messages-chat').scrollTop(vScrollDown);
     }
+  
+    function printChat(chat){
+   	 
+   	 console.log("printChat : " + chat);
+   	 
+   	 $('.chat .header-chat .name').attr('id', "chat_" + chat.room_id);
+   	 
+   	 // 채팅 내용이 있을 때만 출력
+   	 if(chat.content != null){
+
+   			// 상대방의 채팅 내용
+   		if(chat.sender != login_id){
+   			var content = '<div class="message">' +
+   			'<div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">' +
+   			'<div class="online"></div></div>' + 
+   			'<p class="text">'+ chat.content + '</p>	</div>' +
+   			'<p class="time">' + chat.sendtime.substr(0,16) + '</p>';
+   			$(".messages-chat").append(content);
+   		 		
+   	 	}else{	// 나의 채팅 내용
+   	 		var content = '	<div class="message text-only">' +
+   	 			'<div class="response">' +
+   	 			'<p class="text">'+ chat.content +'</p>' +
+   	 			'</div></div>' +
+   	 			'<p class="response-time time">' + chat.sendtime.substr(0,16) + '</p>';
+   	 		$(".messages-chat").append(content);
+   	 	}
+   			
+   		$(".messages-chat").animate({ scrollTop: $(".messages-chat")[0].scrollHeight });
+   	}
+   }
     
- function printChat(chat){
+/*  function printChat(chat){
 	 
 	 console.log("printChat : " + chat);
 	 
@@ -460,7 +486,7 @@ $(document).ready(function() {
 			
 		$(".messages-chat").animate({ scrollTop: $(".messages-chat")[0].scrollHeight });
 	}
-}
+} */
  
 });
 
