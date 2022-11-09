@@ -54,17 +54,23 @@ public class HomeController {
 		List<BookingVO> eventList = new ArrayList<BookingVO>();
 		List<BookingVO> list = bookingService.getList();
 
-		for(int i=0;i<5;i++) {
-			
-			eventList.add(list.get(i));
 		
+		if(list == null) {
+			return "예약이 없습니다";
+		}else {
+			for(int i=0;i<list.size();i++) {
+				eventList.add(list.get(i));
+				if(list.size()==5) {
+					break;
+				}
+			}
 		}
 		
 		//예약 리스트(게시판 형태)
 		//model.addAttribute("event", bookingService.getList());
 		model.addAttribute("event", eventList);
 		
-		model.addAttribute("get", bookingService.getBooking(205));
+		//model.addAttribute("get", bookingService.getBooking(205));
 		//model.addAttribute("event2", sservice.getList());
 		
 		//model.addAttribute("board", service.boardList());
