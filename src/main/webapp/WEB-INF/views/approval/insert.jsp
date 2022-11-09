@@ -76,12 +76,17 @@
            end panel
          </div>
          /.row -->
+         <sec:authentication property="principal" var="pinfo"/>
+		<label for="name" class="form-label">작성자</label>
+			<input class="form-control" type="text" value='<sec:authentication property="principal.employee.name"/>'
+				id="name" readonly>
+			<input class="form-control" type="hidden" value='<sec:authentication property="principal.username"/>'
+				id="emp_id" name="emp_id">
 
-
-             <div >
+             <!-- <div >
                <label>작성자</label> 
-                  <input class ="form-control" name='emp_id' readonly value="user1">
-             </div>
+                  <input class ="form-control" name='emp_id' readonly value="user1" >
+             </div> -->
           <div>
             <label>결재명</label> 
                <input class="form-control" name='apr_title'>
@@ -577,4 +582,5 @@
         
 </div>
 </body>
+<%@include file="/WEB-INF/views/includes/footer.jsp"%>
 </html>
