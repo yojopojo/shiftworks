@@ -60,11 +60,9 @@ public class HomeController {
 		}else {
 			for(int i=0;i<list.size();i++) {
 				eventList.add(list.get(i));
-				if(list.size()==5) {
-					break;
-				}
 			}
 		}
+		
 		
 		//예약 리스트(게시판 형태)
 		//model.addAttribute("event", bookingService.getList());
