@@ -21,7 +21,7 @@
 				apr_status, apr_comment, apr_signdate
 			from
 			(
-				select /*+INDEX_DESC(approval approval_pk) */
+				select /*+INDEX_DESC(approval pk_approval) */
 					rownum rn, apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
 					apr_status, apr_comment, apr_signdate	
 				from
@@ -56,7 +56,7 @@
 				apr_status, apr_comment, apr_signdate
 			from
 			(
-			select /*+INDEX_DESC(approval approval_pk) */
+			select /*+INDEX_DESC(approval pk_approval) */
 				rownum rn, apr_id, af_id, emp_id, apr_receivedate, apr_title, apr_content,
 				apr_status, apr_comment, apr_signdate	
 			from
