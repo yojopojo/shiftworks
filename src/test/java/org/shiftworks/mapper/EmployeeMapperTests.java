@@ -75,13 +75,15 @@ public class EmployeeMapperTests {
 //		
 //	}
 	@Test
-	public void testgetList() {
+	public void testGetListWithPaging() {
+		//검색 테스트
 		AccountCriteria cri = new AccountCriteria();
-		cri.setKeyword("회계팀");
+		cri.setKeyword("회계");
 		cri.setType("D");
 		cri.setPageNum(1);
 		cri.setAmount(10);
 		
 		mapper.getListWithPaging(cri);
 	}
+
 }
