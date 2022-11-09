@@ -90,9 +90,11 @@
 	
 	<!-- 일정 검색 -->
 	<select id="search" resultType="org.shiftworks.domain.ScheduleVO">
-		SELECT sch_id, sch_title, start_date
-			FROM schedule
+		SELECT s.sch_id as sch_id, sch_title, start_date
+			FROM schedule s JOIN sch_participant p
+			ON s.sch_id = p.sch_id
 			WHERE sch_title LIKE '%'||#{keyword}||'%'
+			AND p.emp_id = #{emp_id}
 	</select>
 	
 	<!-- 일정 상세정보 -->

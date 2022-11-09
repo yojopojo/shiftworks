@@ -205,7 +205,25 @@ var scheduleService = (function(){
 				}
 			}
         })
-    } // end function search()
+    } // end function searchBooking()
+
+    // 참가자 검색
+    function searchParticipant(param, callback, error) {
+        $.ajax({
+            type: 'get',
+            url: '/schedule/participant/' + param,
+            success: function(result) {
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+        })
+    } // end function searchParticipant()
 
 
     return {
@@ -218,7 +236,8 @@ var scheduleService = (function(){
         getMemo: getMemo,
         updateMemo: updateMemo,
         getWorkerList: getWorkerList,
-        searchBooking: searchBooking
+        searchBooking: searchBooking,
+        searchParticipant: searchParticipant
     };
 
 })();
@@ -570,7 +589,7 @@ $(document).ready(function(){
     }
     
     
-    
+    // 캘린더 이동
     $('.page-link').on("click", function(e){
         e.preventDefault();
 
@@ -665,40 +684,10 @@ $(document).ready(function(){
         listparam.sch_group = $('.sch_group').val();
         $('.sch_group').text($(this).text());
 
-        // 선택된 탭 
+        // 선택된 탭으로 이동
+        selectedTap.trigger("click");
 
     }); // 그룹 선택 시 값 변경
-
-
-
-    /* * * * * * * * * * * * * * * * * * *
-        버튼 클릭 시 직원 스케쥴 출력 이벤트
-    * * * * * * * * * * * * * * * * * * */
-    $('#calendarBody').on("click", "a", function(e) {
-        e.preventDefault();
-
-        let content = '';
-
-        scheduleService.getWorkerList('dept', function(result){
-           
-            result.forEach((item) => {
-
-                let arr1 = item.start_time.split(' ');
-                let arr2 = arr1[1].split(':');
-
-                
-                content += item.name + ' (' + arr2[0] + ':' + arr2[1] + ') ';
-                
-
-                
-            }); // end forEach 
-
-            $('#workers').attr("data-bs-content", content);
-            $('#workers').popover("show");
-            
-        }); // end getWorkerList()      
-
-    }); // 버튼 클릭 시 직원 스케쥴 출력
 
 
     // 검색 결과 클릭 시 해당 일자로 이동
@@ -711,6 +700,9 @@ $(document).ready(function(){
 	    	
     });
 
+
+     
+    
 
     /** getList를 통해 DB에서 데이터 받아오기 */
     function getList() {scheduleService.getList(listparam, function(list) {

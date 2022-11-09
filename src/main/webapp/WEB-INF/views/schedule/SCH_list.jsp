@@ -137,8 +137,12 @@
 					<div class="form-group participant">
 						<label>참가자목록</label> <input class="form-control"
 							name="participant_name" placeholder="이름 입력 시 검색">
+							<p class="selectedParticipant"></p>
 							<input type="hidden" class="form-control"
 							name="participant_id">
+							<ul class="participantList">
+							
+							</ul>
 					</div>
 					<div class="form-group">
 						<label>내용</label> <input class="form-control" name="sch_content">
@@ -231,7 +235,7 @@ $(document).ready(function() {
             start_date: (start_date.val().split(' '))[0],
             end_date: (end_date.val().split(' '))[0],
             sch_title: sch_title.val(),
-            participant_id: participant_id.val().split(", "),
+            participant: participant_id.val().split(", "),
             sch_content: sch_content.val(),
             dept_id: '<sec:authentication property="principal.employee.dept_id"/>',
             emp_id: '<sec:authentication property="principal.username"/>',
@@ -409,12 +413,43 @@ $(document).ready(function() {
     	}) // end search()
     }); // end input keyup event
     
+    // 참가자 검색
+    $(participant_name).on("keyup", function(){
+    	// 입력값 변수에 저장
+    	var name = participant_name.val();
+    	
+    	if (name == '' || name == null) {
+    		return;
+    	}
+    	// 검색 결과 출력
+    	scheduleService.searchParticipant(name, function(result){
+    		var participantList = '';
+    		result.forEach(p => {
+    			participantList += "<li class='emp' data-emp_id='" + p.emp_id + "'>"
+    						+ p.name + "</li>";
+    		});// end forEach
+    		$('.participantList').html(participantList);
+    	}); // end searchParticipant()
+    	
+    }); // 참가자 검색
     
-    // 예약 번호 검색
+    // 선택 참가자 목록
+    var pList = '<sec:authentication property="principal.username"/>';
+    $('.participantList').on("click", "li", function(){
+    	console.log('hi');
+    	pList += ", " + $(this).data("emp_id");
+    	
+    	$('.selectedParticipant').text(pList);
+    	$(participant_id).val(pList);
+    });
+    
+    
+    // 회의실 예약 번호 검색
     $(book_id).on("keyup", function(){
     	$('.bookingList').html('');
     	// 입력값 변수에 저장
     	var keyword = $(this).val();
+    	
     	scheduleService.searchBooking(keyword, function(result){
     		
     		var bookingList = '';
@@ -436,6 +471,35 @@ $(document).ready(function() {
     	$(this).siblings().removeClass("selectedClass");
     	$(this).addClass("selectedClass");
     })
+    
+    /* * * * * * * * * * * * * * * * * * *
+        버튼 클릭 시 직원 스케쥴 출력 이벤트
+    * * * * * * * * * * * * * * * * * * */
+        $('#calendarBody').on("click", "a", function(e) {
+            e.preventDefault();
+    
+            let content = '';
+    
+            let deptid = '<sec:authentication property="principal.employee.dept_id"/>';
+            scheduleService.getWorkerList(deptid, function(result){
+               
+                result.forEach((item) => {
+    
+                    let startarr1 = item.start_time.split(' ');
+                    let startarr2 = startarr1[1].split(':');
+                    let endarr1 = item.end_time.split(' ');
+                    let endarr2 = endarr1[1].split(':');
+    
+                    content += item.name + ' (' + startarr2[0] + ':' + startarr2[1] + '-' + endarr2[0] + ':' + endarr2[1] + ') ';
+                    
+                }); // end forEach 
+    
+                $('#workers').attr("data-bs-content", content);
+                $('#workers').popover("show");
+                
+            }); // end getWorkerList()      
+    
+        }); // 버튼 클릭 시 직원 스케쥴 출력
     
     
 });// 일정 CRUD 모달
