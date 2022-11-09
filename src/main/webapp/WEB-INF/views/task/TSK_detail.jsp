@@ -89,9 +89,11 @@
 			</ul>
 		</div>
 		<div class="confirm">
-			<button id="updateBtn" type="submit" class="btn btn-warning mb-3">수정</button>
-			<button id="updateSubmitBtn" type="submit" class="btn btn-warning mb-3">수정완료</button>
-			<button id="deleteBtn" type="submit" class="btn btn-danger mb-3">삭제</button>
+			<!-- 해당 게시글의 작성자인 경우에만 수정/삭제 메뉴 출력 -->
+			<button id="updateBtn" type="submit" class="own btn btn-warning mb-3">수정</button>
+			<button id="updateSubmitBtn" type="submit" class="own btn btn-warning mb-3">수정완료</button>
+			<button id="deleteBtn" type="submit" class="own btn btn-danger mb-3">삭제</button>
+			<!-- 모든 사용자에게 목록 버튼 출력 -->
 			<button id="resetBtn" type="reset"
 				class="btn btn-outline-primary mb-3">목록</button>
 		</div>
@@ -100,6 +102,14 @@
 </div>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
+			var taskEmp_id = '<c:out value="${ task.emp_id }"/>';
+			var principalEmp_id = '<sec:authentication property="principal.username"/>';
+			console.log(taskEmp_id);
+			console.log(principalEmp_id);
+			if(taskEmp_id != principalEmp_id) {
+				$('.own').hide();
+			}
 			
 			// 첨부파일 클릭 시 다운로드/삭제할 수 있도록 하는 url
 			$('.taskFiles li').each(function(i, obj){
@@ -191,23 +201,24 @@
 				var selectedLi = $(this).parent("li");
 				var uuid = selectedLi.data("uuid");
 				
-				console.log(typeof(fileName));
 				$.ajax({
 					url: '/task/deleteFile',
 					beforeSend : function(xhr){ // csrf 토큰 전달
 		                xhr.setRequestHeader(csrf_header, csrf_token);
 		            },
 		            type: 'delete',
-		            data: {file_name: fileName,
-		            		uuid: uuid},
+		            data: JSON.stringify(
+		            		{file_name: fileName,
+		            		uuid: uuid}
+		            		),
+		            contentType : "application/json; charset=utf-8",
 		            dataType: 'text',
 					success: function(result) {
-						console.log(this);
 						// 업로드 파일 삭제 성공 시 li 삭제
 						selectedLi.remove();
 					},
 					error : function(xhr, status, er) {
-						console.log(er);
+						console.log('error');
 					}
 				})
 			}); // 삭제 버튼 함수
