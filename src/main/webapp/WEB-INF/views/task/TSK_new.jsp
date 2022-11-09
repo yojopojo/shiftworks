@@ -275,15 +275,17 @@
 		                xhr.setRequestHeader(csrf_header, csrf_token);
 		            },
 		            type: 'delete',
-		            data: fileName,
+		            data: JSON.stringify(
+		            		{file_name: fileName}
+		            		),
+		            contentType : "application/json; charset=utf-8",
 		            dataType: 'text',
 					success: function(result) {
-						console.log(this);
 						// 업로드 파일 삭제 성공 시 li 삭제
 						selectedLi.remove();
 					},
 					error : function(xhr, status, er) {
-						console.log(er);
+						console.log('error');
 					}
 				})
 			}); // 삭제 버튼 함수
