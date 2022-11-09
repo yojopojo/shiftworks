@@ -91,9 +91,9 @@ $(document).ready(function(){
 			Hello world!  
 		</h1> -->
 		
-		
 		<h2> <sec:authentication property="principal.username"></sec:authentication>님 환영합니다</h2>
-	
+		<%-- <c:out value="${get.rsc_id }"></c:out> --%>
+		
 	<div class="row">
 
 <!-- 		<div class="col">
@@ -169,8 +169,34 @@ $(document).ready(function(){
 						<%-- <td><c:out value="${reserv.book_begin }시~${reserv.book_begin+2 }시"></c:out> </td> --%>
 					</tr>
 				</c:forEach>
-					
 			</table>
+			
+			
+			
+			<!-- 게시판 최신글 -->
+<%--  			<table class="table table-sm" id="tabOne">
+ 				<thead>
+					<tr>
+						<th>글번호</th>
+						<th>제목</th>
+						<!-- <th>작성자</th> -->
+						<!-- <th>일자</th> -->
+						<!-- <th>예약시간</th> -->
+					</tr>
+				</thead>
+				
+				<c:forEach items="${ board }" var="reserv">
+					<tr>
+						<td><c:out value="${reserv.post_id }"></c:out></td>
+						<td><a href="#"><c:out value="${reserv.post_name }"></c:out></a></td>
+						<td><c:out value="${reserv.emp_id }"></c:out></td>
+						<td><c:set var="book_date" value="${reserv.book_date }"></c:set>
+						<c:out value="${fn:substring(book_date,0,10) }"></c:out></td>
+						<td><c:out value="${reserv.book_begin }시~${reserv.book_begin+2 }시"></c:out> </td>
+					</tr>
+				</c:forEach>
+			</table> --%>
+			
 			
 			
 			<!-- <br><br>
