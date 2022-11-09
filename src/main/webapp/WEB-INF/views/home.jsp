@@ -120,7 +120,7 @@ $(document).ready(function(){
 				
 				<div class="col">
 				    <ul class="list-group">				    	
-	  					<a href="/approval/list" style="text-decoration: none;"><li class="list-group-item d-flex justify-content-between align-items-center">   					 
+	  					<a href="/approval/main" style="text-decoration: none;"><li class="list-group-item d-flex justify-content-between align-items-center">   					 
 	   					 	결재가 필요한 문서
 	    					<span class="badge bg-primary rounded-pill">14</span> 
 	  					</li></a>
@@ -159,7 +159,7 @@ $(document).ready(function(){
 					</tr>
 				</thead>
 				
-				<c:forEach items="${ event }" var="reserv">
+				<c:forEach items="${ event }" var="reserv" begin="0" end="4">
 					<tr>
 						<td><c:out value="${reserv.book_id }"></c:out></td>
 						<td><a href="/booking/${reserv.book_id}"><c:out value="${reserv.book_title }"></c:out></a></td>

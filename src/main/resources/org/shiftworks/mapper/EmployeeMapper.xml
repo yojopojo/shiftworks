@@ -75,10 +75,10 @@
 		<select id="getListWithPaging"
 		resultType="org.shiftworks.domain.EmployeeVO"> 
 		<![CDATA[ 
-		select emp_id, dept_name, position, name, entry_date
+		select emp_id, dept_name, position, name, entry_date, resignation_date
 			from ( 
 				select /*+INDEX_DESC(employee employee_pk) */ 
-						rownum rn, emp_id, dept_name, position, name, entry_date
+						rownum rn, emp_id, dept_name, position, name, entry_date, resignation_date
 					from employee e JOIN department d
 					on e.dept_id = d.dept_id
 					where 
@@ -87,7 +87,7 @@
 	<![CDATA[
 			 rownum <= #{pageNum} * #{amount}
 		)where rn > (#{pageNum} -1) * #{amount}
-	]]>
+	]]>and resignation_date is null
 	</select>
 	
 		<!-- 퇴사자 검색 및 페이징 처리 -->
