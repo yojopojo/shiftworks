@@ -22,13 +22,13 @@ public class TaskServiceTests {
 	private TaskService service;
 
 	// 검색기능 적용 페이징 처리
-	@Test
-	public void testGetList() {
-		
-		TaskCriteria cri = new TaskCriteria(1, "T", "제목", "dept");
-		
-		service.getList(cri);
-	}
+//	@Test
+//	public void testGetList() {
+//		
+//		TaskCriteria cri = new TaskCriteria(1, "T", "제목", "dept");
+//		
+//		service.getList(cri);
+//	}
 	
 	// 업무 게시글 개별 출력
 //	@Test
@@ -67,9 +67,9 @@ public class TaskServiceTests {
 //	}
 	
 	// 업무 삭제 단위 테스트
-//	@Test
-//	public void testDelete() {
-//		log.info(service.deleteTask(11));
-//	}
+	@Test
+	public void testDelete() {
+		log.info(service.deleteTask(159));
+	}
 
 }
