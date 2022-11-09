@@ -520,7 +520,7 @@ $(document).ready(function(){
                 }
                 
                 tHTML += '<tr><td class="timeline"><b>' + t 
-                        + '</b></td><td class="' + t + '"></td><tr>';
+                        + '</b></td><td class="' + t + '"><ul class="dayResult"></ul></td><tr>';
             }
             
             return tHTML;
@@ -731,6 +731,7 @@ $(document).ready(function(){
         }) // end forEach
     });} // end getList
     
+
 
      // 기본으로 '월별' 캘린더가 클릭된 상태로 만듦
     $("#month").trigger("click");
