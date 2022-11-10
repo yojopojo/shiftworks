@@ -164,7 +164,7 @@ public class ScheduleController {
 		// 검색어(이름) 입력
 		cri.setKeyword(name);
 		// 검색옵션(이름으로 검색) 입력
-		cri.setType("E");
+		cri.setType("N");
 		List<EmployeeVO> list = empMapper.getListWithPaging(cri);
 		return new ResponseEntity<List<EmployeeVO>>(list, HttpStatus.OK);
 	}
