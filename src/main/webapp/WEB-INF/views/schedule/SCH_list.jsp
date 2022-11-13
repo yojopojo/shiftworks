@@ -15,6 +15,8 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <link rel="stylesheet" href="/resources/css/schedule.css">
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
@@ -126,10 +128,14 @@
 					<div class="form-group">
 						<label>시작일</label> <input type="text" class="form-control"
 							name="start_date" id="start_date">
+						<label>시작시간</label> <input type="text" class="form-control"
+							name="start_time" id="start_time">
 					</div>
 					<div class="form-group">
 						<label>종료일</label> <input type="text" class="form-control"
 							name="end_date" id="end_date">
+						<label>종료시간</label> <input type="text" class="form-control"
+							name="end_time" id="end_time">
 					</div>
 					<div class="form-group">
 						<label>제목</label> <input class="form-control" name="sch_title">
@@ -206,7 +212,33 @@ $(document).ready(function() {
     	});
     	
     	$('#end_date').datepicker({ dateFormat: 'yy-mm-dd' });
-    })
+    	
+    	// 시작시간, 종료시간 선택 timepicker
+        $('#start_time').timepicker({
+        	timeFormat: 'hh:mm p',
+        	interval: 60,
+       		minTime: '10',
+        	maxTime: '23:00pm',
+        	defaultTime: '11',
+        	startTime: '00:00',
+        	dynamic: true,
+        	dropdown: true,
+        	scrollbar: true
+    	});
+        $('#end_time').timepicker({
+        	timeFormat: 'hh:mm p',
+        	interval: 60,
+       		minTime: '10',
+        	maxTime: '23:00pm',
+        	defaultTime: '11',
+        	startTime: '00:00',
+        	dynamic: true,
+        	dropdown: true,
+        	scrollbar: true
+    	});
+    }); // 시작일, 종료일 선택 datepicker, timepicker
+    
+    
     
 
     // 일정 등록 버튼 클릭 시 이벤트

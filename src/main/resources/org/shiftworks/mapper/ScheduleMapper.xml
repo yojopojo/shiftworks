@@ -8,7 +8,8 @@
 	<insert id="insertSchedule">
 		INSERT INTO schedule(sch_id, dept_id, book_id, sch_title, sch_content, start_date, end_date, sch_group, emp_id)
 			VALUES(schedule_seq.nextval, #{dept_id}, #{book_id}, #{sch_title}, #{sch_content},
-					#{start_date}, #{end_date}, #{sch_group}, #{emp_id})
+					TO_DATE(#{start_date}, 'YYYY-MM-DD HH24-MI'), TO_DATE(#{end_date}, 'YYYY-MM-DD HH24-MI'),
+					#{sch_group}, #{emp_id})
 	</insert>
 	
 	<!-- 일정 참가자들이 일정을 확인할 수 있도록 DB에 등록 -->

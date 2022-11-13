@@ -103,6 +103,11 @@ public class ScheduleController {
 					produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
 		
+		if(scheduleVO.getBook_id() == null) {
+			// 회의실 예약 번호가 미입력 되었을 경우 0으로 초기화
+			scheduleVO.setBook_id(0);
+		}
+		
 		return service.insertSchedule(scheduleVO) ?
 			new ResponseEntity<String>("success", HttpStatus.OK) :
 			new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
