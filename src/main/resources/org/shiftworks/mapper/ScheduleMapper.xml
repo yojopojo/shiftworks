@@ -27,6 +27,7 @@
 							sch_content = #{sch_content},
 							start_date = #{start_date},
 							end_date = #{end_date}
+							
 		]]>
 		
 		<include refid="booking"/>
@@ -72,7 +73,7 @@
 					CONNECT BY LEVEL <= TO_DATE(#{periodEnd}, 'yyyy-MM-dd')-TO_DATE(#{periodStart}, 'yyyy-MM-dd') + 1
 					) cal
 				LEFT OUTER JOIN schedule s
-				ON sch_date BETWEEN start_date AND end_date
+				ON sch_date BETWEEN TO_CHAR(start_date, 'yyyy-MM-dd') AND TO_CHAR(end_date, 'yyyy-MM-dd')
 				JOIN sch_participant p
 				ON p.sch_id = s.sch_id
 				AND p.emp_id = #{emp_id}

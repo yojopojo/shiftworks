@@ -155,7 +155,7 @@
 					</div>
 					<div class="form-group">
 						<label>예약 회의실</label> <input class="form-control" name="book_id"
-							placeholder="회의실 예약 코드 입력 시 검색, 클릭 시 예약번호 입력">
+							placeholder="입력 시 예약건 검색, 클릭 시 예약번호 입력">
 							<ul class="bookingList">
 								
 							</ul>
@@ -187,7 +187,9 @@ $(document).ready(function() {
     var sch_id = $('.modal').find("input[name='sch_id']");
     var sch_group = $('.modal').find(".selectedGroup");
     var start_date= $('.modal').find("input[name='start_date']");
+    var start_time= $('.modal').find("input[name='start_time']");
     var end_date= $('.modal').find("input[name='end_date']");
+    var end_time= $('.modal').find("input[name='end_time']");
     var sch_title= $('.modal').find("input[name='sch_title']");
     var sch_content = $('.modal').find("input[name='sch_content']");
     var participant_name = $('.modal').find("input[name='participant_name']");
@@ -215,22 +217,23 @@ $(document).ready(function() {
     	
     	// 시작시간, 종료시간 선택 timepicker
         $('#start_time').timepicker({
-        	timeFormat: 'hh:mm p',
+        	// 오전, 오후로 나누지 않고 24시 모두 출력 가능
+        	timeFormat: 'HH:mm',
         	interval: 60,
-       		minTime: '10',
+       		minTime: '00:00am',
         	maxTime: '23:00pm',
-        	defaultTime: '11',
+        	defaultTime: '09',
         	startTime: '00:00',
         	dynamic: true,
         	dropdown: true,
         	scrollbar: true
     	});
         $('#end_time').timepicker({
-        	timeFormat: 'hh:mm p',
+        	timeFormat: 'HH:mm',
         	interval: 60,
-       		minTime: '10',
+       		minTime: '00:00am',
         	maxTime: '23:00pm',
-        	defaultTime: '11',
+        	defaultTime: '09',
         	startTime: '00:00',
         	dynamic: true,
         	dropdown: true,
@@ -264,8 +267,8 @@ $(document).ready(function() {
         
         let schedule = {
             sch_group: sch_group.val(),
-            start_date: (start_date.val().split(' '))[0],
-            end_date: (end_date.val().split(' '))[0],
+            start_date: start_date.val() + ' ' + start_time.val(),
+            end_date: end_date.val() + ' ' + end_time.val(),
             sch_title: sch_title.val(),
             participant: participant_id.val().split(", "),
             sch_content: sch_content.val(),
@@ -273,6 +276,8 @@ $(document).ready(function() {
             emp_id: '<sec:authentication property="principal.username"/>',
             book_id: book_id.val()
         }
+        
+        console.log(schedule.start_date);
         
         scheduleService.insertSchedule(schedule, function(result){
             
@@ -318,7 +323,9 @@ $(document).ready(function() {
         	sch_id.val(selected_sch_id);
             sch_group.val(result.sch_group);
             start_date.val((result.start_date.split(" "))[0]);
+            start_time.val((result.start_date.split(" "))[1].substr(0, 5));
             end_date.val((result.end_date.split(" "))[0]);
+            end_time.val((result.end_date.split(" "))[1].substr(0, 5));
             sch_title.val(result.sch_title);
             sch_content.val(result.sch_content);
             book_id.val(result.book_id);				

@@ -714,10 +714,20 @@ $(document).ready(function(){
 
             if(item.sch_title != null) {
                 html += '<tr>';
-                html += '<td id="' + item.sch_id + '" class="eachSch">' + item.sch_title + '</td>';
+                html += '<td id="' + item.sch_id + '" class="eachSch';
+                if(item.sch_group == 'my') {
+                    html += ' my';
+                } else if(item.sch_group == 'dept') {
+                    html += ' dept';
+                } else if(item.sch_group == 'comp') {
+                    html += ' comp';
+                }
+                html += '">' + item.sch_title + '</td>';
                 html += '</tr>';
+                console.log(item.sch_date);
                 $('#calendarBody .' + item.sch_date).append(html);
             }
+            
             // end if
 
         }) // end forEach
