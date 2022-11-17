@@ -2,10 +2,13 @@ package org.shiftworks.controller;
 
 import java.util.List;
 
+import org.shiftworks.domain.AccountCriteria;
 import org.shiftworks.domain.BookingVO;
+import org.shiftworks.domain.EmployeeVO;
 import org.shiftworks.domain.ScheduleCriteria;
 import org.shiftworks.domain.ScheduleVO;
 import org.shiftworks.domain.WorkScheduleVO;
+import org.shiftworks.mapper.EmployeeMapper;
 import org.shiftworks.mapper.ScheduleMapper;
 import org.shiftworks.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,9 @@ public class ScheduleController {
 	
 	@Autowired
 	private ScheduleMapper mapper;
+	
+	@Autowired
+	private EmployeeMapper empMapper;
 	
 	@GetMapping("/main")
 	public ModelAndView schedule() {
@@ -74,9 +80,10 @@ public class ScheduleController {
 	// 일정 검색
 	@GetMapping(value="/search/{keyword}",
 				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<List<ScheduleVO>> search(@PathVariable String keyword) {
+	public ResponseEntity<List<ScheduleVO>> search(@PathVariable String keyword, Authentication auth) {
+		UserDetails ud = (UserDetails) auth.getPrincipal();
 		
-		List<ScheduleVO> list = service.search(keyword);
+		List<ScheduleVO> list = service.search(keyword, ud.getUsername());
 		
 		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
 	}
@@ -95,6 +102,11 @@ public class ScheduleController {
 	@PostMapping(value="/new",
 					produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
+		
+		if(scheduleVO.getBook_id() == null) {
+			// 회의실 예약 번호가 미입력 되었을 경우 0으로 초기화
+			scheduleVO.setBook_id(0);
+		}
 		
 		return service.insertSchedule(scheduleVO) ?
 			new ResponseEntity<String>("success", HttpStatus.OK) :
@@ -148,9 +160,23 @@ public class ScheduleController {
 			new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	// 참가자 등록 시 직원 검색하기
+	@GetMapping(value="/participant/{name}",
+				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<EmployeeVO>> getEmployee(@PathVariable String name){
+		// 계정 검색을 위한 criteria 계정 생성
+		AccountCriteria cri = new AccountCriteria();
+		// 검색어(이름) 입력
+		cri.setKeyword(name);
+		// 검색옵션(이름으로 검색) 입력
+		cri.setType("N");
+		List<EmployeeVO> list = empMapper.getListWithPaging(cri);
+		return new ResponseEntity<List<EmployeeVO>>(list, HttpStatus.OK);
+	}
+	
 	// 같은 부서 직원 스케쥴 불러오기
 	@GetMapping(value="/worker/{dept_id}",
-			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+				produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<WorkScheduleVO>> getWorkerList(@PathVariable String dept_id) {
 		
 		List<WorkScheduleVO> list = service.getWorkerList(dept_id);
