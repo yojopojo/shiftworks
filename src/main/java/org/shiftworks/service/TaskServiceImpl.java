@@ -71,16 +71,6 @@ public class TaskServiceImpl implements TaskService {
 		log.info("service: insertTask..........");
 		boolean result = taskMapper.insertTask(taskVO) == 1;
 		
-		
-		// 업로드된 파일이 없을 경우 메소드 종료
-		if (taskVO.getFileList() == null || taskVO.getFileList().size() <= 0) {
-			return result;
-		}
-		// 파일 목록을 차례로 DB에 등록
-		taskVO.getFileList().forEach(file -> {
-			fileMapper.insertTaskFile(file);
-		});
-		
 		// 부서원들에게 부서 업무에 대한 알림 생성
 		List<EmployeeVO> list = taskMapper.getDeptMember(taskVO.getDept_id());
 		for(EmployeeVO e : list) {
@@ -91,6 +81,15 @@ public class TaskServiceImpl implements TaskService {
 			
 			alarmMapper.insertAlarm(alarm);
 		}
+		
+		// 업로드된 파일이 없을 경우 메소드 종료
+		if (taskVO.getFileList() == null || taskVO.getFileList().size() <= 0) {
+			return result;
+		}
+		// 파일 목록을 차례로 DB에 등록
+		taskVO.getFileList().forEach(file -> {
+			fileMapper.insertTaskFile(file);
+		});
 		
 		return result;
 	}
