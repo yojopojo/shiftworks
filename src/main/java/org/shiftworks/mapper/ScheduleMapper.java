@@ -11,7 +11,7 @@ import org.shiftworks.domain.WorkScheduleVO;
 public interface ScheduleMapper {
 
 	List<ScheduleVO> getList(ScheduleCriteria cri);
-	List<ScheduleVO> search(String keyword);
+	List<ScheduleVO> search(@Param("keyword")String keyword, @Param("emp_id") String emp_id);
 	
 	ScheduleVO getSchedule(Integer sch_id);
 	
