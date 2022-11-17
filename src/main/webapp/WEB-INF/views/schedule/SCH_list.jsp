@@ -129,20 +129,20 @@
 						<label>시작일</label> <input type="text" class="form-control"
 							name="start_date" id="start_date">
 						<label>시작시간</label> <input type="text" class="form-control"
-							name="start_time" id="start_time">
+							name="start_time" id="start_time" placeholder="ex) 09:30">
 					</div>
 					<div class="form-group">
 						<label>종료일</label> <input type="text" class="form-control"
 							name="end_date" id="end_date">
 						<label>종료시간</label> <input type="text" class="form-control"
-							name="end_time" id="end_time">
+							name="end_time" id="end_time" placeholder="ex) 21:30">
 					</div>
 					<div class="form-group">
 						<label>제목</label> <input class="form-control" name="sch_title">
 					</div>
 					<div class="form-group participant">
-						<label>참가자목록</label> <input class="form-control"
-							name="participant_name" placeholder="이름 입력 시 검색">
+						<label>참가자 추가 등록</label> <input class="form-control"
+							name="participant_name" placeholder="이름 입력 시 사원 검색">
 							<p class="selectedParticipant"></p>
 							<input type="hidden" class="form-control"
 							name="participant_id">
@@ -474,6 +474,7 @@ $(document).ready(function() {
     
     // 선택 참가자 목록
     var pList = '<sec:authentication property="principal.username"/>';
+    $('.selectedParticipant').text(pList);
     $('.participantList').on("click", "li", function(){
     	console.log('hi');
     	pList += ", " + $(this).data("emp_id");
