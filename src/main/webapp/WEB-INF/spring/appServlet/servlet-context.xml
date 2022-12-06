@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans
-	xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
@@ -31,6 +32,17 @@
 	</beans:bean>
 	
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
+
+	<!-- stomp -->
+	<!-- 클라이언트에서 보낸 메세지를 받을 prefix -->
+	<websocket:message-broker application-destination-prefix="/app">
+		<!-- SockJS 연결 주소 : 주소(ws://localhost:8081/messenger/chat)-->
+		<websocket:stomp-endpoint path="/messenger/chat" allowed-origins="*">
+			<!-- 버전 낮은 브라우저에서도 적용 가능 -->
+			<websocket:sockjs/>
+		</websocket:stomp-endpoint>
+		<!-- 해당 주소를 구독하고 있는 클라이언트들에게 메세지 전달 -->
+		<websocket:simple-broker prefix="/pub, /sub" />	
+	</websocket:message-broker>
 	
-	
-</beans:beans>
+	</beans:beans>

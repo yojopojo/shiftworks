@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shiftworks.mapper.EmployeeMapper">
+
+<!-- Criteria -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'E'.toString()">
+							emp_id like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'D'.toString()">
+							dept_name like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<!-- resultMap for LOGIN -->
+	<resultMap type="org.shiftworks.domain.EmployeeVO" id="empMap">
+		<id property="emp_id" column="emp_id"/>
+		<result property="emp_id" column="emp_id"/>
+		<result property="dept_id" column="dept_id"/>
+		<result property="name" column="name"/>
+		<result property="position" column="position"/>
+		<result property="birthday" column="birthday"/>
+		<result property="address" column="address"/>
+		<result property="entry_date" column="entry_date"/>
+		<result property="password" column="password"/>
+		<collection property="authList" resultMap="deptMap"/>
+	</resultMap>
+	
+	<resultMap type="org.shiftworks.domain.DepartmentVO" id="deptMap">
+		<result property="dept_id" column="dept_id"/>
+		<result property="dept_name" column="dept_name"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+
+
+	<select id="read" resultMap="empMap">
+		SELECT emp_id, e.dept_id as dept_id, password, name, authority
+			FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id
+			WHERE emp_id = #{emp_id}
+	</select>
+	
+	
+	<!--계정관리-->
+		<!--전체  list-->
+	<select id="getList" resultType="org.shiftworks.domain.EmployeeVO">
+			SELECT emp_id, dept_name, position, name, entry_date
+			FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id
+			WHERE resignation_date is null
+	</select>
+	
+		<!-- 퇴직자리스트 -->
+	<select id="getRetireeList" resultType="org.shiftworks.domain.EmployeeVO">
+			SELECT emp_id, dept_name, position, name, entry_date
+			FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id
+			WHERE resignation_date is not null			
+	</select>
+	
+		<!--검색 및 페이징 처리 -->
+		<select id="getListWithPaging"
+		resultType="org.shiftworks.domain.EmployeeVO"> 
+		<![CDATA[ 
+		select emp_id, dept_name, position, name, entry_date, resignation_date
+			from ( 
+				select /*+INDEX_DESC(employee employee_pk) */ 
+						rownum rn, emp_id, dept_name, position, name, entry_date, resignation_date
+					from employee e JOIN department d
+					on e.dept_id = d.dept_id
+					where 
+		]]>
+	<include refid="criteria"/>
+	<![CDATA[
+			 rownum <= #{pageNum} * #{amount}
+		)where rn > (#{pageNum} -1) * #{amount}
+	]]>and resignation_date is null
+	</select>
+	
+		<!-- 퇴사자 검색 및 페이징 처리 -->
+	<select id="getListWithRetireePaging"
+		resultType="org.shiftworks.domain.EmployeeVO"> 
+		<![CDATA[ 
+		select emp_id, dept_name, position, name, resignation_date, entry_date
+			from ( 
+				select /*+INDEX_DESC(employee employee_pk) */ 
+						rownum rn, emp_id, dept_name, position, name, resignation_date, entry_date
+					from employee e JOIN department d
+					on e.dept_id = d.dept_id
+					where 
+		]]>
+	<include refid="criteria"/>
+	<![CDATA[
+			 rownum <= #{pageNum} * #{amount}
+		)where rn > (#{pageNum} -1) * #{amount}
+	]]>and resignation_date is not null
+	</select>
+	
+		<!-- 총 계정 개수 -->
+	 <select id="getTotalCount" resultType="int">
+		select count(*) from employee e
+		where <include refid="criteria"/> resignation_date is null
+	</select>
+	
+	<!--총 퇴사자 계정 개수  -->
+	<select id="getTotalRetireeCount" resultType="int">
+		select count(*) from employee e
+		where <include refid="criteria"/> resignation_date is not null
+	</select>
+		
+		<!-- 계정추가 -->
+	<insert id="insert">
+		insert into employee(emp_id, dept_id, password, position, name, birthday, mobile, internal, 
+		email, address, entry_date) 
+			values (#{emp_id}, #{dept_id}, #{password}, #{position}, #{name}, #{birthday}, #{mobile}, #{internal}, 
+			#{email}, #{address}, #{entry_date})
+	</insert>
+	
+		<!-- 계정상세보기 -->
+	<select id="detail" resultType="org.shiftworks.domain.EmployeeVO">
+		select emp_id, password, e.dept_id as dept_id, position, name, birthday, mobile, internal, 
+		email, address, entry_date, resignation_date
+		FROM employee e JOIN department d
+			ON e.dept_id = d.dept_id where emp_id = #{emp_id}
+	</select>
+	
+		<!-- 계정삭제 -->
+	<delete id="delete">
+		delete from employee where emp_id = #{emp_id}
+	</delete>
+	
+		<!-- 계정정보수정 -->
+	<update id="update">
+		update employee set password=#{password}, dept_id=#{dept_id}, position=#{position}, name=#{name}, birthday=#{birthday}, mobile=#{mobile}, internal=#{internal}
+		, email=#{email}, address=#{address}, resignation_date=#{resignation_date} where emp_id=#{emp_id}
+	</update>
+	
+
+	<!-- 관리자 계정 끝 -->
+	
+	
+	
+	
+	<!-- 일반 계정 -->
+		<!-- 일반 계정정보 수정 -->
+	<update id="updateMyAccount">
+		update employee set password=#{password}, mobile=#{mobile}, email=#{email} 
+		where emp_id=#{emp_id}
+	</update>
+
+	
+</mapper>

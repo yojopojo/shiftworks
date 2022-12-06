@@ -1,0 +1,109 @@
+@charset "EUC-KR";
+
+
+#mainTable {
+	width: 100%;
+	display: flex;
+	margin-top: 20px;
+}
+
+#memoTable {
+	width: 20%;
+}
+
+.dayOfWeek td {
+	width: 14%;
+	text-align: center;
+	font-weight: bold;
+}
+
+.eachSch {
+	color: #1C3359;
+}
+
+.prevDay, .nextDay {
+	color: darkgray;
+}
+
+tr[class^=week] {
+	text-align: right;
+}
+
+tr[class^=week] td {
+	text-align: left;
+}
+
+.pagination {
+	width: 220px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.dropdown, .newSchedule{
+	text-align: center;
+	margin: 0 auto;
+	float: right;
+}
+
+.refDate {
+	width: 140px;
+}
+
+#memoTable {
+	vertical-align: top;
+	text-align: left;
+	padding: 20px;
+	border: 1px darkgray !important;
+}
+
+.timeline, .searchResult {
+	list-style: none;
+}
+
+.table-responsive {
+	border-top: none;
+}
+
+.noPadding {
+	padding: 0px !important;
+}
+
+.refDate p{
+	display: none;
+}
+
+.fa {
+	color: #1C3359 !important;
+	float: right;
+}
+
+.search {
+	/* float: right; */
+	width: 300px;
+}
+
+.searchResult {
+	width: 300px;
+	position: absolute;
+	z-index: 1;
+	background-color: white;
+}
+
+.selectedBooking {
+	font-weight: bold;
+}
+
+.my {
+	background-color: #CCCCFF;
+	border-radius: 3px;
+}
+
+.dept {
+	background-color: #99CCFF;
+	border-radius: 3px;
+}
+
+.comp {
+	background-color: #9999CC;
+	border-radius: 3px;
+}

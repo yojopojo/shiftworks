@@ -1,0 +1,15 @@
+@charset "EUC-KR";
+
+
+.getBold td{
+	font-weight: bold;
+}
+
+
+#post_content{
+		text-align: left;
+}
+
+.chat {
+	 list-style:none;
+}
