@@ -20,9 +20,9 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
       throws IOException, ServletException {
 
     log.error("Access Denied Handler");
-
     log.error("Redirect....");
 
+    // 접근 권한이 없는 경우 accessError로 redirect
     response.sendRedirect("/accessError");
 
   }
