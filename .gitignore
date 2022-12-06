@@ -15,3 +15,6 @@ META-INF/
 
 # project 버전관리 제외
 .project
+
+# README 파일 제외
+README.md
