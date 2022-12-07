@@ -19,3 +19,5 @@
     <br>→ Google Drive를 통한 이중 백업을 통해 파일을 안전하게 관리
     - 애자일 방법론을 채택하여 매일 아침 애자일 스크럼 회의 진행
     - 개발 프로그램에 대한 QA 진행
+
+🔗 [2차 프로젝트](https://github.com/chaebini/shiftworksboot)
