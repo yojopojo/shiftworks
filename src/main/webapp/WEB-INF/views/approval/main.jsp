@@ -53,8 +53,8 @@
 	     						 <h5 class="mb-1" >휴가 신청서</h5>
 	     							 <small>대기중</small>
 	   				 		</div>
-	    						<p class="mb-1">회계팀 김ㅇㅇ 대리</p>
-	    							<small>상기 본인은 11월 11일부터 11월 14일까지 휴가를 신청합니다.</small>
+	    						<p class="mb-1">회계팀 홍길동	 대리</p>
+	    							<small>상기 본인은 11월 11일부터 11월 30일까지 휴가를 신청합니다.</small>
 	 					</a>
  					</div>	
  					 <!-- end of list-group -->		    			    
