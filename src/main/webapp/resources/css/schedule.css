@@ -2,7 +2,9 @@
 
 
 #mainTable {
-	width: 80%;
+	width: 100%;
+	display: flex;
+	margin-top: 20px;
 }
 
 #memoTable {
@@ -25,6 +27,10 @@
 
 tr[class^=week] {
 	text-align: right;
+}
+
+tr[class^=week] td {
+	text-align: left;
 }
 
 .pagination {
@@ -85,4 +91,19 @@ tr[class^=week] {
 
 .selectedBooking {
 	font-weight: bold;
+}
+
+.my {
+	background-color: #CCCCFF;
+	border-radius: 3px;
+}
+
+.dept {
+	background-color: #99CCFF;
+	border-radius: 3px;
+}
+
+.comp {
+	background-color: #9999CC;
+	border-radius: 3px;
 }

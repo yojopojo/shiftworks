@@ -33,9 +33,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 	
 	@Override
-	public List<ScheduleVO> search(String keyword) {
+	public List<ScheduleVO> search(String keyword, String emp_id) {
 	
-		return mapper.search(keyword);
+		return mapper.search(keyword, emp_id);
 	}
 
 	// 개별 일정 가져오기

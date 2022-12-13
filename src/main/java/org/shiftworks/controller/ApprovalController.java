@@ -23,8 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,32 +105,34 @@ public class ApprovalController {
 	/*
 	 * 결재 문서 작성
 	 */
-	@PostMapping("/insert")
+	@PostMapping("/new")
 	@PreAuthorize("isAuthenticated()")
 	public String insert(ApprovalVO approval, RedirectAttributes rttr) {
 		//log.info("insert: "+ approval);
 		service.insertForm(approval);
 		
 		rttr.addFlashAttribute("result",approval.getApr_id());
-		return "redirect:/approval/list";
+		return "redirect:/approval/APR_list";
 	}
 	
 	/*
 	 * 결재 문서 상세보기
-	 */ 
-	@GetMapping("/get")
+	 */
+	@GetMapping("/{apr_id}")
 	@PreAuthorize("isAuthenticated()")
-	public void get(@RequestParam("apr_id") int apr_id, Model model) {
+	public String get(@PathVariable("apr_id") int apr_id, Model model) {
 		//log.info("/get");
 		model.addAttribute("approval",service.get(apr_id));
+		
+		return "/approval/APR_get";
 	}
 	
 	/*
 	 * 결재 수정(결재 상태 수정)
 	 */ 
-	@PostMapping("/update")
+	@PostMapping("/receive/{apr_id}")
 	@PreAuthorize("isAuthenticated()")
-	public String update(ApprovalVO approval, RedirectAttributes rttr) {
+	public String update(@PathVariable int apr_id, ApprovalVO approval, RedirectAttributes rttr) {
 		//log.info("update: "+approval);
 		
 		if (service.update(approval)) {
@@ -144,10 +144,10 @@ public class ApprovalController {
 	/*
 	 * 결재 양식 호출
 	 */
-	@GetMapping("/insert")
+	@GetMapping("/new")
 	@PreAuthorize("isAuthenticated()")
-	public void insert() {
-	
+	public String insert() {
+		return "/approval/APR_new";
 	}
 	
 	/*
@@ -172,7 +172,7 @@ public class ApprovalController {
 	/*
 	 임시저장 업데이트 하기
 	*/
-	@PostMapping("/temporal")
+	@PostMapping("/temporory")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> temporalPost(@RequestBody TempApprovalVO vo){
@@ -187,7 +187,7 @@ public class ApprovalController {
 	/*
 	 임시저장 목록 불러오기
 	*/
-	@GetMapping(value="/tempList", produces="application/json; charSet=UTF-8")
+	@GetMapping(value="/temporory", produces="application/json; charSet=UTF-8")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<List<TempApprovalVO>> tempList(@RequestParam String emp_id){
@@ -199,9 +199,9 @@ public class ApprovalController {
 	}
 	
 	/*
-	 임시저장 선택?
+	 임시저장 선택
 	*/
-	@GetMapping(value="/tempSelect/{temp_id}", produces="application/json; charSet=UTF-8")
+	@GetMapping(value="/temporory/{temp_id}", produces="application/json; charSet=UTF-8")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<TempApprovalVO> tempSelect(@PathVariable int temp_id){

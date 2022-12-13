@@ -205,7 +205,25 @@ var scheduleService = (function(){
 				}
 			}
         })
-    } // end function search()
+    } // end function searchBooking()
+
+    // 참가자 검색
+    function searchParticipant(param, callback, error) {
+        $.ajax({
+            type: 'get',
+            url: '/schedule/participant/' + param,
+            success: function(result) {
+                if (callback) {
+					callback(result);
+				}
+            },
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+        })
+    } // end function searchParticipant()
 
 
     return {
@@ -218,7 +236,8 @@ var scheduleService = (function(){
         getMemo: getMemo,
         updateMemo: updateMemo,
         getWorkerList: getWorkerList,
-        searchBooking: searchBooking
+        searchBooking: searchBooking,
+        searchParticipant: searchParticipant
     };
 
 })();
@@ -318,11 +337,11 @@ $(document).ready(function(){
         // 일주일마다 테이블 로우를 새로 만들 수 있도록 count
         var dayCount;
         // 각 주마다 넘버링 할 수 있도록 count
-        var weekCount;
+        var weekCount = 0;
         dayCount = 0;
         weekCount = 0;
         makeCalendar = "";
-        makeCalendar = '<tr class="week0">';
+        makeCalendar = '<tr class="week' + weekCount + '">';
         // 근무자 확인 아이콘 생성을 위한 html 태그
         var workers = '<a id="workers" tabindex="0" class="btn"'
                     + 'data-bs-toggle="popover"' + 'data-bs-title="workerList"'
@@ -364,7 +383,7 @@ $(document).ready(function(){
         // 이번달 날짜만큼 칸 생성
         for (var i = 1; i <= nextDate; i++) {
             if(dayCount == 7) {
-                makeCalendar += '</tr><tr class="week'+ weekCount +'">'
+                makeCalendar += '</tr><tr class="week'+ ++weekCount +'">'
                 dayCount = 0;
             }
             dayCount++;
@@ -520,7 +539,7 @@ $(document).ready(function(){
                 }
                 
                 tHTML += '<tr><td class="timeline"><b>' + t 
-                        + '</b></td><td class="' + t + '"></td><tr>';
+                        + '</b></td><td class="' + t + '"><ul class="dayResult"></ul></td><tr>';
             }
             
             return tHTML;
@@ -570,7 +589,7 @@ $(document).ready(function(){
     }
     
     
-    
+    // 캘린더 이동
     $('.page-link').on("click", function(e){
         e.preventDefault();
 
@@ -665,40 +684,10 @@ $(document).ready(function(){
         listparam.sch_group = $('.sch_group').val();
         $('.sch_group').text($(this).text());
 
-        // 선택된 탭 
+        // 선택된 탭으로 이동
+        selectedTap.trigger("click");
 
     }); // 그룹 선택 시 값 변경
-
-
-
-    /* * * * * * * * * * * * * * * * * * *
-        버튼 클릭 시 직원 스케쥴 출력 이벤트
-    * * * * * * * * * * * * * * * * * * */
-    $('#calendarBody').on("click", "a", function(e) {
-        e.preventDefault();
-
-        let content = '';
-
-        scheduleService.getWorkerList('dept', function(result){
-           
-            result.forEach((item) => {
-
-                let arr1 = item.start_time.split(' ');
-                let arr2 = arr1[1].split(':');
-
-                
-                content += item.name + ' (' + arr2[0] + ':' + arr2[1] + ') ';
-                
-
-                
-            }); // end forEach 
-
-            $('#workers').attr("data-bs-content", content);
-            $('#workers').popover("show");
-            
-        }); // end getWorkerList()      
-
-    }); // 버튼 클릭 시 직원 스케쥴 출력
 
 
     // 검색 결과 클릭 시 해당 일자로 이동
@@ -712,6 +701,9 @@ $(document).ready(function(){
     });
 
 
+     
+    
+
     /** getList를 통해 DB에서 데이터 받아오기 */
     function getList() {scheduleService.getList(listparam, function(list) {
            
@@ -722,15 +714,26 @@ $(document).ready(function(){
 
             if(item.sch_title != null) {
                 html += '<tr>';
-                html += '<td id="' + item.sch_id + '" class="eachSch">' + item.sch_title + '</td>';
+                html += '<td id="' + item.sch_id + '" class="eachSch';
+                if(item.sch_group == 'my') {
+                    html += ' my';
+                } else if(item.sch_group == 'dept') {
+                    html += ' dept';
+                } else if(item.sch_group == 'comp') {
+                    html += ' comp';
+                }
+                html += '">' + item.sch_title + '</td>';
                 html += '</tr>';
+                console.log(item.sch_date);
                 $('#calendarBody .' + item.sch_date).append(html);
             }
+            
             // end if
 
         }) // end forEach
     });} // end getList
     
+
 
      // 기본으로 '월별' 캘린더가 클릭된 상태로 만듦
     $("#month").trigger("click");

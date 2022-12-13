@@ -37,9 +37,9 @@
 							data-bs-toggle="dropdown" aria-expanded="false" value="T">
 							제목</button>
 						<ul class="dropdown-menu typeList">
-							<li><a class="dropdown-item type" href="T">제목</a></li>
-							<li><a class="dropdown-item type" href="C">내용</a></li>
-							<li><a class="dropdown-item type" href="W">작성자</a></li>
+							<li><a class="dropdown-item type" href="t">제목</a></li>
+							<li><a class="dropdown-item type" href="c">내용</a></li>
+							<li><a class="dropdown-item type" href="w">작성자</a></li>
 						</ul>
 						<form class="d-flex" role="search">
 						<input id="searchForm" class="form-control me-2" type="search"
@@ -117,6 +117,8 @@
 		var pageNum = '${dto.cri.pageNum}' || '1';
 		var type = '${dto.cri.type}' || 'empty';
 		var keyword = '${dto.cri.keyword}' || 'empty';
+		var startPage = '${ dto.startPage }';
+		var endPage = '${ dto.endPage }';
 		
 		// 작성 버튼 클릭 시 새 글(업무) 작성 화면으로 이동
 		$('.new').on("click", function(){
@@ -133,6 +135,17 @@
 		$('.pageNum').on("click", function(){
 			location.href="/task/pages/"+ dept_id +"/" + type + "/" + keyword + "/" + $(this).text();
 		});
+		// 이전, 이후 버튼 클릭 시 이동
+		$('.prev').on("click", function(e){
+			e.preventDefault();
+			pageNum = (eval(startPage) - 1);
+			location.href="/task/pages/"+ dept_id +"/" + type + "/" + keyword + "/" + pageNum;
+		})
+		$('.next').on("click", function(e){
+			e.preventDefault();
+			pageNum = (eval(endPage) + 1);
+			location.href="/task/pages/"+ dept_id +"/" + type + "/" + keyword + "/" + pageNum;
+		})
 		
 		// 부서 버튼 클릭 시 해당 부서 결과만 검색
 		$('.dept').on("click", function(){
