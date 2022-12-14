@@ -58,12 +58,16 @@ public class ApprovalController {
 	*/
 	@GetMapping("/main")
 	@PreAuthorize("isAuthenticated()")
-	public String approvalMain(ApprovalCriteria cri, Model model) {
+	public void approvalMain(ApprovalCriteria cri, Model model,Authentication auth) {
 		//log.info("list" + cri);
+		//log.info("list" + cri);
+		 UserDetails ud = (UserDetails)auth.getPrincipal();
+	      //log.info(ud.getUsername());
+	      String emp_id = ud.getUsername();
+	      cri.setEmp_id(emp_id);
+	      
 		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
-		
-		return "/approval/APR_main";
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal(emp_id)));
 	}
 	
 	/*
@@ -71,12 +75,15 @@ public class ApprovalController {
 	 */
 	@GetMapping("/list")
 	@PreAuthorize("isAuthenticated()")
-	public String list(ApprovalCriteria cri, Model model) {
+	public void list(ApprovalCriteria cri, Model model, Authentication auth) {
 		//log.info("list" + cri);
+		 UserDetails ud = (UserDetails)auth.getPrincipal();
+	      //log.info(ud.getUsername());
+	      String emp_id = ud.getUsername();
+	      cri.setEmp_id(emp_id);
 		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal()));
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getTotal(emp_id)));
 		
-		return "/approval/APR_list";
 	}
 	
 	
@@ -85,12 +92,14 @@ public class ApprovalController {
 	 */	
 	@GetMapping("/receivedList")
 	@PreAuthorize("isAuthenticated()")
-	public String receivedList(ApprovalCriteria cri, Model model) {
+	public void receivedList(ApprovalCriteria cri, Model model, Authentication auth) {
 		//log.info("list" + cri);
+		UserDetails ud = (UserDetails)auth.getPrincipal();
+	      //log.info(ud.getUsername());
+	      String emp_id = ud.getUsername();
+	      cri.setEmp_id(emp_id);
 		model.addAttribute("list", service.getReceivedList(cri));
-		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getReceivedTotal()));
-		
-		return "/approval/APR_receivedList";
+		model.addAttribute("pageMaker", new ApprovalPageDTO(cri, service.getReceivedTotal(emp_id)));
 	}
 	
 	/*

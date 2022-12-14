@@ -15,8 +15,8 @@ public interface ApprovalMapper {
 	//public List<ApprovalVO> getList();
 	public List<ApprovalVO> getListWithPaging(ApprovalCriteria cri);
 	public List<ApprovalVO> getReceivedListWithPaging(ApprovalCriteria cri);
-	public int getTotal();
-	int getReceivedTotal();
+	public int getTotal(String emp_id);
+	int getReceivedTotal(String emp_id);
 	public int insert(ApprovalVO approval);
 	public ApprovalVO read(int apr_id);
 	

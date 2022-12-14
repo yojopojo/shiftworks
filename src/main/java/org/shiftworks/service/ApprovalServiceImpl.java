@@ -81,8 +81,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public int getTotal() {
-		return mapper.getTotal();
+	public int getTotal(String emp_id) {
+		return mapper.getTotal(emp_id);
 	}
 
 	
@@ -165,9 +165,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
 
 		@Override
-		public int getReceivedTotal() {
+		public int getReceivedTotal(String emp_id) {
 			// TODO Auto-generated method stub
-			return mapper.getReceivedTotal();
+			return mapper.getReceivedTotal(emp_id);
 		}
 
 		
