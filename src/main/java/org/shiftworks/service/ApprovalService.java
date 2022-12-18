@@ -15,8 +15,8 @@ public interface ApprovalService {
 	public int insertForm(ApprovalVO approval);
 	public ApprovalDTO get(int apr_id);
 	public List<ApprovalDTO> getList(ApprovalCriteria cri);
-	public int getTotal();
-	public int getReceivedTotal();
+	public int getTotal(String emp_id);
+	public int getReceivedTotal(String emp_id);
 	public List<ApprovalDTO> getReceivedList(ApprovalCriteria cri);
 	
 	// 결재 상태 변경
