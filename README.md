@@ -1,5 +1,3 @@
-# Git 수정
-
 # **💻** Shiftworks (2022)
 
 ***KOSTA FINAL PROJECT - 1차 / [포트폴리오](https://docs.google.com/presentation/d/1mwzoWcrF-YmYtobXlks01ZUQAqpD0xYfLgqcOwehdrc/edit?usp=sharing)***
@@ -116,4 +114,4 @@
 
 ![Sample2](/img/readme7.png)
 
-🎞더 자세한 내용은 ***[포트폴리오](https://docs.google.com/presentation/d/1mwzoWcrF-YmYtobXlks01ZUQAqpD0xYfLgqcOwehdrc/edit?usp=sharing)***에서 확인하실 수 있습니다.
+🎞더 자세한 내용은 [포트폴리오](https://docs.google.com/presentation/d/1mwzoWcrF-YmYtobXlks01ZUQAqpD0xYfLgqcOwehdrc/edit?usp=sharing)에서 확인하실 수 있습니다.
