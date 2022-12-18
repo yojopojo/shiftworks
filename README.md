@@ -1,23 +1,119 @@
-# 💻 Shiftworks (2022)
+# Git 수정
 
-***KOSTA FINAL PROJECT - 1차***   / [📄 포트폴리오](https://docs.google.com/presentation/d/1rttHUe7aAMxpQ76MAXWj0zSivruam0E_X2pU2RgdAfM/edit?usp=sharing)
+# **💻** Shiftworks (2022)
+
+***KOSTA FINAL PROJECT - 1차 / [포트폴리오](https://docs.google.com/presentation/d/1mwzoWcrF-YmYtobXlks01ZUQAqpD0xYfLgqcOwehdrc/edit?usp=sharing)***
 
 - 참여인원: 6명
 - 프로젝트 기간: 221024 - 221110(3주)
-- 프로젝트 주제: 그룹웨어 앱 애플리케이션 개발
-- 담당: Git Master, 로그인(Security), 일정관리, 업무관리
-- 내용
-    - SpringFramework와 MyBatis, OracleDB를 활용한 웹 애플리케이션 개발
-    - **RESTful한 개발**을 통해 서버로 보내지는 요청만으로도 어떤 데이터가 넘어올 것인지 예측 가능하도록 설계
-    - API 문서, 요구정의서/명세서, 명명법 등의 필요한 자료를 문서화
-    - MVC 패턴을 이용하여 **비즈니스 로직과 UI 로직을 분리**
-    - 관계형 DB 설계 및 RDBMS 사용
-    - Junit을 통한 단위테스트 진행
-    - Git을 통한 형상관리
-    <br>→ [🔗 Git 사용 및 운영 방법을 작성하여 배포](https://www.evernote.com/shard/s518/sh/80ec7831-30a0-c533-52e7-fb84d750310f/d5e4db8b8e3bb36e4b77b2d8bbcb1327), [🔗 사용 방법(세팅) 문서화](https://www.evernote.com/shard/s518/sh/75116b7b-2272-e691-2968-9dae37d27b0d/e40d39a90e5910dc9f32b715e7a51aeb)
-    <br>→ Upstream Repository 사용 방식을 도입하여 보다 실험적이고 과감하게 코드 작성
-    <br>→ Google Drive를 통한 이중 백업을 통해 파일을 안전하게 관리
-    - 애자일 방법론을 채택하여 매일 아침 애자일 스크럼 회의 진행
-    - 개발 프로그램에 대한 QA 진행
+- 프로젝트 주제: 교대근무 협업을 위한 그룹웨어 웹 애플리케이션 개발
+- 프로젝트 개요: 팀원들의 교대근무 경험을 바탕으로 유동적인 근무 시간으로 인한 일정 관리 및 협업의 어려움이라는 개선점을 도출, 이를 해결할 수 있는 그룹웨어 시스템 개발을 목표로 함
 
-🔗 [2차 프로젝트](https://github.com/chaebini/shiftworksboot)
+## 담당역할
+
+✔ 각 팀원의 이름을 클릭하면 개인 리포지토리로 이동합니다. (팀원 이름 ㄱ-ㅎ 순)
+
+### [👸 권해림](https://github.com/podo9264/shiftworks)
+
+- Project Master: 프로젝트 총괄, 프로젝트 일정 관리
+- 메신저(채팅) 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/ChatRoomController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/ChatMapper.xml)
+    - [View](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/messenger/MSG_main.jsp)
+
+### [👱‍♀️ 김수진](https://github.com/sooosujin/shiftworks)
+
+- 애자일 스크럼 담당: 애자일 방식의 스크럼 회의 진행 및 Jira 관리
+- 전자결재 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/ApprovalController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/ApprovalMapper.xml)
+    - [View](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/approval/APR_list.jsp)
+
+### [👱‍♀️ 유지영](https://github.com/jyjyu1204/shiftworks)
+
+- 문서 담당: 회의와 프로젝트 진행 내용 기록 및 문서화, 보관 작업
+- 로그인 및 계정관리 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/EmployeeController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/EmployeeMapper.xml)
+    - [View(Login)](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/customLogin.jsp)
+    - [View(Account)](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/manager/MGR_list.jsp)
+
+### [👱‍♀️ 이지현](https://github.com/jh1359753/shiftworks)
+
+- UI 담당: 메인페이지 및 전체 UI 템플릿 설계 및 구현
+- 메인페이지 및 UI 구현
+    - [View(Main Page)](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/home.jsp)
+    - [View(UI)](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/includes/header.jsp)
+- 자원관리 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/BookingController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/BookingMapper.xml)
+    - [View](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/booking/BOK_myList.jsp)
+
+### [👱‍♀️ 이채빈](https://github.com/chaebini/shiftworks)
+
+- Git 담당: Github을 통한 형상관리 총괄
+- 로그인 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/EmployeeController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/EmployeeMapper.xml)
+- 업무관리 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/TaskController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/TaskMapper.xml)
+    - [View](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/task/TSK_list.jsp)
+- 일정관리 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/ScheduleController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/ScheduleMapper.xml)
+    - [View](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/schedule/SCH_list.jsp)
+- 알림 기능 구현
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/AlarmMapper.xml)
+
+### [👱‍♀️ 조현수](https://github.com/brightvvater/shiftworks)
+
+- DB 담당: 관계형 데이터베이스 설계 및 구축, 관리
+- 게시판 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/PostController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/PostMapper.xml)
+    - [View](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/board/BOA_list.jsp)
+- 문서함 기능 구현
+    - [Controller](https://github.com/cocobini/shiftworks/blob/master/src/main/java/org/shiftworks/controller/DocumentController.java)
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/DocumentMapper.xml)
+    - [View](https://github.com/cocobini/shiftworks/blob/master/src/main/webapp/WEB-INF/views/document/DOC_mydoclist.jsp)
+- 첨부파일 - DB CRD 구현
+    - [SQL Mapper](https://github.com/cocobini/shiftworks/blob/master/src/main/resources/org/shiftworks/mapper/FileMapper.xml)
+
+---
+
+## 개발환경
+
+![개발환경1](/img/readme1.png)
+
+![개발환경2](/img/readme2.png)
+
+![REST API](/img/readme3.png)
+
+![MVC 아키텍처](/img/readme4.png)
+
+---
+
+## 프로젝트 진행 방식
+
+### 🕐 애자일 스크럼 활용
+
+👉 매일 개발을 시작하기에 앞서 스크럼보드 앞에서 15분간 회의를 진행
+👉 모든 팀원이 참석해야 하며 한 사람씩 전일 한 일, 오늘 진행할 일, 이슈에 대해 공유
+👉 Jira를 통해 Issue, Task 관리
+
+![애자일 - Jira 칸반보드](/img/readme5.png)
+
+### 🕑 Git-Flow, Upstream Repository를 활용한 형상관리(Git/Github 사용)
+
+![Git Repository](/img/readme6.png)
+
+---
+
+## Sample
+
+![Sample1](/img/readme8.png)
+
+![Sample2](/img/readme7.png)
+
+🎞더 자세한 내용은 ***[포트폴리오](https://docs.google.com/presentation/d/1mwzoWcrF-YmYtobXlks01ZUQAqpD0xYfLgqcOwehdrc/edit?usp=sharing)***에서 확인하실 수 있습니다.
